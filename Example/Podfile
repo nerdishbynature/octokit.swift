@@ -1,0 +1,11 @@
+platform :ios, "8.0"
+use_frameworks!
+workspace "../OctokitSwift.xcworkspace"
+
+target "OctokitSwift", exclusive: true do
+  pod "OctoKit.swift", path: "../Octokit.podspec"
+end
+
+target "OctokitSwiftTests", exclusive: true do
+  pod "OctoKit.swift", path: "../Octokit.podspec"
+end

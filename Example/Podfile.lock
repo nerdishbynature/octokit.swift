@@ -1,0 +1,14 @@
+PODS:
+  - OctoKit.swift (0.1.0)
+
+DEPENDENCIES:
+  - OctoKit.swift (from `../Octokit.podspec`)
+
+EXTERNAL SOURCES:
+  OctoKit.swift:
+    :path: ../Octokit.podspec
+
+SPEC CHECKSUMS:
+  OctoKit.swift: 6fff16fafe6a4208e597d694e887b494e73b3e80
+
+COCOAPODS: 0.36.0.beta.1
