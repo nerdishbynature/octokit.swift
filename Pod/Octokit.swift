@@ -1,33 +1,10 @@
 import Foundation
 import Alamofire
 
-let githubBaseURL = "https://api.github.com"
-
-public enum Server {
-    case Github
-    case Enterprise
-}
-
-public struct Configuration {
-    public let apiEndpoint: String
-    public let accessToken: String
-
-    public init(_ url: String = githubBaseURL, token: String) {
-        apiEndpoint = url
-        accessToken = token
-    }
-
-    public var serverType: Server {
-        get {
-            return apiEndpoint == githubBaseURL ? .Github : .Enterprise
-        }
-    }
-}
-
 public struct Octokit {
-    public let configuration: Configuration
+    public let configuration: TokenConfiguration
 
-    public init(_ config: Configuration = Configuration(token: "token")) {
+    public init(_ config: TokenConfiguration = TokenConfiguration(token: "token")) {
         configuration = config
     }
 }
@@ -81,7 +58,11 @@ public enum Router: URLRequestConvertible {
             let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
             mutableURLRequest.HTTPMethod = method.rawValue
             let encoding = Alamofire.ParameterEncoding.URL
-            return encoding.encode(mutableURLRequest, parameters: ["access_token": kit.configuration.accessToken]).0
+            var parameters: [String: AnyObject]?
+            if let accessToken = kit.configuration.accessToken {
+                parameters = ["access_token": accessToken]
+            }
+            return encoding.encode(mutableURLRequest, parameters: parameters).0
         case .ReadUser(let username, let kit):
             let URL = NSURL(string: kit.configuration.apiEndpoint)!
             let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))

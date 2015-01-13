@@ -15,6 +15,7 @@
 		F01C6F411A6429CC0072FA44 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F01C6F401A6429CC0072FA44 /* Images.xcassets */; };
 		F01C6F441A6429CC0072FA44 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F01C6F421A6429CC0072FA44 /* LaunchScreen.xib */; };
 		F01C6F501A6429CC0072FA44 /* OctokitSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01C6F4F1A6429CC0072FA44 /* OctokitSwiftTests.swift */; };
+		F02AF8451A6597F3009076ED /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02AF8441A6597F3009076ED /* ConfigurationTests.swift */; };
 		F094BCA31A6500BA00DDFF5B /* user_mietzmithut.json in Resources */ = {isa = PBXBuildFile; fileRef = F094BCA21A6500BA00DDFF5B /* user_mietzmithut.json */; };
 		F094BCA51A65030B00DDFF5B /* user_me.json in Resources */ = {isa = PBXBuildFile; fileRef = F094BCA41A65030B00DDFF5B /* user_me.json */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		F01C6F491A6429CC0072FA44 /* OctokitSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OctokitSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F01C6F4E1A6429CC0072FA44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F01C6F4F1A6429CC0072FA44 /* OctokitSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctokitSwiftTests.swift; sourceTree = "<group>"; };
+		F02AF8441A6597F3009076ED /* ConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
 		F094BCA21A6500BA00DDFF5B /* user_mietzmithut.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_mietzmithut.json; path = Fixtures/user_mietzmithut.json; sourceTree = "<group>"; };
 		F094BCA41A65030B00DDFF5B /* user_me.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_me.json; path = Fixtures/user_me.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				F01C6F4F1A6429CC0072FA44 /* OctokitSwiftTests.swift */,
+				F02AF8441A6597F3009076ED /* ConfigurationTests.swift */,
 				F01C6F4D1A6429CC0072FA44 /* Supporting Files */,
 				F094BCA21A6500BA00DDFF5B /* user_mietzmithut.json */,
 				F094BCA41A65030B00DDFF5B /* user_me.json */,
@@ -360,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F02AF8451A6597F3009076ED /* ConfigurationTests.swift in Sources */,
 				F01C6F501A6429CC0072FA44 /* OctokitSwiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
