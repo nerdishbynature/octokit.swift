@@ -7,18 +7,30 @@
 //
 
 import UIKit
+import Octokit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let config = OAuthConfiguration(token: "<your_secret>", secret: "<your_token>", scopes: ["repo", "read:org"])
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        // config.authenticate()
         return true
     }
 
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        config.handleOpenURL(url) { config in
+            self.loadCurrentUser(config)
+        }
+        return false
     }
 
+    func loadCurrentUser(config: TokenConfiguration) {
+        Octokit(config).me { user in
+            println(user.login)
+        }
     }
 
 }
