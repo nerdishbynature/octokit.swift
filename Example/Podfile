@@ -4,8 +4,10 @@ workspace "../OctokitSwift.xcworkspace"
 
 target "OctokitSwift", exclusive: true do
   pod "OctoKit.swift", path: "../Octokit.podspec"
+  pod "Alamofire", git: "https://github.com/Alamofire/Alamofire.git", tag: "1.1.3"
 end
 
 target "OctokitSwiftTests", exclusive: true do
   pod "OctoKit.swift", path: "../Octokit.podspec"
+  pod 'Nocilla'
 end
