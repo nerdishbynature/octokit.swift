@@ -28,7 +28,7 @@ class UserTests: XCTestCase {
 
     func testGettingUser() {
         let username = "mietzmithut"
-        if let json = Helper.jsonFromFile("user_mietzmithut") {
+        if let json = Helper.stringFromFile("user_mietzmithut") {
             stubRequest("GET", "https://api.github.com/users/mietzmithut").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("\(username)")
             Octokit().user(username) { user in
@@ -44,7 +44,7 @@ class UserTests: XCTestCase {
     }
 
     func testGettingAuthenticatedUser() {
-        if let json = Helper.jsonFromFile("user_me") {
+        if let json = Helper.stringFromFile("user_me") {
             stubRequest("GET", "https://api.github.com/user?access_token=token").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("me")
             Octokit().me() { user in
