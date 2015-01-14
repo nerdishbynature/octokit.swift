@@ -16,26 +16,13 @@ class OctokitSwiftTests: XCTestCase {
         LSNocilla.sharedInstance().stop()
     }
 
-    func testConfigurationBaseURL() {
-        let subject = Configuration(token: "12345")
-        XCTAssertEqual(subject.serverType, Server.Github)
-        XCTAssertEqual(subject.accessToken, "12345")
-        XCTAssertEqual(subject.apiEndpoint, "https://api.github.com")
-    }
-
-    func testEnterpriseConfigurationBaseURL() {
-        let subject = Configuration(enterpriseURL, token: "12345")
-        XCTAssertEqual(subject.serverType, Server.Enterprise)
-        XCTAssertEqual(subject.accessToken, "12345")
-    }
-
     func testOctokitInitializerWithEmptyConfig() {
         let subject = Octokit()
         XCTAssertEqual(subject.configuration.apiEndpoint, "https://api.github.com")
     }
 
     func testOctokitInitializerWithConfig() {
-        let config = Configuration(enterpriseURL, token: "12345")
+        let config = TokenConfiguration(enterpriseURL, token: "12345")
         let subject = Octokit(config)
         XCTAssertEqual(subject.configuration.apiEndpoint, "https://enterprise.myserver.com")
     }
@@ -47,7 +34,7 @@ class OctokitSwiftTests: XCTestCase {
     }
 
     func testReadingAuthenticatedUserURLRequest() {
-        let kit = Octokit(Configuration(token: "12345"))
+        let kit = Octokit(TokenConfiguration(token: "12345"))
         let request = Router.ReadAuthenticatedUser(kit).URLRequest
         XCTAssertEqual(request.URL, NSURL(string: "https://api.github.com/user?access_token=12345")!)
     }
