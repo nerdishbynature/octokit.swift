@@ -142,8 +142,7 @@
 				F02AF8441A6597F3009076ED /* ConfigurationTests.swift */,
 				F0A998EB1A6711FE00A107A3 /* TestHelper.swift */,
 				F01C6F4D1A6429CC0072FA44 /* Supporting Files */,
-				F094BCA21A6500BA00DDFF5B /* user_mietzmithut.json */,
-				F094BCA41A65030B00DDFF5B /* user_me.json */,
+				F0A998ED1A67123400A107A3 /* Fixtures */,
 			);
 			path = OctokitSwiftTests;
 			sourceTree = "<group>";
@@ -154,6 +153,15 @@
 				F01C6F4E1A6429CC0072FA44 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F0A998ED1A67123400A107A3 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				F094BCA21A6500BA00DDFF5B /* user_mietzmithut.json */,
+				F094BCA41A65030B00DDFF5B /* user_me.json */,
+			);
+			name = Fixtures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
