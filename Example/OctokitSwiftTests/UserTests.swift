@@ -14,6 +14,8 @@ class UserTests: XCTestCase {
         LSNocilla.sharedInstance().stop()
     }
 
+    // MARK: URLRequest Tests
+
     func testReadingUserURLRequest() {
         let kit = Octokit()
         let request = UserRouter.ReadUser("mietzmithut", kit).URLRequest
@@ -25,6 +27,8 @@ class UserTests: XCTestCase {
         let request = UserRouter.ReadAuthenticatedUser(kit).URLRequest
         XCTAssertEqual(request.URL, NSURL(string: "https://api.github.com/user?access_token=12345")!)
     }
+
+    // MARK: Actual Request tests
 
     func testGettingUser() {
         let username = "mietzmithut"
