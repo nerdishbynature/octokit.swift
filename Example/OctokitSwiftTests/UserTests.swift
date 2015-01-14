@@ -58,4 +58,40 @@ class UserTests: XCTestCase {
             XCTFail("json shouldn't be nil")
         }
     }
+
+    // MARK: Model Tests
+
+    func testUserParsingFullUser() {
+        let subject = User(Helper.JSONFromFile("user_me"))
+        XCTAssertEqual(subject.login, "pietbrauer")
+        XCTAssertEqual(subject.id, 759730)
+        XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/759730?v=3")
+        XCTAssertEqual(subject.gravatarID, "")
+        XCTAssertEqual(subject.type, "User")
+        XCTAssertEqual(subject.name, "Piet Brauer")
+        XCTAssertEqual(subject.company, "XING AG")
+        XCTAssertEqual(subject.blog, "xing.to/PietBrauer")
+        XCTAssertEqual(subject.location, "Hamburg")
+        XCTAssertNil(subject.email)
+        XCTAssertEqual(subject.numberOfPublicRepos, 6)
+        XCTAssertEqual(subject.numberOfPublicGists, 10)
+        XCTAssertEqual(subject.numberOfPrivateRepos!, 4)
+    }
+
+    func testUserParsingMinimalUser() {
+        let subject = User(Helper.JSONFromFile("user_mietzmithut"))
+        XCTAssertEqual(subject.login, "mietzmithut")
+        XCTAssertEqual(subject.id, 4672699)
+        XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/4672699?v=3")
+        XCTAssertEqual(subject.gravatarID, "")
+        XCTAssertEqual(subject.type, "User")
+        XCTAssertEqual(subject.name, "Julia Kallenberg")
+        XCTAssertEqual(subject.company, "")
+        XCTAssertEqual(subject.blog, "")
+        XCTAssertEqual(subject.location, "Hamburg")
+        XCTAssertNil(subject.email)
+        XCTAssertEqual(subject.numberOfPublicRepos, 7)
+        XCTAssertEqual(subject.numberOfPublicGists, 0)
+        XCTAssertNil(subject.numberOfPrivateRepos)
+    }
 }
