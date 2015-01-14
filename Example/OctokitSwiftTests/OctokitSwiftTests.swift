@@ -41,7 +41,7 @@ class OctokitSwiftTests: XCTestCase {
 
     func testGettingUser() {
         let username = "mietzmithut"
-        if let json = jsonFromFile("user_mietzmithut") {
+        if let json = Helper.jsonFromFile("user_mietzmithut") {
             stubRequest("GET", "https://api.github.com/users/mietzmithut").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("\(username)")
             Octokit().user(username) { user in
@@ -57,7 +57,7 @@ class OctokitSwiftTests: XCTestCase {
     }
 
     func testGettingAuthenticatedUser() {
-        if let json = jsonFromFile("user_me") {
+        if let json = Helper.jsonFromFile("user_me") {
             stubRequest("GET", "https://api.github.com/user?access_token=token").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("me")
             Octokit().me() { user in
@@ -70,15 +70,5 @@ class OctokitSwiftTests: XCTestCase {
         } else {
             XCTFail("json shouldn't be nil")
         }
-    }
-
-    func jsonFromFile(name: String) -> String? {
-        let bundle = NSBundle(forClass: self.dynamicType)
-        let path = bundle.pathForResource(name, ofType: "json")
-        if let path = path {
-            let string = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)
-            return string
-        }
-        return nil
     }
 }
