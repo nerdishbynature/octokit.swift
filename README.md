@@ -28,8 +28,13 @@ let config = TokenConfiguration("https://github.example.com/api/v3/", token: "12
 After you got your token you can use it with `Octokit`
 
 ```swift
-Octokit(config).me { user in
-  println(user.login) // e.g. prints piet-brauer (if I would login)
+Octokit(config).me() { response in
+  switch response {
+  case .Success(let user):
+    println(user.login)
+  case .Failure(let error):
+    println(error)
+  }
 }
 ```
 
@@ -67,8 +72,13 @@ func application(application: UIApplication, openURL url: NSURL, sourceApplicati
 }
 
 func loadCurrentUser(config: TokenConfiguration) {
-  Octokit(config).me { user in
-    println(user.login)
+  Octokit(config).me() { response in
+    switch response {
+    case .Success(let user):
+      println(user.login)
+    case .Failure(let error):
+      println(error)
+    }
   }
 }
 ```
@@ -80,7 +90,40 @@ necessary to do the OAuth Flow again. You can just use a `TokenConfiguration`.
 ```swift
 let token = // get your token from your keychain, user defaults (not recommended) etc.
 let config = TokenConfiguration(token)
-Octokit(config).user("octocat") { user in
-  println(user.login) // octocat
+Octokit(config).user("octocat") { response in
+  switch response {
+  case .Success(let user):
+    println(user.login)
+  case .Failure(let error):
+    println(error)
+  }
 }
+```
+
+## Users
+
+### Get a single user
+
+```swift
+let username = ... // set the username
+Octokit().user(username) { response in
+  switch response {
+    case .Success(let user):
+      // do something with the user
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
+
+### Get the authenticated user
+
+```swift
+Octokit().me() { response in
+  switch response {
+    case .Success(let user):
+      // do something with the user
+    case .Failure(let error):
+      // handle any errors
+  }
 ```

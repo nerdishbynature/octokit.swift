@@ -30,14 +30,20 @@ class UserTests: XCTestCase {
 
     // MARK: Actual Request tests
 
-    func testGettingUser() {
+    func testGetUser() {
         let username = "mietzmithut"
         if let json = Helper.stringFromFile("user_mietzmithut") {
             stubRequest("GET", "https://api.github.com/users/mietzmithut").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("\(username)")
-            Octokit().user(username) { user in
-                XCTAssertEqual(user.login, username)
-                expectation.fulfill()
+            Octokit().user(username) { response in
+                switch response {
+                case .Success(let user):
+                    XCTAssertEqual(user.login, username)
+                    expectation.fulfill()
+                case .Failure(let error):
+                    XCTAssert(false, "should not get an user")
+                    expectation.fulfill()
+                }
             }
             waitForExpectationsWithTimeout(1) { (error) in
                 XCTAssertNil(error, "\(error)")
@@ -47,19 +53,63 @@ class UserTests: XCTestCase {
         }
     }
 
+    func testFailingToGetUser() {
+        let username = "notexisting"
+        stubRequest("GET", "https://api.github.com/users/notexisting").andReturn(404)
+        let expectation = expectationWithDescription("\(username)")
+        Octokit().user(username) { response in
+            switch response {
+            case .Success(let user):
+                XCTAssert(false, "should not retrieve user")
+                expectation.fulfill()
+            case .Failure(let error):
+                XCTAssertEqual(error.code, 404)
+                XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            }
+        }
+        waitForExpectationsWithTimeout(1) { (error) in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
+
     func testGettingAuthenticatedUser() {
         if let json = Helper.stringFromFile("user_me") {
             stubRequest("GET", "https://api.github.com/user?access_token=token").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("me")
-            Octokit().me() { user in
-                XCTAssertEqual(user.login, "pietbrauer")
-                expectation.fulfill()
+            Octokit().me() { response in
+                switch response {
+                case .Success(let user):
+                    XCTAssertEqual(user.login, "pietbrauer")
+                    expectation.fulfill()
+                case .Failure(let error):
+                    XCTAssert(false, "should not retrieve an error \(error)")
+                }
             }
             waitForExpectationsWithTimeout(10) { (error) in
                 XCTAssertNil(error, "\(error)")
             }
         } else {
             XCTFail("json shouldn't be nil")
+        }
+    }
+
+    func testFailToGetAuthenticatedUser() {
+        let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
+        stubRequest("GET", "https://api.github.com/user?access_token=token").andReturn(401).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        let expectation = expectationWithDescription("failing_me")
+        Octokit().me() { response in
+            switch response {
+            case .Success:
+                XCTAssert(false, "should not retrieve user")
+            case .Failure(let error):
+                XCTAssertEqual(error.code, 401)
+                XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            }
+        }
+        waitForExpectationsWithTimeout(10) { error in
+            XCTAssertNil(error, "\(error)")
         }
     }
 
