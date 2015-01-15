@@ -28,8 +28,13 @@ let config = TokenConfiguration("https://github.example.com/api/v3/", token: "12
 After you got your token you can use it with `Octokit`
 
 ```swift
-Octokit(config).me { user in
-  println(user.login) // e.g. prints piet-brauer (if I would login)
+Octokit(config).me { response in
+  switch response {
+  case .Success(let user):
+    println(user.login)
+  case .Failure(let error):
+    println(error)
+  }
 }
 ```
 
@@ -67,8 +72,13 @@ func application(application: UIApplication, openURL url: NSURL, sourceApplicati
 }
 
 func loadCurrentUser(config: TokenConfiguration) {
-  Octokit(config).me { user in
-    println(user.login)
+  Octokit(config).me { response in
+    switch response {
+    case .Success(let user):
+      println(user.login)
+    case .Failure(let error):
+      println(error)
+    }
   }
 }
 ```

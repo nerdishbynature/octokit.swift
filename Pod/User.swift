@@ -1,5 +1,6 @@
 import Octokit
 import Alamofire
+import Foundation
 
 // MARK: model
 
@@ -40,21 +41,30 @@ public struct User {
 
 // MARK: request
 
+public enum UserResponse {
+    case Success(User)
+    case Failure(NSError)
+}
+
 public extension Octokit {
-    public func user(name: String, completion: (user: User) -> Void) {
-        Alamofire.request(UserRouter.ReadUser(name, self)).validate().responseJSON { (_, _, JSON, err) in
-            if err == nil {
+    public func user(name: String, completion: (response: UserResponse) -> Void) {
+        Alamofire.request(UserRouter.ReadUser(name, self)).validate().responseJSON { (_, response, JSON, err) in
+            if let err = err{
+                completion(response: UserResponse.Failure(self.parseError(err, response: response)))
+            } else {
                 let parsedUser = User(JSON as [String: AnyObject])
-                completion(user: parsedUser)
+                completion(response: UserResponse.Success(parsedUser))
             }
         }
     }
 
-    public func me(completion: (user: User) -> Void) {
-        Alamofire.request(UserRouter.ReadAuthenticatedUser(self)).validate().responseJSON { (_, _, JSON, err) in
-            if err == nil {
+    public func me(completion: (response: UserResponse) -> Void) {
+        Alamofire.request(UserRouter.ReadAuthenticatedUser(self)).validate().responseJSON { (_, response, JSON, err) in
+            if let err = err {
+                completion(response: UserResponse.Failure(self.parseError(err, response: response)))
+            } else {
                 let parsedUser = User(JSON as [String: AnyObject])
-                completion(user: parsedUser)
+                completion(response: UserResponse.Success(parsedUser))
             }
         }
     }

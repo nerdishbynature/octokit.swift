@@ -28,8 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func loadCurrentUser(config: TokenConfiguration) {
-        Octokit(config).me { user in
-            println(user.login)
+        Octokit(config).me { response in
+            switch response {
+            case .Success(let user):
+                println(user.login)
+            case .Failure(let error):
+                println(error)
+            }
         }
     }
 
