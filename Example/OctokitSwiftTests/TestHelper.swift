@@ -11,12 +11,12 @@ internal class Helper {
         return nil
     }
 
-    internal class func JSONFromFile(name: String) -> [String: AnyObject] {
+    internal class func JSONFromFile(name: String) -> AnyObject {
         let bundle = NSBundle(forClass: self)
         let path = bundle.pathForResource(name, ofType: "json")!
         let data = NSData(contentsOfFile: path)!
-        let dict = NSJSONSerialization.JSONObjectWithData(data,
-        options: NSJSONReadingOptions.MutableContainers, error: nil) as [String: AnyObject]
-        return dict
+        let dict: AnyObject? = NSJSONSerialization.JSONObjectWithData(data,
+        options: NSJSONReadingOptions.MutableContainers, error: nil)
+        return dict!
     }
 }

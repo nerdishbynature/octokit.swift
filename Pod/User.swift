@@ -10,13 +10,13 @@ public struct User {
     public let avatarURL: String
     public let gravatarID: String
     public let type: String
-    public let name: String
-    public let company: String
-    public let blog: String
-    public let location: String
+    public let name: String?
+    public let company: String?
+    public let blog: String?
+    public let location: String?
     public let email: String?
-    public let numberOfPublicRepos: Int
-    public let numberOfPublicGists: Int
+    public let numberOfPublicRepos: Int?
+    public let numberOfPublicGists: Int?
     public let numberOfPrivateRepos: Int?
 
     public init(_ json: [String: AnyObject]) {
@@ -25,16 +25,16 @@ public struct User {
         avatarURL = json["avatar_url"] as String
         gravatarID = json["gravatar_id"] as String
         type = json["type"] as String
-        name = json["name"] as String
-        company = json["company"] as String
-        blog = json["blog"] as String
-        location = json["location"] as String
+        name = json["name"] as? String
+        company = json["company"] as? String
+        blog = json["blog"] as? String
+        location = json["location"] as? String
         email = json["email"] as? String
         if let email = email {
             self.email = (email.utf16Count == 0) ? nil:email
         }
-        numberOfPublicRepos = json["public_repos"] as Int
-        numberOfPublicGists = json["public_gists"] as Int
+        numberOfPublicRepos = json["public_repos"] as? Int
+        numberOfPublicGists = json["public_gists"] as? Int
         numberOfPrivateRepos = json["total_private_repos"] as? Int
     }
 }
