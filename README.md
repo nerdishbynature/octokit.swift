@@ -127,3 +127,32 @@ Octokit().me() { response in
       // handle any errors
   }
 ```
+
+## Repositories
+
+### Get a single repository
+
+```swift
+let (owner, name) = ("owner", "name") // replace with actual owner and name
+Octokit().repository(owner, name) { response in
+  switch response {
+    case .Success(let repoBox):
+      // do something with the repositoryBox (not another joke about unboxing)
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
+
+### Get repositories of authenticated user
+
+```swift
+Octokit().repositories() { response in
+  switch response {
+    case .Success(let repoBox):
+      // do something (submit a pull request if you feel there can be more unboxing jokes)
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
