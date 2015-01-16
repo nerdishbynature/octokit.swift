@@ -31,8 +31,8 @@ class RepositoryTests: XCTestCase {
             let expectation = expectationWithDescription("user_repos")
             Octokit(config).repositories() { response in
                 switch response {
-                case .Success(let repositories):
-                    XCTAssertEqual(repositories.count, 1)
+                case .Success(let box):
+                    XCTAssertEqual(box.unbox.count, 1)
                     expectation.fulfill()
                 case .Failure(let error):
                     XCTAssert(false, "should not get an error")

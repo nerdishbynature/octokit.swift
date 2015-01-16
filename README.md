@@ -30,8 +30,8 @@ After you got your token you can use it with `Octokit`
 ```swift
 Octokit(config).me() { response in
   switch response {
-  case .Success(let user):
-    println(user.login)
+  case .Success(let userBox):
+    println(userBox.unbox.login)
   case .Failure(let error):
     println(error)
   }
@@ -74,8 +74,8 @@ func application(application: UIApplication, openURL url: NSURL, sourceApplicati
 func loadCurrentUser(config: TokenConfiguration) {
   Octokit(config).me() { response in
     switch response {
-    case .Success(let user):
-      println(user.login)
+    case .Success(let userBox):
+      println(userBox.unbox.login)
     case .Failure(let error):
       println(error)
     }
@@ -92,8 +92,8 @@ let token = // get your token from your keychain, user defaults (not recommended
 let config = TokenConfiguration(token)
 Octokit(config).user("octocat") { response in
   switch response {
-  case .Success(let user):
-    println(user.login)
+  case .Success(let userBox):
+    println(userBox.unbox.login)
   case .Failure(let error):
     println(error)
   }
@@ -108,8 +108,8 @@ Octokit(config).user("octocat") { response in
 let username = ... // set the username
 Octokit().user(username) { response in
   switch response {
-    case .Success(let user):
-      // do something with the user
+    case .Success(let userBox):
+      // do something with the userBox (e.g. unbox ;) )
     case .Failure(let error):
       // handle any errors
   }
@@ -121,8 +121,8 @@ Octokit().user(username) { response in
 ```swift
 Octokit().me() { response in
   switch response {
-    case .Success(let user):
-      // do something with the user
+    case .Success(let userBox):
+      // do something with the userBox (again, unboxing is recommended)
     case .Failure(let error):
       // handle any errors
   }

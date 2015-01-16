@@ -16,22 +16,17 @@ public struct Repository {
 
 // MARK: request
 
-public enum RepositoryResponse {
-    case Success([Repository])
-    case Failure(NSError)
-}
-
 public extension Octokit {
-    public func repositories(completion: (response: RepositoryResponse) -> Void) {
+    public func repositories(completion: (response: Response<[Repository]>) -> Void) {
         Alamofire.request(RepositoryRouter.ReadRepositories(self)).validate().responseJSON { (_, response, JSON, err) in
             if let err = err{
-                completion(response: RepositoryResponse.Failure(self.parseError(err, response: response)))
+                completion(response: Response.Failure(self.parseError(err, response: response)))
             } else {
                 let jsonRepos = JSON as [[String: AnyObject]]
                 let repos = jsonRepos.map({ json -> Repository in
                     return Repository(json)
                 })
-                completion(response: RepositoryResponse.Success(repos))
+                completion(response: Response.Success(Box(repos)))
             }
         }
     }
