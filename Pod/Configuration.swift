@@ -3,15 +3,9 @@ import Alamofire
 let githubBaseURL = "https://api.github.com"
 let githubWebURL = "https://github.com"
 
-public enum Server {
-    case Github
-    case Enterprise
-}
-
 public protocol OctokitConfiguration {
     var apiEndpoint: String { get }
     var accessToken: String? { get }
-    var serverType: Server { get }
 }
 
 public struct TokenConfiguration: OctokitConfiguration {
@@ -21,12 +15,6 @@ public struct TokenConfiguration: OctokitConfiguration {
     public init(_ token: String? = nil, url: String = githubBaseURL) {
         apiEndpoint = url
         accessToken = token
-    }
-
-    public var serverType: Server {
-        get {
-            return apiEndpoint == githubBaseURL ? .Github : .Enterprise
-        }
     }
 }
 
@@ -45,12 +33,6 @@ public struct OAuthConfiguration: OctokitConfiguration {
         self.token = token
         self.secret = secret
         self.scopes = scopes
-    }
-
-    public var serverType: Server {
-        get {
-            return apiEndpoint == githubBaseURL ? .Github : .Enterprise
-        }
     }
 
     public func authenticate() {

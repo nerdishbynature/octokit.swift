@@ -17,21 +17,18 @@ class ConfigurationTests: XCTestCase {
 
     func testTokenConfiguration() {
         let subject = TokenConfiguration("12345")
-        XCTAssertEqual(subject.serverType, Server.Github)
         XCTAssertEqual(subject.accessToken!, "12345")
         XCTAssertEqual(subject.apiEndpoint, "https://api.github.com")
     }
 
     func testEnterpriseTokenConfiguration() {
         let subject = TokenConfiguration("12345", url: enterpriseURL)
-        XCTAssertEqual(subject.serverType, Server.Enterprise)
         XCTAssertEqual(subject.accessToken!, "12345")
         XCTAssertEqual(subject.apiEndpoint, enterpriseURL)
     }
 
     func testOAuthConfiguration() {
         let subject = OAuthConfiguration(token: "12345", secret: "6789", scopes: ["repo", "read:org"])
-        XCTAssertEqual(subject.serverType, Server.Github)
         XCTAssertEqual(subject.token, "12345")
         XCTAssertEqual(subject.secret, "6789")
         XCTAssertEqual(subject.apiEndpoint, "https://api.github.com")
@@ -39,7 +36,6 @@ class ConfigurationTests: XCTestCase {
 
     func testOAuthTokenConfiguration() {
         let subject = OAuthConfiguration(enterpriseURL, token: "12345", secret: "6789", scopes: ["repo", "read:org"])
-        XCTAssertEqual(subject.serverType, Server.Enterprise)
         XCTAssertEqual(subject.token, "12345")
         XCTAssertEqual(subject.secret, "6789")
         XCTAssertEqual(subject.apiEndpoint, enterpriseURL)
