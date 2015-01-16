@@ -73,12 +73,7 @@ public enum UserRouter: URLRequestConvertible {
     case ReadUser(String, Octokit)
 
     var method: Alamofire.Method {
-        switch self {
-        case .ReadAuthenticatedUser:
-            return .GET
-        case .ReadUser:
-            return .GET
-        }
+        return .GET
     }
 
     var path: String {
@@ -93,20 +88,9 @@ public enum UserRouter: URLRequestConvertible {
     public var URLRequest: NSURLRequest {
         switch self {
         case .ReadAuthenticatedUser(let kit):
-            let URL = NSURL(string: kit.configuration.apiEndpoint)!
-            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-            mutableURLRequest.HTTPMethod = method.rawValue
-            let encoding = Alamofire.ParameterEncoding.URL
-            var parameters: [String: AnyObject]?
-            if let accessToken = kit.configuration.accessToken {
-                parameters = ["access_token": accessToken]
-            }
-            return encoding.encode(mutableURLRequest, parameters: parameters).0
-        case .ReadUser(let username, let kit):
-            let URL = NSURL(string: kit.configuration.apiEndpoint)!
-            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-            mutableURLRequest.HTTPMethod = method.rawValue
-            return mutableURLRequest
+            return kit.request(path, method: method)
+        case .ReadUser(_, let kit):
+            return kit.request(path, method: method)
         }
     }
 }

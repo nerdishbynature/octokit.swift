@@ -28,4 +28,16 @@ public struct Octokit {
             return err
         }
     }
+
+    internal func request(path: String, method: Alamofire.Method) -> NSURLRequest {
+        let URL = NSURL(string: configuration.apiEndpoint)!
+        let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
+        mutableURLRequest.HTTPMethod = method.rawValue
+        let encoding = Alamofire.ParameterEncoding.URL
+        var parameters: [String: AnyObject]?
+        if let accessToken = configuration.accessToken {
+            parameters = ["access_token": accessToken]
+        }
+        return encoding.encode(mutableURLRequest, parameters: parameters).0
+    }
 }

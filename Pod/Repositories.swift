@@ -38,10 +38,7 @@ public enum RepositoryRouter: URLRequestConvertible {
     case ReadRepositories(Octokit)
 
     var method: Alamofire.Method {
-        switch self {
-        case .ReadRepositories:
-            return .GET
-        }
+        return .GET
     }
 
     var path: String {
@@ -54,15 +51,7 @@ public enum RepositoryRouter: URLRequestConvertible {
     public var URLRequest: NSURLRequest {
         switch self {
         case .ReadRepositories(let kit):
-            let URL = NSURL(string: kit.configuration.apiEndpoint)!
-            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-            mutableURLRequest.HTTPMethod = method.rawValue
-            let encoding = Alamofire.ParameterEncoding.URL
-            var parameters: [String: AnyObject]?
-            if let accessToken = kit.configuration.accessToken {
-                parameters = ["access_token": accessToken]
-            }
-            return encoding.encode(mutableURLRequest, parameters: parameters).0
+            return kit.request(path, method: method)
         }
     }
 }
