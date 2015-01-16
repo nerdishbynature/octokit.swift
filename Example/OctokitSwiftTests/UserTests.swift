@@ -23,7 +23,7 @@ class UserTests: XCTestCase {
     }
 
     func testReadingAuthenticatedUserURLRequest() {
-        let kit = Octokit(TokenConfiguration(token: "12345"))
+        let kit = Octokit(TokenConfiguration("12345"))
         let request = UserRouter.ReadAuthenticatedUser(kit).URLRequest
         XCTAssertEqual(request.URL, NSURL(string: "https://api.github.com/user?access_token=12345")!)
     }
@@ -77,7 +77,7 @@ class UserTests: XCTestCase {
         if let json = Helper.stringFromFile("user_me") {
             stubRequest("GET", "https://api.github.com/user?access_token=token").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("me")
-            Octokit().me() { response in
+            Octokit(TokenConfiguration("token")).me() { response in
                 switch response {
                 case .Success(let box):
                     XCTAssertEqual(box.unbox.login, "pietbrauer")
@@ -96,7 +96,7 @@ class UserTests: XCTestCase {
 
     func testFailToGetAuthenticatedUser() {
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
-        stubRequest("GET", "https://api.github.com/user?access_token=token").andReturn(401).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stubRequest("GET", "https://api.github.com/user").andReturn(401).withHeaders(["Content-Type": "application/json"]).withBody(json)
         let expectation = expectationWithDescription("failing_me")
         Octokit().me() { response in
             switch response {
@@ -108,7 +108,7 @@ class UserTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectationsWithTimeout(1) { error in
             XCTAssertNil(error, "\(error)")
         }
     }

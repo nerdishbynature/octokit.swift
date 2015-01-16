@@ -18,7 +18,7 @@ public struct TokenConfiguration: OctokitConfiguration {
     public var apiEndpoint: String
     public var accessToken: String?
 
-    public init(_ url: String = githubBaseURL, token: String) {
+    public init(_ token: String? = nil, url: String = githubBaseURL) {
         apiEndpoint = url
         accessToken = token
     }
@@ -65,7 +65,7 @@ public struct OAuthConfiguration: OctokitConfiguration {
                     if let string = string {
                         let accessToken = self.accessTokenFromResponse(string)
                         if let accessToken = accessToken {
-                            let config = TokenConfiguration(self.apiEndpoint, token: accessToken)
+                            let config = TokenConfiguration(accessToken, url: self.apiEndpoint)
                             completion(config: config)
                         }
                     }

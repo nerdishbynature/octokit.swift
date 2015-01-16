@@ -17,7 +17,7 @@ class RepositoryTests: XCTestCase {
     // MARK: URLRequest Tests
 
     func testReadingUserURLRequest() {
-        let kit = Octokit(TokenConfiguration(token: "12345"))
+        let kit = Octokit(TokenConfiguration("12345"))
         let request = RepositoryRouter.ReadRepositories(kit).URLRequest
         XCTAssertEqual(request.URL, NSURL(string: "https://api.github.com/user/repos?access_token=12345")!)
     }
@@ -25,7 +25,7 @@ class RepositoryTests: XCTestCase {
     // MARK: Actual Request tests
 
     func testGetRepositories() {
-        let config = TokenConfiguration(token: "12345")
+        let config = TokenConfiguration("12345")
         if let json = Helper.stringFromFile("user_repos") {
             stubRequest("GET", "https://api.github.com/user/repos?access_token=12345").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("user_repos")
@@ -48,7 +48,7 @@ class RepositoryTests: XCTestCase {
     }
 
     func testFailToGetAuthenticatedUser() {
-        let config = TokenConfiguration(token: "12345")
+        let config = TokenConfiguration("12345")
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
         stubRequest("GET", "https://api.github.com/user/repos?access_token=12345").andReturn(401).withHeaders(["Content-Type": "application/json"]).withBody(json)
         let expectation = expectationWithDescription("failing_repos")

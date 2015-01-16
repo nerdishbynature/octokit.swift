@@ -16,7 +16,7 @@ public enum Response<T> {
 public struct Octokit {
     public let configuration: TokenConfiguration
 
-    public init(_ config: TokenConfiguration = TokenConfiguration(token: "token")) {
+    public init(_ config: TokenConfiguration = TokenConfiguration()) {
         configuration = config
     }
 

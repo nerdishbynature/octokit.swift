@@ -16,14 +16,14 @@ class ConfigurationTests: XCTestCase {
     }
 
     func testTokenConfiguration() {
-        let subject = TokenConfiguration(token: "12345")
+        let subject = TokenConfiguration("12345")
         XCTAssertEqual(subject.serverType, Server.Github)
         XCTAssertEqual(subject.accessToken!, "12345")
         XCTAssertEqual(subject.apiEndpoint, "https://api.github.com")
     }
 
     func testEnterpriseTokenConfiguration() {
-        let subject = TokenConfiguration(enterpriseURL, token: "12345")
+        let subject = TokenConfiguration("12345", url: enterpriseURL)
         XCTAssertEqual(subject.serverType, Server.Enterprise)
         XCTAssertEqual(subject.accessToken!, "12345")
         XCTAssertEqual(subject.apiEndpoint, enterpriseURL)
