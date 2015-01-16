@@ -23,7 +23,7 @@ class UserTests: XCTestCase {
     }
 
     func testReadingAuthenticatedUserURLRequest() {
-        let kit = Octokit(TokenConfiguration(token: "12345"))
+        let kit = Octokit(TokenConfiguration("12345"))
         let request = UserRouter.ReadAuthenticatedUser(kit).URLRequest
         XCTAssertEqual(request.URL, NSURL(string: "https://api.github.com/user?access_token=12345")!)
     }
@@ -37,8 +37,8 @@ class UserTests: XCTestCase {
             let expectation = expectationWithDescription("\(username)")
             Octokit().user(username) { response in
                 switch response {
-                case .Success(let user):
-                    XCTAssertEqual(user.login, username)
+                case .Success(let box):
+                    XCTAssertEqual(box.unbox.login, username)
                     expectation.fulfill()
                 case .Failure(let error):
                     XCTAssert(false, "should not get an user")
@@ -77,10 +77,10 @@ class UserTests: XCTestCase {
         if let json = Helper.stringFromFile("user_me") {
             stubRequest("GET", "https://api.github.com/user?access_token=token").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("me")
-            Octokit().me() { response in
+            Octokit(TokenConfiguration("token")).me() { response in
                 switch response {
-                case .Success(let user):
-                    XCTAssertEqual(user.login, "pietbrauer")
+                case .Success(let box):
+                    XCTAssertEqual(box.unbox.login, "pietbrauer")
                     expectation.fulfill()
                 case .Failure(let error):
                     XCTAssert(false, "should not retrieve an error \(error)")
@@ -96,7 +96,7 @@ class UserTests: XCTestCase {
 
     func testFailToGetAuthenticatedUser() {
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
-        stubRequest("GET", "https://api.github.com/user?access_token=token").andReturn(401).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stubRequest("GET", "https://api.github.com/user").andReturn(401).withHeaders(["Content-Type": "application/json"]).withBody(json)
         let expectation = expectationWithDescription("failing_me")
         Octokit().me() { response in
             switch response {
@@ -108,7 +108,7 @@ class UserTests: XCTestCase {
                 expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(10) { error in
+        waitForExpectationsWithTimeout(1) { error in
             XCTAssertNil(error, "\(error)")
         }
     }
@@ -116,36 +116,36 @@ class UserTests: XCTestCase {
     // MARK: Model Tests
 
     func testUserParsingFullUser() {
-        let subject = User(Helper.JSONFromFile("user_me"))
+        let subject = User(Helper.JSONFromFile("user_me") as [String: AnyObject])
         XCTAssertEqual(subject.login, "pietbrauer")
         XCTAssertEqual(subject.id, 759730)
         XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/759730?v=3")
         XCTAssertEqual(subject.gravatarID, "")
         XCTAssertEqual(subject.type, "User")
-        XCTAssertEqual(subject.name, "Piet Brauer")
-        XCTAssertEqual(subject.company, "XING AG")
-        XCTAssertEqual(subject.blog, "xing.to/PietBrauer")
-        XCTAssertEqual(subject.location, "Hamburg")
+        XCTAssertEqual(subject.name!, "Piet Brauer")
+        XCTAssertEqual(subject.company!, "XING AG")
+        XCTAssertEqual(subject.blog!, "xing.to/PietBrauer")
+        XCTAssertEqual(subject.location!, "Hamburg")
         XCTAssertNil(subject.email)
-        XCTAssertEqual(subject.numberOfPublicRepos, 6)
-        XCTAssertEqual(subject.numberOfPublicGists, 10)
+        XCTAssertEqual(subject.numberOfPublicRepos!, 6)
+        XCTAssertEqual(subject.numberOfPublicGists!, 10)
         XCTAssertEqual(subject.numberOfPrivateRepos!, 4)
     }
 
     func testUserParsingMinimalUser() {
-        let subject = User(Helper.JSONFromFile("user_mietzmithut"))
+        let subject = User(Helper.JSONFromFile("user_mietzmithut") as [String: AnyObject])
         XCTAssertEqual(subject.login, "mietzmithut")
         XCTAssertEqual(subject.id, 4672699)
         XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/4672699?v=3")
         XCTAssertEqual(subject.gravatarID, "")
         XCTAssertEqual(subject.type, "User")
-        XCTAssertEqual(subject.name, "Julia Kallenberg")
-        XCTAssertEqual(subject.company, "")
-        XCTAssertEqual(subject.blog, "")
-        XCTAssertEqual(subject.location, "Hamburg")
+        XCTAssertEqual(subject.name!, "Julia Kallenberg")
+        XCTAssertEqual(subject.company!, "")
+        XCTAssertEqual(subject.blog!, "")
+        XCTAssertEqual(subject.location!, "Hamburg")
         XCTAssertNil(subject.email)
-        XCTAssertEqual(subject.numberOfPublicRepos, 7)
-        XCTAssertEqual(subject.numberOfPublicGists, 0)
+        XCTAssertEqual(subject.numberOfPublicRepos!, 7)
+        XCTAssertEqual(subject.numberOfPublicGists!, 0)
         XCTAssertNil(subject.numberOfPrivateRepos)
     }
 }

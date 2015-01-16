@@ -10,13 +10,13 @@ public struct User {
     public let avatarURL: String
     public let gravatarID: String
     public let type: String
-    public let name: String
-    public let company: String
-    public let blog: String
-    public let location: String
+    public let name: String?
+    public let company: String?
+    public let blog: String?
+    public let location: String?
     public let email: String?
-    public let numberOfPublicRepos: Int
-    public let numberOfPublicGists: Int
+    public let numberOfPublicRepos: Int?
+    public let numberOfPublicGists: Int?
     public let numberOfPrivateRepos: Int?
 
     public init(_ json: [String: AnyObject]) {
@@ -25,46 +25,42 @@ public struct User {
         avatarURL = json["avatar_url"] as String
         gravatarID = json["gravatar_id"] as String
         type = json["type"] as String
-        name = json["name"] as String
-        company = json["company"] as String
-        blog = json["blog"] as String
-        location = json["location"] as String
+        name = json["name"] as? String
+        company = json["company"] as? String
+        blog = json["blog"] as? String
+        location = json["location"] as? String
         email = json["email"] as? String
         if let email = email {
             self.email = (email.utf16Count == 0) ? nil:email
         }
-        numberOfPublicRepos = json["public_repos"] as Int
-        numberOfPublicGists = json["public_gists"] as Int
+        numberOfPublicRepos = json["public_repos"] as? Int
+        numberOfPublicGists = json["public_gists"] as? Int
         numberOfPrivateRepos = json["total_private_repos"] as? Int
     }
 }
 
 // MARK: request
 
-public enum UserResponse {
-    case Success(User)
-    case Failure(NSError)
-}
-
 public extension Octokit {
-    public func user(name: String, completion: (response: UserResponse) -> Void) {
+    public func user(name: String, completion: (response: Response<User>) -> Void) {
         Alamofire.request(UserRouter.ReadUser(name, self)).validate().responseJSON { (_, response, JSON, err) in
             if let err = err{
-                completion(response: UserResponse.Failure(self.parseError(err, response: response)))
+                completion(response: Response.Failure(self.parseError(err, response: response)))
             } else {
                 let parsedUser = User(JSON as [String: AnyObject])
-                completion(response: UserResponse.Success(parsedUser))
+                completion(response: Response.Success(Box(parsedUser)))
             }
         }
     }
 
-    public func me(completion: (response: UserResponse) -> Void) {
-        Alamofire.request(UserRouter.ReadAuthenticatedUser(self)).validate().responseJSON { (_, response, JSON, err) in
+    public func me(completion: (response: Response<User>) -> Void) {
+        Alamofire.request(UserRouter.ReadAuthenticatedUser(self)).validate()
+            .responseJSON { (_, response, JSON, err) in
             if let err = err {
-                completion(response: UserResponse.Failure(self.parseError(err, response: response)))
+                completion(response: Response.Failure(self.parseError(err, response: response)))
             } else {
                 let parsedUser = User(JSON as [String: AnyObject])
-                completion(response: UserResponse.Success(parsedUser))
+                completion(response: Response.Success(Box(parsedUser)))
             }
         }
     }
@@ -77,12 +73,7 @@ public enum UserRouter: URLRequestConvertible {
     case ReadUser(String, Octokit)
 
     var method: Alamofire.Method {
-        switch self {
-        case .ReadAuthenticatedUser:
-            return .GET
-        case .ReadUser:
-            return .GET
-        }
+        return .GET
     }
 
     var path: String {
@@ -97,20 +88,9 @@ public enum UserRouter: URLRequestConvertible {
     public var URLRequest: NSURLRequest {
         switch self {
         case .ReadAuthenticatedUser(let kit):
-            let URL = NSURL(string: kit.configuration.apiEndpoint)!
-            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-            mutableURLRequest.HTTPMethod = method.rawValue
-            let encoding = Alamofire.ParameterEncoding.URL
-            var parameters: [String: AnyObject]?
-            if let accessToken = kit.configuration.accessToken {
-                parameters = ["access_token": accessToken]
-            }
-            return encoding.encode(mutableURLRequest, parameters: parameters).0
-        case .ReadUser(let username, let kit):
-            let URL = NSURL(string: kit.configuration.apiEndpoint)!
-            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-            mutableURLRequest.HTTPMethod = method.rawValue
-            return mutableURLRequest
+            return kit.request(path, method: method)
+        case .ReadUser(_, let kit):
+            return kit.request(path, method: method)
         }
     }
 }
