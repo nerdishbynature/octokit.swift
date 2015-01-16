@@ -20,6 +20,7 @@
 		F094BCA51A65030B00DDFF5B /* user_me.json in Resources */ = {isa = PBXBuildFile; fileRef = F094BCA41A65030B00DDFF5B /* user_me.json */; };
 		F0A998EC1A6711FE00A107A3 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A998EB1A6711FE00A107A3 /* TestHelper.swift */; };
 		F0A998EF1A67131F00A107A3 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0A998EE1A67131F00A107A3 /* UserTests.swift */; };
+		F0D3D42E1A69B20500147F33 /* repo.json in Resources */ = {isa = PBXBuildFile; fileRef = F0D3D42D1A69B20500147F33 /* repo.json */; };
 		F0D54B971A68765F0055D3AC /* RepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D54B961A68765F0055D3AC /* RepositoryTests.swift */; };
 		F0D54B9B1A687A1A0055D3AC /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = F0D54B9A1A687A1A0055D3AC /* user_repos.json */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 		F094BCA41A65030B00DDFF5B /* user_me.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_me.json; path = Fixtures/user_me.json; sourceTree = "<group>"; };
 		F0A998EB1A6711FE00A107A3 /* TestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelper.swift; sourceTree = "<group>"; };
 		F0A998EE1A67131F00A107A3 /* UserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTests.swift; sourceTree = "<group>"; };
+		F0D3D42D1A69B20500147F33 /* repo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = repo.json; path = Fixtures/repo.json; sourceTree = "<group>"; };
 		F0D54B961A68765F0055D3AC /* RepositoryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RepositoryTests.swift; sourceTree = "<group>"; };
 		F0D54B9A1A687A1A0055D3AC /* user_repos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_repos.json; path = Fixtures/user_repos.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,6 +171,7 @@
 				F0D54B9A1A687A1A0055D3AC /* user_repos.json */,
 				F094BCA21A6500BA00DDFF5B /* user_mietzmithut.json */,
 				F094BCA41A65030B00DDFF5B /* user_me.json */,
+				F0D3D42D1A69B20500147F33 /* repo.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				F094BCA51A65030B00DDFF5B /* user_me.json in Resources */,
 				F094BCA31A6500BA00DDFF5B /* user_mietzmithut.json in Resources */,
 				F0D54B9B1A687A1A0055D3AC /* user_repos.json in Resources */,
+				F0D3D42E1A69B20500147F33 /* repo.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
