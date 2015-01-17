@@ -3,11 +3,10 @@ use_frameworks!
 workspace "../OctokitSwift.xcworkspace"
 
 target "OctokitSwift", exclusive: true do
-  pod "OctoKit.swift", path: "../Octokit.podspec"
-  pod "Alamofire", git: "https://github.com/Alamofire/Alamofire.git", tag: "1.1.3"
+  pod "OctoKit.swift", path: "../OctoKit.swift.podspec"
 end
 
 target "OctokitSwiftTests", exclusive: true do
-  pod "OctoKit.swift", path: "../Octokit.podspec"
+  pod "OctoKit.swift", path: "../OctoKit.swift.podspec"
   pod 'Nocilla'
 end
