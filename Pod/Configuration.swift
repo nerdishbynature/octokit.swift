@@ -37,12 +37,13 @@ public struct OAuthConfiguration: OctokitConfiguration {
 
     public func authenticate() {
         let url = OAuthRouter.Authorize(self).URLRequest.URL
-        UIApplication.sharedApplication().openURL(url)
+        UIApplication.sharedApplication().openURL(url!)
     }
 
     public func authorize(code: String, completion: (config: TokenConfiguration) -> Void) {
-        Alamofire.request(OAuthRouter.AccessToken(self, code)).validate()
-            .responseString({ (_, response, string, error) in
+
+        Alamofire.request(OAuthRouter.AccessToken(self, code)).validate().responseString(encoding: NSUTF8StringEncoding, completionHandler:
+            { (_, response, string, error) in
                 if error == nil {
                     if let string = string {
                         let accessToken = self.accessTokenFromResponse(string)

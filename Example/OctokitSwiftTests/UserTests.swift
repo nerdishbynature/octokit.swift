@@ -19,13 +19,13 @@ class UserTests: XCTestCase {
     func testReadingUserURLRequest() {
         let kit = Octokit()
         let request = UserRouter.ReadUser("mietzmithut", kit).URLRequest
-        XCTAssertEqual(request.URL, NSURL(string: "https://api.github.com/users/mietzmithut")!)
+        XCTAssertEqual(request.URL!, NSURL(string: "https://api.github.com/users/mietzmithut")!)
     }
 
     func testReadingAuthenticatedUserURLRequest() {
         let kit = Octokit(TokenConfiguration("12345"))
         let request = UserRouter.ReadAuthenticatedUser(kit).URLRequest
-        XCTAssertEqual(request.URL, NSURL(string: "https://api.github.com/user?access_token=12345")!)
+        XCTAssertEqual(request.URL!, NSURL(string: "https://api.github.com/user?access_token=12345")!)
     }
 
     // MARK: Actual Request tests
@@ -116,7 +116,7 @@ class UserTests: XCTestCase {
     // MARK: Model Tests
 
     func testUserParsingFullUser() {
-        let subject = User(Helper.JSONFromFile("user_me") as [String: AnyObject])
+        let subject = User(Helper.JSONFromFile("user_me") as! [String: AnyObject])
         XCTAssertEqual(subject.login, "pietbrauer")
         XCTAssertEqual(subject.id, 759730)
         XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/759730?v=3")
@@ -133,7 +133,7 @@ class UserTests: XCTestCase {
     }
 
     func testUserParsingMinimalUser() {
-        let subject = User(Helper.JSONFromFile("user_mietzmithut") as [String: AnyObject])
+        let subject = User(Helper.JSONFromFile("user_mietzmithut") as! [String: AnyObject])
         XCTAssertEqual(subject.login, "mietzmithut")
         XCTAssertEqual(subject.id, 4672699)
         XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/4672699?v=3")
@@ -143,7 +143,7 @@ class UserTests: XCTestCase {
         XCTAssertEqual(subject.company!, "")
         XCTAssertEqual(subject.blog!, "")
         XCTAssertEqual(subject.location!, "Hamburg")
-        XCTAssertNil(subject.email)
+        XCTAssertEqual(subject.email!, "")
         XCTAssertEqual(subject.numberOfPublicRepos!, 7)
         XCTAssertEqual(subject.numberOfPublicGists!, 0)
         XCTAssertNil(subject.numberOfPrivateRepos)

@@ -20,19 +20,16 @@ public struct User {
     public let numberOfPrivateRepos: Int?
 
     public init(_ json: [String: AnyObject]) {
-        login = json["login"] as String
-        id = json["id"] as Int
-        avatarURL = json["avatar_url"] as String
-        gravatarID = json["gravatar_id"] as String
-        type = json["type"] as String
+        login = json["login"] as! String
+        id = json["id"] as! Int
+        avatarURL = json["avatar_url"] as! String
+        gravatarID = json["gravatar_id"] as! String
+        type = json["type"] as! String
         name = json["name"] as? String
         company = json["company"] as? String
         blog = json["blog"] as? String
         location = json["location"] as? String
         email = json["email"] as? String
-        if let email = email {
-            self.email = (email.utf16Count == 0) ? nil:email
-        }
         numberOfPublicRepos = json["public_repos"] as? Int
         numberOfPublicGists = json["public_gists"] as? Int
         numberOfPrivateRepos = json["total_private_repos"] as? Int
@@ -47,7 +44,7 @@ public extension Octokit {
             if let err = err{
                 completion(response: Response.Failure(self.parseError(err, response: response)))
             } else {
-                let parsedUser = User(JSON as [String: AnyObject])
+                let parsedUser = User(JSON as! [String: AnyObject])
                 completion(response: Response.Success(Box(parsedUser)))
             }
         }
@@ -59,7 +56,7 @@ public extension Octokit {
             if let err = err {
                 completion(response: Response.Failure(self.parseError(err, response: response)))
             } else {
-                let parsedUser = User(JSON as [String: AnyObject])
+                let parsedUser = User(JSON as! [String: AnyObject])
                 completion(response: Response.Success(Box(parsedUser)))
             }
         }
