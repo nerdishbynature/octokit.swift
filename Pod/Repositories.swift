@@ -17,16 +17,16 @@ public struct Repository {
     public let cloneURL: String
 
     public init(_ json: [String: AnyObject]) {
-        owner = User(json["owner"] as [String: AnyObject])
-        name = json["name"] as String
-        fullName = json["full_name"] as String
-        id = json["id"] as Int
-        isPrivate = json["private"] as Bool
-        description = json["description"] as String
-        isFork = json["fork"] as Bool
-        gitURL = json["git_url"] as String
-        sshURL = json["ssh_url"] as String
-        cloneURL = json["clone_url"] as String
+        owner = User(json["owner"] as! [String: AnyObject])
+        name = json["name"] as! String
+        fullName = json["full_name"] as! String
+        id = json["id"] as! Int
+        isPrivate = json["private"] as! Bool
+        description = json["description"] as! String
+        isFork = json["fork"] as! Bool
+        gitURL = json["git_url"] as! String
+        sshURL = json["ssh_url"] as! String
+        cloneURL = json["clone_url"] as! String
     }
 }
 
@@ -38,7 +38,7 @@ public extension Octokit {
             if let err = err{
                 completion(response: Response.Failure(self.parseError(err, response: response)))
             } else {
-                let jsonRepos = JSON as [[String: AnyObject]]
+                let jsonRepos = JSON as! [[String: AnyObject]]
                 let repos = jsonRepos.map { Repository($0) }
                 completion(response: Response.Success(Box(repos)))
             }
@@ -51,7 +51,7 @@ public extension Octokit {
                 if let err = err{
                     completion(response: Response.Failure(self.parseError(err, response: response)))
                 } else {
-                    completion(response: Response.Success(Box(Repository(JSON as [String: AnyObject]))))
+                    completion(response: Response.Success(Box(Repository(JSON as! [String: AnyObject]))))
                 }
         }
     }

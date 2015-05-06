@@ -45,7 +45,7 @@ class ConfigurationTests: XCTestCase {
         let config = OAuthConfiguration(token: "12345", secret: "6789", scopes: ["repo", "read:org"])
         let request = OAuthRouter.Authorize(config).URLRequest
         let expected = NSURL(string: "https://github.com/login/oauth/authorize?client_id=12345&scope=repo%2Cread%3Aorg")!
-        XCTAssertEqual(request.URL, expected)
+        XCTAssertEqual(request.URL!, expected)
     }
 
     func testAccessTokenURLRequest() {
@@ -53,7 +53,7 @@ class ConfigurationTests: XCTestCase {
         let request = OAuthRouter.AccessToken(config, "dhfjgh23493").URLRequest
         let expected = NSURL(string: "https://github.com/login/oauth/access_token")!
         let expectedBody = "client_id=12345&client_secret=6789&code=dhfjgh23493"
-        XCTAssertEqual(request.URL, expected)
+        XCTAssertEqual(request.URL!, expected)
         let string = NSString(data: request.HTTPBody!, encoding: NSUTF8StringEncoding)!
         XCTAssertEqual(string as String, expectedBody)
     }
