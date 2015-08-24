@@ -19,13 +19,13 @@ class UserTests: XCTestCase {
     func testReadingUserURLRequest() {
         let kit = Octokit()
         let request = UserRouter.ReadUser("mietzmithut", kit).URLRequest
-        XCTAssertEqual(request.URL!, NSURL(string: "https://api.github.com/users/mietzmithut")!)
+        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/mietzmithut")!)
     }
 
     func testReadingAuthenticatedUserURLRequest() {
         let kit = Octokit(TokenConfiguration("12345"))
         let request = UserRouter.ReadAuthenticatedUser(kit).URLRequest
-        XCTAssertEqual(request.URL!, NSURL(string: "https://api.github.com/user?access_token=12345")!)
+        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user?access_token=12345")!)
     }
 
     // MARK: Actual Request tests

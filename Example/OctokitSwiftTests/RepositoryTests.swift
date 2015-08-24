@@ -19,12 +19,12 @@ class RepositoryTests: XCTestCase {
     func testReadRepositoriesURLRequest() {
         let kit = Octokit(TokenConfiguration("12345"))
         let request = RepositoryRouter.ReadRepositories(kit).URLRequest
-        XCTAssertEqual(request.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345")!)
+        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345")!)
     }
 
     func testReadRepositoryURLRequest() {
         let request = RepositoryRouter.ReadRepository(Octokit(), "mietzmithut", "Test").URLRequest
-        XCTAssertEqual(request.URL!, NSURL(string: "https://api.github.com/repos/mietzmithut/Test")!)
+        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/repos/mietzmithut/Test")!)
     }
 
     // MARK: Actual Request tests
