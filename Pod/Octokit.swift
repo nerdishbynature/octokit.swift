@@ -85,8 +85,8 @@ public struct Octokit {
         return join("&", components.map{"\($0)=\($1)"})
     }
 
-    internal func loadJSON<T>(request: NSURLRequest?, expectedResultType: T.Type, completion: (json: T?, error: NSError?) -> Void) {
-        if let request = request {
+    internal func loadJSON<T>(router: Router, expectedResultType: T.Type, completion: (json: T?, error: NSError?) -> Void) {
+        if let request = router.URLRequest {
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, err in
                 if let response = response as? NSHTTPURLResponse {
                     if response.statusCode != 200 {

@@ -1,4 +1,3 @@
-import Octokit
 import Foundation
 
 // MARK: model
@@ -33,8 +32,7 @@ public struct Repository {
 
 public extension Octokit {
     public func repositories(completion: (response: Response<[Repository]>) -> Void) {
-        let request = RepositoryRouter.ReadRepositories(self)
-        loadJSON(request.URLRequest, expectedResultType: [[String: AnyObject]].self) { json, error in
+        loadJSON(RepositoryRouter.ReadRepositories(self), expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             }
@@ -47,8 +45,7 @@ public extension Octokit {
     }
 
     public func repository(owner: String, name: String, completion: (response: Response<Repository>) -> Void) {
-        let request = RepositoryRouter.ReadRepository(self, owner, name)
-        loadJSON(request.URLRequest, expectedResultType: [String: AnyObject].self) { json, error in
+        loadJSON(RepositoryRouter.ReadRepository(self, owner, name), expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {

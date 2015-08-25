@@ -38,8 +38,7 @@ public struct User {
 
 public extension Octokit {
     public func user(name: String, completion: (response: Response<User>) -> Void) {
-        let request = UserRouter.ReadUser(name, self).URLRequest
-        loadJSON(request, expectedResultType: [String: AnyObject].self) { json, error in
+        loadJSON(UserRouter.ReadUser(name, self), expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -52,8 +51,7 @@ public extension Octokit {
     }
 
     public func me(completion: (response: Response<User>) -> Void) {
-        let request = UserRouter.ReadAuthenticatedUser(self).URLRequest
-        loadJSON(request, expectedResultType: [String: AnyObject].self) { json, error in
+        loadJSON(UserRouter.ReadAuthenticatedUser(self), expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
