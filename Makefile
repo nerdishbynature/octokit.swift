@@ -1,6 +1,7 @@
 install:
 	bundle check || bundle install	
 	bundle exec pod install --project-directory=Example
+	brew install carthage
 
 test:
 	make install
