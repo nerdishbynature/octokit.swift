@@ -63,7 +63,7 @@ public extension Octokit {
 
 // MARK: Router
 
-public enum RepositoryRouter {
+public enum RepositoryRouter: Router {
     case ReadRepositories(Octokit)
     case ReadRepository(Octokit, String, String)
 

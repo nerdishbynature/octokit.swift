@@ -1,4 +1,3 @@
-import Octokit
 import Foundation
 
 // MARK: model
@@ -69,7 +68,7 @@ public extension Octokit {
 
 // MAKR: Router
 
-public enum UserRouter {
+public enum UserRouter: Router {
     case ReadAuthenticatedUser(Octokit)
     case ReadUser(String, Octokit)
 

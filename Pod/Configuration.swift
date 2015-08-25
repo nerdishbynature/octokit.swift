@@ -78,7 +78,7 @@ public struct OAuthConfiguration: OctokitConfiguration {
     }
 }
 
-public enum OAuthRouter {
+public enum OAuthRouter: Router {
     case Authorize(OAuthConfiguration)
     case AccessToken(OAuthConfiguration, String)
 

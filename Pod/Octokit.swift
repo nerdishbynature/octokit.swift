@@ -109,3 +109,9 @@ public struct Octokit {
         }
     }
 }
+
+protocol Router {
+    var method: HTTPMethod { get }
+    var path: String { get }
+    var URLRequest: NSURLRequest? { get }
+}
