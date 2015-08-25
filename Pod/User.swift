@@ -1,5 +1,3 @@
-import Octokit
-import Alamofire
 import Foundation
 
 // MARK: model
@@ -40,24 +38,27 @@ public struct User {
 
 public extension Octokit {
     public func user(name: String, completion: (response: Response<User>) -> Void) {
-        Alamofire.request(UserRouter.ReadUser(name, self)).validate().responseJSON { (_, response, JSON, err) in
-            if let err = err{
-                completion(response: Response.Failure(self.parseError(err, response: response)))
+        loadJSON(UserRouter.ReadUser(name, self), expectedResultType: [String: AnyObject].self) { json, error in
+            if let error = error {
+                completion(response: Response.Failure(error))
             } else {
-                let parsedUser = User(JSON as! [String: AnyObject])
-                completion(response: Response.Success(Box(parsedUser)))
+                if let json = json {
+                    let parsedUser = User(json)
+                    completion(response: Response.Success(Box(parsedUser)))
+                }
             }
         }
     }
 
     public func me(completion: (response: Response<User>) -> Void) {
-        Alamofire.request(UserRouter.ReadAuthenticatedUser(self)).validate()
-            .responseJSON { (_, response, JSON, err) in
-            if let err = err {
-                completion(response: Response.Failure(self.parseError(err, response: response)))
+        loadJSON(UserRouter.ReadAuthenticatedUser(self), expectedResultType: [String: AnyObject].self) { json, error in
+            if let error = error {
+                completion(response: Response.Failure(error))
             } else {
-                let parsedUser = User(JSON as! [String: AnyObject])
-                completion(response: Response.Success(Box(parsedUser)))
+                if let json = json {
+                    let parsedUser = User(json)
+                    completion(response: Response.Success(Box(parsedUser)))
+                }
             }
         }
     }
@@ -65,11 +66,11 @@ public extension Octokit {
 
 // MAKR: Router
 
-public enum UserRouter: URLRequestConvertible {
+public enum UserRouter: Router {
     case ReadAuthenticatedUser(Octokit)
     case ReadUser(String, Octokit)
 
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         return .GET
     }
 
@@ -82,7 +83,7 @@ public enum UserRouter: URLRequestConvertible {
         }
     }
 
-    public var URLRequest: NSURLRequest {
+    public var URLRequest: NSURLRequest? {
         switch self {
         case .ReadAuthenticatedUser(let kit):
             return kit.request(path, method: method)

@@ -1,5 +1,3 @@
-import Alamofire
-
 let githubBaseURL = "https://api.github.com"
 let githubWebURL = "https://github.com"
 
@@ -28,34 +26,39 @@ public struct OAuthConfiguration: OctokitConfiguration {
 
     public init(_ url: String = githubBaseURL, webURL: String = githubWebURL,
         token: String, secret: String, scopes: [String]) {
-        apiEndpoint = url
-        webEndpoint = webURL
-        self.token = token
-        self.secret = secret
-        self.scopes = scopes
+            apiEndpoint = url
+            webEndpoint = webURL
+            self.token = token
+            self.secret = secret
+            self.scopes = scopes
     }
 
     public func authenticate() {
-        let url = OAuthRouter.Authorize(self).URLRequest.URL
-        UIApplication.sharedApplication().openURL(url!)
+        if let urlRequest = OAuthRouter.Authorize(self).URLRequest, url = urlRequest.URL {
+            UIApplication.sharedApplication().openURL(url)
+        }
     }
 
     public func authorize(code: String, completion: (config: TokenConfiguration) -> Void) {
-
-        Alamofire.request(OAuthRouter.AccessToken(self, code)).validate().responseString(encoding: NSUTF8StringEncoding, completionHandler:
-            { (_, response, string, error) in
-                if error == nil {
-                    if let string = string {
-                        let accessToken = self.accessTokenFromResponse(string)
-                        if let accessToken = accessToken {
-                            let config = TokenConfiguration(accessToken, url: self.apiEndpoint)
-                            completion(config: config)
+        let request = OAuthRouter.AccessToken(self, code).URLRequest
+        if let request = request {
+            let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, err in
+                if let response = response as? NSHTTPURLResponse {
+                    if response.statusCode != 200 {
+                        return
+                    } else {
+                        if let string = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
+                            let accessToken = self.accessTokenFromResponse(string)
+                            if let accessToken = accessToken {
+                                let config = TokenConfiguration(accessToken, url: self.apiEndpoint)
+                                completion(config: config)
+                            }
                         }
                     }
-                } else {
-                    println(error)
                 }
-            })
+            }
+            task.resume()
+        }
     }
 
     public func handleOpenURL(url: NSURL, completion: (config: TokenConfiguration) -> Void) {
@@ -75,11 +78,11 @@ public struct OAuthConfiguration: OctokitConfiguration {
     }
 }
 
-public enum OAuthRouter: URLRequestConvertible {
+public enum OAuthRouter: Router {
     case Authorize(OAuthConfiguration)
     case AccessToken(OAuthConfiguration, String)
 
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         switch self {
         case .Authorize:
             return .GET
@@ -97,7 +100,7 @@ public enum OAuthRouter: URLRequestConvertible {
         }
     }
 
-    var params: [String: AnyObject] {
+    var params: [String: String] {
         switch self {
         case .Authorize(let config):
             let scope = (config.scopes as NSArray).componentsJoinedByString(",")
@@ -107,22 +110,14 @@ public enum OAuthRouter: URLRequestConvertible {
         }
     }
 
-    var mutableURLRequest: NSMutableURLRequest {
+    public var URLRequest: NSURLRequest? {
         switch self {
         case .Authorize(let config):
-            let URL = NSURL(string: config.webEndpoint)!
-            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-            mutableURLRequest.HTTPMethod = method.rawValue
-            return mutableURLRequest
+            let URLString = config.webEndpoint.stringByAppendingURLPath(path)
+            return Octokit.request(URLString, method: method, parameters: params)
         case .AccessToken(let config, _):
-            let URL = NSURL(string: config.webEndpoint)!
-            let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
-            mutableURLRequest.HTTPMethod = method.rawValue
-            return mutableURLRequest
+            let URLString = config.webEndpoint.stringByAppendingURLPath(path)
+            return Octokit.request(URLString, method: method, parameters: params)
         }
-    }
-
-    public var URLRequest: NSURLRequest {
-        return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: params).0
     }
 }

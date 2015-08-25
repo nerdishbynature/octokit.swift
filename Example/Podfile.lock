@@ -1,8 +1,6 @@
 PODS:
-  - Alamofire (1.2.1)
   - Nocilla (0.9.0)
-  - OctoKit.swift (0.1.0):
-    - Alamofire (~> 1.2.1)
+  - OctoKit.swift (0.1.0)
 
 DEPENDENCIES:
   - Nocilla
@@ -13,8 +11,7 @@ EXTERNAL SOURCES:
     :path: "../OctoKit.swift.podspec"
 
 SPEC CHECKSUMS:
-  Alamofire: 1acfdf179aff68b41a48dff70c1ac7fa263e2bcb
   Nocilla: d7d96e8a11e363f0d7c976d48b320c43d61fb471
-  OctoKit.swift: 03bfc8df652fd91dd721aef30863904611fc7bb3
+  OctoKit.swift: 000e7d670594613632d7820255f18f2f1a1231b3
 
 COCOAPODS: 0.38.2

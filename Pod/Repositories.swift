@@ -1,5 +1,3 @@
-import Octokit
-import Alamofire
 import Foundation
 
 // MARK: model
@@ -34,36 +32,39 @@ public struct Repository {
 
 public extension Octokit {
     public func repositories(completion: (response: Response<[Repository]>) -> Void) {
-        Alamofire.request(RepositoryRouter.ReadRepositories(self)).validate().responseJSON { (_, response, JSON, err) in
-            if let err = err{
-                completion(response: Response.Failure(self.parseError(err, response: response)))
-            } else {
-                let jsonRepos = JSON as! [[String: AnyObject]]
-                let repos = jsonRepos.map { Repository($0) }
+        loadJSON(RepositoryRouter.ReadRepositories(self), expectedResultType: [[String: AnyObject]].self) { json, error in
+            if let error = error {
+                completion(response: Response.Failure(error))
+            }
+
+            if let json = json {
+                let repos = json.map { Repository($0) }
                 completion(response: Response.Success(Box(repos)))
             }
         }
     }
 
     public func repository(owner: String, name: String, completion: (response: Response<Repository>) -> Void) {
-        Alamofire.request(RepositoryRouter.ReadRepository(self, owner, name)).validate()
-            .responseJSON { (_, response, JSON, err) in
-                if let err = err{
-                    completion(response: Response.Failure(self.parseError(err, response: response)))
-                } else {
-                    completion(response: Response.Success(Box(Repository(JSON as! [String: AnyObject]))))
+        loadJSON(RepositoryRouter.ReadRepository(self, owner, name), expectedResultType: [String: AnyObject].self) { json, error in
+            if let error = error {
+                completion(response: Response.Failure(error))
+            } else {
+                if let json = json {
+                    let repo = Repository(json)
+                    completion(response: Response.Success(Box(repo)))
                 }
+            }
         }
     }
 }
 
 // MARK: Router
 
-public enum RepositoryRouter: URLRequestConvertible {
+public enum RepositoryRouter: Router {
     case ReadRepositories(Octokit)
     case ReadRepository(Octokit, String, String)
 
-    var method: Alamofire.Method {
+    var method: HTTPMethod {
         return .GET
     }
 
@@ -76,7 +77,7 @@ public enum RepositoryRouter: URLRequestConvertible {
         }
     }
 
-    public var URLRequest: NSURLRequest {
+    public var URLRequest: NSURLRequest? {
         switch self {
         case .ReadRepositories(let kit):
             return kit.request(path, method: method)
