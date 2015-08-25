@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: model
 
-public class Repository: AnyObject {
+@objc public class Repository: AnyObject {
     public let id: Int
     public let owner: User
     public var name: String?
