@@ -20,6 +20,11 @@ extension String {
     func stringByAppendingURLPath(path: String) -> String {
         return path.hasPrefix("/") ? self + path : self + "/" + path
     }
+
+    func urlEncodedString() -> String? {
+        var originalString = "test/test"
+        return self.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+    }
 }
 
 public struct Octokit {
@@ -40,15 +45,32 @@ public struct Octokit {
 
     public static func request(string: String, method: HTTPMethod, parameters: [String: String]?) -> NSURLRequest? {
         var URLString = string
-        if let parameters = parameters {
-            URLString = join("?", [URLString, Octokit.urlQuery(parameters)])
+        switch method {
+        case .GET:
+            if let parameters = parameters {
+                URLString = join("?", [URLString, Octokit.urlQuery(parameters).urlEncodedString() ?? ""])
+            }
+
+            if let URL = NSURL(string: URLString) {
+                let mutableURLRequest = NSMutableURLRequest(URL: URL)
+                mutableURLRequest.HTTPMethod = method.rawValue
+                return mutableURLRequest
+            }
+        case .POST:
+            var queryData: NSData? = nil
+            if let parameters = parameters {
+                queryData = Octokit.urlQuery(parameters).dataUsingEncoding(NSUTF8StringEncoding)
+            }
+
+            if let URL = NSURL(string: URLString) {
+                let mutableURLRequest = NSMutableURLRequest(URL: URL)
+                mutableURLRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
+                mutableURLRequest.HTTPBody = queryData
+                mutableURLRequest.HTTPMethod = method.rawValue
+                return mutableURLRequest
+            }
         }
 
-        if let URL = NSURL(string: URLString) {
-            let mutableURLRequest = NSMutableURLRequest(URL: URL)
-            mutableURLRequest.HTTPMethod = method.rawValue
-            return mutableURLRequest
-        }
         return nil
     }
 
