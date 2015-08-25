@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OctoKit-Swift.h"
 
 //! Project version number for OctoKit.
 FOUNDATION_EXPORT double OctoKitVersionNumber;
