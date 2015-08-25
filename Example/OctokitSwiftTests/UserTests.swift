@@ -38,7 +38,7 @@ class UserTests: XCTestCase {
             Octokit().user(username) { response in
                 switch response {
                 case .Success(let box):
-                    XCTAssertEqual(box.unbox.login, username)
+                    XCTAssertEqual(box.unbox.login!, username)
                     expectation.fulfill()
                 case .Failure(let error):
                     XCTAssert(false, "should not get an user")
@@ -80,7 +80,7 @@ class UserTests: XCTestCase {
             Octokit(TokenConfiguration("token")).me() { response in
                 switch response {
                 case .Success(let box):
-                    XCTAssertEqual(box.unbox.login, "pietbrauer")
+                    XCTAssertEqual(box.unbox.login!, "pietbrauer")
                     expectation.fulfill()
                 case .Failure(let error):
                     XCTAssert(false, "should not retrieve an error \(error)")
@@ -117,11 +117,11 @@ class UserTests: XCTestCase {
 
     func testUserParsingFullUser() {
         let subject = User(Helper.JSONFromFile("user_me") as! [String: AnyObject])
-        XCTAssertEqual(subject.login, "pietbrauer")
+        XCTAssertEqual(subject.login!, "pietbrauer")
         XCTAssertEqual(subject.id, 759730)
-        XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/759730?v=3")
-        XCTAssertEqual(subject.gravatarID, "")
-        XCTAssertEqual(subject.type, "User")
+        XCTAssertEqual(subject.avatarURL!, "https://avatars.githubusercontent.com/u/759730?v=3")
+        XCTAssertEqual(subject.gravatarID!, "")
+        XCTAssertEqual(subject.type!, "User")
         XCTAssertEqual(subject.name!, "Piet Brauer")
         XCTAssertEqual(subject.company!, "XING AG")
         XCTAssertEqual(subject.blog!, "xing.to/PietBrauer")
@@ -134,11 +134,11 @@ class UserTests: XCTestCase {
 
     func testUserParsingMinimalUser() {
         let subject = User(Helper.JSONFromFile("user_mietzmithut") as! [String: AnyObject])
-        XCTAssertEqual(subject.login, "mietzmithut")
+        XCTAssertEqual(subject.login!, "mietzmithut")
         XCTAssertEqual(subject.id, 4672699)
-        XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/4672699?v=3")
-        XCTAssertEqual(subject.gravatarID, "")
-        XCTAssertEqual(subject.type, "User")
+        XCTAssertEqual(subject.avatarURL!, "https://avatars.githubusercontent.com/u/4672699?v=3")
+        XCTAssertEqual(subject.gravatarID!, "")
+        XCTAssertEqual(subject.type!, "User")
         XCTAssertEqual(subject.name!, "Julia Kallenberg")
         XCTAssertEqual(subject.company!, "")
         XCTAssertEqual(subject.blog!, "")
