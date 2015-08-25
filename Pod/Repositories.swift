@@ -3,28 +3,33 @@ import Foundation
 // MARK: model
 
 public struct Repository {
-    public let owner: User
-    public let name: String
-    public let fullName: String
     public let id: Int
-    public let isPrivate: Bool
-    public let description: String
-    public let isFork: Bool
-    public let gitURL: String
-    public let sshURL: String
-    public let cloneURL: String
+    public let owner: User
+    public var name: String?
+    public var fullName: String?
+    public var isPrivate: Bool
+    public var description: String?
+    public var isFork: Bool?
+    public var gitURL: String?
+    public var sshURL: String?
+    public var cloneURL: String?
 
     public init(_ json: [String: AnyObject]) {
-        owner = User(json["owner"] as! [String: AnyObject])
-        name = json["name"] as! String
-        fullName = json["full_name"] as! String
-        id = json["id"] as! Int
-        isPrivate = json["private"] as! Bool
-        description = json["description"] as! String
-        isFork = json["fork"] as! Bool
-        gitURL = json["git_url"] as! String
-        sshURL = json["ssh_url"] as! String
-        cloneURL = json["clone_url"] as! String
+        owner = User(json["owner"] as? [String: AnyObject] ?? [:])
+        if let id = json["id"] as? Int {
+            self.id = id
+            name = json["name"] as? String
+            fullName = json["full_name"] as? String
+            isPrivate = json["private"] as? Bool ?? false
+            description = json["description"] as? String
+            isFork = json["fork"] as? Bool
+            gitURL = json["git_url"] as? String
+            sshURL = json["ssh_url"] as? String
+            cloneURL = json["clone_url"] as? String
+        } else {
+            id = -1
+            isPrivate = false
+        }
     }
 }
 
