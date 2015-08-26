@@ -36,8 +36,8 @@ import Foundation
 // MARK: request
 
 public extension Octokit {
-    public func repositories(completion: (response: Response<[Repository]>) -> Void) {
-        loadJSON(RepositoryRouter.ReadRepositories(self), expectedResultType: [[String: AnyObject]].self) { json, error in
+    public func repositories(page: String = "1", completion: (response: Response<[Repository]>) -> Void) {
+        loadJSON(RepositoryRouter.ReadRepositories(self, page), expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             }
@@ -66,18 +66,27 @@ public extension Octokit {
 // MARK: Router
 
 public enum RepositoryRouter: Router {
-    case ReadRepositories(Octokit)
+    case ReadRepositories(Octokit, String)
     case ReadRepository(Octokit, String, String)
 
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         return .GET
     }
 
-    var encoding: HTTPEncoding {
+    public var encoding: HTTPEncoding {
         return .URL
     }
 
-    var path: String {
+    public var params: [String: String] {
+        switch self {
+        case .ReadRepositories(_, let page):
+            return ["per_page": "100", "page": page]
+        case .ReadRepository:
+            return [:]
+        }
+    }
+
+    public var path: String {
         switch self {
         case .ReadRepositories:
             return "/user/repos"
@@ -88,10 +97,10 @@ public enum RepositoryRouter: Router {
 
     public var URLRequest: NSURLRequest? {
         switch self {
-        case .ReadRepositories(let kit):
-            return kit.request(path, encoding: encoding, method: method)
+        case .ReadRepositories(let kit, let page):
+            return kit.request(self)
         case .ReadRepository(let kit, _, _):
-            return kit.request(path, encoding: encoding, method: method)
+            return kit.request(self)
         }
     }
 }

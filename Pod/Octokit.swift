@@ -17,7 +17,7 @@ public enum HTTPMethod: String {
 }
 
 public enum HTTPEncoding: Int {
-    case URL, FORM
+    case URL, FORM, JSON
 }
 
 extension String {
@@ -38,39 +38,34 @@ public struct Octokit {
         configuration = config
     }
 
-    internal func request(path: String, encoding: HTTPEncoding, method: HTTPMethod) -> NSURLRequest? {
-        var URLString = configuration.apiEndpoint.stringByAppendingURLPath(path)
-        var parameters: [String: String]?
+    internal func request(router: Router) -> NSURLRequest? {
+        var URLString = configuration.apiEndpoint.stringByAppendingURLPath(router.path)
+        var parameters = router.encoding == .JSON ? [:] : router.params
         if let accessToken = configuration.accessToken {
-            parameters = ["access_token": accessToken]
+            parameters["access_token"] = accessToken
         }
-        return Octokit.request(URLString, encoding: encoding, method: method, parameters: parameters)
+        return Octokit.request(URLString, router: router, parameters: parameters)
     }
 
-    public static func request(string: String, encoding: HTTPEncoding, method: HTTPMethod, parameters: [String: String]?) -> NSURLRequest? {
-        var URLString = string
-        switch encoding {
-        case .URL:
-            if let parameters = parameters {
+    public static func request(urlString: String, router: Router, parameters: [String: String]) -> NSURLRequest? {
+        var URLString = urlString
+        switch router.encoding {
+        case .URL, .JSON:
+            if count(parameters.keys) > 0 {
                 URLString = join("?", [URLString, Octokit.urlQuery(parameters).urlEncodedString() ?? ""])
             }
-
             if let URL = NSURL(string: URLString) {
                 let mutableURLRequest = NSMutableURLRequest(URL: URL)
-                mutableURLRequest.HTTPMethod = method.rawValue
+                mutableURLRequest.HTTPMethod = router.method.rawValue
                 return mutableURLRequest
             }
         case .FORM:
-            var queryData: NSData? = nil
-            if let parameters = parameters {
-                queryData = Octokit.urlQuery(parameters).dataUsingEncoding(NSUTF8StringEncoding)
-            }
-
+            var queryData = Octokit.urlQuery(parameters).dataUsingEncoding(NSUTF8StringEncoding)
             if let URL = NSURL(string: URLString) {
                 let mutableURLRequest = NSMutableURLRequest(URL: URL)
                 mutableURLRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
                 mutableURLRequest.HTTPBody = queryData
-                mutableURLRequest.HTTPMethod = method.rawValue
+                mutableURLRequest.HTTPMethod = router.method.rawValue
                 return mutableURLRequest
             }
         }
@@ -143,13 +138,13 @@ public struct Octokit {
     }
 }
 
-protocol Router {
+public protocol Router {
     var method: HTTPMethod { get }
     var path: String { get }
     var URLRequest: NSURLRequest? { get }
     var encoding: HTTPEncoding { get }
+    var params: [String: String] { get }
 }
 
 protocol JSONPostRouter: Router {
-    var params: [String: String] { get }
 }

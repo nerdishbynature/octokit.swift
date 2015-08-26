@@ -74,15 +74,15 @@ public enum UserRouter: Router {
     case ReadAuthenticatedUser(Octokit)
     case ReadUser(String, Octokit)
 
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         return .GET
     }
 
-    var encoding: HTTPEncoding {
+    public var encoding: HTTPEncoding {
         return .URL
     }
 
-    var path: String {
+    public var path: String {
         switch self {
         case .ReadAuthenticatedUser:
             return "user"
@@ -91,12 +91,16 @@ public enum UserRouter: Router {
         }
     }
 
+    public var params: [String: String] {
+        return [:]
+    }
+
     public var URLRequest: NSURLRequest? {
         switch self {
         case .ReadAuthenticatedUser(let kit):
-            return kit.request(path, encoding: encoding, method: method)
+            return kit.request(self)
         case .ReadUser(_, let kit):
-            return kit.request(path, encoding: encoding, method: method)
+            return kit.request(self)
         }
     }
 }

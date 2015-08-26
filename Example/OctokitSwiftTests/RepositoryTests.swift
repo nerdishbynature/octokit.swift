@@ -18,8 +18,8 @@ class RepositoryTests: XCTestCase {
 
     func testReadRepositoriesURLRequest() {
         let kit = Octokit(TokenConfiguration("12345"))
-        let request = RepositoryRouter.ReadRepositories(kit).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345")!)
+        let request = RepositoryRouter.ReadRepositories(kit, "1").URLRequest
+        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100")!)
     }
 
     func testReadRepositoryURLRequest() {
@@ -32,7 +32,7 @@ class RepositoryTests: XCTestCase {
     func testGetRepositories() {
         let config = TokenConfiguration("12345")
         if let json = Helper.stringFromFile("user_repos") {
-            stubRequest("GET", "https://api.github.com/user/repos?access_token=12345").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+            stubRequest("GET", "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
             let expectation = expectationWithDescription("user_repos")
             Octokit(config).repositories() { response in
                 switch response {
@@ -55,7 +55,7 @@ class RepositoryTests: XCTestCase {
     func testFailToGetRepositories() {
         let config = TokenConfiguration("12345")
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
-        stubRequest("GET", "https://api.github.com/user/repos?access_token=12345").andReturn(401).withHeaders(["Content-Type": "application/json"]).withBody(json)
+        stubRequest("GET", "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100").andReturn(401).withHeaders(["Content-Type": "application/json"]).withBody(json)
         let expectation = expectationWithDescription("failing_repos")
         Octokit(config).repositories() { response in
             switch response {

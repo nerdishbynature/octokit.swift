@@ -82,7 +82,7 @@ public enum OAuthRouter: Router {
     case Authorize(OAuthConfiguration)
     case AccessToken(OAuthConfiguration, String)
 
-    var method: HTTPMethod {
+    public var method: HTTPMethod {
         switch self {
         case .Authorize:
             return .GET
@@ -91,7 +91,7 @@ public enum OAuthRouter: Router {
         }
     }
 
-    var encoding: HTTPEncoding {
+    public var encoding: HTTPEncoding {
         switch self {
         case .Authorize:
             return .URL
@@ -100,7 +100,7 @@ public enum OAuthRouter: Router {
         }
     }
 
-    var path: String {
+    public var path: String {
         switch self {
         case .Authorize:
             return "login/oauth/authorize"
@@ -109,7 +109,7 @@ public enum OAuthRouter: Router {
         }
     }
 
-    var params: [String: String] {
+    public var params: [String: String] {
         switch self {
         case .Authorize(let config):
             let scope = (config.scopes as NSArray).componentsJoinedByString(",")
@@ -123,10 +123,10 @@ public enum OAuthRouter: Router {
         switch self {
         case .Authorize(let config):
             let URLString = config.webEndpoint.stringByAppendingURLPath(path)
-            return Octokit.request(URLString, encoding: encoding, method: method, parameters: params)
+            return Octokit.request(URLString, router: self, parameters: params)
         case .AccessToken(let config, _):
             let URLString = config.webEndpoint.stringByAppendingURLPath(path)
-            return Octokit.request(URLString, encoding: encoding, method: method, parameters: params)
+            return Octokit.request(URLString, router: self, parameters: params)
         }
     }
 }
