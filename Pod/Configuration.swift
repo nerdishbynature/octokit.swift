@@ -91,6 +91,15 @@ public enum OAuthRouter: Router {
         }
     }
 
+    var encoding: HTTPEncoding {
+        switch self {
+        case .Authorize:
+            return .URL
+        case .AccessToken:
+            return .FORM
+        }
+    }
+
     var path: String {
         switch self {
         case .Authorize:
@@ -114,10 +123,10 @@ public enum OAuthRouter: Router {
         switch self {
         case .Authorize(let config):
             let URLString = config.webEndpoint.stringByAppendingURLPath(path)
-            return Octokit.request(URLString, method: method, parameters: params)
+            return Octokit.request(URLString, encoding: encoding, method: method, parameters: params)
         case .AccessToken(let config, _):
             let URLString = config.webEndpoint.stringByAppendingURLPath(path)
-            return Octokit.request(URLString, method: method, parameters: params)
+            return Octokit.request(URLString, encoding: encoding, method: method, parameters: params)
         }
     }
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		232FCC381B8CAD4C0036C4EC /* PublicKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 232FCC371B8CAD4C0036C4EC /* PublicKeyTests.swift */; };
+		232FCC3A1B8CB0040036C4EC /* public_key.json in Resources */ = {isa = PBXBuildFile; fileRef = 232FCC391B8CB0040036C4EC /* public_key.json */; };
+		236BAA4B1B8D87F500A3EDB1 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 236BAA4A1B8D87F500A3EDB1 /* PublicKey.swift */; };
 		239BE7CE1B8C47A100D2CE22 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		239BE7E61B8C47B300D2CE22 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BE7E21B8C47B300D2CE22 /* Configuration.swift */; };
 		239BE7E71B8C47B300D2CE22 /* Octokit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239BE7E31B8C47B300D2CE22 /* Octokit.swift */; };
@@ -43,6 +46,9 @@
 /* Begin PBXFileReference section */
 		081DB7E30442989934CFD48F /* Pods_OctokitSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OctokitSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DBDD4785808B6E8CD3190E8 /* Pods-OctokitSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OctokitSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OctokitSwiftTests/Pods-OctokitSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
+		232FCC371B8CAD4C0036C4EC /* PublicKeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicKeyTests.swift; sourceTree = "<group>"; };
+		232FCC391B8CB0040036C4EC /* public_key.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = public_key.json; path = Fixtures/public_key.json; sourceTree = "<group>"; };
+		236BAA4A1B8D87F500A3EDB1 /* PublicKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PublicKey.swift; path = ../../Pod/PublicKey.swift; sourceTree = "<group>"; };
 		239BE7C91B8C47A100D2CE22 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		239BE7CC1B8C47A100D2CE22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		239BE7CD1B8C47A100D2CE22 /* OctoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OctoKit.h; sourceTree = "<group>"; };
@@ -109,6 +115,7 @@
 				239BE7E31B8C47B300D2CE22 /* Octokit.swift */,
 				239BE7E41B8C47B300D2CE22 /* Repositories.swift */,
 				239BE7E51B8C47B300D2CE22 /* User.swift */,
+				236BAA4A1B8D87F500A3EDB1 /* PublicKey.swift */,
 				239BE7CB1B8C47A100D2CE22 /* Supporting Files */,
 			);
 			path = OctoKit;
@@ -192,6 +199,7 @@
 				F02AF8441A6597F3009076ED /* ConfigurationTests.swift */,
 				F0A998EE1A67131F00A107A3 /* UserTests.swift */,
 				F0D54B961A68765F0055D3AC /* RepositoryTests.swift */,
+				232FCC371B8CAD4C0036C4EC /* PublicKeyTests.swift */,
 				F0A998EB1A6711FE00A107A3 /* TestHelper.swift */,
 				F01C6F4D1A6429CC0072FA44 /* Supporting Files */,
 				F0A998ED1A67123400A107A3 /* Fixtures */,
@@ -214,6 +222,7 @@
 				F094BCA21A6500BA00DDFF5B /* user_mietzmithut.json */,
 				F094BCA41A65030B00DDFF5B /* user_me.json */,
 				F0D3D42D1A69B20500147F33 /* repo.json */,
+				232FCC391B8CB0040036C4EC /* public_key.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -358,6 +367,7 @@
 				F094BCA31A6500BA00DDFF5B /* user_mietzmithut.json in Resources */,
 				F0D54B9B1A687A1A0055D3AC /* user_repos.json in Resources */,
 				F0D3D42E1A69B20500147F33 /* repo.json in Resources */,
+				232FCC3A1B8CB0040036C4EC /* public_key.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,6 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				236BAA4B1B8D87F500A3EDB1 /* PublicKey.swift in Sources */,
 				239BE7E91B8C47B300D2CE22 /* User.swift in Sources */,
 				239BE7E61B8C47B300D2CE22 /* Configuration.swift in Sources */,
 				239BE7E71B8C47B300D2CE22 /* Octokit.swift in Sources */,
@@ -481,6 +492,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				232FCC381B8CAD4C0036C4EC /* PublicKeyTests.swift in Sources */,
 				F0A998EF1A67131F00A107A3 /* UserTests.swift in Sources */,
 				F0A998EC1A6711FE00A107A3 /* TestHelper.swift in Sources */,
 				F02AF8451A6597F3009076ED /* ConfigurationTests.swift in Sources */,

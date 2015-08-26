@@ -16,6 +16,10 @@ public enum HTTPMethod: String {
     case GET = "GET", POST = "POST"
 }
 
+public enum HTTPEncoding: Int {
+    case URL, FORM
+}
+
 extension String {
     func stringByAppendingURLPath(path: String) -> String {
         return path.hasPrefix("/") ? self + path : self + "/" + path
@@ -34,19 +38,19 @@ public struct Octokit {
         configuration = config
     }
 
-    internal func request(path: String, method: HTTPMethod) -> NSURLRequest? {
+    internal func request(path: String, encoding: HTTPEncoding, method: HTTPMethod) -> NSURLRequest? {
         var URLString = configuration.apiEndpoint.stringByAppendingURLPath(path)
         var parameters: [String: String]?
         if let accessToken = configuration.accessToken {
             parameters = ["access_token": accessToken]
         }
-        return Octokit.request(URLString, method: method, parameters: parameters)
+        return Octokit.request(URLString, encoding: encoding, method: method, parameters: parameters)
     }
 
-    public static func request(string: String, method: HTTPMethod, parameters: [String: String]?) -> NSURLRequest? {
+    public static func request(string: String, encoding: HTTPEncoding, method: HTTPMethod, parameters: [String: String]?) -> NSURLRequest? {
         var URLString = string
-        switch method {
-        case .GET:
+        switch encoding {
+        case .URL:
             if let parameters = parameters {
                 URLString = join("?", [URLString, Octokit.urlQuery(parameters).urlEncodedString() ?? ""])
             }
@@ -56,7 +60,7 @@ public struct Octokit {
                 mutableURLRequest.HTTPMethod = method.rawValue
                 return mutableURLRequest
             }
-        case .POST:
+        case .FORM:
             var queryData: NSData? = nil
             if let parameters = parameters {
                 queryData = Octokit.urlQuery(parameters).dataUsingEncoding(NSUTF8StringEncoding)
@@ -108,10 +112,44 @@ public struct Octokit {
             task.resume()
         }
     }
+
+    internal func postJSON<T>(router: JSONPostRouter, expectedResultType: T.Type, completion: (json: T?, error: NSError?) -> Void) {
+        var error: NSError?
+        if let request = router.URLRequest, data = NSJSONSerialization.dataWithJSONObject(router.params, options: .allZeros, error: &error) {
+            let task = NSURLSession.sharedSession().uploadTaskWithRequest(request, fromData: data) { data, response, error in
+                if let response = response as? NSHTTPURLResponse {
+                    if response.statusCode != 201 {
+                        let error = NSError(domain: errorDomain, code: response.statusCode, userInfo: nil)
+                        completion(json: nil, error: error)
+                        return
+                    }
+                }
+
+                if let error = error {
+                    completion(json: nil, error: error)
+                } else {
+                    var error: NSError?
+                    if let JSON = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: &error) as? T {
+                        completion(json: JSON, error: error)
+                    }
+                }
+            }
+            task.resume()
+        }
+
+        if let error = error {
+            completion(json: nil, error: error)
+        }
+    }
 }
 
 protocol Router {
     var method: HTTPMethod { get }
     var path: String { get }
     var URLRequest: NSURLRequest? { get }
+    var encoding: HTTPEncoding { get }
+}
+
+protocol JSONPostRouter: Router {
+    var params: [String: String] { get }
 }
