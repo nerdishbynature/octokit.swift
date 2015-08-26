@@ -26,6 +26,13 @@ public enum PublicKeyRouter: JSONPostRouter {
         }
     }
 
+    var encoding: HTTPEncoding {
+        switch self {
+        case .PostPublicKey:
+            return .URL
+        }
+    }
+
     var path: String {
         switch self {
         case .PostPublicKey:
@@ -43,7 +50,7 @@ public enum PublicKeyRouter: JSONPostRouter {
     public var URLRequest: NSURLRequest? {
         switch self {
         case .PostPublicKey(_, _, let kit):
-            return kit.request(path, method: method)
+            return kit.request(path, encoding: encoding, method: method)
         }
     }
 }

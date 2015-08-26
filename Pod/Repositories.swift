@@ -73,6 +73,10 @@ public enum RepositoryRouter: Router {
         return .GET
     }
 
+    var encoding: HTTPEncoding {
+        return .URL
+    }
+
     var path: String {
         switch self {
         case .ReadRepositories:
@@ -85,9 +89,9 @@ public enum RepositoryRouter: Router {
     public var URLRequest: NSURLRequest? {
         switch self {
         case .ReadRepositories(let kit):
-            return kit.request(path, method: method)
+            return kit.request(path, encoding: encoding, method: method)
         case .ReadRepository(let kit, _, _):
-            return kit.request(path, method: method)
+            return kit.request(path, encoding: encoding, method: method)
         }
     }
 }

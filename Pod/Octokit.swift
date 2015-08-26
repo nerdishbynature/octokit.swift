@@ -16,6 +16,10 @@ public enum HTTPMethod: String {
     case GET = "GET", POST = "POST"
 }
 
+public enum HTTPEncoding: Int {
+    case URL, FORM
+}
+
 extension String {
     func stringByAppendingURLPath(path: String) -> String {
         return path.hasPrefix("/") ? self + path : self + "/" + path
@@ -34,19 +38,19 @@ public struct Octokit {
         configuration = config
     }
 
-    internal func request(path: String, method: HTTPMethod) -> NSURLRequest? {
+    internal func request(path: String, encoding: HTTPEncoding, method: HTTPMethod) -> NSURLRequest? {
         var URLString = configuration.apiEndpoint.stringByAppendingURLPath(path)
         var parameters: [String: String]?
         if let accessToken = configuration.accessToken {
             parameters = ["access_token": accessToken]
         }
-        return Octokit.request(URLString, method: method, parameters: parameters)
+        return Octokit.request(URLString, encoding: encoding, method: method, parameters: parameters)
     }
 
-    public static func request(string: String, method: HTTPMethod, parameters: [String: String]?) -> NSURLRequest? {
+    public static func request(string: String, encoding: HTTPEncoding, method: HTTPMethod, parameters: [String: String]?) -> NSURLRequest? {
         var URLString = string
-        switch method {
-        case .GET:
+        switch encoding {
+        case .URL:
             if let parameters = parameters {
                 URLString = join("?", [URLString, Octokit.urlQuery(parameters).urlEncodedString() ?? ""])
             }
@@ -56,7 +60,7 @@ public struct Octokit {
                 mutableURLRequest.HTTPMethod = method.rawValue
                 return mutableURLRequest
             }
-        case .POST:
+        case .FORM:
             var queryData: NSData? = nil
             if let parameters = parameters {
                 queryData = Octokit.urlQuery(parameters).dataUsingEncoding(NSUTF8StringEncoding)
@@ -143,6 +147,7 @@ protocol Router {
     var method: HTTPMethod { get }
     var path: String { get }
     var URLRequest: NSURLRequest? { get }
+    var encoding: HTTPEncoding { get }
 }
 
 protocol JSONPostRouter: Router {

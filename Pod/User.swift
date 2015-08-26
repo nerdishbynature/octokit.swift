@@ -78,6 +78,10 @@ public enum UserRouter: Router {
         return .GET
     }
 
+    var encoding: HTTPEncoding {
+        return .URL
+    }
+
     var path: String {
         switch self {
         case .ReadAuthenticatedUser:
@@ -90,9 +94,9 @@ public enum UserRouter: Router {
     public var URLRequest: NSURLRequest? {
         switch self {
         case .ReadAuthenticatedUser(let kit):
-            return kit.request(path, method: method)
+            return kit.request(path, encoding: encoding, method: method)
         case .ReadUser(_, let kit):
-            return kit.request(path, method: method)
+            return kit.request(path, encoding: encoding, method: method)
         }
     }
 }
