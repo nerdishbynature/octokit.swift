@@ -108,10 +108,43 @@ public struct Octokit {
             task.resume()
         }
     }
+
+    internal func postJSON<T>(router: JSONPostRouter, expectedResultType: T.Type, completion: (json: T?, error: NSError?) -> Void) {
+        var error: NSError?
+        if let request = router.URLRequest, data = NSJSONSerialization.dataWithJSONObject(router.params, options: .allZeros, error: &error) {
+            let task = NSURLSession.sharedSession().uploadTaskWithRequest(request, fromData: data) { data, response, error in
+                if let response = response as? NSHTTPURLResponse {
+                    if response.statusCode != 201 {
+                        let error = NSError(domain: errorDomain, code: response.statusCode, userInfo: nil)
+                        completion(json: nil, error: error)
+                        return
+                    }
+                }
+
+                if let error = error {
+                    completion(json: nil, error: error)
+                } else {
+                    var error: NSError?
+                    if let JSON = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: &error) as? T {
+                        completion(json: JSON, error: error)
+                    }
+                }
+            }
+            task.resume()
+        }
+
+        if let error = error {
+            completion(json: nil, error: error)
+        }
+    }
 }
 
 protocol Router {
     var method: HTTPMethod { get }
     var path: String { get }
     var URLRequest: NSURLRequest? { get }
+}
+
+protocol JSONPostRouter: Router {
+    var params: [String: String] { get }
 }
