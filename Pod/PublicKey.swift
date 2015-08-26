@@ -3,7 +3,7 @@ import Foundation
 // MARK: request
 
 public extension Octokit {
-    func postPublicKey(publicKey: String, title: String, completion: (response:Response<String>) -> Void) {
+    public func postPublicKey(publicKey: String, title: String, completion: (response:Response<String>) -> Void) {
         postJSON(PublicKeyRouter.PostPublicKey(publicKey, title, self), expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
