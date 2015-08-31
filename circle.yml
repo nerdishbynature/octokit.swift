@@ -1,6 +1,9 @@
 machine:
   xcode:
     version: "6.3.1"
+dependencies:
+  override:
+    - make install
 test:
   override:
     - make test
