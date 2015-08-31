@@ -1,5 +1,5 @@
 PODS:
-  - Nocilla (0.9.0)
+  - Nocilla (0.10.0)
   - OctoKit.swift (0.1.0)
 
 DEPENDENCIES:
@@ -11,7 +11,7 @@ EXTERNAL SOURCES:
     :path: "../OctoKit.swift.podspec"
 
 SPEC CHECKSUMS:
-  Nocilla: d7d96e8a11e363f0d7c976d48b320c43d61fb471
+  Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
   OctoKit.swift: 000e7d670594613632d7820255f18f2f1a1231b3
 
 COCOAPODS: 0.38.2
