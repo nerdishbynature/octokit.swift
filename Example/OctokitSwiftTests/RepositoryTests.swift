@@ -142,7 +142,7 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.name!, "Test")
         XCTAssertEqual(subject.fullName!, "mietzmithut/Test")
         XCTAssertEqual(subject.isPrivate, false)
-        XCTAssertEqual(subject.description!, "")
+        XCTAssertEqual(subject.repositoryDescription, "")
         XCTAssertEqual(subject.isFork!, false)
         XCTAssertEqual(subject.gitURL!, "git://github.com/mietzmithut/Test.git")
         XCTAssertEqual(subject.sshURL!, "git@github.com:mietzmithut/Test.git")

@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: model
 
-public class User: AnyObject {
+@objc public class User: NSObject {
     public let id: Int
     public var login: String?
     public var avatarURL: String?

@@ -2,13 +2,13 @@ import Foundation
 
 // MARK: model
 
-public class Repository: AnyObject {
+@objc public class Repository: NSObject {
     public let id: Int
     public let owner: User
     public var name: String?
     public var fullName: String?
     public var isPrivate: Bool
-    public var description: String?
+    public var repositoryDescription: String?
     public var isFork: Bool?
     public var gitURL: String?
     public var sshURL: String?
@@ -21,7 +21,7 @@ public class Repository: AnyObject {
             name = json["name"] as? String
             fullName = json["full_name"] as? String
             isPrivate = json["private"] as? Bool ?? false
-            description = json["description"] as? String
+            repositoryDescription = json["description"] as? String
             isFork = json["fork"] as? Bool
             gitURL = json["git_url"] as? String
             sshURL = json["ssh_url"] as? String
