@@ -34,7 +34,7 @@ class PublicKeyTests: XCTestCase {
                 case .Success(let box):
                     XCTAssertEqual(box.unbox, "test-key")
                     expectation.fulfill()
-                case .Failure(let error):
+                case .Failure:
                     XCTAssert(false, "should not get an error")
                     expectation.fulfill()
                 }

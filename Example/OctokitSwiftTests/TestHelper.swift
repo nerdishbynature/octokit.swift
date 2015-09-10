@@ -5,7 +5,7 @@ internal class Helper {
         let bundle = NSBundle(forClass: self)
         let path = bundle.pathForResource(name, ofType: "json")
         if let path = path {
-            let string = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)
+            let string = try? String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
             return string
         }
         return nil
@@ -15,8 +15,8 @@ internal class Helper {
         let bundle = NSBundle(forClass: self)
         let path = bundle.pathForResource(name, ofType: "json")!
         let data = NSData(contentsOfFile: path)!
-        let dict: AnyObject? = NSJSONSerialization.JSONObjectWithData(data,
-        options: NSJSONReadingOptions.MutableContainers, error: nil)
+        let dict: AnyObject? = try? NSJSONSerialization.JSONObjectWithData(data,
+        options: NSJSONReadingOptions.MutableContainers)
         return dict!
     }
 }

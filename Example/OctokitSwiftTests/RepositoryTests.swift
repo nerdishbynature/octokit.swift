@@ -45,7 +45,7 @@ class RepositoryTests: XCTestCase {
                 case .Success(let box):
                     XCTAssertEqual(box.unbox.count, 1)
                     expectation.fulfill()
-                case .Failure(let error):
+                case .Failure:
                     XCTAssert(false, "should not get an error")
                     expectation.fulfill()
                 }
@@ -68,9 +68,12 @@ class RepositoryTests: XCTestCase {
             case .Success:
                 XCTAssert(false, "should not retrieve repositories")
                 expectation.fulfill()
-            case .Failure(let error):
+            case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 401)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            case .Failure:
+                XCTAssertTrue(false)
                 expectation.fulfill()
             }
         }
@@ -92,7 +95,7 @@ class RepositoryTests: XCTestCase {
                     XCTAssertEqual(repo.name!, name)
                     XCTAssertEqual(repo.owner.login!, owner)
                     expectation.fulfill()
-                case .Failure(let error):
+                case .Failure:
                     XCTAssert(false, "should not get an error")
                     expectation.fulfill()
                 }
@@ -114,9 +117,12 @@ class RepositoryTests: XCTestCase {
             case .Success:
                 XCTAssert(false, "should not retrieve repositories")
                 expectation.fulfill()
-            case .Failure(let error):
+            case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            case .Failure:
+                XCTAssertTrue(false)
                 expectation.fulfill()
             }
         }

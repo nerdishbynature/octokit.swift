@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         config.handleOpenURL(url) { config in
             self.loadCurrentUser(config)
         }
@@ -32,9 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch response {
             case .Success(let box):
                 let user = box.unbox
-                println(user.login)
+                print(user.login)
             case .Failure(let error):
-                println(error)
+                print(error)
             }
         }
     }
