@@ -42,8 +42,8 @@ class RepositoryTests: XCTestCase {
             let expectation = expectationWithDescription("user_repos")
             Octokit(config).repositories() { response in
                 switch response {
-                case .Success(let box):
-                    XCTAssertEqual(box.unbox.count, 1)
+                case .Success(let repositories):
+                    XCTAssertEqual(repositories.count, 1)
                     expectation.fulfill()
                 case .Failure:
                     XCTAssert(false, "should not get an error")
@@ -90,8 +90,7 @@ class RepositoryTests: XCTestCase {
             let expectation = expectationWithDescription("repo")
             Octokit().repository(owner, name: name) { response in
                 switch response {
-                case .Success(let box):
-                    let repo = box.unbox
+                case .Success(let repo):
                     XCTAssertEqual(repo.name!, name)
                     XCTAssertEqual(repo.owner.login!, owner)
                     expectation.fulfill()

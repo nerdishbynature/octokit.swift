@@ -44,7 +44,7 @@ public extension Octokit {
 
             if let json = json {
                 let repos = json.map { Repository($0) }
-                completion(response: Response.Success(Box(repos)))
+                completion(response: Response.Success(repos))
             }
         }
     }
@@ -56,7 +56,7 @@ public extension Octokit {
             } else {
                 if let json = json {
                     let repo = Repository(json)
-                    completion(response: Response.Success(Box(repo)))
+                    completion(response: Response.Success(repo))
                 }
             }
         }

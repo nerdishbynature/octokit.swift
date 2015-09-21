@@ -37,8 +37,8 @@ class UserTests: XCTestCase {
             let expectation = expectationWithDescription("\(username)")
             Octokit().user(username) { response in
                 switch response {
-                case .Success(let box):
-                    XCTAssertEqual(box.unbox.login!, username)
+                case .Success(let user):
+                    XCTAssertEqual(user.login!, username)
                     expectation.fulfill()
                 case .Failure:
                     XCTAssert(false, "should not get an user")
@@ -82,8 +82,8 @@ class UserTests: XCTestCase {
             let expectation = expectationWithDescription("me")
             Octokit(TokenConfiguration("token")).me() { response in
                 switch response {
-                case .Success(let box):
-                    XCTAssertEqual(box.unbox.login!, "pietbrauer")
+                case .Success(let user):
+                    XCTAssertEqual(user.login!, "pietbrauer")
                     expectation.fulfill()
                 case .Failure(let error):
                     XCTAssert(false, "should not retrieve an error \(error)")

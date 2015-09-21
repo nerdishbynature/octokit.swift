@@ -2,13 +2,8 @@ import Foundation
 
 let errorDomain = "com.octokit.swift"
 
-final public class Box<T> {
-    public let unbox: T
-    public init(_ value: T) { self.unbox = value }
-}
-
 public enum Response<T> {
-    case Success(Box<T>)
+    case Success(T)
     case Failure(ErrorType)
 }
 

@@ -9,7 +9,7 @@ public extension Octokit {
                 completion(response: Response.Failure(error))
             } else {
                 if let _ = json {
-                    completion(response: Response.Success(Box(publicKey)))
+                    completion(response: Response.Success(publicKey))
                 }
             }
         }
