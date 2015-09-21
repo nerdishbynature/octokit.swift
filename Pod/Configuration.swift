@@ -33,10 +33,8 @@ public struct OAuthConfiguration: OctokitConfiguration {
             self.scopes = scopes
     }
 
-    public func authenticate() {
-        if let urlRequest = OAuthRouter.Authorize(self).URLRequest, url = urlRequest.URL {
-            UIApplication.sharedApplication().openURL(url)
-        }
+    public func authenticate() -> NSURL? {
+        return OAuthRouter.Authorize(self).URLRequest?.URL
     }
 
     public func authorize(code: String, completion: (config: TokenConfiguration) -> Void) {
