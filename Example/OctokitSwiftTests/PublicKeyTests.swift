@@ -31,10 +31,10 @@ class PublicKeyTests: XCTestCase {
             let expectation = expectationWithDescription("public_key")
             Octokit(config).postPublicKey("test-key", title: "test title") { response in
                 switch response {
-                case .Success(let box):
-                    XCTAssertEqual(box.unbox, "test-key")
+                case .Success(let publicKey):
+                    XCTAssertEqual(publicKey, "test-key")
                     expectation.fulfill()
-                case .Failure(let error):
+                case .Failure:
                     XCTAssert(false, "should not get an error")
                     expectation.fulfill()
                 }

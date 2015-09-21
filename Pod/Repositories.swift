@@ -2,13 +2,13 @@ import Foundation
 
 // MARK: model
 
-@objc public class Repository: AnyObject {
+@objc public class Repository: NSObject {
     public let id: Int
     public let owner: User
     public var name: String?
     public var fullName: String?
     public var isPrivate: Bool
-    public var description: String?
+    public var repositoryDescription: String?
     public var isFork: Bool?
     public var gitURL: String?
     public var sshURL: String?
@@ -21,7 +21,7 @@ import Foundation
             name = json["name"] as? String
             fullName = json["full_name"] as? String
             isPrivate = json["private"] as? Bool ?? false
-            description = json["description"] as? String
+            repositoryDescription = json["description"] as? String
             isFork = json["fork"] as? Bool
             gitURL = json["git_url"] as? String
             sshURL = json["ssh_url"] as? String
@@ -44,7 +44,7 @@ public extension Octokit {
 
             if let json = json {
                 let repos = json.map { Repository($0) }
-                completion(response: Response.Success(Box(repos)))
+                completion(response: Response.Success(repos))
             }
         }
     }
@@ -56,7 +56,7 @@ public extension Octokit {
             } else {
                 if let json = json {
                     let repo = Repository(json)
-                    completion(response: Response.Success(Box(repo)))
+                    completion(response: Response.Success(repo))
                 }
             }
         }

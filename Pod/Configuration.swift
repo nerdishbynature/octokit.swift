@@ -47,7 +47,7 @@ public struct OAuthConfiguration: OctokitConfiguration {
                     if response.statusCode != 200 {
                         return
                     } else {
-                        if let string = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
+                        if let data = data, string = NSString(data: data, encoding: NSUTF8StringEncoding) as? String {
                             let accessToken = self.accessTokenFromResponse(string)
                             if let accessToken = accessToken {
                                 let config = TokenConfiguration(accessToken, url: self.apiEndpoint)
@@ -62,7 +62,7 @@ public struct OAuthConfiguration: OctokitConfiguration {
     }
 
     public func handleOpenURL(url: NSURL, completion: (config: TokenConfiguration) -> Void) {
-        if let code = url.absoluteString?.componentsSeparatedByString("=").last {
+        if let code = url.absoluteString.componentsSeparatedByString("=").last {
             authorize(code) { (config) in
                 completion(config: config)
             }

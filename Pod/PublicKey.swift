@@ -8,8 +8,8 @@ public extension Octokit {
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
-                if let json = json {
-                    completion(response: Response.Success(Box(publicKey)))
+                if let _ = json {
+                    completion(response: Response.Success(publicKey))
                 }
             }
         }

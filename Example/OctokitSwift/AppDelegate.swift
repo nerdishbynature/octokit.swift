@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         config.handleOpenURL(url) { config in
             self.loadCurrentUser(config)
         }
@@ -30,11 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func loadCurrentUser(config: TokenConfiguration) {
         Octokit(config).me { response in
             switch response {
-            case .Success(let box):
-                let user = box.unbox
-                println(user.login)
+            case .Success(let user):
+                print(user.login)
             case .Failure(let error):
-                println(error)
+                print(error)
             }
         }
     }

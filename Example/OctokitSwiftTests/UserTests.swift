@@ -37,10 +37,10 @@ class UserTests: XCTestCase {
             let expectation = expectationWithDescription("\(username)")
             Octokit().user(username) { response in
                 switch response {
-                case .Success(let box):
-                    XCTAssertEqual(box.unbox.login!, username)
+                case .Success(let user):
+                    XCTAssertEqual(user.login!, username)
                     expectation.fulfill()
-                case .Failure(let error):
+                case .Failure:
                     XCTAssert(false, "should not get an user")
                     expectation.fulfill()
                 }
@@ -59,12 +59,15 @@ class UserTests: XCTestCase {
         let expectation = expectationWithDescription("\(username)")
         Octokit().user(username) { response in
             switch response {
-            case .Success(let user):
+            case .Success:
                 XCTAssert(false, "should not retrieve user")
                 expectation.fulfill()
-            case .Failure(let error):
+            case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            case .Failure:
+                XCTAssertTrue(false)
                 expectation.fulfill()
             }
         }
@@ -79,8 +82,8 @@ class UserTests: XCTestCase {
             let expectation = expectationWithDescription("me")
             Octokit(TokenConfiguration("token")).me() { response in
                 switch response {
-                case .Success(let box):
-                    XCTAssertEqual(box.unbox.login!, "pietbrauer")
+                case .Success(let user):
+                    XCTAssertEqual(user.login!, "pietbrauer")
                     expectation.fulfill()
                 case .Failure(let error):
                     XCTAssert(false, "should not retrieve an error \(error)")
@@ -102,9 +105,13 @@ class UserTests: XCTestCase {
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve user")
-            case .Failure(let error):
+                expectation.fulfill()
+            case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 401)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            case .Failure:
+                XCTAssertTrue(false)
                 expectation.fulfill()
             }
         }

@@ -2,14 +2,9 @@ import Foundation
 
 let errorDomain = "com.octokit.swift"
 
-final public class Box<T> {
-    public let unbox: T
-    public init(_ value: T) { self.unbox = value }
-}
-
 public enum Response<T> {
-    case Success(Box<T>)
-    case Failure(NSError)
+    case Success(T)
+    case Failure(ErrorType)
 }
 
 public enum HTTPMethod: String {
@@ -26,7 +21,6 @@ extension String {
     }
 
     func urlEncodedString() -> String? {
-        var originalString = "test/test"
         return self.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
     }
 }
@@ -39,7 +33,7 @@ public struct Octokit {
     }
 
     internal func request(router: Router) -> NSURLRequest? {
-        var URLString = configuration.apiEndpoint.stringByAppendingURLPath(router.path)
+        let URLString = configuration.apiEndpoint.stringByAppendingURLPath(router.path)
         var parameters = router.encoding == .JSON ? [:] : router.params
         if let accessToken = configuration.accessToken {
             parameters["access_token"] = accessToken
@@ -51,8 +45,8 @@ public struct Octokit {
         var URLString = urlString
         switch router.encoding {
         case .URL, .JSON:
-            if count(parameters.keys) > 0 {
-                URLString = join("?", [URLString, Octokit.urlQuery(parameters).urlEncodedString() ?? ""])
+            if parameters.keys.count > 0 {
+                URLString = [URLString, Octokit.urlQuery(parameters).urlEncodedString() ?? ""].joinWithSeparator("?")
             }
             if let URL = NSURL(string: URLString) {
                 let mutableURLRequest = NSMutableURLRequest(URL: URL)
@@ -60,7 +54,7 @@ public struct Octokit {
                 return mutableURLRequest
             }
         case .FORM:
-            var queryData = Octokit.urlQuery(parameters).dataUsingEncoding(NSUTF8StringEncoding)
+            let queryData = Octokit.urlQuery(parameters).dataUsingEncoding(NSUTF8StringEncoding)
             if let URL = NSURL(string: URLString) {
                 let mutableURLRequest = NSMutableURLRequest(URL: URL)
                 mutableURLRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "content-type")
@@ -75,16 +69,16 @@ public struct Octokit {
 
      public static func urlQuery(parameters: [String: String]) -> String {
         var components: [(String, String)] = []
-        for key in sorted(parameters.keys, <) {
+        for key in parameters.keys.sort(<) {
             if let value = parameters[key] {
                 components.append(key, value)
             }
         }
 
-        return join("&", components.map{"\($0)=\($1)"})
+        return components.map{"\($0)=\($1)"}.joinWithSeparator("&")
     }
 
-    internal func loadJSON<T>(router: Router, expectedResultType: T.Type, completion: (json: T?, error: NSError?) -> Void) {
+    internal func loadJSON<T>(router: Router, expectedResultType: T.Type, completion: (json: T?, error: ErrorType?) -> Void) {
         if let request = router.URLRequest {
             let task = NSURLSession.sharedSession().dataTaskWithRequest(request) { data, response, err in
                 if let response = response as? NSHTTPURLResponse {
@@ -98,9 +92,13 @@ public struct Octokit {
                 if let err = err {
                     completion(json: nil, error: err)
                 } else {
-                    var error: NSError?
-                    if let JSON = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: &error) as? T {
-                        completion(json: JSON, error: error)
+                    if let data = data {
+                        do {
+                            let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? T
+                            completion(json: JSON, error: nil)
+                        } catch {
+                            completion(json: nil, error: error)
+                        }
                     }
                 }
             }
@@ -108,31 +106,35 @@ public struct Octokit {
         }
     }
 
-    internal func postJSON<T>(router: JSONPostRouter, expectedResultType: T.Type, completion: (json: T?, error: NSError?) -> Void) {
-        var error: NSError?
-        if let request = router.URLRequest, data = NSJSONSerialization.dataWithJSONObject(router.params, options: .allZeros, error: &error) {
-            let task = NSURLSession.sharedSession().uploadTaskWithRequest(request, fromData: data) { data, response, error in
-                if let response = response as? NSHTTPURLResponse {
-                    if response.statusCode != 201 {
-                        let error = NSError(domain: errorDomain, code: response.statusCode, userInfo: nil)
+    internal func postJSON<T>(router: JSONPostRouter, expectedResultType: T.Type, completion: (json: T?, error: ErrorType?) -> Void) {
+        do {
+            let data = try NSJSONSerialization.dataWithJSONObject(router.params, options: NSJSONWritingOptions())
+            if let request = router.URLRequest {
+                let task = NSURLSession.sharedSession().uploadTaskWithRequest(request, fromData: data) { data, response, error in
+                    if let response = response as? NSHTTPURLResponse {
+                        if response.statusCode != 201 {
+                            let error = NSError(domain: errorDomain, code: response.statusCode, userInfo: nil)
+                            completion(json: nil, error: error)
+                            return
+                        }
+                    }
+
+                    if let error = error {
                         completion(json: nil, error: error)
-                        return
+                    } else {
+                        if let data = data {
+                            do {
+                                let JSON = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers) as? T
+                                completion(json: JSON, error: nil)
+                            } catch {
+                                completion(json: nil, error: error)
+                            }
+                        }
                     }
                 }
-
-                if let error = error {
-                    completion(json: nil, error: error)
-                } else {
-                    var error: NSError?
-                    if let JSON = NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers, error: &error) as? T {
-                        completion(json: JSON, error: error)
-                    }
-                }
+                task.resume()
             }
-            task.resume()
-        }
-
-        if let error = error {
+        } catch {
             completion(json: nil, error: error)
         }
     }

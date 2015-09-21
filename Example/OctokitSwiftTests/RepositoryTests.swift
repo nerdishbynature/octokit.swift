@@ -42,10 +42,10 @@ class RepositoryTests: XCTestCase {
             let expectation = expectationWithDescription("user_repos")
             Octokit(config).repositories() { response in
                 switch response {
-                case .Success(let box):
-                    XCTAssertEqual(box.unbox.count, 1)
+                case .Success(let repositories):
+                    XCTAssertEqual(repositories.count, 1)
                     expectation.fulfill()
-                case .Failure(let error):
+                case .Failure:
                     XCTAssert(false, "should not get an error")
                     expectation.fulfill()
                 }
@@ -68,9 +68,12 @@ class RepositoryTests: XCTestCase {
             case .Success:
                 XCTAssert(false, "should not retrieve repositories")
                 expectation.fulfill()
-            case .Failure(let error):
+            case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 401)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            case .Failure:
+                XCTAssertTrue(false)
                 expectation.fulfill()
             }
         }
@@ -87,12 +90,11 @@ class RepositoryTests: XCTestCase {
             let expectation = expectationWithDescription("repo")
             Octokit().repository(owner, name: name) { response in
                 switch response {
-                case .Success(let box):
-                    let repo = box.unbox
+                case .Success(let repo):
                     XCTAssertEqual(repo.name!, name)
                     XCTAssertEqual(repo.owner.login!, owner)
                     expectation.fulfill()
-                case .Failure(let error):
+                case .Failure:
                     XCTAssert(false, "should not get an error")
                     expectation.fulfill()
                 }
@@ -114,9 +116,12 @@ class RepositoryTests: XCTestCase {
             case .Success:
                 XCTAssert(false, "should not retrieve repositories")
                 expectation.fulfill()
-            case .Failure(let error):
+            case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            case .Failure:
+                XCTAssertTrue(false)
                 expectation.fulfill()
             }
         }
@@ -136,7 +141,7 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.name!, "Test")
         XCTAssertEqual(subject.fullName!, "mietzmithut/Test")
         XCTAssertEqual(subject.isPrivate, false)
-        XCTAssertEqual(subject.description!, "")
+        XCTAssertEqual(subject.repositoryDescription, "")
         XCTAssertEqual(subject.isFork!, false)
         XCTAssertEqual(subject.gitURL!, "git://github.com/mietzmithut/Test.git")
         XCTAssertEqual(subject.sshURL!, "git@github.com:mietzmithut/Test.git")

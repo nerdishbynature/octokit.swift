@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: model
 
-@objc public class User: AnyObject {
+@objc public class User: NSObject {
     public let id: Int
     public var login: String?
     public var avatarURL: String?
@@ -48,7 +48,7 @@ public extension Octokit {
             } else {
                 if let json = json {
                     let parsedUser = User(json)
-                    completion(response: Response.Success(Box(parsedUser)))
+                    completion(response: Response.Success(parsedUser))
                 }
             }
         }
@@ -61,7 +61,7 @@ public extension Octokit {
             } else {
                 if let json = json {
                     let parsedUser = User(json)
-                    completion(response: Response.Success(Box(parsedUser)))
+                    completion(response: Response.Success(parsedUser))
                 }
             }
         }
