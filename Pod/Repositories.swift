@@ -13,6 +13,7 @@ import Foundation
     public var gitURL: String?
     public var sshURL: String?
     public var cloneURL: String?
+    public var size: Int
 
     public init(_ json: [String: AnyObject]) {
         owner = User(json["owner"] as? [String: AnyObject] ?? [:])
@@ -26,9 +27,11 @@ import Foundation
             gitURL = json["git_url"] as? String
             sshURL = json["ssh_url"] as? String
             cloneURL = json["clone_url"] as? String
+            size = json["size"] as? Int ?? 0
         } else {
             id = -1
             isPrivate = false
+            size = 0
         }
     }
 }

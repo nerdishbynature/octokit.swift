@@ -146,5 +146,6 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.gitURL!, "git://github.com/mietzmithut/Test.git")
         XCTAssertEqual(subject.sshURL!, "git@github.com:mietzmithut/Test.git")
         XCTAssertEqual(subject.cloneURL!, "https://github.com/mietzmithut/Test.git")
+        XCTAssertEqual(subject.size, 132)
     }
 }
