@@ -10,10 +10,10 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/nerdishbynature/octokit.swift"
   s.license          = 'MIT'
   s.author           = { "Piet Brauer" => "piet@nerdishbynature.com" }
-  s.source           = { :git => "git://github.com/nerdishbynature/octokit.swift.git", :tag => s.version.to_s }
+  s.source           = { :git => "https://github.com/nerdishbynature/octokit.swift.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/pietbrauer'
   s.module_name     = "Octokit"
   s.platform     = :ios, '8.0'
   s.requires_arc = true
-  s.source_files = 'Pod'
+  s.source_files = 'OctoKit/*.swift'
 end

@@ -1,5 +1,6 @@
 import XCTest
 import OctoKit
+import Nocilla
 
 class RepositoryTests: XCTestCase {
     override func setUp() {

@@ -1,7 +1,19 @@
 import XCTest
 import OctoKit
+import Nocilla
 
 class UserTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        LSNocilla.sharedInstance().start()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        LSNocilla.sharedInstance().clearStubs()
+        LSNocilla.sharedInstance().stop()
+    }
+
     // MARK: URLRequest Tests
 
     func testReadingUserURLRequest() {

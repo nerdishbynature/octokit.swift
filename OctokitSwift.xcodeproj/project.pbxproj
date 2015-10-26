@@ -17,6 +17,8 @@
 		23B2678E1BDDD756003887E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267891BDDD756003887E3 /* User.swift */; };
 		23B267911BDDD78B003887E3 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239BE7C91B8C47A100D2CE22 /* OctoKit.framework */; };
 		23B267921BDDD798003887E3 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239BE7C91B8C47A100D2CE22 /* OctoKit.framework */; };
+		23B2679D1BDDDBBE003887E3 /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23B2679C1BDDDBBE003887E3 /* Nocilla.framework */; };
+		23B267A01BDDDC15003887E3 /* Nocilla.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23B2679C1BDDDBBE003887E3 /* Nocilla.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F01C6F3A1A6429CC0072FA44 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01C6F391A6429CC0072FA44 /* AppDelegate.swift */; };
 		F01C6F3C1A6429CC0072FA44 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F01C6F3B1A6429CC0072FA44 /* ViewController.swift */; };
 		F01C6F3F1A6429CC0072FA44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F01C6F3D1A6429CC0072FA44 /* Main.storyboard */; };
@@ -57,6 +59,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		23B2679E1BDDDC03003887E3 /* Carthage embed */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 8;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				23B267A01BDDDC15003887E3 /* Nocilla.framework in Carthage embed */,
+			);
+			name = "Carthage embed";
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		081DB7E30442989934CFD48F /* Pods_OctokitSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OctokitSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DBDD4785808B6E8CD3190E8 /* Pods-OctokitSwiftTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OctokitSwiftTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OctokitSwiftTests/Pods-OctokitSwiftTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -70,6 +86,7 @@
 		23B267871BDDD756003887E3 /* PublicKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicKey.swift; sourceTree = "<group>"; };
 		23B267881BDDD756003887E3 /* Repositories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repositories.swift; sourceTree = "<group>"; };
 		23B267891BDDD756003887E3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		23B2679C1BDDDBBE003887E3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/iOS/Nocilla.framework; sourceTree = "<group>"; };
 		2C35E8C321CC64D5910C3185 /* Pods-OctokitSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OctokitSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OctokitSwift/Pods-OctokitSwift.debug.xcconfig"; sourceTree = "<group>"; };
 		43D2D4FB0106533E43109D55 /* Pods-OctokitSwiftTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OctokitSwiftTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OctokitSwiftTests/Pods-OctokitSwiftTests.debug.xcconfig"; sourceTree = "<group>"; };
 		45A6EDE8A785CC37566E9121 /* Pods_OctokitSwiftTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OctokitSwiftTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +131,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23B2679D1BDDDBBE003887E3 /* Nocilla.framework in Frameworks */,
 				23B267911BDDD78B003887E3 /* OctoKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,6 +164,7 @@
 		B975D5A3F8B0384EFB0C5863 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23B2679C1BDDDBBE003887E3 /* Nocilla.framework */,
 				081DB7E30442989934CFD48F /* Pods_OctokitSwift.framework */,
 				45A6EDE8A785CC37566E9121 /* Pods_OctokitSwiftTests.framework */,
 			);
@@ -298,6 +317,7 @@
 				F01C6F451A6429CC0072FA44 /* Sources */,
 				F01C6F461A6429CC0072FA44 /* Frameworks */,
 				F01C6F471A6429CC0072FA44 /* Resources */,
+				23B2679E1BDDDC03003887E3 /* Carthage embed */,
 			);
 			buildRules = (
 			);
@@ -618,6 +638,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -633,6 +657,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = OctokitSwiftTests/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -1,8 +1,20 @@
 import XCTest
 import Foundation
 import OctoKit
+import Nocilla
 
 class ConfigurationTests: XCTestCase {
+    override func setUp() {
+        super.setUp()
+        LSNocilla.sharedInstance().start()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        LSNocilla.sharedInstance().clearStubs()
+        LSNocilla.sharedInstance().stop()
+    }
+
     func testTokenConfiguration() {
         let subject = TokenConfiguration("12345")
         XCTAssertEqual(subject.accessToken!, "12345")
