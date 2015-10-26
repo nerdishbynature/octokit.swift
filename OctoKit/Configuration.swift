@@ -1,3 +1,5 @@
+import RequestKit
+
 let githubBaseURL = "https://api.github.com"
 let githubWebURL = "https://github.com"
 
