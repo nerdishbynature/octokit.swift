@@ -1,12 +1,7 @@
 let githubBaseURL = "https://api.github.com"
 let githubWebURL = "https://github.com"
 
-public protocol OctokitConfiguration {
-    var apiEndpoint: String { get }
-    var accessToken: String? { get }
-}
-
-public struct TokenConfiguration: OctokitConfiguration {
+public struct TokenConfiguration: Configuration {
     public var apiEndpoint: String
     public var accessToken: String?
 
@@ -16,7 +11,7 @@ public struct TokenConfiguration: OctokitConfiguration {
     }
 }
 
-public struct OAuthConfiguration: OctokitConfiguration {
+public struct OAuthConfiguration: Configuration {
     public var apiEndpoint: String
     public var accessToken: String?
     public let token: String
@@ -80,6 +75,13 @@ public enum OAuthRouter: Router {
     case Authorize(OAuthConfiguration)
     case AccessToken(OAuthConfiguration, String)
 
+    public var configuration: Configuration {
+        switch self {
+        case .Authorize(let config): return config
+        case .AccessToken(let config, _): return config
+        }
+    }
+
     public var method: HTTPMethod {
         switch self {
         case .Authorize:
@@ -121,10 +123,10 @@ public enum OAuthRouter: Router {
         switch self {
         case .Authorize(let config):
             let URLString = config.webEndpoint.stringByAppendingURLPath(path)
-            return Octokit.request(URLString, router: self, parameters: params)
+            return request(URLString, parameters: params)
         case .AccessToken(let config, _):
             let URLString = config.webEndpoint.stringByAppendingURLPath(path)
-            return Octokit.request(URLString, router: self, parameters: params)
+            return request(URLString, parameters: params)
         }
     }
 }
