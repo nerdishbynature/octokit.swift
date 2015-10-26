@@ -1,3 +1,4 @@
+import Foundation
 import RequestKit
 
 let githubBaseURL = "https://api.github.com"
