@@ -1,6 +1,6 @@
 import XCTest
+import OctoKit
 import Nocilla
-import Octokit
 
 class UserTests: XCTestCase {
     override func setUp() {

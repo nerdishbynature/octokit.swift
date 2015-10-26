@@ -22,3 +22,5 @@ DerivedData
 
 .DS_Store
 Pods/
+Carthage/
+Checkouts/

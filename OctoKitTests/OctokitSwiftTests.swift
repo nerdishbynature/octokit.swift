@@ -1,6 +1,5 @@
 import XCTest
-import Octokit
-import Nocilla
+import OctoKit
 
 let enterpriseURL = "https://enterprise.myserver.com"
 

@@ -1,6 +1,6 @@
 import XCTest
 import Foundation
-import Octokit
+import OctoKit
 import Nocilla
 
 class ConfigurationTests: XCTestCase {
