@@ -71,7 +71,7 @@ public extension Octokit {
     }
 }
 
-// MAKR: Router
+// MARK: Router
 
 public enum UserRouter: Router {
     case ReadAuthenticatedUser(Configuration)
