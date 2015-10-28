@@ -1,11 +1,3 @@
-//
-//  Stars.swift
-//  OctoKit
-//
-//  Created by Nate West on 10/27/15.
-//  Copyright © 2015 nerdish by nature. All rights reserved.
-//
-
 import Foundation
 
 public extension Octokit {
