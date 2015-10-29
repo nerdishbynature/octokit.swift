@@ -156,3 +156,33 @@ Octokit().repositories() { response in
   }
 }
 ```
+
+## Starred Repositories
+
+### Get starred repositories of some user
+
+```swift
+let username = "username"
+Octokit().stars(username) { response in
+  switch response {
+    case .Success(let repositories):
+      // do something with the repositories
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
+
+### Get starred repositories of authenticated user
+
+```swift
+Octokit().myStars() { response in
+  switch response {
+    case .Success(let repositories):
+      // do something with the repositories
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
+

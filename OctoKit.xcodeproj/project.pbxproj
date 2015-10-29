@@ -27,6 +27,8 @@
 		23B2678C1BDDD756003887E3 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267871BDDD756003887E3 /* PublicKey.swift */; };
 		23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267881BDDD756003887E3 /* Repositories.swift */; };
 		23B2678E1BDDD756003887E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267891BDDD756003887E3 /* User.swift */; };
+		E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D71BDFEFB30012E3D2 /* Stars.swift */; };
+		E7EE59DA1BE10DA60012E3D2 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +78,8 @@
 		23B267881BDDD756003887E3 /* Repositories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repositories.swift; sourceTree = "<group>"; };
 		23B267891BDDD756003887E3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		23B2679C1BDDDBBE003887E3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/iOS/Nocilla.framework; sourceTree = "<group>"; };
+		E7EE59D71BDFEFB30012E3D2 /* Stars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stars.swift; sourceTree = "<group>"; };
+		E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +110,7 @@
 				234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */,
 				234F4BCC1BDDE3F900A58EF7 /* PublicKeyTests.swift */,
 				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
+				E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */,
 				234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */,
 				234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */,
 				234F4BAD1BDDE31A00A58EF7 /* Info.plist */,
@@ -134,6 +139,7 @@
 				23B267871BDDD756003887E3 /* PublicKey.swift */,
 				23B267881BDDD756003887E3 /* Repositories.swift */,
 				23B267891BDDD756003887E3 /* User.swift */,
+				E7EE59D71BDFEFB30012E3D2 /* Stars.swift */,
 				239BE7CB1B8C47A100D2CE22 /* Supporting Files */,
 			);
 			path = OctoKit;
@@ -296,6 +302,7 @@
 				234F4BD51BDDE3F900A58EF7 /* TestHelper.swift in Sources */,
 				234F4BD01BDDE3F900A58EF7 /* ConfigurationTests.swift in Sources */,
 				234F4BD21BDDE3F900A58EF7 /* OctokitSwiftTests.swift in Sources */,
+				E7EE59DA1BE10DA60012E3D2 /* StarsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23B2678A1BDDD756003887E3 /* Configuration.swift in Sources */,
+				E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */,
 				23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */,
 				23B2678C1BDDD756003887E3 /* PublicKey.swift in Sources */,
 				23B2678E1BDDD756003887E3 /* User.swift in Sources */,
