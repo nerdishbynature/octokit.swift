@@ -15,8 +15,23 @@ public extension Octokit {
             }
         }
     }
+
     public func followers(name: String, completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadFollowers(name, configuration)
+        router.loadJSON([[String: AnyObject]].self) { json, error in
+            if let error = error {
+                completion(response: Response.Failure(error))
+            } else {
+                if let json = json {
+                    let parsedUsers = json.map { User($0) }
+                    completion(response: Response.Success(parsedUsers))
+                }
+            }
+        }
+    }
+
+    public func myFollowing(completion: (response: Response<[User]>) -> Void) {
+        let router = FollowRouter.ReadAuthenticatedFollowing(configuration)
         router.loadJSON([[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))

@@ -131,4 +131,50 @@ class FollowTests: XCTestCase {
             XCTAssertNil(error, "\(error)")
         }
     }
+
+    func testGetMyFollowing() {
+        let config = TokenConfiguration("12345")
+        if let json = Helper.stringFromFile("users") {
+            stubRequest("GET", "https://api.github.com/user/following?access_token=12345").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+            let expectation = expectationWithDescription("user_following")
+            Octokit(config).myFollowing() { response in
+                switch response {
+                case .Success(let users):
+                    XCTAssertEqual(users.count, 1)
+                    expectation.fulfill()
+                case .Failure:
+                    XCTAssert(false, "should not get an error")
+                    expectation.fulfill()
+                }
+            }
+            waitForExpectationsWithTimeout(1) { (error) in
+                XCTAssertNil(error, "\(error)")
+            }
+        } else {
+            XCTFail("json shouldn't be nil")
+        }
+    }
+
+    func testFailToGetMyFollowing() {
+        let config = TokenConfiguration("12345")
+        stubRequest("GET", "https://api.github.com/user/following?access_token=12345").andReturn(404)
+        let expectation = expectationWithDescription("failing_my_following")
+        Octokit(config).myFollowing() { response in
+            switch response {
+            case .Success:
+                XCTAssert(false, "should not retrieve repositories")
+                expectation.fulfill()
+            case .Failure(let error as NSError):
+                XCTAssertEqual(error.code, 404)
+                XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            case .Failure:
+                XCTAssertTrue(false)
+                expectation.fulfill()
+            }
+        }
+        waitForExpectationsWithTimeout(1) { error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
 }
