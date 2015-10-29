@@ -87,4 +87,48 @@ class FollowTests: XCTestCase {
             XCTAssertNil(error, "\(error)")
         }
     }
+
+    func testGetUsersFollowers() {
+        if let json = Helper.stringFromFile("users") {
+            stubRequest("GET", "https://api.github.com/users/octocat/followers").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+            let expectation = expectationWithDescription("users_followers")
+            Octokit().followers("octocat") { response in
+                switch response {
+                case .Success(let users):
+                    XCTAssertEqual(users.count, 1)
+                    expectation.fulfill()
+                case .Failure:
+                    XCTAssert(false, "should not get an error")
+                    expectation.fulfill()
+                }
+            }
+            waitForExpectationsWithTimeout(1) { (error) in
+                XCTAssertNil(error, "\(error)")
+            }
+        } else {
+            XCTFail("json shouldn't be nil")
+        }
+    }
+
+    func testFailToGetUsersFollowers() {
+        stubRequest("GET", "https://api.github.com/users/octocat/followers").andReturn(404)
+        let expectation = expectationWithDescription("failing_users_followers")
+        Octokit().followers("octocat") { response in
+            switch response {
+            case .Success:
+                XCTAssert(false, "should not retrieve repositories")
+                expectation.fulfill()
+            case .Failure(let error as NSError):
+                XCTAssertEqual(error.code, 404)
+                XCTAssertEqual(error.domain, "com.octokit.swift")
+                expectation.fulfill()
+            case .Failure:
+                XCTAssertTrue(false)
+                expectation.fulfill()
+            }
+        }
+        waitForExpectationsWithTimeout(1) { error in
+            XCTAssertNil(error, "\(error)")
+        }
+    }
 }

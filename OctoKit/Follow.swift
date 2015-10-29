@@ -15,6 +15,19 @@ public extension Octokit {
             }
         }
     }
+    public func followers(name: String, completion: (response: Response<[User]>) -> Void) {
+        let router = FollowRouter.ReadFollowers(name, configuration)
+        router.loadJSON([[String: AnyObject]].self) { json, error in
+            if let error = error {
+                completion(response: Response.Failure(error))
+            } else {
+                if let json = json {
+                    let parsedUsers = json.map { User($0) }
+                    completion(response: Response.Success(parsedUsers))
+                }
+            }
+        }
+    }
 }
 
 public enum FollowRouter: Router {
@@ -30,7 +43,7 @@ public enum FollowRouter: Router {
     public var encoding: HTTPEncoding {
         return .URL
     }
-    
+
     public var configuration: Configuration {
         switch self {
         case .ReadAuthenticatedFollowers(let config): return config
@@ -39,7 +52,7 @@ public enum FollowRouter: Router {
         case .ReadFollowing(_, let config): return config
         }
     }
-    
+
     public var path: String {
         switch self {
         case .ReadAuthenticatedFollowers:
@@ -56,7 +69,7 @@ public enum FollowRouter: Router {
     public var params: [String: String] {
         return [:]
     }
-    
+
     public var URLRequest: NSURLRequest? {
         return request()
     }
