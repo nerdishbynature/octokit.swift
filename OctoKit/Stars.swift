@@ -1,8 +1,10 @@
 import Foundation
+import RequestKit
 
 public extension Octokit {
     public func stars(name: String, completion: (response: Response<[Repository]>) -> Void) {
-        loadJSON(StarsRouter.ReadStars(name, self), expectedResultType: [[String: AnyObject]].self) { json, error in
+        let router = StarsRouter.ReadStars(name, configuration)
+        router.loadJSON([[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -15,7 +17,8 @@ public extension Octokit {
     }
 
     public func myStars(completion: (response: Response<[Repository]>) -> Void) {
-        loadJSON(StarsRouter.ReadAuthenticatedStars(self), expectedResultType: [[String: AnyObject]].self) { json, error in
+        let router = StarsRouter.ReadAuthenticatedStars(configuration)
+        router.loadJSON([[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -29,10 +32,17 @@ public extension Octokit {
 }
 
 public enum StarsRouter: Router {
-    case ReadAuthenticatedStars(Octokit)
-    case ReadStars(String, Octokit)
+    case ReadAuthenticatedStars(Configuration)
+    case ReadStars(String, Configuration)
     public var method: HTTPMethod {
         return .GET
+    }
+
+    public var configuration: Configuration {
+        switch self {
+        case .ReadAuthenticatedStars(let config): return config
+        case .ReadStars(_, let config): return config
+        }
     }
 
     public var encoding: HTTPEncoding {
@@ -53,11 +63,6 @@ public enum StarsRouter: Router {
     }
 
     public var URLRequest: NSURLRequest? {
-        switch self {
-        case .ReadAuthenticatedStars(let kit):
-            return kit.request(self)
-        case .ReadStars(_, let kit):
-            return kit.request(self)
-        }
+        return request()
     }
 }
