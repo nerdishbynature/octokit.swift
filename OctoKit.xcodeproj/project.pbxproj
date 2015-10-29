@@ -21,6 +21,8 @@
 		234F4BDF1BDDE44600A58EF7 /* user_me.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDA1BDDE44600A58EF7 /* user_me.json */; };
 		234F4BE01BDDE44600A58EF7 /* user_mietzmithut.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDB1BDDE44600A58EF7 /* user_mietzmithut.json */; };
 		234F4BE11BDDE44600A58EF7 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
+		234F4C3F1BDE0FE200A58EF7 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */; };
+		234F4C401BDE113800A58EF7 /* RequestKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		239BE7CE1B8C47A100D2CE22 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		23B2678A1BDDD756003887E3 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267851BDDD756003887E3 /* Configuration.swift */; };
 		23B2678B1BDDD756003887E3 /* Octokit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267861BDDD756003887E3 /* Octokit.swift */; };
@@ -48,6 +50,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				234F4C401BDE113800A58EF7 /* RequestKit.framework in Carthage embed */,
 				234F4BC31BDDE37100A58EF7 /* Nocilla.framework in Carthage embed */,
 			);
 			name = "Carthage embed";
@@ -69,6 +72,7 @@
 		234F4BDA1BDDE44600A58EF7 /* user_me.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_me.json; path = Fixtures/user_me.json; sourceTree = "<group>"; };
 		234F4BDB1BDDE44600A58EF7 /* user_mietzmithut.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_mietzmithut.json; path = Fixtures/user_mietzmithut.json; sourceTree = "<group>"; };
 		234F4BDC1BDDE44600A58EF7 /* user_repos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_repos.json; path = Fixtures/user_repos.json; sourceTree = "<group>"; };
+		234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/iOS/RequestKit.framework; sourceTree = "<group>"; };
 		239BE7C91B8C47A100D2CE22 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		239BE7CC1B8C47A100D2CE22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		239BE7CD1B8C47A100D2CE22 /* OctoKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OctoKit.h; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				234F4C3F1BDE0FE200A58EF7 /* RequestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,6 +161,7 @@
 		B975D5A3F8B0384EFB0C5863 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */,
 				23B2679C1BDDDBBE003887E3 /* Nocilla.framework */,
 			);
 			name = Frameworks;
@@ -375,6 +381,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -405,6 +415,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = OctoKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

@@ -1,4 +1,5 @@
 import Foundation
+import RequestKit
 
 // MARK: model
 
@@ -40,7 +41,8 @@ import Foundation
 
 public extension Octokit {
     public func repositories(page: String = "1", perPage: String = "100", completion: (response: Response<[Repository]>) -> Void) {
-        loadJSON(RepositoryRouter.ReadRepositories(self, page, perPage), expectedResultType: [[String: AnyObject]].self) { json, error in
+        let router = RepositoryRouter.ReadRepositories(configuration, page, perPage)
+        router.loadJSON([[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             }
@@ -53,7 +55,8 @@ public extension Octokit {
     }
 
     public func repository(owner: String, name: String, completion: (response: Response<Repository>) -> Void) {
-        loadJSON(RepositoryRouter.ReadRepository(self, owner, name), expectedResultType: [String: AnyObject].self) { json, error in
+        let router = RepositoryRouter.ReadRepository(configuration, owner, name)
+        router.loadJSON([String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -69,8 +72,15 @@ public extension Octokit {
 // MARK: Router
 
 public enum RepositoryRouter: Router {
-    case ReadRepositories(Octokit, String, String)
-    case ReadRepository(Octokit, String, String)
+    case ReadRepositories(Configuration, String, String)
+    case ReadRepository(Configuration, String, String)
+
+    public var configuration: Configuration {
+        switch self {
+        case .ReadRepositories(let config, _, _): return config
+        case .ReadRepository(let config, _, _): return config
+        }
+    }
 
     public var method: HTTPMethod {
         return .GET
@@ -100,10 +110,10 @@ public enum RepositoryRouter: Router {
 
     public var URLRequest: NSURLRequest? {
         switch self {
-        case .ReadRepositories(let kit, _, _):
-            return kit.request(self)
-        case .ReadRepository(let kit, _, _):
-            return kit.request(self)
+        case .ReadRepositories(_, _, _):
+            return request()
+        case .ReadRepository(_, _, _):
+            return request()
         }
     }
 }

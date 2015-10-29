@@ -1,4 +1,5 @@
 import Foundation
+import RequestKit
 
 // MARK: model
 
@@ -42,7 +43,8 @@ import Foundation
 
 public extension Octokit {
     public func user(name: String, completion: (response: Response<User>) -> Void) {
-        loadJSON(UserRouter.ReadUser(name, self), expectedResultType: [String: AnyObject].self) { json, error in
+        let router = UserRouter.ReadUser(name, self.configuration)
+        router.loadJSON([String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -55,7 +57,8 @@ public extension Octokit {
     }
 
     public func me(completion: (response: Response<User>) -> Void) {
-        loadJSON(UserRouter.ReadAuthenticatedUser(self), expectedResultType: [String: AnyObject].self) { json, error in
+        let router = UserRouter.ReadAuthenticatedUser(self.configuration)
+        router.loadJSON([String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -71,8 +74,15 @@ public extension Octokit {
 // MARK: Router
 
 public enum UserRouter: Router {
-    case ReadAuthenticatedUser(Octokit)
-    case ReadUser(String, Octokit)
+    case ReadAuthenticatedUser(Configuration)
+    case ReadUser(String, Configuration)
+
+    public var configuration: Configuration {
+        switch self {
+        case .ReadAuthenticatedUser(let config): return config
+        case .ReadUser(_, let config): return config
+        }
+    }
 
     public var method: HTTPMethod {
         return .GET
@@ -97,10 +107,10 @@ public enum UserRouter: Router {
 
     public var URLRequest: NSURLRequest? {
         switch self {
-        case .ReadAuthenticatedUser(let kit):
-            return kit.request(self)
-        case .ReadUser(_, let kit):
-            return kit.request(self)
+        case .ReadAuthenticatedUser(_):
+            return request()
+        case .ReadUser(_, _):
+            return request()
         }
     }
 }

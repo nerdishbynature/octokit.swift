@@ -1,10 +1,12 @@
 import Foundation
+import RequestKit
 
 // MARK: request
 
 public extension Octokit {
     public func postPublicKey(publicKey: String, title: String, completion: (response:Response<String>) -> Void) {
-        postJSON(PublicKeyRouter.PostPublicKey(publicKey, title, self), expectedResultType: [String: AnyObject].self) { json, error in
+        let router = PublicKeyRouter.PostPublicKey(publicKey, title, configuration)
+        router.postJSON([String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -17,7 +19,13 @@ public extension Octokit {
 }
 
 public enum PublicKeyRouter: JSONPostRouter {
-    case PostPublicKey(String, String, Octokit)
+    case PostPublicKey(String, String, Configuration)
+
+    public var configuration: Configuration {
+        switch self {
+        case .PostPublicKey(_, _, let config): return config
+        }
+    }
 
     public var method: HTTPMethod {
         switch self {
@@ -49,8 +57,8 @@ public enum PublicKeyRouter: JSONPostRouter {
 
     public var URLRequest: NSURLRequest? {
         switch self {
-        case .PostPublicKey(_, _, let kit):
-            return kit.request(self)
+        case .PostPublicKey(_, _, _):
+            return request()
         }
     }
 }

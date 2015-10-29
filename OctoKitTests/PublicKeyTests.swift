@@ -18,7 +18,7 @@ class PublicKeyTests: XCTestCase {
 
     func testPostPublicKeyURLRequest() {
         let kit = Octokit(TokenConfiguration("12345"))
-        let request = PublicKeyRouter.PostPublicKey("test-key", "test title", kit).URLRequest
+        let request = PublicKeyRouter.PostPublicKey("test-key", "test title", kit.configuration).URLRequest
         XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/keys?access_token=12345")!)
     }
 
