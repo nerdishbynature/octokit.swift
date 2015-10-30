@@ -1,9 +1,0 @@
-machine:
-  xcode:
-    version: "7.0"
-dependencies:
-  override:
-    - make install
-test:
-  override:
-    - make test
