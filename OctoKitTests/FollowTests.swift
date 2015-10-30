@@ -72,7 +72,7 @@ class FollowTests: XCTestCase {
         Octokit(config).myFollowers() { response in
             switch response {
             case .Success:
-                XCTAssert(false, "should not retrieve repositories")
+                XCTAssert(false, "should not retrieve followers")
                 expectation.fulfill()
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
@@ -116,7 +116,7 @@ class FollowTests: XCTestCase {
         Octokit().followers("octocat") { response in
             switch response {
             case .Success:
-                XCTAssert(false, "should not retrieve repositories")
+                XCTAssert(false, "should not retrieve followers")
                 expectation.fulfill()
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
@@ -162,7 +162,7 @@ class FollowTests: XCTestCase {
         Octokit(config).myFollowing() { response in
             switch response {
             case .Success:
-                XCTAssert(false, "should not retrieve repositories")
+                XCTAssert(false, "should not retrieve following")
                 expectation.fulfill()
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
@@ -206,7 +206,7 @@ class FollowTests: XCTestCase {
         Octokit().following("octocat") { response in
             switch response {
             case .Success:
-                XCTAssert(false, "should not retrieve repositories")
+                XCTAssert(false, "should not retrieve following")
                 expectation.fulfill()
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
