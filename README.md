@@ -186,3 +186,59 @@ Octokit().myStars() { response in
 }
 ```
 
+## Follower and Following
+
+### Get followers of some user
+
+```swift
+let username = "username"
+Octokit().followers(username) { response in
+  switch response {
+    case .Success(let users):
+      // do something with the users
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
+
+### Get followers of authenticated user
+
+```swift
+Octokit().myFollowers() { response in
+  switch response {
+    case .Success(let users):
+      // do something with the users
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
+
+### Get following of some user
+
+```swift
+let username = "username"
+Octokit().following(username) { response in
+  switch response {
+    case .Success(let users):
+      // do something with the users
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
+
+### Get following of authenticated user
+
+```swift
+Octokit().myFollowing() { response in
+  switch response {
+    case .Success(let users):
+      // do something with the users
+    case .Failure(let error):
+      // handle any errors
+  }
+}
+```
+

@@ -31,6 +31,9 @@
 		23B2678E1BDDD756003887E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267891BDDD756003887E3 /* User.swift */; };
 		E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D71BDFEFB30012E3D2 /* Stars.swift */; };
 		E7EE59DA1BE10DA60012E3D2 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
+		E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
+		E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */; };
+		E7EE59E01BE139FD0012E3D2 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +87,9 @@
 		23B2679C1BDDDBBE003887E3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/iOS/Nocilla.framework; sourceTree = "<group>"; };
 		E7EE59D71BDFEFB30012E3D2 /* Stars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stars.swift; sourceTree = "<group>"; };
 		E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsTests.swift; sourceTree = "<group>"; };
+		E7EE59DB1BE119110012E3D2 /* Follow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
+		E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTests.swift; sourceTree = "<group>"; };
+		E7EE59DF1BE139FD0012E3D2 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,7 @@
 			children = (
 				234F4BD71BDDE40400A58EF7 /* Fixtures */,
 				234F4BC91BDDE3F900A58EF7 /* ConfigurationTests.swift */,
+				E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */,
 				234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */,
 				234F4BCC1BDDE3F900A58EF7 /* PublicKeyTests.swift */,
 				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
@@ -131,6 +138,7 @@
 				234F4BDA1BDDE44600A58EF7 /* user_me.json */,
 				234F4BDB1BDDE44600A58EF7 /* user_mietzmithut.json */,
 				234F4BDC1BDDE44600A58EF7 /* user_repos.json */,
+				E7EE59DF1BE139FD0012E3D2 /* users.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -140,6 +148,7 @@
 			children = (
 				239BE7CD1B8C47A100D2CE22 /* OctoKit.h */,
 				23B267851BDDD756003887E3 /* Configuration.swift */,
+				E7EE59DB1BE119110012E3D2 /* Follow.swift */,
 				23B267861BDDD756003887E3 /* Octokit.swift */,
 				23B267871BDDD756003887E3 /* PublicKey.swift */,
 				23B267881BDDD756003887E3 /* Repositories.swift */,
@@ -280,6 +289,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7EE59E01BE139FD0012E3D2 /* users.json in Resources */,
 				234F4BDF1BDDE44600A58EF7 /* user_me.json in Resources */,
 				234F4BDD1BDDE44600A58EF7 /* public_key.json in Resources */,
 				234F4BDE1BDDE44600A58EF7 /* repo.json in Resources */,
@@ -305,6 +315,7 @@
 				234F4BD61BDDE3F900A58EF7 /* UserTests.swift in Sources */,
 				234F4BD31BDDE3F900A58EF7 /* PublicKeyTests.swift in Sources */,
 				234F4BD41BDDE3F900A58EF7 /* RepositoryTests.swift in Sources */,
+				E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */,
 				234F4BD51BDDE3F900A58EF7 /* TestHelper.swift in Sources */,
 				234F4BD01BDDE3F900A58EF7 /* ConfigurationTests.swift in Sources */,
 				234F4BD21BDDE3F900A58EF7 /* OctokitSwiftTests.swift in Sources */,
@@ -316,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */,
 				23B2678A1BDDD756003887E3 /* Configuration.swift in Sources */,
 				E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */,
 				23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */,
