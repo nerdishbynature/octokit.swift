@@ -1,5 +1,6 @@
 osx_image: xcode71
 language: objective-c
+before_install: brew update
 install: make install
 script: make test
 notifications:
