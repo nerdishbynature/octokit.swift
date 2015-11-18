@@ -1,6 +1,6 @@
 # Octokit.swift
 
-[![Build Status](https://travis-ci.org/nerdishbynature/octokit.swift.svg?branch=travis.yml)](https://travis-ci.org/nerdishbynature/octokit.swift)
+[![Build Status](https://travis-ci.org/nerdishbynature/octokit.swift.svg?branch=master)](https://travis-ci.org/nerdishbynature/octokit.swift)
 
 ## Authentication
 
