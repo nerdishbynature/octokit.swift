@@ -1,11 +1,3 @@
-//
-//  Time.swift
-//  OctoKit
-//
-//  Created by Ben Chatelain on 11/18/15.
-//  Copyright © 2015 nerdish by nature. All rights reserved.
-//
-
 import Foundation
 
 struct Time {
