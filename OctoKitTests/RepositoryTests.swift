@@ -48,6 +48,28 @@ class RepositoryTests: XCTestCase {
     // MARK: Actual Request tests
 
     func testGetRepositories() {
+        if let json = Helper.stringFromFile("user_repos") {
+            stubRequest("GET", "https://api.github.com/users/octocat/repos?page=1&per_page=100").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+            let expectation = expectationWithDescription("user_repos")
+            Octokit().repositories("octocat") { response in
+                switch response {
+                case .Success(let repositories):
+                    XCTAssertEqual(repositories.count, 1)
+                    expectation.fulfill()
+                case .Failure:
+                    XCTAssert(false, "should not get an error")
+                    expectation.fulfill()
+                }
+            }
+            waitForExpectationsWithTimeout(1) { (error) in
+                XCTAssertNil(error, "\(error)")
+            }
+        } else {
+            XCTFail("json shouldn't be nil")
+        }
+    }
+
+    func testGetAuthenticatedRepositories() {
         let config = TokenConfiguration("12345")
         if let json = Helper.stringFromFile("user_repos") {
             stubRequest("GET", "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
