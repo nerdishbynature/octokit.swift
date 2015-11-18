@@ -44,8 +44,10 @@ import RequestKit
 // MARK: request
 
 public extension Octokit {
-    public func repositories(page: String = "1", perPage: String = "100", completion: (response: Response<[Repository]>) -> Void) {
-        let router = RepositoryRouter.ReadRepositories(configuration, page, perPage)
+    public func repositories(owner: String? = nil, page: String = "1", perPage: String = "100", completion: (response: Response<[Repository]>) -> Void) {
+        let router = (owner != nil)
+            ? RepositoryRouter.ReadRepositories(configuration, owner!, page, perPage)
+            : RepositoryRouter.ReadAuthenticatedRepositories(configuration, page, perPage)
         router.loadJSON([[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
@@ -76,12 +78,14 @@ public extension Octokit {
 // MARK: Router
 
 public enum RepositoryRouter: Router {
-    case ReadRepositories(Configuration, String, String)
+    case ReadRepositories(Configuration, String, String, String)
+    case ReadAuthenticatedRepositories(Configuration, String, String)
     case ReadRepository(Configuration, String, String)
 
     public var configuration: Configuration {
         switch self {
-        case .ReadRepositories(let config, _, _): return config
+        case .ReadRepositories(let config, _, _, _): return config
+        case .ReadAuthenticatedRepositories(let config, _, _): return config
         case .ReadRepository(let config, _, _): return config
         }
     }
@@ -96,7 +100,9 @@ public enum RepositoryRouter: Router {
 
     public var params: [String: String] {
         switch self {
-        case .ReadRepositories(_, let page, let perPage):
+        case .ReadRepositories(_, _, let page, let perPage):
+            return ["per_page": perPage, "page": page]
+        case .ReadAuthenticatedRepositories(_, let page, let perPage):
             return ["per_page": perPage, "page": page]
         case .ReadRepository:
             return [:]
@@ -105,7 +111,9 @@ public enum RepositoryRouter: Router {
 
     public var path: String {
         switch self {
-        case .ReadRepositories:
+        case ReadRepositories(_, let owner, _, _):
+            return "/users/\(owner)/repos"
+        case .ReadAuthenticatedRepositories:
             return "/user/repos"
         case .ReadRepository(_, let owner, let name):
             return "/repos/\(owner)/\(name)"
@@ -114,7 +122,9 @@ public enum RepositoryRouter: Router {
 
     public var URLRequest: NSURLRequest? {
         switch self {
-        case .ReadRepositories(_, _, _):
+        case .ReadRepositories(_, _, _, _):
+            return request()
+        case .ReadAuthenticatedRepositories(_, _, _):
             return request()
         case .ReadRepository(_, _, _):
             return request()
