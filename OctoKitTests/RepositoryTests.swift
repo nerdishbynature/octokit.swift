@@ -16,15 +16,15 @@ class RepositoryTests: XCTestCase {
 
     // MARK: URLRequest Tests
 
-    func testReadRepositoriesURLRequest() {
+    func testReadAuthenticatedRepositoriesURLRequest() {
         let kit = Octokit(TokenConfiguration("12345"))
-        let request = RepositoryRouter.ReadRepositories(kit.configuration, "1", "100").URLRequest
+        let request = RepositoryRouter.ReadAuthenticatedRepositories(kit.configuration, "1", "100").URLRequest
         XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100")!)
     }
 
-    func testReadRepositoriesURLRequestWithCustomPageAndPerPage() {
+    func testReadAuthenticatedRepositoriesURLRequestWithCustomPageAndPerPage() {
         let kit = Octokit(TokenConfiguration("12345"))
-        let request = RepositoryRouter.ReadRepositories(kit.configuration, "5", "50").URLRequest
+        let request = RepositoryRouter.ReadAuthenticatedRepositories(kit.configuration, "5", "50").URLRequest
         XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345&page=5&per_page=50")!)
     }
 
