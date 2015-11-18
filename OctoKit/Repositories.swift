@@ -14,7 +14,9 @@ import RequestKit
     public var gitURL: String?
     public var sshURL: String?
     public var cloneURL: String?
+    public var htmlURL: String?
     public var size: Int
+    public var lastPush: NSDate?
 
     public init(_ json: [String: AnyObject]) {
         owner = User(json["owner"] as? [String: AnyObject] ?? [:])
@@ -28,7 +30,9 @@ import RequestKit
             gitURL = json["git_url"] as? String
             sshURL = json["ssh_url"] as? String
             cloneURL = json["clone_url"] as? String
+            htmlURL = json["html_url"] as? String
             size = json["size"] as? Int ?? 0
+            lastPush = Time.rfc3339Date(json["pushed_at"] as? String)
         } else {
             id = -1
             isPrivate = false

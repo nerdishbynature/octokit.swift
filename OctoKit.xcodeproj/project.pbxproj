@@ -34,6 +34,8 @@
 		E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
 		E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */; };
 		E7EE59E01BE139FD0012E3D2 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
+		F8711EA21BFCAE9F005DDACA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA11BFCAE9F005DDACA /* Time.swift */; };
+		F8711EA41BFCB02D005DDACA /* TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA31BFCB02D005DDACA /* TimeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +92,8 @@
 		E7EE59DB1BE119110012E3D2 /* Follow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
 		E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTests.swift; sourceTree = "<group>"; };
 		E7EE59DF1BE139FD0012E3D2 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
+		F8711EA11BFCAE9F005DDACA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		F8711EA31BFCB02D005DDACA /* TimeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
 				E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */,
 				234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */,
+				F8711EA31BFCB02D005DDACA /* TimeTests.swift */,
 				234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */,
 				234F4BAD1BDDE31A00A58EF7 /* Info.plist */,
 			);
@@ -154,6 +159,7 @@
 				23B267881BDDD756003887E3 /* Repositories.swift */,
 				23B267891BDDD756003887E3 /* User.swift */,
 				E7EE59D71BDFEFB30012E3D2 /* Stars.swift */,
+				F8711EA11BFCAE9F005DDACA /* Time.swift */,
 				239BE7CB1B8C47A100D2CE22 /* Supporting Files */,
 			);
 			path = OctoKit;
@@ -315,6 +321,7 @@
 				234F4BD61BDDE3F900A58EF7 /* UserTests.swift in Sources */,
 				234F4BD31BDDE3F900A58EF7 /* PublicKeyTests.swift in Sources */,
 				234F4BD41BDDE3F900A58EF7 /* RepositoryTests.swift in Sources */,
+				F8711EA41BFCB02D005DDACA /* TimeTests.swift in Sources */,
 				E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */,
 				234F4BD51BDDE3F900A58EF7 /* TestHelper.swift in Sources */,
 				234F4BD01BDDE3F900A58EF7 /* ConfigurationTests.swift in Sources */,
@@ -331,6 +338,7 @@
 				23B2678A1BDDD756003887E3 /* Configuration.swift in Sources */,
 				E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */,
 				23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */,
+				F8711EA21BFCAE9F005DDACA /* Time.swift in Sources */,
 				23B2678C1BDDD756003887E3 /* PublicKey.swift in Sources */,
 				23B2678E1BDDD756003887E3 /* User.swift in Sources */,
 				23B2678B1BDDD756003887E3 /* Octokit.swift in Sources */,
