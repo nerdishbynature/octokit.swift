@@ -17,14 +17,26 @@ class RepositoryTests: XCTestCase {
     // MARK: URLRequest Tests
 
     func testReadRepositoriesURLRequest() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = RepositoryRouter.ReadRepositories(kit.configuration, "1", "100").URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100")!)
+        let kit = Octokit(TokenConfiguration())
+        let request = RepositoryRouter.ReadRepositories(kit.configuration, "octocat", "1", "100").URLRequest
+        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/octocat/repos?page=1&per_page=100")!)
     }
 
     func testReadRepositoriesURLRequestWithCustomPageAndPerPage() {
+        let kit = Octokit(TokenConfiguration())
+        let request = RepositoryRouter.ReadRepositories(kit.configuration, "octocat", "5", "50").URLRequest
+        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/octocat/repos?page=5&per_page=50")!)
+    }
+
+    func testReadAuthenticatedRepositoriesURLRequest() {
         let kit = Octokit(TokenConfiguration("12345"))
-        let request = RepositoryRouter.ReadRepositories(kit.configuration, "5", "50").URLRequest
+        let request = RepositoryRouter.ReadAuthenticatedRepositories(kit.configuration, "1", "100").URLRequest
+        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100")!)
+    }
+
+    func testReadAuthenticatedRepositoriesURLRequestWithCustomPageAndPerPage() {
+        let kit = Octokit(TokenConfiguration("12345"))
+        let request = RepositoryRouter.ReadAuthenticatedRepositories(kit.configuration, "5", "50").URLRequest
         XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345&page=5&per_page=50")!)
     }
 
@@ -36,6 +48,28 @@ class RepositoryTests: XCTestCase {
     // MARK: Actual Request tests
 
     func testGetRepositories() {
+        if let json = Helper.stringFromFile("user_repos") {
+            stubRequest("GET", "https://api.github.com/users/octocat/repos?page=1&per_page=100").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+            let expectation = expectationWithDescription("user_repos")
+            Octokit().repositories("octocat") { response in
+                switch response {
+                case .Success(let repositories):
+                    XCTAssertEqual(repositories.count, 1)
+                    expectation.fulfill()
+                case .Failure:
+                    XCTAssert(false, "should not get an error")
+                    expectation.fulfill()
+                }
+            }
+            waitForExpectationsWithTimeout(1) { (error) in
+                XCTAssertNil(error, "\(error)")
+            }
+        } else {
+            XCTFail("json shouldn't be nil")
+        }
+    }
+
+    func testGetAuthenticatedRepositories() {
         let config = TokenConfiguration("12345")
         if let json = Helper.stringFromFile("user_repos") {
             stubRequest("GET", "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
