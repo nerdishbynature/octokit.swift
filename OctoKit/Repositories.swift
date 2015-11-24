@@ -46,7 +46,7 @@ import RequestKit
 public extension Octokit {
 
 /**
-     Fetches all the Repositories for a user or organization
+     Fetches the Repositories for a user or organization
      - parameter owner: The user or organization that owns the repositories. If `nil`, fetches repositories for the authenticated user.
      - parameter page: Current page for repository pagination. `1` by default.
      - parameter perPage: Number of repositories per page. `100` by default.
