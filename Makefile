@@ -6,6 +6,7 @@ install:
 	carthage bootstrap
 
 test:
+	pod lib lint --quick
 	set -o pipefail && xcodebuild clean test -scheme OctoKit -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES -enableCodeCoverage YES | xcpretty -c
 
 post_coverage:
