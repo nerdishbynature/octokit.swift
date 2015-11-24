@@ -2,6 +2,11 @@ import Foundation
 import RequestKit
 
 public extension Octokit {
+
+/**
+     Fetches the followers of the authenticated user
+     - parameter completion: Callback for the outcome of the fetch.
+*/
     public func myFollowers(completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadAuthenticatedFollowers(configuration)
         router.loadJSON([[String: AnyObject]].self) { json, error in
@@ -16,6 +21,11 @@ public extension Octokit {
         }
     }
 
+/**
+     Fetches the followers of a user
+     - parameter name: Name of the user
+     - parameter completion: Callback for the outcome of the fetch.
+*/
     public func followers(name: String, completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadFollowers(name, configuration)
         router.loadJSON([[String: AnyObject]].self) { json, error in
@@ -30,6 +40,10 @@ public extension Octokit {
         }
     }
 
+/**
+     Fetches the users following the authenticated user
+     - parameter completion: Callback for the outcome of the fetch.
+*/
     public func myFollowing(completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadAuthenticatedFollowing(configuration)
         router.loadJSON([[String: AnyObject]].self) { json, error in
@@ -44,6 +58,11 @@ public extension Octokit {
         }
     }
 
+/**
+     Fetches the users following a user
+     - parameter name: The name of the user
+     - parameter completion: Callback for the outcome of the fetch.
+*/
     public func following(name: String, completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadFollowing(name, configuration)
         router.loadJSON([[String: AnyObject]].self) { json, error in
