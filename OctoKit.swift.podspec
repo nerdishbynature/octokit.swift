@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "OctoKit.swift"
-  s.version          = "0.1.0"
+  s.version          = "0.4.0"
   s.summary          = "Swift version of the Octokit family"
   s.description      = <<-DESC
                         You are looking at the Swift port of the
