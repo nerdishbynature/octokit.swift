@@ -1,5 +1,5 @@
 install:
-	brew update
+	brew update || brew update
 	brew install carthage
 	brew install python
 	pip install codecov
