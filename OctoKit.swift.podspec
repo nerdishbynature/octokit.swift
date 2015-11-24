@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
                         by Github.
   DESC
   s.homepage         = "https://github.com/nerdishbynature/octokit.swift"
-  s.license          = "MIT"
+  s.license          = { :type => "MIT", :file => "LICENSE" }
   s.author           = { "Piet Brauer" => "piet@nerdishbynature.com" }
   s.source           = { :git => "https://github.com/nerdishbynature/octokit.swift.git", :tag => s.version.to_s }
   s.social_media_url = "https://twitter.com/pietbrauer"
