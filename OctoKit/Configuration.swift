@@ -74,18 +74,18 @@ public struct OAuthConfiguration: Configuration {
     }
 }
 
-public enum OAuthRouter: Router {
+enum OAuthRouter: Router {
     case Authorize(OAuthConfiguration)
     case AccessToken(OAuthConfiguration, String)
 
-    public var configuration: Configuration {
+    var configuration: Configuration {
         switch self {
         case .Authorize(let config): return config
         case .AccessToken(let config, _): return config
         }
     }
 
-    public var method: HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .Authorize:
             return .GET
@@ -94,7 +94,7 @@ public enum OAuthRouter: Router {
         }
     }
 
-    public var encoding: HTTPEncoding {
+    var encoding: HTTPEncoding {
         switch self {
         case .Authorize:
             return .URL
@@ -103,7 +103,7 @@ public enum OAuthRouter: Router {
         }
     }
 
-    public var path: String {
+    var path: String {
         switch self {
         case .Authorize:
             return "login/oauth/authorize"
@@ -112,7 +112,7 @@ public enum OAuthRouter: Router {
         }
     }
 
-    public var params: [String: String] {
+    var params: [String: String] {
         switch self {
         case .Authorize(let config):
             let scope = (config.scopes as NSArray).componentsJoinedByString(",")
@@ -122,7 +122,7 @@ public enum OAuthRouter: Router {
         }
     }
 
-    public var URLRequest: NSURLRequest? {
+    var URLRequest: NSURLRequest? {
         switch self {
         case .Authorize(let config):
             let URLString = config.webEndpoint.stringByAppendingURLPath(path)

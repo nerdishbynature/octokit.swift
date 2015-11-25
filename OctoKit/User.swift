@@ -73,26 +73,26 @@ public extension Octokit {
 
 // MARK: Router
 
-public enum UserRouter: Router {
+enum UserRouter: Router {
     case ReadAuthenticatedUser(Configuration)
     case ReadUser(String, Configuration)
 
-    public var configuration: Configuration {
+    var configuration: Configuration {
         switch self {
         case .ReadAuthenticatedUser(let config): return config
         case .ReadUser(_, let config): return config
         }
     }
 
-    public var method: HTTPMethod {
+    var method: HTTPMethod {
         return .GET
     }
 
-    public var encoding: HTTPEncoding {
+    var encoding: HTTPEncoding {
         return .URL
     }
 
-    public var path: String {
+    var path: String {
         switch self {
         case .ReadAuthenticatedUser:
             return "user"
@@ -101,11 +101,11 @@ public enum UserRouter: Router {
         }
     }
 
-    public var params: [String: String] {
+    var params: [String: String] {
         return [:]
     }
 
-    public var URLRequest: NSURLRequest? {
+    var URLRequest: NSURLRequest? {
         switch self {
         case .ReadAuthenticatedUser(_):
             return request()
