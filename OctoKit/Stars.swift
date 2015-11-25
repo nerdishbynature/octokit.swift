@@ -2,6 +2,12 @@ import Foundation
 import RequestKit
 
 public extension Octokit {
+
+    /**
+        Fetches all the starred repositories for a user
+        - parameter name: The user who starred repositories.
+        - parameter completion: Callback for the outcome of the fetch.
+    */
     public func stars(name: String, completion: (response: Response<[Repository]>) -> Void) {
         let router = StarsRouter.ReadStars(name, configuration)
         router.loadJSON([[String: AnyObject]].self) { json, error in
@@ -16,6 +22,10 @@ public extension Octokit {
         }
     }
 
+    /**
+        Fetches all the starred repositories for the authenticated user
+        - parameter completion: Callback for the outcome of the fetch.
+    */
     public func myStars(completion: (response: Response<[Repository]>) -> Void) {
         let router = StarsRouter.ReadAuthenticatedStars(configuration)
         router.loadJSON([[String: AnyObject]].self) { json, error in
