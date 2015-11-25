@@ -78,21 +78,21 @@ public extension Octokit {
     }
 }
 
-public enum FollowRouter: Router {
+enum FollowRouter: Router {
     case ReadAuthenticatedFollowers(Configuration)
     case ReadFollowers(String, Configuration)
     case ReadAuthenticatedFollowing(Configuration)
     case ReadFollowing(String, Configuration)
 
-    public var method: HTTPMethod {
+    var method: HTTPMethod {
         return .GET
     }
 
-    public var encoding: HTTPEncoding {
+    var encoding: HTTPEncoding {
         return .URL
     }
 
-    public var configuration: Configuration {
+    var configuration: Configuration {
         switch self {
         case .ReadAuthenticatedFollowers(let config): return config
         case .ReadFollowers(_, let config): return config
@@ -101,7 +101,7 @@ public enum FollowRouter: Router {
         }
     }
 
-    public var path: String {
+    var path: String {
         switch self {
         case .ReadAuthenticatedFollowers:
             return "user/followers"
@@ -114,11 +114,11 @@ public enum FollowRouter: Router {
         }
     }
 
-    public var params: [String: String] {
+    var params: [String: String] {
         return [:]
     }
 
-    public var URLRequest: NSURLRequest? {
+    var URLRequest: NSURLRequest? {
         return request()
     }
 }

@@ -91,12 +91,12 @@ public extension Octokit {
 
 // MARK: Router
 
-public enum RepositoryRouter: Router {
+enum RepositoryRouter: Router {
     case ReadRepositories(Configuration, String, String, String)
     case ReadAuthenticatedRepositories(Configuration, String, String)
     case ReadRepository(Configuration, String, String)
 
-    public var configuration: Configuration {
+    var configuration: Configuration {
         switch self {
         case .ReadRepositories(let config, _, _, _): return config
         case .ReadAuthenticatedRepositories(let config, _, _): return config
@@ -104,15 +104,15 @@ public enum RepositoryRouter: Router {
         }
     }
 
-    public var method: HTTPMethod {
+    var method: HTTPMethod {
         return .GET
     }
 
-    public var encoding: HTTPEncoding {
+    var encoding: HTTPEncoding {
         return .URL
     }
 
-    public var params: [String: String] {
+    var params: [String: String] {
         switch self {
         case .ReadRepositories(_, _, let page, let perPage):
             return ["per_page": perPage, "page": page]
@@ -123,7 +123,7 @@ public enum RepositoryRouter: Router {
         }
     }
 
-    public var path: String {
+    var path: String {
         switch self {
         case ReadRepositories(_, let owner, _, _):
             return "/users/\(owner)/repos"
@@ -134,7 +134,7 @@ public enum RepositoryRouter: Router {
         }
     }
 
-    public var URLRequest: NSURLRequest? {
+    var URLRequest: NSURLRequest? {
         switch self {
         case .ReadRepositories(_, _, _, _):
             return request()
