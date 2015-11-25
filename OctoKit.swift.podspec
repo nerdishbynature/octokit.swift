@@ -1,12 +1,11 @@
 Pod::Spec.new do |s|
   s.name             = "OctoKit.swift"
   s.version          = "0.4.0"
-  s.summary          = "Swift version of the Octokit family"
+  s.summary          = "A Swift API Client for GitHub and GitHub Enterprise"
   s.description      = <<-DESC
-                        You are looking at the Swift port of the
-                        Octokit family. This is very unofficial and not maintained
-                        by Github.
-  DESC
+                        You are looking at the A Swift API Client for GitHub and GitHub Enterprise.
+                        This is very unofficial and not maintained by Github.
+                        DESC
   s.homepage         = "https://github.com/nerdishbynature/octokit.swift"
   s.license          = { :type => "MIT", :file => "LICENSE" }
   s.author           = { "Piet Brauer" => "piet@nerdishbynature.com" }
