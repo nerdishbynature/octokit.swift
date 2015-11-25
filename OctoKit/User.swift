@@ -43,11 +43,11 @@ import RequestKit
 
 public extension Octokit {
 
-/**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
-     - parameter completion: Callback for the outcome of the fetch.
-*/
+    /**
+        Fetches a user or organization
+        - parameter name: The name of the user or organization.
+        - parameter completion: Callback for the outcome of the fetch.
+    */
     public func user(name: String, completion: (response: Response<User>) -> Void) {
         let router = UserRouter.ReadUser(name, self.configuration)
         router.loadJSON([String: AnyObject].self) { json, error in
@@ -62,10 +62,10 @@ public extension Octokit {
         }
     }
 
-/**
-     Fetches the authenticated user
-     - parameter completion: Callback for the outcome of the fetch.
-*/
+    /**
+        Fetches the authenticated user
+        - parameter completion: Callback for the outcome of the fetch.
+    */
     public func me(completion: (response: Response<User>) -> Void) {
         let router = UserRouter.ReadAuthenticatedUser(self.configuration)
         router.loadJSON([String: AnyObject].self) { json, error in
