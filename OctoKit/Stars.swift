@@ -41,25 +41,25 @@ public extension Octokit {
     }
 }
 
-public enum StarsRouter: Router {
+enum StarsRouter: Router {
     case ReadAuthenticatedStars(Configuration)
     case ReadStars(String, Configuration)
-    public var method: HTTPMethod {
+    var method: HTTPMethod {
         return .GET
     }
 
-    public var configuration: Configuration {
+    var configuration: Configuration {
         switch self {
         case .ReadAuthenticatedStars(let config): return config
         case .ReadStars(_, let config): return config
         }
     }
 
-    public var encoding: HTTPEncoding {
+    var encoding: HTTPEncoding {
         return .URL
     }
 
-    public var path: String {
+    var path: String {
         switch self {
         case .ReadAuthenticatedStars:
             return "user/starred"
@@ -68,11 +68,11 @@ public enum StarsRouter: Router {
         }
     }
 
-    public var params: [String: String] {
+    var params: [String: String] {
         return [:]
     }
 
-    public var URLRequest: NSURLRequest? {
+    var URLRequest: NSURLRequest? {
         return request()
     }
 }

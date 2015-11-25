@@ -1,5 +1,5 @@
 import XCTest
-import OctoKit
+@testable import OctoKit
 import Nocilla
 
 class FollowTests: XCTestCase {
