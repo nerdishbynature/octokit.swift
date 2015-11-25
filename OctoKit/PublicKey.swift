@@ -18,44 +18,44 @@ public extension Octokit {
     }
 }
 
-public enum PublicKeyRouter: JSONPostRouter {
+enum PublicKeyRouter: JSONPostRouter {
     case PostPublicKey(String, String, Configuration)
 
-    public var configuration: Configuration {
+    var configuration: Configuration {
         switch self {
         case .PostPublicKey(_, _, let config): return config
         }
     }
 
-    public var method: HTTPMethod {
+    var method: HTTPMethod {
         switch self {
         case .PostPublicKey:
             return .POST
         }
     }
 
-    public var encoding: HTTPEncoding {
+    var encoding: HTTPEncoding {
         switch self {
         case .PostPublicKey:
             return .JSON
         }
     }
 
-    public var path: String {
+    var path: String {
         switch self {
         case .PostPublicKey:
             return "user/keys"
         }
     }
 
-    public var params: [String: String] {
+    var params: [String: String] {
         switch self {
         case .PostPublicKey(let publicKey, let title, _):
             return ["title": title, "key": publicKey]
         }
     }
 
-    public var URLRequest: NSURLRequest? {
+    var URLRequest: NSURLRequest? {
         switch self {
         case .PostPublicKey(_, _, _):
             return request()
