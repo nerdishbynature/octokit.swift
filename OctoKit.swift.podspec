@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "OctoKit.swift"
-  s.version          = "0.5.0"
+  s.version          = "0.5.1"
   s.summary          = "A Swift API Client for GitHub and GitHub Enterprise"
   s.description      = <<-DESC
                         You are looking at the A Swift API Client for GitHub and GitHub Enterprise.
