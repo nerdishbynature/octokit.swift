@@ -1,1 +1,1 @@
-github "nerdishbynature/RequestKit" "dammit"
+github "nerdishbynature/RequestKit" == 0.2.1
