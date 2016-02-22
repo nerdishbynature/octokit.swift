@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 nerdish by nature. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for OctoKit.
 FOUNDATION_EXPORT double OctoKitVersionNumber;
