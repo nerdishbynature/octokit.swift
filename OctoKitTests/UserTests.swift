@@ -1,5 +1,5 @@
 import XCTest
-@testable import OctoKit
+import OctoKit
 import Nocilla
 
 class UserTests: XCTestCase {
@@ -12,20 +12,6 @@ class UserTests: XCTestCase {
         super.tearDown()
         LSNocilla.sharedInstance().clearStubs()
         LSNocilla.sharedInstance().stop()
-    }
-
-    // MARK: URLRequest Tests
-
-    func testReadingUserURLRequest() {
-        let kit = Octokit()
-        let request = UserRouter.ReadUser("mietzmithut", kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/mietzmithut")!)
-    }
-
-    func testReadingAuthenticatedUserURLRequest() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = UserRouter.ReadAuthenticatedUser(kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user?access_token=12345")!)
     }
 
     // MARK: Actual Request tests

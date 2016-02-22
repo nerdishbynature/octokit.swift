@@ -69,8 +69,6 @@
 		23CAF2C51C7AB709005011C4 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
 		23CAF2C61C7AB70B005011C4 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */; };
 		23CAF2C71C7AB70C005011C4 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */; };
-		23CAF2C81C7AB70E005011C4 /* TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA31BFCB02D005DDACA /* TimeTests.swift */; };
-		23CAF2C91C7AB70F005011C4 /* TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA31BFCB02D005DDACA /* TimeTests.swift */; };
 		23CAF2CA1C7AB711005011C4 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */; };
 		23CAF2CB1C7AB712005011C4 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */; };
 		23CAF2CC1C7AB728005011C4 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -103,7 +101,6 @@
 		E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */; };
 		E7EE59E01BE139FD0012E3D2 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 		F8711EA21BFCAE9F005DDACA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA11BFCAE9F005DDACA /* Time.swift */; };
-		F8711EA41BFCB02D005DDACA /* TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA31BFCB02D005DDACA /* TimeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,7 +206,6 @@
 		E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTests.swift; sourceTree = "<group>"; };
 		E7EE59DF1BE139FD0012E3D2 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
 		F8711EA11BFCAE9F005DDACA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
-		F8711EA31BFCB02D005DDACA /* TimeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -286,7 +282,6 @@
 				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
 				E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */,
 				234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */,
-				F8711EA31BFCB02D005DDACA /* TimeTests.swift */,
 				234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */,
 				234F4BAD1BDDE31A00A58EF7 /* Info.plist */,
 			);
@@ -672,7 +667,6 @@
 				234F4BD61BDDE3F900A58EF7 /* UserTests.swift in Sources */,
 				234F4BD31BDDE3F900A58EF7 /* PublicKeyTests.swift in Sources */,
 				234F4BD41BDDE3F900A58EF7 /* RepositoryTests.swift in Sources */,
-				F8711EA41BFCB02D005DDACA /* TimeTests.swift in Sources */,
 				E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */,
 				234F4BD51BDDE3F900A58EF7 /* TestHelper.swift in Sources */,
 				234F4BD01BDDE3F900A58EF7 /* ConfigurationTests.swift in Sources */,
@@ -719,7 +713,6 @@
 				23CAF2C41C7AB708005011C4 /* StarsTests.swift in Sources */,
 				23CAF2C61C7AB70B005011C4 /* TestHelper.swift in Sources */,
 				23CAF2BE1C7AB6FE005011C4 /* OctokitSwiftTests.swift in Sources */,
-				23CAF2C81C7AB70E005011C4 /* TimeTests.swift in Sources */,
 				23CAF2C01C7AB702005011C4 /* PublicKeyTests.swift in Sources */,
 				23CAF2CA1C7AB711005011C4 /* UserTests.swift in Sources */,
 				23CAF2C21C7AB705005011C4 /* RepositoryTests.swift in Sources */,
@@ -750,7 +743,6 @@
 				23CAF2C51C7AB709005011C4 /* StarsTests.swift in Sources */,
 				23CAF2C71C7AB70C005011C4 /* TestHelper.swift in Sources */,
 				23CAF2BF1C7AB6FF005011C4 /* OctokitSwiftTests.swift in Sources */,
-				23CAF2C91C7AB70F005011C4 /* TimeTests.swift in Sources */,
 				23CAF2C11C7AB702005011C4 /* PublicKeyTests.swift in Sources */,
 				23CAF2CB1C7AB712005011C4 /* UserTests.swift in Sources */,
 				23CAF2C31C7AB706005011C4 /* RepositoryTests.swift in Sources */,
