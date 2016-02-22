@@ -1,3 +1,5 @@
 source "https://rubygems.org"
 
-gem "slather", git: "https://github.com/nerdishbynature/slather.git", branch: "feature-profdata"
+gem "slather", "~> 2.0"
+gem "fastlane"
+gem "cocoapods"
