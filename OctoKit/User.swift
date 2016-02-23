@@ -114,13 +114,4 @@ enum UserRouter: Router {
     var params: [String: String] {
         return [:]
     }
-
-    var URLRequest: NSURLRequest? {
-        switch self {
-        case .ReadAuthenticatedUser(_):
-            return request()
-        case .ReadUser(_, _):
-            return request()
-        }
-    }
 }

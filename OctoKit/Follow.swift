@@ -117,8 +117,4 @@ enum FollowRouter: Router {
     var params: [String: String] {
         return [:]
     }
-
-    var URLRequest: NSURLRequest? {
-        return request()
-    }
 }
