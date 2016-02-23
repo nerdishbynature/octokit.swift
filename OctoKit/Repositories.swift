@@ -133,15 +133,4 @@ enum RepositoryRouter: Router {
             return "/repos/\(owner)/\(name)"
         }
     }
-
-    var URLRequest: NSURLRequest? {
-        switch self {
-        case .ReadRepositories(_, _, _, _):
-            return request()
-        case .ReadAuthenticatedRepositories(_, _, _):
-            return request()
-        case .ReadRepository(_, _, _):
-            return request()
-        }
-    }
 }
