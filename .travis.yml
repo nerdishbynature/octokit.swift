@@ -16,8 +16,6 @@ matrix:
       env: FASTLANE_ENV=tvos91
     - osx_image: xcode7.2
       env: FASTLANE_ENV=osx
-    - osx_image: xcode7.3
-      env: FASTLANE_ENV=ios93_xcode73
 before_install:
   - make install
 script:
