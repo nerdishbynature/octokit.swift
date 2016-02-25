@@ -29,13 +29,78 @@
 		23B2678C1BDDD756003887E3 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267871BDDD756003887E3 /* PublicKey.swift */; };
 		23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267881BDDD756003887E3 /* Repositories.swift */; };
 		23B2678E1BDDD756003887E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267891BDDD756003887E3 /* User.swift */; };
+		23CAF26C1C7AB5FC005011C4 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF2621C7AB5FB005011C4 /* OctoKit.framework */; };
+		23CAF2881C7AB60D005011C4 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF27E1C7AB60C005011C4 /* OctoKit.framework */; };
+		23CAF2A21C7AB6BE005011C4 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267851BDDD756003887E3 /* Configuration.swift */; };
+		23CAF2A31C7AB6BF005011C4 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267851BDDD756003887E3 /* Configuration.swift */; };
+		23CAF2A41C7AB6BF005011C4 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267851BDDD756003887E3 /* Configuration.swift */; };
+		23CAF2A51C7AB6C2005011C4 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
+		23CAF2A61C7AB6C2005011C4 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
+		23CAF2A71C7AB6C3005011C4 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
+		23CAF2A81C7AB6C6005011C4 /* Octokit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267861BDDD756003887E3 /* Octokit.swift */; };
+		23CAF2A91C7AB6C6005011C4 /* Octokit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267861BDDD756003887E3 /* Octokit.swift */; };
+		23CAF2AA1C7AB6C7005011C4 /* Octokit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267861BDDD756003887E3 /* Octokit.swift */; };
+		23CAF2AB1C7AB6C9005011C4 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267871BDDD756003887E3 /* PublicKey.swift */; };
+		23CAF2AC1C7AB6CA005011C4 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267871BDDD756003887E3 /* PublicKey.swift */; };
+		23CAF2AD1C7AB6CA005011C4 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267871BDDD756003887E3 /* PublicKey.swift */; };
+		23CAF2AE1C7AB6CD005011C4 /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267881BDDD756003887E3 /* Repositories.swift */; };
+		23CAF2AF1C7AB6CD005011C4 /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267881BDDD756003887E3 /* Repositories.swift */; };
+		23CAF2B01C7AB6CE005011C4 /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267881BDDD756003887E3 /* Repositories.swift */; };
+		23CAF2B11C7AB6D1005011C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267891BDDD756003887E3 /* User.swift */; };
+		23CAF2B21C7AB6D1005011C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267891BDDD756003887E3 /* User.swift */; };
+		23CAF2B31C7AB6D2005011C4 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267891BDDD756003887E3 /* User.swift */; };
+		23CAF2B41C7AB6D4005011C4 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D71BDFEFB30012E3D2 /* Stars.swift */; };
+		23CAF2B51C7AB6D5005011C4 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D71BDFEFB30012E3D2 /* Stars.swift */; };
+		23CAF2B61C7AB6D5005011C4 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D71BDFEFB30012E3D2 /* Stars.swift */; };
+		23CAF2B71C7AB6EB005011C4 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA11BFCAE9F005DDACA /* Time.swift */; };
+		23CAF2B81C7AB6EB005011C4 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA11BFCAE9F005DDACA /* Time.swift */; };
+		23CAF2B91C7AB6EC005011C4 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA11BFCAE9F005DDACA /* Time.swift */; };
+		23CAF2BA1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BC91BDDE3F900A58EF7 /* ConfigurationTests.swift */; };
+		23CAF2BB1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BC91BDDE3F900A58EF7 /* ConfigurationTests.swift */; };
+		23CAF2BC1C7AB6FC005011C4 /* FollowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */; };
+		23CAF2BD1C7AB6FC005011C4 /* FollowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */; };
+		23CAF2BE1C7AB6FE005011C4 /* OctokitSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */; };
+		23CAF2BF1C7AB6FF005011C4 /* OctokitSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */; };
+		23CAF2C01C7AB702005011C4 /* PublicKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCC1BDDE3F900A58EF7 /* PublicKeyTests.swift */; };
+		23CAF2C11C7AB702005011C4 /* PublicKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCC1BDDE3F900A58EF7 /* PublicKeyTests.swift */; };
+		23CAF2C21C7AB705005011C4 /* RepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */; };
+		23CAF2C31C7AB706005011C4 /* RepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */; };
+		23CAF2C41C7AB708005011C4 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
+		23CAF2C51C7AB709005011C4 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
+		23CAF2C61C7AB70B005011C4 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */; };
+		23CAF2C71C7AB70C005011C4 /* TestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */; };
+		23CAF2CA1C7AB711005011C4 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */; };
+		23CAF2CB1C7AB712005011C4 /* UserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */; };
+		23CAF2CC1C7AB728005011C4 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23CAF2CE1C7AB73D005011C4 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23CAF2D11C7AB759005011C4 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		23CAF2D51C7AB9C0005011C4 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF2D41C7AB9C0005011C4 /* RequestKit.framework */; };
+		23CAF2D91C7AB9DB005011C4 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF2D81C7AB9DB005011C4 /* RequestKit.framework */; };
+		23CAF2DA1C7ABA67005011C4 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF2D61C7AB9CE005011C4 /* RequestKit.framework */; };
+		23F6433D1C7AEEB6000427B3 /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F6433C1C7AEEB6000427B3 /* Nocilla.framework */; };
+		23F6433E1C7AEECE000427B3 /* Nocilla.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23F6433C1C7AEEB6000427B3 /* Nocilla.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		23F6433F1C7AEED7000427B3 /* RequestKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23CAF2D41C7AB9C0005011C4 /* RequestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		23F643431C7AEF2F000427B3 /* Nocilla.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F643421C7AEF2F000427B3 /* Nocilla.framework */; };
+		23F643441C7AEF32000427B3 /* Nocilla.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23F643421C7AEF2F000427B3 /* Nocilla.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		23F643451C7AEF37000427B3 /* RequestKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23CAF2D61C7AB9CE005011C4 /* RequestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		23F643461C7AEF63000427B3 /* public_key.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BD81BDDE44600A58EF7 /* public_key.json */; };
+		23F643471C7AEF63000427B3 /* public_key.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BD81BDDE44600A58EF7 /* public_key.json */; };
+		23F643481C7AEF66000427B3 /* repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BD91BDDE44600A58EF7 /* repo.json */; };
+		23F643491C7AEF67000427B3 /* repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BD91BDDE44600A58EF7 /* repo.json */; };
+		23F6434A1C7AEF69000427B3 /* user_me.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDA1BDDE44600A58EF7 /* user_me.json */; };
+		23F6434B1C7AEF6A000427B3 /* user_me.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDA1BDDE44600A58EF7 /* user_me.json */; };
+		23F6434C1C7AEF6C000427B3 /* user_mietzmithut.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDB1BDDE44600A58EF7 /* user_mietzmithut.json */; };
+		23F6434D1C7AEF6D000427B3 /* user_mietzmithut.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDB1BDDE44600A58EF7 /* user_mietzmithut.json */; };
+		23F6434E1C7AEF6F000427B3 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
+		23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
+		23F643501C7AEF72000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
+		23F643511C7AEF73000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 		E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D71BDFEFB30012E3D2 /* Stars.swift */; };
 		E7EE59DA1BE10DA60012E3D2 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
 		E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
 		E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */; };
 		E7EE59E01BE139FD0012E3D2 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 		F8711EA21BFCAE9F005DDACA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA11BFCAE9F005DDACA /* Time.swift */; };
-		F8711EA41BFCB02D005DDACA /* TimeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA31BFCB02D005DDACA /* TimeTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +110,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 239BE7C81B8C47A100D2CE22;
 			remoteInfo = OctoKit;
+		};
+		23CAF26D1C7AB5FC005011C4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F01C6F2C1A6429CC0072FA44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 23CAF2611C7AB5FB005011C4;
+			remoteInfo = "OctoKit tvOS";
+		};
+		23CAF2891C7AB60D005011C4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F01C6F2C1A6429CC0072FA44 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 23CAF27D1C7AB60C005011C4;
+			remoteInfo = "OctoKit Mac";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -57,6 +136,30 @@
 			files = (
 				234F4C401BDE113800A58EF7 /* RequestKit.framework in Carthage embed */,
 				234F4BC31BDDE37100A58EF7 /* Nocilla.framework in Carthage embed */,
+			);
+			name = "Carthage embed";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23F6433A1C7AEE7C000427B3 /* Carthage embed */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				23F6433E1C7AEECE000427B3 /* Nocilla.framework in Carthage embed */,
+				23F6433F1C7AEED7000427B3 /* RequestKit.framework in Carthage embed */,
+			);
+			name = "Carthage embed";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23F643411C7AEF13000427B3 /* Carthage embed */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				23F643441C7AEF32000427B3 /* Nocilla.framework in Carthage embed */,
+				23F643451C7AEF37000427B3 /* RequestKit.framework in Carthage embed */,
 			);
 			name = "Carthage embed";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,13 +190,22 @@
 		23B267881BDDD756003887E3 /* Repositories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repositories.swift; sourceTree = "<group>"; };
 		23B267891BDDD756003887E3 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		23B2679C1BDDDBBE003887E3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/iOS/Nocilla.framework; sourceTree = "<group>"; };
+		23CAF2621C7AB5FB005011C4 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23CAF26B1C7AB5FC005011C4 /* OctoKit tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OctoKit tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23CAF27E1C7AB60C005011C4 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23CAF2871C7AB60D005011C4 /* OctoKit MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OctoKit MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		23CAF29A1C7AB619005011C4 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		23CAF2D41C7AB9C0005011C4 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/tvOS/RequestKit.framework; sourceTree = "<group>"; };
+		23CAF2D61C7AB9CE005011C4 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/Mac/RequestKit.framework; sourceTree = "<group>"; };
+		23CAF2D81C7AB9DB005011C4 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/watchOS/RequestKit.framework; sourceTree = "<group>"; };
+		23F6433C1C7AEEB6000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/tvOS/Nocilla.framework; sourceTree = "<group>"; };
+		23F643421C7AEF2F000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/Mac/Nocilla.framework; sourceTree = "<group>"; };
 		E7EE59D71BDFEFB30012E3D2 /* Stars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stars.swift; sourceTree = "<group>"; };
 		E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsTests.swift; sourceTree = "<group>"; };
 		E7EE59DB1BE119110012E3D2 /* Follow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
 		E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTests.swift; sourceTree = "<group>"; };
 		E7EE59DF1BE139FD0012E3D2 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = users.json; sourceTree = "<group>"; };
 		F8711EA11BFCAE9F005DDACA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
-		F8711EA31BFCB02D005DDACA /* TimeTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +226,48 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		23CAF25E1C7AB5FB005011C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2D51C7AB9C0005011C4 /* RequestKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2681C7AB5FC005011C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23F6433D1C7AEEB6000427B3 /* Nocilla.framework in Frameworks */,
+				23CAF26C1C7AB5FC005011C4 /* OctoKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF27A1C7AB60C005011C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2DA1C7ABA67005011C4 /* RequestKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2841C7AB60D005011C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23F643431C7AEF2F000427B3 /* Nocilla.framework in Frameworks */,
+				23CAF2881C7AB60D005011C4 /* OctoKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2961C7AB619005011C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2D91C7AB9DB005011C4 /* RequestKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -128,7 +282,6 @@
 				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
 				E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */,
 				234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */,
-				F8711EA31BFCB02D005DDACA /* TimeTests.swift */,
 				234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */,
 				234F4BAD1BDDE31A00A58EF7 /* Info.plist */,
 			);
@@ -176,6 +329,11 @@
 		B975D5A3F8B0384EFB0C5863 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23F643421C7AEF2F000427B3 /* Nocilla.framework */,
+				23F6433C1C7AEEB6000427B3 /* Nocilla.framework */,
+				23CAF2D81C7AB9DB005011C4 /* RequestKit.framework */,
+				23CAF2D61C7AB9CE005011C4 /* RequestKit.framework */,
+				23CAF2D41C7AB9C0005011C4 /* RequestKit.framework */,
 				234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */,
 				23B2679C1BDDDBBE003887E3 /* Nocilla.framework */,
 			);
@@ -197,6 +355,11 @@
 			children = (
 				239BE7C91B8C47A100D2CE22 /* OctoKit.framework */,
 				234F4BA91BDDE31A00A58EF7 /* OctoKitTests.xctest */,
+				23CAF2621C7AB5FB005011C4 /* OctoKit.framework */,
+				23CAF26B1C7AB5FC005011C4 /* OctoKit tvOSTests.xctest */,
+				23CAF27E1C7AB60C005011C4 /* OctoKit.framework */,
+				23CAF2871C7AB60D005011C4 /* OctoKit MacTests.xctest */,
+				23CAF29A1C7AB619005011C4 /* OctoKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -209,6 +372,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				239BE7CE1B8C47A100D2CE22 /* OctoKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF25F1C7AB5FB005011C4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2CC1C7AB728005011C4 /* OctoKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF27B1C7AB60C005011C4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2CE1C7AB73D005011C4 /* OctoKit.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2971C7AB619005011C4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2D11C7AB759005011C4 /* OctoKit.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,6 +439,98 @@
 			productReference = 239BE7C91B8C47A100D2CE22 /* OctoKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		23CAF2611C7AB5FB005011C4 /* OctoKit tvOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23CAF2771C7AB5FC005011C4 /* Build configuration list for PBXNativeTarget "OctoKit tvOS" */;
+			buildPhases = (
+				23CAF25D1C7AB5FB005011C4 /* Sources */,
+				23CAF25E1C7AB5FB005011C4 /* Frameworks */,
+				23CAF25F1C7AB5FB005011C4 /* Headers */,
+				23CAF2601C7AB5FB005011C4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OctoKit tvOS";
+			productName = "OctoKit tvOS";
+			productReference = 23CAF2621C7AB5FB005011C4 /* OctoKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		23CAF26A1C7AB5FC005011C4 /* OctoKit tvOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23CAF2781C7AB5FC005011C4 /* Build configuration list for PBXNativeTarget "OctoKit tvOSTests" */;
+			buildPhases = (
+				23CAF2671C7AB5FC005011C4 /* Sources */,
+				23CAF2681C7AB5FC005011C4 /* Frameworks */,
+				23CAF2691C7AB5FC005011C4 /* Resources */,
+				23F6433A1C7AEE7C000427B3 /* Carthage embed */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				23CAF26E1C7AB5FC005011C4 /* PBXTargetDependency */,
+			);
+			name = "OctoKit tvOSTests";
+			productName = "OctoKit tvOSTests";
+			productReference = 23CAF26B1C7AB5FC005011C4 /* OctoKit tvOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		23CAF27D1C7AB60C005011C4 /* OctoKit Mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23CAF28F1C7AB60D005011C4 /* Build configuration list for PBXNativeTarget "OctoKit Mac" */;
+			buildPhases = (
+				23CAF2791C7AB60C005011C4 /* Sources */,
+				23CAF27A1C7AB60C005011C4 /* Frameworks */,
+				23CAF27B1C7AB60C005011C4 /* Headers */,
+				23CAF27C1C7AB60C005011C4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OctoKit Mac";
+			productName = "OctoKit Mac";
+			productReference = 23CAF27E1C7AB60C005011C4 /* OctoKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		23CAF2861C7AB60D005011C4 /* OctoKit MacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23CAF2921C7AB60D005011C4 /* Build configuration list for PBXNativeTarget "OctoKit MacTests" */;
+			buildPhases = (
+				23CAF2831C7AB60D005011C4 /* Sources */,
+				23CAF2841C7AB60D005011C4 /* Frameworks */,
+				23CAF2851C7AB60D005011C4 /* Resources */,
+				23F643411C7AEF13000427B3 /* Carthage embed */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				23CAF28A1C7AB60D005011C4 /* PBXTargetDependency */,
+			);
+			name = "OctoKit MacTests";
+			productName = "OctoKit MacTests";
+			productReference = 23CAF2871C7AB60D005011C4 /* OctoKit MacTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		23CAF2991C7AB619005011C4 /* OctoKit watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 23CAF29F1C7AB619005011C4 /* Build configuration list for PBXNativeTarget "OctoKit watchOS" */;
+			buildPhases = (
+				23CAF2951C7AB619005011C4 /* Sources */,
+				23CAF2961C7AB619005011C4 /* Frameworks */,
+				23CAF2971C7AB619005011C4 /* Headers */,
+				23CAF2981C7AB619005011C4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OctoKit watchOS";
+			productName = "OctoKit watchOS";
+			productReference = 23CAF29A1C7AB619005011C4 /* OctoKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -259,7 +538,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftMigration = 0700;
-				LastSwiftUpdateCheck = 0710;
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "nerdish by nature";
 				TargetAttributes = {
@@ -268,6 +547,21 @@
 					};
 					239BE7C81B8C47A100D2CE22 = {
 						CreatedOnToolsVersion = 6.4;
+					};
+					23CAF2611C7AB5FB005011C4 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					23CAF26A1C7AB5FC005011C4 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					23CAF27D1C7AB60C005011C4 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					23CAF2861C7AB60D005011C4 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					23CAF2991C7AB619005011C4 = {
+						CreatedOnToolsVersion = 7.2.1;
 					};
 				};
 			};
@@ -286,6 +580,11 @@
 			targets = (
 				239BE7C81B8C47A100D2CE22 /* OctoKit */,
 				234F4BA81BDDE31A00A58EF7 /* OctoKitTests */,
+				23CAF2611C7AB5FB005011C4 /* OctoKit tvOS */,
+				23CAF26A1C7AB5FC005011C4 /* OctoKit tvOSTests */,
+				23CAF27D1C7AB60C005011C4 /* OctoKit Mac */,
+				23CAF2861C7AB60D005011C4 /* OctoKit MacTests */,
+				23CAF2991C7AB619005011C4 /* OctoKit watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -311,6 +610,53 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		23CAF2601C7AB5FB005011C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2691C7AB5FC005011C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23F643501C7AEF72000427B3 /* users.json in Resources */,
+				23F6434A1C7AEF69000427B3 /* user_me.json in Resources */,
+				23F643461C7AEF63000427B3 /* public_key.json in Resources */,
+				23F643481C7AEF66000427B3 /* repo.json in Resources */,
+				23F6434E1C7AEF6F000427B3 /* user_repos.json in Resources */,
+				23F6434C1C7AEF6C000427B3 /* user_mietzmithut.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF27C1C7AB60C005011C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2851C7AB60D005011C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23F643511C7AEF73000427B3 /* users.json in Resources */,
+				23F6434B1C7AEF6A000427B3 /* user_me.json in Resources */,
+				23F643471C7AEF63000427B3 /* public_key.json in Resources */,
+				23F643491C7AEF67000427B3 /* repo.json in Resources */,
+				23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */,
+				23F6434D1C7AEF6D000427B3 /* user_mietzmithut.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2981C7AB619005011C4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -321,7 +667,6 @@
 				234F4BD61BDDE3F900A58EF7 /* UserTests.swift in Sources */,
 				234F4BD31BDDE3F900A58EF7 /* PublicKeyTests.swift in Sources */,
 				234F4BD41BDDE3F900A58EF7 /* RepositoryTests.swift in Sources */,
-				F8711EA41BFCB02D005DDACA /* TimeTests.swift in Sources */,
 				E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */,
 				234F4BD51BDDE3F900A58EF7 /* TestHelper.swift in Sources */,
 				234F4BD01BDDE3F900A58EF7 /* ConfigurationTests.swift in Sources */,
@@ -345,6 +690,81 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		23CAF25D1C7AB5FB005011C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2A51C7AB6C2005011C4 /* Follow.swift in Sources */,
+				23CAF2AE1C7AB6CD005011C4 /* Repositories.swift in Sources */,
+				23CAF2B11C7AB6D1005011C4 /* User.swift in Sources */,
+				23CAF2A21C7AB6BE005011C4 /* Configuration.swift in Sources */,
+				23CAF2B71C7AB6EB005011C4 /* Time.swift in Sources */,
+				23CAF2B41C7AB6D4005011C4 /* Stars.swift in Sources */,
+				23CAF2AB1C7AB6C9005011C4 /* PublicKey.swift in Sources */,
+				23CAF2A81C7AB6C6005011C4 /* Octokit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2671C7AB5FC005011C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2BC1C7AB6FC005011C4 /* FollowTests.swift in Sources */,
+				23CAF2C41C7AB708005011C4 /* StarsTests.swift in Sources */,
+				23CAF2C61C7AB70B005011C4 /* TestHelper.swift in Sources */,
+				23CAF2BE1C7AB6FE005011C4 /* OctokitSwiftTests.swift in Sources */,
+				23CAF2C01C7AB702005011C4 /* PublicKeyTests.swift in Sources */,
+				23CAF2CA1C7AB711005011C4 /* UserTests.swift in Sources */,
+				23CAF2C21C7AB705005011C4 /* RepositoryTests.swift in Sources */,
+				23CAF2BA1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2791C7AB60C005011C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2A61C7AB6C2005011C4 /* Follow.swift in Sources */,
+				23CAF2AF1C7AB6CD005011C4 /* Repositories.swift in Sources */,
+				23CAF2B21C7AB6D1005011C4 /* User.swift in Sources */,
+				23CAF2A31C7AB6BF005011C4 /* Configuration.swift in Sources */,
+				23CAF2B81C7AB6EB005011C4 /* Time.swift in Sources */,
+				23CAF2B51C7AB6D5005011C4 /* Stars.swift in Sources */,
+				23CAF2AC1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
+				23CAF2A91C7AB6C6005011C4 /* Octokit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2831C7AB60D005011C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2BD1C7AB6FC005011C4 /* FollowTests.swift in Sources */,
+				23CAF2C51C7AB709005011C4 /* StarsTests.swift in Sources */,
+				23CAF2C71C7AB70C005011C4 /* TestHelper.swift in Sources */,
+				23CAF2BF1C7AB6FF005011C4 /* OctokitSwiftTests.swift in Sources */,
+				23CAF2C11C7AB702005011C4 /* PublicKeyTests.swift in Sources */,
+				23CAF2CB1C7AB712005011C4 /* UserTests.swift in Sources */,
+				23CAF2C31C7AB706005011C4 /* RepositoryTests.swift in Sources */,
+				23CAF2BB1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		23CAF2951C7AB619005011C4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				23CAF2A71C7AB6C3005011C4 /* Follow.swift in Sources */,
+				23CAF2B01C7AB6CE005011C4 /* Repositories.swift in Sources */,
+				23CAF2B31C7AB6D2005011C4 /* User.swift in Sources */,
+				23CAF2A41C7AB6BF005011C4 /* Configuration.swift in Sources */,
+				23CAF2B91C7AB6EC005011C4 /* Time.swift in Sources */,
+				23CAF2B61C7AB6D5005011C4 /* Stars.swift in Sources */,
+				23CAF2AD1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
+				23CAF2AA1C7AB6C7005011C4 /* Octokit.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -352,6 +772,16 @@
 			isa = PBXTargetDependency;
 			target = 239BE7C81B8C47A100D2CE22 /* OctoKit */;
 			targetProxy = 234F4BAF1BDDE31A00A58EF7 /* PBXContainerItemProxy */;
+		};
+		23CAF26E1C7AB5FC005011C4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 23CAF2611C7AB5FB005011C4 /* OctoKit tvOS */;
+			targetProxy = 23CAF26D1C7AB5FC005011C4 /* PBXContainerItemProxy */;
+		};
+		23CAF28A1C7AB60D005011C4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 23CAF27D1C7AB60C005011C4 /* OctoKit Mac */;
+			targetProxy = 23CAF2891C7AB60D005011C4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -410,12 +840,9 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = OctoKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -440,16 +867,250 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = OctoKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		23CAF2731C7AB5FC005011C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		23CAF2741C7AB5FC005011C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 9.0;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		23CAF2751C7AB5FC005011C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Debug;
+		};
+		23CAF2761C7AB5FC005011C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/tvOS",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-tvOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = appletvos;
+				TVOS_DEPLOYMENT_TARGET = 9.1;
+			};
+			name = Release;
+		};
+		23CAF2901C7AB60D005011C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		23CAF2911C7AB60D005011C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		23CAF2931C7AB60D005011C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-MacTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		23CAF2941C7AB60D005011C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-MacTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		23CAF2A01C7AB619005011C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+			};
+			name = Debug;
+		};
+		23CAF2A11C7AB619005011C4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/watchOS",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+				WATCHOS_DEPLOYMENT_TARGET = 2.1;
 			};
 			name = Release;
 		};
@@ -488,9 +1149,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = OctoKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKit;
+				PRODUCT_NAME = OctoKit;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -524,8 +1188,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = OctoKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKit;
+				PRODUCT_NAME = OctoKit;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -548,6 +1215,51 @@
 			buildConfigurations = (
 				239BE7DC1B8C47A100D2CE22 /* Debug */,
 				239BE7DD1B8C47A100D2CE22 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23CAF2771C7AB5FC005011C4 /* Build configuration list for PBXNativeTarget "OctoKit tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23CAF2731C7AB5FC005011C4 /* Debug */,
+				23CAF2741C7AB5FC005011C4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23CAF2781C7AB5FC005011C4 /* Build configuration list for PBXNativeTarget "OctoKit tvOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23CAF2751C7AB5FC005011C4 /* Debug */,
+				23CAF2761C7AB5FC005011C4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23CAF28F1C7AB60D005011C4 /* Build configuration list for PBXNativeTarget "OctoKit Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23CAF2901C7AB60D005011C4 /* Debug */,
+				23CAF2911C7AB60D005011C4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23CAF2921C7AB60D005011C4 /* Build configuration list for PBXNativeTarget "OctoKit MacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23CAF2931C7AB60D005011C4 /* Debug */,
+				23CAF2941C7AB60D005011C4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		23CAF29F1C7AB619005011C4 /* Build configuration list for PBXNativeTarget "OctoKit watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				23CAF2A01C7AB619005011C4 /* Debug */,
+				23CAF2A11C7AB619005011C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

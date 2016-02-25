@@ -1,5 +1,5 @@
 import XCTest
-@testable import OctoKit
+import OctoKit
 import Nocilla
 
 class FollowTests: XCTestCase {
@@ -12,32 +12,6 @@ class FollowTests: XCTestCase {
         super.tearDown()
         LSNocilla.sharedInstance().clearStubs()
         LSNocilla.sharedInstance().stop()
-    }
-
-    // MARK: URLRequest Tests
-
-    func testReadingUserFollowersURLRequest() {
-        let kit = Octokit()
-        let request = FollowRouter.ReadFollowers("octocat", kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/octocat/followers")!)
-    }
-
-    func testReadingAuthenticatedUserFollowersURLRequest() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = FollowRouter.ReadAuthenticatedFollowers(kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/followers?access_token=12345")!)
-    }
-
-    func testReadingUserFollowingURLRequest() {
-        let kit = Octokit()
-        let request = FollowRouter.ReadFollowing("octocat", kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/octocat/following")!)
-    }
-
-    func testReadingAuthenticatedUserFollowingURLRequest() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = FollowRouter.ReadAuthenticatedFollowing(kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/following?access_token=12345")!)
     }
     
     // MARK: Actual Request tests

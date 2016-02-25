@@ -1,14 +1,14 @@
+SHA=$(shell git rev-parse HEAD)
+BRANCH=$(shell git name-rev --name-only HEAD)
+
 install:
-	brew update || brew update
 	brew install carthage
-	brew install python
-	pip install codecov
 	carthage bootstrap
 
 test:
-	pod lib lint --quick
-	set -o pipefail && xcodebuild clean test -scheme OctoKit -sdk iphonesimulator ONLY_ACTIVE_ARCH=YES -enableCodeCoverage YES | xcpretty -c
+	bundle exec fastlane code_coverage configuration:Debug --env default
 
 post_coverage:
-	bundle exec slather coverage --input-format profdata -x --ignore "../**/*/Xcode*" --ignore "Carthage/**" --output-directory slather-report --scheme OctoKit Octokit.xcodeproj
-	codecov -f slather-report/cobertura.xml
+	bundle exec slather coverage --input-format profdata -x --ignore "../**/*/Xcode*" --ignore "Carthage/**" --output-directory slather-report --scheme OctoKit OctoKit.xcodeproj
+	curl -X POST -d @slather-report/cobertura.xml "https://codecov.io/upload/v2?token="$(CODECOV_TOKEN)"&commit="$(SHA)"&branch="$(BRANCH)"&job="$(TRAVIS_BUILD_NUMBER)
+

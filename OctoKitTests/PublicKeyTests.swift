@@ -1,5 +1,5 @@
 import XCTest
-@testable import OctoKit
+import OctoKit
 import Nocilla
 
 class PublicKeyTests: XCTestCase {
@@ -12,14 +12,6 @@ class PublicKeyTests: XCTestCase {
         super.tearDown()
         LSNocilla.sharedInstance().clearStubs()
         LSNocilla.sharedInstance().stop()
-    }
-
-    // MARK: URLRequest Tests
-
-    func testPostPublicKeyURLRequest() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = PublicKeyRouter.PostPublicKey("test-key", "test title", kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/keys?access_token=12345")!)
     }
 
     // MARK: Actual Request tests
