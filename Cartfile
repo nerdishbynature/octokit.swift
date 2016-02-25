@@ -1,1 +1,1 @@
-github "nerdishbynature/RequestKit" "all-platforms"
+github "nerdishbynature/RequestKit" ~> 0.2.2
