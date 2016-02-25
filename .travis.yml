@@ -1,8 +1,28 @@
-osx_image: xcode7.1
 language: objective-c
+osx_image: xcode7.1
+sudo: false
+env:
+  global:
+  - LC_CTYPE=en_US.UTF-8
+  - LANG=en_US.UTF-8
+  - FASTLANE_LANE=ci_commit
+matrix:
+  include:
+    - osx_image: xcode7.2
+      env: FASTLANE_LANE=code_coverage FASTLANE_ENV=default
+    - osx_image: xcode7.2
+      env: FASTLANE_ENV=ios92
+    - osx_image: xcode7.2
+      env: FASTLANE_ENV=tvos91
+    - osx_image: xcode7.2
+      env: FASTLANE_ENV=osx
 before_install:
-    - make install
+  - make install
 script:
-    - make test
+  - set -o pipefail
+  - bundle exec fastlane $FASTLANE_LANE configuration:Debug --env $FASTLANE_ENV
+  - bundle exec fastlane $FASTLANE_LANE configuration:Release --env $FASTLANE_ENV
 after_success:
-    - make post_coverage
+  - if [ "$FASTLANE_LANE" == "code_coverage" ]; then
+     make post_coverage;
+    fi

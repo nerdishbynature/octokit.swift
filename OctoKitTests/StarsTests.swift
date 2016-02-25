@@ -1,5 +1,5 @@
 import XCTest
-@testable import OctoKit
+import OctoKit
 import Nocilla
 
 class StarsTests: XCTestCase {
@@ -13,20 +13,6 @@ class StarsTests: XCTestCase {
         super.tearDown()
         LSNocilla.sharedInstance().clearStubs()
         LSNocilla.sharedInstance().stop()
-    }
-
-    // MARK: URLRequest Tests
-
-    func testReadStarsURLRequest() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = StarsRouter.ReadStars("octocat", kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/octocat/starred?access_token=12345")!)
-    }
-
-    func testMyStarsURLRequest() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = StarsRouter.ReadAuthenticatedStars(kit.configuration).URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/starred?access_token=12345")!)
     }
 
     // MARK: Actual Request tests

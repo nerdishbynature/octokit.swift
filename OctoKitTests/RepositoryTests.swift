@@ -1,5 +1,5 @@
 import XCTest
-@testable import OctoKit
+import OctoKit
 import Nocilla
 
 class RepositoryTests: XCTestCase {
@@ -12,37 +12,6 @@ class RepositoryTests: XCTestCase {
         super.tearDown()
         LSNocilla.sharedInstance().clearStubs()
         LSNocilla.sharedInstance().stop()
-    }
-
-    // MARK: URLRequest Tests
-
-    func testReadRepositoriesURLRequest() {
-        let kit = Octokit(TokenConfiguration())
-        let request = RepositoryRouter.ReadRepositories(kit.configuration, "octocat", "1", "100").URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/octocat/repos?page=1&per_page=100")!)
-    }
-
-    func testReadRepositoriesURLRequestWithCustomPageAndPerPage() {
-        let kit = Octokit(TokenConfiguration())
-        let request = RepositoryRouter.ReadRepositories(kit.configuration, "octocat", "5", "50").URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/users/octocat/repos?page=5&per_page=50")!)
-    }
-
-    func testReadAuthenticatedRepositoriesURLRequest() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = RepositoryRouter.ReadAuthenticatedRepositories(kit.configuration, "1", "100").URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100")!)
-    }
-
-    func testReadAuthenticatedRepositoriesURLRequestWithCustomPageAndPerPage() {
-        let kit = Octokit(TokenConfiguration("12345"))
-        let request = RepositoryRouter.ReadAuthenticatedRepositories(kit.configuration, "5", "50").URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/user/repos?access_token=12345&page=5&per_page=50")!)
-    }
-
-    func testReadRepositoryURLRequest() {
-        let request = RepositoryRouter.ReadRepository(Octokit().configuration, "mietzmithut", "Test").URLRequest
-        XCTAssertEqual(request!.URL!, NSURL(string: "https://api.github.com/repos/mietzmithut/Test")!)
     }
 
     // MARK: Actual Request tests
