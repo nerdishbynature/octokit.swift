@@ -20,6 +20,7 @@ import RequestKit
 @objc public class Issue: NSObject {
     public let id: Int
     public var url: String?
+    public var htmlUrl: String?
     public var number: Int?
     public var title: String?
     public var body: String?
@@ -36,6 +37,7 @@ import RequestKit
         if let id = json["id"] as? Int {
             self.id = id
             url = json["url"] as? String
+            htmlUrl = json["html_url"] as? String
             number = json["number"] as? Int
             title = json["title"] as? String
             body = json["body"] as? String
