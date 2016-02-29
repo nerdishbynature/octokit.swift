@@ -19,8 +19,8 @@ class IssueTests: XCTestCase {
     func testGetMyIssues() {
         let config = TokenConfiguration("12345")
         if let json = Helper.stringFromFile("issue") {
-            stubRequest("GET", "https://api.github.com/user/issues?access_token=12345").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
-            let expectation = expectationWithDescription("user_issues")
+            stubRequest("GET", "https://api.github.com/issues?access_token=12345&page=1&per_page=100").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
+            let expectation = expectationWithDescription("issues")
             Octokit(config).myIssues() { response in
                 switch response {
                 case .Success(let issues):
