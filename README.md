@@ -247,12 +247,41 @@ Octokit().myFollowing() { response in
 
 ## Issues
 
+### Get Issues and Pull Requests of authenticated user
+
+```swift
+Octokit(config).myIssuesAndPullRequests() { response in
+    switch response {
+        case .Success(let issues):
+        // do something with the issues and pull requests
+    case .Failure:
+        // handle any errors
+    }   
+}
+```
+
+### Get Issues of authenticated user
+
 ```swift
 Octokit(config).myIssues() { response in
     switch response {
         case .Success(let issues):
         // do something with the issues
-    case .Failure:
+        case .Failure:
+        // handle any errors
+    }   
+}
+```
+
+
+### Get Pull Requests of authenticated user
+
+```swift
+Octokit(config).myPullRequests() { response in
+    switch response {
+        case .Success(let issues):
+        // do something with the issues
+        case .Failure:
         // handle any errors
     }   
 }
