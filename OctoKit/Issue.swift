@@ -41,17 +41,19 @@ public extension Octokit {
     
     /**
      Fetches the issues of the authenticated user
+     - parameter page: Current page for issue pagination. `1` by default.
+     - parameter perPage: Number of issues per page. `100` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    public func myIssues(completion: (response: Response<[Issue]>) -> Void) {
-        let router = IssueRouter.ReadAuthenticatedIssues(configuration)
+    public func myIssues(page: String = "1", perPage: String = "100", completion: (response: Response<[Issue]>) -> Void) {
+        let router = IssueRouter.ReadAuthenticatedIssues(configuration, page, perPage)
         router.loadJSON([[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
                 if let json = json {
-                    let parsedIssue = json.map { Issue($0) }
-                    completion(response: Response.Success(parsedIssue))
+                    let parsedIssues = json.map { Issue($0) }
+                    completion(response: Response.Success(parsedIssues))
                 }
             }
         }
@@ -61,7 +63,7 @@ public extension Octokit {
 // MARK: Router
 
 enum IssueRouter: Router {
-    case ReadAuthenticatedIssues(Configuration)
+    case ReadAuthenticatedIssues(Configuration, String, String)
     
     var method: HTTPMethod {
         return .GET
@@ -73,19 +75,23 @@ enum IssueRouter: Router {
     
     var configuration: Configuration {
         switch self {
-        case .ReadAuthenticatedIssues(let config): return config
+        case .ReadAuthenticatedIssues(let config, _, _):
+            return config
+        }
+    }
+    
+    var params: [String: String] {
+        switch self {
+        case .ReadAuthenticatedIssues(_, let page, let perPage):
+            return ["per_page": perPage, "page": page]
         }
     }
     
     var path: String {
         switch self {
         case .ReadAuthenticatedIssues:
-            return "user/issues"
+            return "issues"
         }
-    }
-    
-    var params: [String: String] {
-        return [:]
     }
 }
 
