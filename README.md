@@ -247,6 +247,8 @@ Octokit().myFollowing() { response in
 
 ## Issues
 
+### Get issues of authenticated user
+
 Get all issues across all the authenticated user's visible repositories including owned repositories, member repositories, and organization repositories.
 
 ```swift
@@ -260,3 +262,42 @@ Octokit(config).myIssues() { response in
 }
 ```
 
+### Get a single issue
+
+```swift
+let (owner, repo, number) = ("owner", "repo", 1347) // replace with actual owner, repo name, and issue number
+Octokit(config).issue(owner, repository: repo, number: number) { response in
+    switch response {
+    case .Success(let issue):
+        // do something with the issue
+    case .Failure:
+        // handle any errors
+    }
+}
+```
+
+### Open a new issue
+
+```swift
+Octokit(config).postIssue("owner", repository: "repo", title: "Found a bug", body: "I'm having a problem with this.", assignee: "octocat") { response in
+    switch response {
+    case .Success(let issue):
+        // do something with the issue
+    case .Failure:
+        // handle any errors
+    }
+}
+```
+
+### Edit an existing issue
+
+```swift
+Octokit(config).patchIssue("owner", repository: "repo", number: 1347, title: "Found a bug", body: "I'm having a problem with this.", assignee: "octocat", state: .Closed) { response in
+    switch response {
+    case .Success(let issue):
+        // do something with the issue
+    case .Failure:
+        // handle any errors
+    }
+}
+```
