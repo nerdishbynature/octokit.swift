@@ -25,7 +25,9 @@ import RequestKit
             title = json["title"] as? String
             body = json["body"] as? String
             state = json["state"] as? String
-            assignee = User(json["assignee"] as? [String: AnyObject] ?? [:])
+            if let assigneeJson = json["assignee"] as? [String: AnyObject] {
+                assignee = User(assigneeJson)
+            }
             createdAt = Time.rfc3339Date(json["created_at"] as? String)
             closedAt = Time.rfc3339Date(json["closed_at"] as? String)
             updatedAt = Time.rfc3339Date(json["updated_at"] as? String)
