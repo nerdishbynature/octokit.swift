@@ -10,13 +10,14 @@ import RequestKit
     public var title: String?
     public var body: String?
     public var state: String?
-    public var user: User?
+    public var user: User
     public var assignee: User?
     public var createdAt: NSDate?
     public var closedAt: NSDate?
     public var updatedAt: NSDate?
     
     public init(_ json: [String: AnyObject]) {
+        user = User(json["user"] as? [String: AnyObject] ?? [:])
         if let id = json["id"] as? Int {
             self.id = id
             url = json["url"] as? String
@@ -24,7 +25,6 @@ import RequestKit
             title = json["title"] as? String
             body = json["body"] as? String
             state = json["state"] as? String
-            user = User(json["user"] as? [String: AnyObject] ?? [:])
             assignee = User(json["assignee"] as? [String: AnyObject] ?? [:])
             createdAt = Time.rfc3339Date(json["created_at"] as? String)
             closedAt = Time.rfc3339Date(json["closed_at"] as? String)
