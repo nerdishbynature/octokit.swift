@@ -245,3 +245,16 @@ Octokit().myFollowing() { response in
 }
 ```
 
+## Issues
+
+```swift
+Octokit(config).myIssues() { response in
+    switch response {
+        case .Success(let issues):
+        // do something with the issues
+    case .Failure:
+        // handle any errors
+    }   
+}
+```
+
