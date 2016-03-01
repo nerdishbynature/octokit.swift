@@ -247,6 +247,8 @@ Octokit().myFollowing() { response in
 
 ## Issues
 
+Get all issues across all the authenticated user's visible repositories including owned repositories, member repositories, and organization repositories.
+
 ```swift
 Octokit(config).myIssues() { response in
     switch response {
