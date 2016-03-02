@@ -95,6 +95,9 @@
 		23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
 		23F643501C7AEF72000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 		23F643511C7AEF73000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
+		E7EDEA6A1C871CEB006BAAF2 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA691C871CEB006BAAF2 /* Issue.swift */; };
+		E7EDEA6C1C871D01006BAAF2 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA6B1C871D01006BAAF2 /* IssueTests.swift */; };
+		E7EDEA6E1C871D0E006BAAF2 /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EDEA6D1C871D0E006BAAF2 /* issue.json */; };
 		E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D71BDFEFB30012E3D2 /* Stars.swift */; };
 		E7EE59DA1BE10DA60012E3D2 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
 		E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
@@ -200,6 +203,9 @@
 		23CAF2D81C7AB9DB005011C4 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/watchOS/RequestKit.framework; sourceTree = "<group>"; };
 		23F6433C1C7AEEB6000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/tvOS/Nocilla.framework; sourceTree = "<group>"; };
 		23F643421C7AEF2F000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/Mac/Nocilla.framework; sourceTree = "<group>"; };
+		E7EDEA691C871CEB006BAAF2 /* Issue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Issue.swift; sourceTree = "<group>"; };
+		E7EDEA6B1C871D01006BAAF2 /* IssueTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IssueTests.swift; sourceTree = "<group>"; };
+		E7EDEA6D1C871D0E006BAAF2 /* issue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = issue.json; path = Fixtures/issue.json; sourceTree = "<group>"; };
 		E7EE59D71BDFEFB30012E3D2 /* Stars.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stars.swift; sourceTree = "<group>"; };
 		E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsTests.swift; sourceTree = "<group>"; };
 		E7EE59DB1BE119110012E3D2 /* Follow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
@@ -277,6 +283,7 @@
 				234F4BD71BDDE40400A58EF7 /* Fixtures */,
 				234F4BC91BDDE3F900A58EF7 /* ConfigurationTests.swift */,
 				E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */,
+				E7EDEA6B1C871D01006BAAF2 /* IssueTests.swift */,
 				234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */,
 				234F4BCC1BDDE3F900A58EF7 /* PublicKeyTests.swift */,
 				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
@@ -291,6 +298,7 @@
 		234F4BD71BDDE40400A58EF7 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				E7EDEA6D1C871D0E006BAAF2 /* issue.json */,
 				234F4BD81BDDE44600A58EF7 /* public_key.json */,
 				234F4BD91BDDE44600A58EF7 /* repo.json */,
 				234F4BDA1BDDE44600A58EF7 /* user_me.json */,
@@ -304,6 +312,7 @@
 		239BE7CA1B8C47A100D2CE22 /* OctoKit */ = {
 			isa = PBXGroup;
 			children = (
+				E7EDEA691C871CEB006BAAF2 /* Issue.swift */,
 				239BE7CD1B8C47A100D2CE22 /* OctoKit.h */,
 				23B267851BDDD756003887E3 /* Configuration.swift */,
 				E7EE59DB1BE119110012E3D2 /* Follow.swift */,
@@ -600,6 +609,7 @@
 				234F4BDE1BDDE44600A58EF7 /* repo.json in Resources */,
 				234F4BE11BDDE44600A58EF7 /* user_repos.json in Resources */,
 				234F4BE01BDDE44600A58EF7 /* user_mietzmithut.json in Resources */,
+				E7EDEA6E1C871D0E006BAAF2 /* issue.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +676,7 @@
 			files = (
 				234F4BD61BDDE3F900A58EF7 /* UserTests.swift in Sources */,
 				234F4BD31BDDE3F900A58EF7 /* PublicKeyTests.swift in Sources */,
+				E7EDEA6C1C871D01006BAAF2 /* IssueTests.swift in Sources */,
 				234F4BD41BDDE3F900A58EF7 /* RepositoryTests.swift in Sources */,
 				E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */,
 				234F4BD51BDDE3F900A58EF7 /* TestHelper.swift in Sources */,
@@ -687,6 +698,7 @@
 				23B2678C1BDDD756003887E3 /* PublicKey.swift in Sources */,
 				23B2678E1BDDD756003887E3 /* User.swift in Sources */,
 				23B2678B1BDDD756003887E3 /* Octokit.swift in Sources */,
+				E7EDEA6A1C871CEB006BAAF2 /* Issue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
