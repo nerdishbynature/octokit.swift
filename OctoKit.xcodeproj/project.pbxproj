@@ -98,6 +98,13 @@
 		E7EDEA6A1C871CEB006BAAF2 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA691C871CEB006BAAF2 /* Issue.swift */; };
 		E7EDEA6C1C871D01006BAAF2 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA6B1C871D01006BAAF2 /* IssueTests.swift */; };
 		E7EDEA6E1C871D0E006BAAF2 /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EDEA6D1C871D0E006BAAF2 /* issue.json */; };
+		E7EDEA6F1C871F81006BAAF2 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA691C871CEB006BAAF2 /* Issue.swift */; };
+		E7EDEA701C871F81006BAAF2 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA691C871CEB006BAAF2 /* Issue.swift */; };
+		E7EDEA711C871F82006BAAF2 /* Issue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA691C871CEB006BAAF2 /* Issue.swift */; };
+		E7EDEA721C871F94006BAAF2 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA6B1C871D01006BAAF2 /* IssueTests.swift */; };
+		E7EDEA731C871F95006BAAF2 /* IssueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EDEA6B1C871D01006BAAF2 /* IssueTests.swift */; };
+		E7EDEA741C871FA8006BAAF2 /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EDEA6D1C871D0E006BAAF2 /* issue.json */; };
+		E7EDEA751C871FA9006BAAF2 /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EDEA6D1C871D0E006BAAF2 /* issue.json */; };
 		E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D71BDFEFB30012E3D2 /* Stars.swift */; };
 		E7EE59DA1BE10DA60012E3D2 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
 		E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
@@ -637,6 +644,7 @@
 				23F643481C7AEF66000427B3 /* repo.json in Resources */,
 				23F6434E1C7AEF6F000427B3 /* user_repos.json in Resources */,
 				23F6434C1C7AEF6C000427B3 /* user_mietzmithut.json in Resources */,
+				E7EDEA741C871FA8006BAAF2 /* issue.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,6 +665,7 @@
 				23F643491C7AEF67000427B3 /* repo.json in Resources */,
 				23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */,
 				23F6434D1C7AEF6D000427B3 /* user_mietzmithut.json in Resources */,
+				E7EDEA751C871FA9006BAAF2 /* issue.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +723,7 @@
 				23CAF2B41C7AB6D4005011C4 /* Stars.swift in Sources */,
 				23CAF2AB1C7AB6C9005011C4 /* PublicKey.swift in Sources */,
 				23CAF2A81C7AB6C6005011C4 /* Octokit.swift in Sources */,
+				E7EDEA6F1C871F81006BAAF2 /* Issue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -723,6 +733,7 @@
 			files = (
 				23CAF2BC1C7AB6FC005011C4 /* FollowTests.swift in Sources */,
 				23CAF2C41C7AB708005011C4 /* StarsTests.swift in Sources */,
+				E7EDEA721C871F94006BAAF2 /* IssueTests.swift in Sources */,
 				23CAF2C61C7AB70B005011C4 /* TestHelper.swift in Sources */,
 				23CAF2BE1C7AB6FE005011C4 /* OctokitSwiftTests.swift in Sources */,
 				23CAF2C01C7AB702005011C4 /* PublicKeyTests.swift in Sources */,
@@ -744,6 +755,7 @@
 				23CAF2B51C7AB6D5005011C4 /* Stars.swift in Sources */,
 				23CAF2AC1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
 				23CAF2A91C7AB6C6005011C4 /* Octokit.swift in Sources */,
+				E7EDEA701C871F81006BAAF2 /* Issue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -753,6 +765,7 @@
 			files = (
 				23CAF2BD1C7AB6FC005011C4 /* FollowTests.swift in Sources */,
 				23CAF2C51C7AB709005011C4 /* StarsTests.swift in Sources */,
+				E7EDEA731C871F95006BAAF2 /* IssueTests.swift in Sources */,
 				23CAF2C71C7AB70C005011C4 /* TestHelper.swift in Sources */,
 				23CAF2BF1C7AB6FF005011C4 /* OctokitSwiftTests.swift in Sources */,
 				23CAF2C11C7AB702005011C4 /* PublicKeyTests.swift in Sources */,
@@ -774,6 +787,7 @@
 				23CAF2B61C7AB6D5005011C4 /* Stars.swift in Sources */,
 				23CAF2AD1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
 				23CAF2AA1C7AB6C7005011C4 /* Octokit.swift in Sources */,
+				E7EDEA711C871F82006BAAF2 /* Issue.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
