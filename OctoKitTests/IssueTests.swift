@@ -48,7 +48,7 @@ class IssueTests: XCTestCase {
             Octokit().issue(owner, repository: repo, number: number) { response in
                 switch response {
                 case .Success(let issue):
-                    XCTAssertEqual(issue.number!, number)
+                    XCTAssertEqual(issue.number, number)
                     expectation.fulfill()
                 case .Failure:
                     XCTAssert(false, "should not get an error")
@@ -67,14 +67,14 @@ class IssueTests: XCTestCase {
     
     func testParsingIssue() {
         let subject = Issue(Helper.JSONFromFile("issue") as! [String: AnyObject])
-        XCTAssertEqual(subject.user!.login!, "octocat")
-        XCTAssertEqual(subject.user!.id, 1)
+        XCTAssertEqual(subject.user?.login, "octocat")
+        XCTAssertEqual(subject.user?.id, 1)
         
         XCTAssertEqual(subject.id, 1)
-        XCTAssertEqual(subject.number!, 1347)
-        XCTAssertEqual(subject.title!, "Found a bug")
+        XCTAssertEqual(subject.number, 1347)
+        XCTAssertEqual(subject.title, "Found a bug")
         XCTAssertEqual(subject.htmlURL, NSURL(string: "https://github.com/octocat/Hello-World/issues/1347"))
-        XCTAssertEqual(subject.state!, IssueState.Open)
-        XCTAssertEqual(subject.locked!, false)
+        XCTAssertEqual(subject.state, Openness.Open)
+        XCTAssertEqual(subject.locked, false)
     }
 }
