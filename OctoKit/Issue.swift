@@ -3,7 +3,7 @@ import RequestKit
 
 // MARK: model
 
-public enum IssueState: String {
+public enum Openness: String {
     case Open = "open"
     case Closed = "closed"
 }
@@ -17,7 +17,7 @@ public enum IssueState: String {
     public var eventsURL: NSURL?
     public var htmlURL: NSURL?
     public var number: Int?
-    public var state: IssueState?
+    public var state: Openness?
     public var title: String?
     public var body: String?
     public var user: User?
@@ -25,11 +25,11 @@ public enum IssueState: String {
     public var assignee: User?
     public var milestone: Milestone?
     public var locked: Bool?
-    public var numberOfComments: Int?
-    public var closureDate: NSDate?
-    public var creationDate: NSDate?
-    public var updateDate: NSDate?
-    public var closer: User?
+    public var comments: Int?
+    public var closedAt: NSDate?
+    public var createdAt: NSDate?
+    public var updatedAt: NSDate?
+    public var closedBy: User?
     
     public init(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
@@ -53,14 +53,7 @@ public enum IssueState: String {
                 htmlURL = url
             }
             number = json["number"] as? Int
-            switch json["state"] as? String ?? "" {
-            case "open":
-                state = .Open
-            case "closed":
-                state = .Closed
-            default:
-                break
-            }
+            state = Openness(rawValue: json["state"] as? String ?? "")
             title = json["title"] as? String
             body = json["body"] as? String
             user = User(json["user"] as? [String: AnyObject] ?? [:])
@@ -70,13 +63,13 @@ public enum IssueState: String {
             assignee = User(json["assignee"] as? [String: AnyObject] ?? [:])
             milestone = Milestone(json["milestone"] as? [String: AnyObject] ?? [:])
             locked = json["locked"] as? Bool
-            numberOfComments = json["comments"] as? Int
-            closureDate = Time.rfc3339Date(json["closed_at"] as? String)
-            creationDate = Time.rfc3339Date(json["created_at"] as? String)
-            updateDate = Time.rfc3339Date(json["updated_at"] as? String)
-            closer = User(json["closed_by"] as? [String: AnyObject] ?? [:])
+            comments = json["comments"] as? Int
+            closedAt = Time.rfc3339Date(json["closed_at"] as? String)
+            createdAt = Time.rfc3339Date(json["created_at"] as? String)
+            updatedAt = Time.rfc3339Date(json["updated_at"] as? String)
+            closedBy = User(json["closed_by"] as? [String: AnyObject] ?? [:])
         } else {
-            self.id = -1
+            id = -1
         }
     }
 }
@@ -160,7 +153,7 @@ public extension Octokit {
      - parameter state: Whether the issue is open or closed.
      - parameter completion: Callback for the issue that is created.
      */
-    public func patchIssue(owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: IssueState? = nil, completion: (response:Response<Issue>) -> Void) {
+    public func patchIssue(owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: Openness? = nil, completion: (response:Response<Issue>) -> Void) {
         let router = IssueRouter.PatchIssue(configuration, owner, repository, number, title, body, assignee, state)
         router.postJSON([String: AnyObject].self) { json, error in
             if let error = error {
@@ -181,7 +174,7 @@ enum IssueRouter: JSONPostRouter {
     case ReadAuthenticatedIssues(Configuration, String, String)
     case ReadIssue(Configuration, String, String, Int)
     case PostIssue(Configuration, String, String, String, String?, String?)
-    case PatchIssue(Configuration, String, String, Int, String?, String?, String?, IssueState?)
+    case PatchIssue(Configuration, String, String, Int, String?, String?, String?, Openness?)
     
     var method: HTTPMethod {
         switch self {
