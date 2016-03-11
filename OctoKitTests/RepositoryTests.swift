@@ -94,8 +94,8 @@ class RepositoryTests: XCTestCase {
             Octokit().repository(owner, name: name) { response in
                 switch response {
                 case .Success(let repo):
-                    XCTAssertEqual(repo.name!, name)
-                    XCTAssertEqual(repo.owner.login!, owner)
+                    XCTAssertEqual(repo.name, name)
+                    XCTAssertEqual(repo.owner.login, owner)
                     expectation.fulfill()
                 case .Failure:
                     XCTAssert(false, "should not get an error")
@@ -137,18 +137,18 @@ class RepositoryTests: XCTestCase {
 
     func testUserParsingFullRepository() {
         let subject = Repository(Helper.JSONFromFile("repo") as! [String: AnyObject])
-        XCTAssertEqual(subject.owner.login!, "mietzmithut")
+        XCTAssertEqual(subject.owner.login, "mietzmithut")
         XCTAssertEqual(subject.owner.id, 4672699)
 
         XCTAssertEqual(subject.id, 10824973)
-        XCTAssertEqual(subject.name!, "Test")
-        XCTAssertEqual(subject.fullName!, "mietzmithut/Test")
+        XCTAssertEqual(subject.name, "Test")
+        XCTAssertEqual(subject.fullName, "mietzmithut/Test")
         XCTAssertEqual(subject.isPrivate, false)
         XCTAssertEqual(subject.repositoryDescription, "")
-        XCTAssertEqual(subject.isFork!, false)
-        XCTAssertEqual(subject.gitURL!, "git://github.com/mietzmithut/Test.git")
-        XCTAssertEqual(subject.sshURL!, "git@github.com:mietzmithut/Test.git")
-        XCTAssertEqual(subject.cloneURL!, "https://github.com/mietzmithut/Test.git")
+        XCTAssertEqual(subject.isFork, false)
+        XCTAssertEqual(subject.gitURL, "git://github.com/mietzmithut/Test.git")
+        XCTAssertEqual(subject.sshURL, "git@github.com:mietzmithut/Test.git")
+        XCTAssertEqual(subject.cloneURL, "https://github.com/mietzmithut/Test.git")
         XCTAssertEqual(subject.size, 132)
     }
 }

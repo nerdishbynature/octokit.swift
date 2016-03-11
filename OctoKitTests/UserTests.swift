@@ -24,7 +24,7 @@ class UserTests: XCTestCase {
             Octokit().user(username) { response in
                 switch response {
                 case .Success(let user):
-                    XCTAssertEqual(user.login!, username)
+                    XCTAssertEqual(user.login, username)
                     expectation.fulfill()
                 case .Failure:
                     XCTAssert(false, "should not get an user")
@@ -69,7 +69,7 @@ class UserTests: XCTestCase {
             Octokit(TokenConfiguration("token")).me() { response in
                 switch response {
                 case .Success(let user):
-                    XCTAssertEqual(user.login!, "pietbrauer")
+                    XCTAssertEqual(user.login, "pietbrauer")
                     expectation.fulfill()
                 case .Failure(let error):
                     XCTAssert(false, "should not retrieve an error \(error)")
@@ -110,19 +110,19 @@ class UserTests: XCTestCase {
 
     func testUserParsingFullUser() {
         let subject = User(Helper.JSONFromFile("user_me") as! [String: AnyObject])
-        XCTAssertEqual(subject.login!, "pietbrauer")
+        XCTAssertEqual(subject.login, "pietbrauer")
         XCTAssertEqual(subject.id, 759730)
-        XCTAssertEqual(subject.avatarURL!, "https://avatars.githubusercontent.com/u/759730?v=3")
-        XCTAssertEqual(subject.gravatarID!, "")
-        XCTAssertEqual(subject.type!, "User")
-        XCTAssertEqual(subject.name!, "Piet Brauer")
-        XCTAssertEqual(subject.company!, "XING AG")
-        XCTAssertEqual(subject.blog!, "xing.to/PietBrauer")
-        XCTAssertEqual(subject.location!, "Hamburg")
+        XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/759730?v=3")
+        XCTAssertEqual(subject.gravatarID, "")
+        XCTAssertEqual(subject.type, "User")
+        XCTAssertEqual(subject.name, "Piet Brauer")
+        XCTAssertEqual(subject.company, "XING AG")
+        XCTAssertEqual(subject.blog, "xing.to/PietBrauer")
+        XCTAssertEqual(subject.location, "Hamburg")
         XCTAssertNil(subject.email)
-        XCTAssertEqual(subject.numberOfPublicRepos!, 6)
-        XCTAssertEqual(subject.numberOfPublicGists!, 10)
-        XCTAssertEqual(subject.numberOfPrivateRepos!, 4)
+        XCTAssertEqual(subject.numberOfPublicRepos, 6)
+        XCTAssertEqual(subject.numberOfPublicGists, 10)
+        XCTAssertEqual(subject.numberOfPrivateRepos, 4)
     }
 
     func testUserParsingMinimalUser() {
