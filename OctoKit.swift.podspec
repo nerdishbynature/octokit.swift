@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "OctoKit.swift"
-  s.version          = "0.5.2"
+  s.version          = "0.6.0"
   s.summary          = "A Swift API Client for GitHub and GitHub Enterprise"
   s.description      = <<-DESC
                         You are looking at the A Swift API Client for GitHub and GitHub Enterprise.
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/nerdishbynature/octokit.swift.git", :tag => s.version.to_s }
   s.social_media_url = "https://twitter.com/pietbrauer"
   s.module_name     = "Octokit"
-  s.dependency "NBNRequestKit", "~> 0.2.2"
+  s.dependency "NBNRequestKit", "~> 0.3.0"
   s.requires_arc = true
   s.source_files = "OctoKit/*.swift"
   s.ios.deployment_target = '8.0'
