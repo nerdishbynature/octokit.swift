@@ -19,6 +19,9 @@ DerivedData
 
 # AppCode
 .idea
+fastlane/README.md
+fastlane/test-output
+fastlane/report.xml
 
 .DS_Store
 Pods/
