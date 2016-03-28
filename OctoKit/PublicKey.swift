@@ -6,7 +6,7 @@ import RequestKit
 public extension Octokit {
     public func postPublicKey(publicKey: String, title: String, completion: (response:Response<String>) -> Void) {
         let router = PublicKeyRouter.PostPublicKey(publicKey, title, configuration)
-        router.postJSON([String: AnyObject].self) { json, error in
+        router.postJSON(expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {

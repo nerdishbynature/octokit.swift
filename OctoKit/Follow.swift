@@ -9,7 +9,7 @@ public extension Octokit {
     */
     public func myFollowers(completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadAuthenticatedFollowers(configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -28,7 +28,7 @@ public extension Octokit {
     */
     public func followers(name: String, completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadFollowers(name, configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -46,7 +46,7 @@ public extension Octokit {
     */
     public func myFollowing(completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadAuthenticatedFollowing(configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -65,7 +65,7 @@ public extension Octokit {
     */
     public func following(name: String, completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadFollowing(name, configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
