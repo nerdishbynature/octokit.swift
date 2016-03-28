@@ -50,7 +50,7 @@ public extension Octokit {
     */
     public func user(name: String, completion: (response: Response<User>) -> Void) {
         let router = UserRouter.ReadUser(name, self.configuration)
-        router.loadJSON([String: AnyObject].self) { json, error in
+        router.loadJSON(expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -68,7 +68,7 @@ public extension Octokit {
     */
     public func me(completion: (response: Response<User>) -> Void) {
         let router = UserRouter.ReadAuthenticatedUser(self.configuration)
-        router.loadJSON([String: AnyObject].self) { json, error in
+        router.loadJSON(expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {

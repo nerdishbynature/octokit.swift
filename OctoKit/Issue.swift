@@ -86,7 +86,7 @@ public extension Octokit {
      */
     public func myIssues(page: String = "1", perPage: String = "100", completion: (response: Response<[Issue]>) -> Void) {
         let router = IssueRouter.ReadAuthenticatedIssues(configuration, page, perPage)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -107,7 +107,7 @@ public extension Octokit {
      */
     public func issue(owner: String, repository: String, number: Int, completion: (response: Response<Issue>) -> Void) {
         let router = IssueRouter.ReadIssue(configuration, owner, repository, number)
-        router.loadJSON([String: AnyObject].self) { json, error in
+        router.loadJSON(expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -130,7 +130,7 @@ public extension Octokit {
      */
     public func postIssue(owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, completion: (response:Response<Issue>) -> Void) {
         let router = IssueRouter.PostIssue(configuration, owner, repository, title, body, assignee)
-        router.postJSON([String: AnyObject].self) { json, error in
+        router.postJSON(expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -155,7 +155,7 @@ public extension Octokit {
      */
     public func patchIssue(owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: Openness? = nil, completion: (response:Response<Issue>) -> Void) {
         let router = IssueRouter.PatchIssue(configuration, owner, repository, number, title, body, assignee, state)
-        router.postJSON([String: AnyObject].self) { json, error in
+        router.postJSON(expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
