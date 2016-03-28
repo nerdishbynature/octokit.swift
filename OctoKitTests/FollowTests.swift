@@ -1,198 +1,124 @@
 import XCTest
 import OctoKit
-import Nocilla
 
 class FollowTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-        LSNocilla.sharedInstance().start()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        LSNocilla.sharedInstance().clearStubs()
-        LSNocilla.sharedInstance().stop()
-    }
-    
-    // MARK: Actual Request tests
-
     func testGetMyFollowers() {
         let config = TokenConfiguration("12345")
-        if let json = Helper.stringFromFile("users") {
-            stubRequest("GET", "https://api.github.com/user/followers?access_token=12345").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
-            let expectation = expectationWithDescription("user_followers")
-            Octokit(config).myFollowers() { response in
-                switch response {
-                case .Success(let users):
-                    XCTAssertEqual(users.count, 1)
-                    expectation.fulfill()
-                case .Failure:
-                    XCTAssert(false, "should not get an error")
-                    expectation.fulfill()
-                }
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers?access_token=12345", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
+        Octokit(config).myFollowers(session) { response in
+            switch response {
+            case .Success(let users):
+                XCTAssertEqual(users.count, 1)
+            case .Failure:
+                XCTAssert(false, "should not get an error")
             }
-            waitForExpectationsWithTimeout(1) { (error) in
-                XCTAssertNil(error, "\(error)")
-            }
-        } else {
-            XCTFail("json shouldn't be nil")
         }
+        XCTAssertTrue(session.wasCalled)
     }
 
     func testFailToGetMyFollowers() {
         let config = TokenConfiguration("12345")
-        stubRequest("GET", "https://api.github.com/user/followers?access_token=12345").andReturn(404)
-        let expectation = expectationWithDescription("failing_my_followers")
-        Octokit(config).myFollowers() { response in
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers?access_token=12345", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        Octokit(config).myFollowers(session) { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve followers")
-                expectation.fulfill()
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
-                expectation.fulfill()
             case .Failure:
                 XCTAssertTrue(false)
-                expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(1) { error in
-            XCTAssertNil(error, "\(error)")
-        }
+        XCTAssertTrue(session.wasCalled)
     }
 
     func testGetUsersFollowers() {
-        if let json = Helper.stringFromFile("users") {
-            stubRequest("GET", "https://api.github.com/users/octocat/followers").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
-            let expectation = expectationWithDescription("users_followers")
-            Octokit().followers("octocat") { response in
-                switch response {
-                case .Success(let users):
-                    XCTAssertEqual(users.count, 1)
-                    expectation.fulfill()
-                case .Failure:
-                    XCTAssert(false, "should not get an error")
-                    expectation.fulfill()
-                }
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/followers", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
+        Octokit().followers(session, name: "octocat") { response in
+            switch response {
+            case .Success(let users):
+                XCTAssertEqual(users.count, 1)
+            case .Failure:
+                XCTAssert(false, "should not get an error")
             }
-            waitForExpectationsWithTimeout(1) { (error) in
-                XCTAssertNil(error, "\(error)")
-            }
-        } else {
-            XCTFail("json shouldn't be nil")
         }
+        XCTAssertTrue(session.wasCalled)
     }
 
     func testFailToGetUsersFollowers() {
-        stubRequest("GET", "https://api.github.com/users/octocat/followers").andReturn(404)
-        let expectation = expectationWithDescription("failing_users_followers")
-        Octokit().followers("octocat") { response in
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/followers", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        Octokit().followers(session, name: "octocat") { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve followers")
-                expectation.fulfill()
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
-                expectation.fulfill()
             case .Failure:
                 XCTAssertTrue(false)
-                expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(1) { error in
-            XCTAssertNil(error, "\(error)")
-        }
+        XCTAssertTrue(session.wasCalled)
     }
 
     func testGetMyFollowing() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following?access_token=12345", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
         let config = TokenConfiguration("12345")
-        if let json = Helper.stringFromFile("users") {
-            stubRequest("GET", "https://api.github.com/user/following?access_token=12345").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
-            let expectation = expectationWithDescription("user_following")
-            Octokit(config).myFollowing() { response in
-                switch response {
-                case .Success(let users):
-                    XCTAssertEqual(users.count, 1)
-                    expectation.fulfill()
-                case .Failure:
-                    XCTAssert(false, "should not get an error")
-                    expectation.fulfill()
-                }
+        Octokit(config).myFollowing(session) { response in
+            switch response {
+            case .Success(let users):
+                XCTAssertEqual(users.count, 1)
+            case .Failure:
+                XCTAssert(false, "should not get an error")
             }
-            waitForExpectationsWithTimeout(1) { (error) in
-                XCTAssertNil(error, "\(error)")
-            }
-        } else {
-            XCTFail("json shouldn't be nil")
         }
+        XCTAssertTrue(session.wasCalled)
     }
 
     func testFailToGetMyFollowing() {
         let config = TokenConfiguration("12345")
-        stubRequest("GET", "https://api.github.com/user/following?access_token=12345").andReturn(404)
-        let expectation = expectationWithDescription("failing_my_following")
-        Octokit(config).myFollowing() { response in
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following?access_token=12345", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        Octokit(config).myFollowing(session) { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve following")
-                expectation.fulfill()
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
-                expectation.fulfill()
             case .Failure:
                 XCTAssertTrue(false)
-                expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(1) { error in
-            XCTAssertNil(error, "\(error)")
-        }
+        XCTAssertTrue(session.wasCalled)
     }
 
     func testGetUsersFollowing() {
-        if let json = Helper.stringFromFile("users") {
-            stubRequest("GET", "https://api.github.com/users/octocat/following").andReturn(200).withHeaders(["Content-Type": "application/json"]).withBody(json)
-            let expectation = expectationWithDescription("users_following")
-            Octokit().following("octocat") { response in
-                switch response {
-                case .Success(let users):
-                    XCTAssertEqual(users.count, 1)
-                    expectation.fulfill()
-                case .Failure:
-                    XCTAssert(false, "should not get an error")
-                    expectation.fulfill()
-                }
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
+        Octokit().following(session, name: "octocat") { response in
+            switch response {
+            case .Success(let users):
+                XCTAssertEqual(users.count, 1)
+            case .Failure:
+                XCTAssert(false, "should not get an error")
             }
-            waitForExpectationsWithTimeout(1) { (error) in
-                XCTAssertNil(error, "\(error)")
-            }
-        } else {
-            XCTFail("json shouldn't be nil")
         }
+        XCTAssertTrue(session.wasCalled)
     }
 
     func testFailToGetUsersFollowing() {
-        stubRequest("GET", "https://api.github.com/users/octocat/following").andReturn(404)
-        let expectation = expectationWithDescription("failing_users_following")
-        Octokit().following("octocat") { response in
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        Octokit().following(session, name: "octocat") { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve following")
-                expectation.fulfill()
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, "com.octokit.swift")
-                expectation.fulfill()
             case .Failure:
                 XCTAssertTrue(false)
-                expectation.fulfill()
             }
         }
-        waitForExpectationsWithTimeout(1) { error in
-            XCTAssertNil(error, "\(error)")
-        }
+        XCTAssertTrue(session.wasCalled)
     }
 }
