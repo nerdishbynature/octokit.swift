@@ -5,7 +5,7 @@ public extension Octokit {
 
     /**
         Fetches the followers of the authenticated user
-     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter completion: Callback for the outcome of the fetch.
     */
     public func myFollowers(session: RequestKitURLSession = NSURLSession.sharedSession(), completion: (response: Response<[User]>) -> Void) {
