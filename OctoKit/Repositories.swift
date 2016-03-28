@@ -56,7 +56,7 @@ public extension Octokit {
         let router = (owner != nil)
             ? RepositoryRouter.ReadRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.ReadAuthenticatedRepositories(configuration, page, perPage)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             }
@@ -76,7 +76,7 @@ public extension Octokit {
     */
     public func repository(owner: String, name: String, completion: (response: Response<Repository>) -> Void) {
         let router = RepositoryRouter.ReadRepository(configuration, owner, name)
-        router.loadJSON([String: AnyObject].self) { json, error in
+        router.loadJSON(expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {

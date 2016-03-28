@@ -10,7 +10,7 @@ public extension Octokit {
     */
     public func stars(name: String, completion: (response: Response<[Repository]>) -> Void) {
         let router = StarsRouter.ReadStars(name, configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -28,7 +28,7 @@ public extension Octokit {
     */
     public func myStars(completion: (response: Response<[Repository]>) -> Void) {
         let router = StarsRouter.ReadAuthenticatedStars(configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
