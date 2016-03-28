@@ -7,7 +7,7 @@ class PublicKeyTests: XCTestCase {
 
     func testPostPublicKey() {
         let config = TokenConfiguration("12345")
-        let session = PublicKeyTestsSession()
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/keys?access_token=12345", expectedHTTPMethod: "POST", jsonFile: "public_key", statusCode: 201)
         Octokit(config).postPublicKey(session, publicKey: "test-key", title: "test title") { response in
             switch response {
             case .Success(let publicKey):
@@ -17,24 +17,5 @@ class PublicKeyTests: XCTestCase {
             }
         }
         XCTAssertTrue(session.wasCalled)
-    }
-}
-
-class PublicKeyTestsSession: RequestKitURLSession {
-    var wasCalled: Bool = false
-
-    func dataTaskWithRequest(request: NSURLRequest, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> URLSessionDataTaskProtocol {
-        XCTFail("This should not be called")
-        return MockURLSessionDataTask()
-    }
-
-    func uploadTaskWithRequest(request: NSURLRequest, fromData bodyData: NSData?, completionHandler: (NSData?, NSURLResponse?, NSError?) -> Void) -> URLSessionDataTaskProtocol {
-        XCTAssertEqual(request.URL?.absoluteString, "https://api.github.com/user/keys?access_token=12345")
-        XCTAssertEqual(request.HTTPMethod, "POST")
-        let data = Helper.stringFromFile("public_key")?.dataUsingEncoding(NSUTF8StringEncoding)
-        let response = NSHTTPURLResponse(URL: request.URL!, statusCode: 201, HTTPVersion: "http/1.1", headerFields: ["Content-Type": "application/json"])
-        completionHandler(data, response, nil)
-        wasCalled = true
-        return MockURLSessionDataTask()
     }
 }
