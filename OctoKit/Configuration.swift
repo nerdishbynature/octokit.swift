@@ -116,7 +116,7 @@ enum OAuthRouter: Router {
         switch self {
         case .Authorize(let config):
             let scope = (config.scopes as NSArray).componentsJoinedByString(",")
-            return ["scope": scope, "client_id": config.token]
+            return ["scope": scope, "client_id": config.token, "allow_signup": "false"]
         case .AccessToken(let config, let code):
             return ["client_id": config.token, "client_secret": config.secret, "code": code]
         }
