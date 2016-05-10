@@ -45,10 +45,12 @@ public extension Octokit {
 
     /**
         Fetches the users following the authenticated user
+        - parameter page: Current page for following pagination. `1` by default.
+        - parameter perPage: Number of following per page. `100` by default.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func myFollowing(completion: (response: Response<[User]>) -> Void) {
-        let router = FollowRouter.ReadAuthenticatedFollowing(configuration)
+    public func myFollowing(page: String = "1", perPage: String = "100", completion: (response: Response<[User]>) -> Void) {
+        let router = FollowRouter.ReadAuthenticatedFollowing(configuration, page, perPage)
         router.loadJSON([[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
@@ -60,6 +62,7 @@ public extension Octokit {
             }
         }
     }
+
 
     /**
         Fetches the users following a user
@@ -84,7 +87,7 @@ public extension Octokit {
 enum FollowRouter: Router {
     case ReadAuthenticatedFollowers(Configuration, String, String)
     case ReadFollowers(String, Configuration)
-    case ReadAuthenticatedFollowing(Configuration)
+    case ReadAuthenticatedFollowing(Configuration, String, String)
     case ReadFollowing(String, Configuration)
 
     var method: HTTPMethod {
@@ -99,7 +102,7 @@ enum FollowRouter: Router {
         switch self {
         case .ReadAuthenticatedFollowers(let config, _, _): return config
         case .ReadFollowers(_, let config): return config
-        case .ReadAuthenticatedFollowing(let config): return config
+        case .ReadAuthenticatedFollowing(let config, _, _): return config
         case .ReadFollowing(_, let config): return config
         }
     }
@@ -120,6 +123,8 @@ enum FollowRouter: Router {
     var params: [String: String] {
         switch self {
         case .ReadAuthenticatedFollowers(_, let page, let perPage):
+            return ["per_page": perPage, "page": page]
+        case .ReadAuthenticatedFollowing(_, let page, let perPage):
             return ["per_page": perPage, "page": page]
         default:
             return [:]
