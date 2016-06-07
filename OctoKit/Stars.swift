@@ -70,11 +70,7 @@ enum StarsRouter: Router {
         }
     }
 
-    var params: [String: String] {
+    var params: [String: AnyObject] {
         return [:]
-    }
-
-    var URLRequest: NSURLRequest? {
-        return request()
     }
 }
