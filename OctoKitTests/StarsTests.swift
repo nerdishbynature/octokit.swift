@@ -27,7 +27,7 @@ class StarsTests: XCTestCase {
                 XCTAssert(false, "should not retrieve repositories")
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
-                XCTAssertEqual(error.domain, "com.octokit.swift")
+                XCTAssertEqual(error.domain, OctoKitErrorDomain)
             case .Failure:
                 XCTAssertTrue(false)
             }
@@ -56,7 +56,7 @@ class StarsTests: XCTestCase {
                 XCTAssert(false, "should not retrieve repositories")
             case .Failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
-                XCTAssertEqual(error.domain, "com.octokit.swift")
+                XCTAssertEqual(error.domain, OctoKitErrorDomain)
             case .Failure:
                 XCTAssertTrue(false)
             }
