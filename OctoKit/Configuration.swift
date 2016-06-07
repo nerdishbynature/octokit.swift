@@ -4,9 +4,12 @@ import RequestKit
 let githubBaseURL = "https://api.github.com"
 let githubWebURL = "https://github.com"
 
+public let OctoKitErrorDomain = "com.nerdishbynature.octokit"
+
 public struct TokenConfiguration: Configuration {
     public var apiEndpoint: String
     public var accessToken: String?
+    public let errorDomain = OctoKitErrorDomain
 
     public init(_ token: String? = nil, url: String = githubBaseURL) {
         apiEndpoint = url
@@ -21,6 +24,7 @@ public struct OAuthConfiguration: Configuration {
     public let secret: String
     public let scopes: [String]
     public let webEndpoint: String
+    public let errorDomain = OctoKitErrorDomain
 
     public init(_ url: String = githubBaseURL, webURL: String = githubWebURL,
         token: String, secret: String, scopes: [String]) {
@@ -125,11 +129,13 @@ enum OAuthRouter: Router {
     var URLRequest: NSURLRequest? {
         switch self {
         case .Authorize(let config):
-            let URLString = config.webEndpoint.stringByAppendingURLPath(path)
-            return request(URLString, parameters: params)
+            let url = NSURL(string: path, relativeToURL: NSURL(string: config.webEndpoint))
+            let components = NSURLComponents(URL: url!, resolvingAgainstBaseURL: true)
+            return request(components!, parameters: params)
         case .AccessToken(let config, _):
-            let URLString = config.webEndpoint.stringByAppendingURLPath(path)
-            return request(URLString, parameters: params)
+            let url = NSURL(string: path, relativeToURL: NSURL(string: config.webEndpoint))
+            let components = NSURLComponents(URL: url!, resolvingAgainstBaseURL: true)
+            return request(components!, parameters: params)
         }
     }
 }
