@@ -48,7 +48,7 @@ enum PublicKeyRouter: JSONPostRouter {
         }
     }
 
-    var params: [String: String] {
+    var params: [String: AnyObject] {
         switch self {
         case .PostPublicKey(let publicKey, let title, _):
             return ["title": title, "key": publicKey]

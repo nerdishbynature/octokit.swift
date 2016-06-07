@@ -118,7 +118,7 @@ enum FollowRouter: Router {
         }
     }
 
-    var params: [String: String] {
+    var params: [String: AnyObject] {
         return [:]
     }
 }

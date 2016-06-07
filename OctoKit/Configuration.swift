@@ -112,7 +112,7 @@ enum OAuthRouter: Router {
         }
     }
 
-    var params: [String: String] {
+    var params: [String: AnyObject] {
         switch self {
         case .Authorize(let config):
             let scope = (config.scopes as NSArray).componentsJoinedByString(",")

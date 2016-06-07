@@ -207,7 +207,7 @@ enum IssueRouter: JSONPostRouter {
         }
     }
     
-    var params: [String: String] {
+    var params: [String: AnyObject] {
         switch self {
         case .ReadAuthenticatedIssues(_, let page, let perPage):
             return ["per_page": perPage, "page": page]
