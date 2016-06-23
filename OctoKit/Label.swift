@@ -23,7 +23,7 @@ extension Color {
 }
 
 @objc public class Label: NSObject {
-    public var url: NSURL?
+    public var url: URL?
     public var name: String?
     #if os(OSX)
         public var color: NSColor?
@@ -32,7 +32,7 @@ extension Color {
     #endif
     
     public init(_ json: [String: AnyObject]) {
-        if let urlString = json["url"] as? String, url = NSURL(string: urlString) {
+        if let urlString = json["url"] as? String, url = URL(string: urlString) {
             self.url = url
         }
         name = json["name"] as? String

@@ -8,11 +8,11 @@ struct Time {
         - [https://developer.apple.com/library/mac/qa/qa1480/_index.html](https://developer.apple.com/library/mac/qa/qa1480/_index.html)
         - [https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/DataFormatting/Articles/dfDateFormatting10_4.html](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/DataFormatting/Articles/dfDateFormatting10_4.html)
     */
-    private static var rfc3339DateFormatter: NSDateFormatter = {
-        let formatter = NSDateFormatter()
+    private static var rfc3339DateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
-        formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        formatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+        formatter.locale = Locale(localeIdentifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(forSecondsFromGMT: 0)
         return formatter
     }()
 
@@ -21,8 +21,8 @@ struct Time {
         - parameter string: The string representation of the date
         - returns: An `NSDate` with a successful parse, otherwise `nil`
      */
-    static func rfc3339Date(string: String?) -> NSDate? {
+    static func rfc3339Date(_ string: String?) -> Date? {
         guard let string = string else { return nil }
-        return Time.rfc3339DateFormatter.dateFromString(string)
+        return Time.rfc3339DateFormatter.date(from: string)
     }
 }

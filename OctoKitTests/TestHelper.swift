@@ -1,22 +1,22 @@
 import Foundation
 
 internal class Helper {
-    internal class func stringFromFile(name: String) -> String? {
-        let bundle = NSBundle(forClass: self)
+    internal class func stringFromFile(_ name: String) -> String? {
+        let bundle = Bundle(for: self)
         let path = bundle.pathForResource(name, ofType: "json")
         if let path = path {
-            let string = try? String(contentsOfFile: path, encoding: NSUTF8StringEncoding)
+            let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
             return string
         }
         return nil
     }
 
-    internal class func JSONFromFile(name: String) -> AnyObject {
-        let bundle = NSBundle(forClass: self)
+    internal class func JSONFromFile(_ name: String) -> AnyObject {
+        let bundle = Bundle(for: self)
         let path = bundle.pathForResource(name, ofType: "json")!
-        let data = NSData(contentsOfFile: path)!
-        let dict: AnyObject? = try? NSJSONSerialization.JSONObjectWithData(data,
-        options: NSJSONReadingOptions.MutableContainers)
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path))
+        let dict: AnyObject? = try? JSONSerialization.jsonObject(with: data,
+        options: JSONSerialization.ReadingOptions.mutableContainers)
         return dict!
     }
 }

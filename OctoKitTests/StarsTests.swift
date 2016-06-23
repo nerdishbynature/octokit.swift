@@ -9,9 +9,9 @@ class StarsTests: XCTestCase {
         let config = TokenConfiguration("12345")
         let task = Octokit(config).myStars(session) { response in
             switch response {
-            case .Success(let repositories):
+            case .success(let repositories):
                 XCTAssertEqual(repositories.count, 1)
-            case .Failure:
+            case .failure:
                 XCTAssert(false, "should not get an error")
             }
         }
@@ -24,12 +24,12 @@ class StarsTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred?access_token=12345", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
         let task = Octokit(config).myStars(session) { response in
             switch response {
-            case .Success:
+            case .success:
                 XCTAssert(false, "should not retrieve repositories")
-            case .Failure(let error as NSError):
+            case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .Failure:
+            case .failure:
                 XCTAssertTrue(false)
             }
         }
@@ -41,9 +41,9 @@ class StarsTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
         let task = Octokit().stars(session, name: "octocat") { response in
             switch response {
-            case .Success(let repositories):
+            case .success(let repositories):
                 XCTAssertEqual(repositories.count, 1)
-            case .Failure:
+            case .failure:
                 XCTAssert(false, "should not get an error")
             }
         }
@@ -55,12 +55,12 @@ class StarsTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
         let task = Octokit().stars(session, name: "octocat") { response in
             switch response {
-            case .Success:
+            case .success:
                 XCTAssert(false, "should not retrieve repositories")
-            case .Failure(let error as NSError):
+            case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .Failure:
+            case .failure:
                 XCTAssertTrue(false)
             }
         }
