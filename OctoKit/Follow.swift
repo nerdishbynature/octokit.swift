@@ -5,11 +5,12 @@ public extension Octokit {
 
     /**
         Fetches the followers of the authenticated user
+        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func myFollowers(completion: (response: Response<[User]>) -> Void) {
+    public func myFollowers(session: RequestKitURLSession = NSURLSession.sharedSession(), completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadAuthenticatedFollowers(configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -23,12 +24,13 @@ public extension Octokit {
 
     /**
         Fetches the followers of a user
+        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter name: Name of the user
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func followers(name: String, completion: (response: Response<[User]>) -> Void) {
+    public func followers(session: RequestKitURLSession = NSURLSession.sharedSession(), name: String, completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadFollowers(name, configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -42,11 +44,12 @@ public extension Octokit {
 
     /**
         Fetches the users following the authenticated user
+        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func myFollowing(completion: (response: Response<[User]>) -> Void) {
+    public func myFollowing(session: RequestKitURLSession = NSURLSession.sharedSession(), completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadAuthenticatedFollowing(configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -60,12 +63,13 @@ public extension Octokit {
 
     /**
         Fetches the users following a user
+        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter name: The name of the user
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func following(name: String, completion: (response: Response<[User]>) -> Void) {
+    public func following(session: RequestKitURLSession = NSURLSession.sharedSession(), name: String, completion: (response: Response<[User]>) -> Void) {
         let router = FollowRouter.ReadFollowing(name, configuration)
-        router.loadJSON([[String: AnyObject]].self) { json, error in
+        router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -114,7 +118,7 @@ enum FollowRouter: Router {
         }
     }
 
-    var params: [String: String] {
+    var params: [String: AnyObject] {
         return [:]
     }
 }
