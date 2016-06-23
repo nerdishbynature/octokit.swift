@@ -9,9 +9,9 @@ class UserTests: XCTestCase {
         let username = "mietzmithut"
         let task = Octokit().user(session, name: username) { response in
             switch response {
-            case .Success(let user):
+            case .success(let user):
                 XCTAssertEqual(user.login, username)
-            case .Failure:
+            case .failure:
                 XCTAssert(false, "should not get an user")
             }
         }
@@ -24,12 +24,12 @@ class UserTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/notexisting", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
         let task = Octokit().user(session, name: username) { response in
             switch response {
-            case .Success:
+            case .success:
                 XCTAssert(false, "should not retrieve user")
-            case .Failure(let error as NSError):
+            case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .Failure:
+            case .failure:
                 XCTAssertTrue(false)
             }
         }
@@ -41,9 +41,9 @@ class UserTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user?access_token=token", expectedHTTPMethod: "GET", jsonFile: "user_me", statusCode: 200)
         let task = Octokit(TokenConfiguration("token")).me(session) { response in
             switch response {
-            case .Success(let user):
+            case .success(let user):
                 XCTAssertEqual(user.login, "pietbrauer")
-            case .Failure(let error):
+            case .failure(let error):
                 XCTAssert(false, "should not retrieve an error \(error)")
             }
         }
@@ -56,12 +56,12 @@ class UserTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", response: json, statusCode: 401)
         let task = Octokit().me(session) { response in
             switch response {
-            case .Success:
+            case .success:
                 XCTAssert(false, "should not retrieve user")
-            case .Failure(let error as NSError):
+            case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 401)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .Failure:
+            case .failure:
                 XCTAssertTrue(false)
             }
         }

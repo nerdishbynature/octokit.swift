@@ -1,9 +1,9 @@
 import Foundation
 
 @objc public class Milestone: NSObject {
-    public var url: NSURL?
-    public var htmlURL: NSURL?
-    public var labelsURL: NSURL?
+    public var url: URL?
+    public var htmlURL: URL?
+    public var labelsURL: URL?
     public var id: Int
     public var number: Int?
     public var state: Openness?
@@ -12,17 +12,17 @@ import Foundation
     public var creator: User?
     public var openIssues: Int?
     public var closedIssues: Int?
-    public var createdAt: NSDate?
-    public var updatedAt: NSDate?
-    public var closedAt: NSDate?
-    public var dueOn: NSDate?
+    public var createdAt: Date?
+    public var updatedAt: Date?
+    public var closedAt: Date?
+    public var dueOn: Date?
     
     public init?(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
-            if let urlString = json["html_url"] as? String, url = NSURL(string: urlString) {
+            if let urlString = json["html_url"] as? String, url = URL(string: urlString) {
                 htmlURL = url
             }
-            if let urlString = json["labels_url"] as? String, url = NSURL(string: urlString) {
+            if let urlString = json["labels_url"] as? String, url = URL(string: urlString) {
                 labelsURL = url
             }
             self.id = id
