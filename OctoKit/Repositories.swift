@@ -53,11 +53,11 @@ public extension Octokit {
         - parameter perPage: Number of repositories per page. `100` by default.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func repositories(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String? = nil, page: String = "1", perPage: String = "100", completion: (response: Response<[Repository]>) -> Void) {
+    public func repositories(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String? = nil, page: String = "1", perPage: String = "100", completion: (response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = (owner != nil)
             ? RepositoryRouter.ReadRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.ReadAuthenticatedRepositories(configuration, page, perPage)
-        router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             }
@@ -76,9 +76,9 @@ public extension Octokit {
         - parameter name: The name of the repository to fetch.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func repository(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String, name: String, completion: (response: Response<Repository>) -> Void) {
+    public func repository(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String, name: String, completion: (response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.ReadRepository(configuration, owner, name)
-        router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
