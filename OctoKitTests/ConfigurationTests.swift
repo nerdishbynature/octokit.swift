@@ -1,20 +1,8 @@
 import XCTest
 import Foundation
 import OctoKit
-import Nocilla
 
 class ConfigurationTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-        LSNocilla.sharedInstance().start()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        LSNocilla.sharedInstance().clearStubs()
-        LSNocilla.sharedInstance().stop()
-    }
-
     func testTokenConfiguration() {
         let subject = TokenConfiguration("12345")
         XCTAssertEqual(subject.accessToken, "12345")
@@ -51,15 +39,13 @@ class ConfigurationTests: XCTestCase {
     func testHandleOpenURL() {
         let config = OAuthConfiguration(token: "12345", secret: "6789", scopes: ["repo", "read:org"])
         let response = "access_token=017ec60f4a182&scope=read%3Aorg%2Crepo&token_type=bearer"
-        stubRequest("POST", "https://github.com/login/oauth/access_token").andReturn(200).withBody(response)
-        let expectation = expectationWithDescription("access_token")
+        let session = OctoKitURLTestSession(expectedURL: "https://github.com/login/oauth/access_token", expectedHTTPMethod: "POST", response: response, statusCode: 200)
         let url = NSURL(string: "urlscheme://authorize?code=dhfjgh23493")!
-        config.handleOpenURL(url) { token in
-            XCTAssertEqual(token.accessToken, "017ec60f4a182")
-            expectation.fulfill()
+        var token: String? = nil
+        config.handleOpenURL(session, url: url) { accessToken in
+            token = accessToken.accessToken
         }
-        waitForExpectationsWithTimeout(10, handler: { error in
-            XCTAssertNil(error, "\(error)")
-        })
+        XCTAssertEqual(token, "017ec60f4a182")
+        XCTAssertTrue(session.wasCalled)
     }
 }
