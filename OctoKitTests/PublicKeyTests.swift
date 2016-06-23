@@ -8,7 +8,7 @@ class PublicKeyTests: XCTestCase {
     func testPostPublicKey() {
         let config = TokenConfiguration("12345")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/keys?access_token=12345", expectedHTTPMethod: "POST", jsonFile: "public_key", statusCode: 201)
-        Octokit(config).postPublicKey(session, publicKey: "test-key", title: "test title") { response in
+        let task = Octokit(config).postPublicKey(session, publicKey: "test-key", title: "test title") { response in
             switch response {
             case .Success(let publicKey):
                 XCTAssertEqual(publicKey, "test-key")
@@ -16,6 +16,7 @@ class PublicKeyTests: XCTestCase {
                 XCTAssert(false, "should not get an error")
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 }

@@ -79,7 +79,7 @@ class FollowTests: XCTestCase {
     func testFailToGetMyFollowing() {
         let config = TokenConfiguration("12345")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following?access_token=12345", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        Octokit(config).myFollowing(session) { response in
+        let task = Octokit(config).myFollowing(session) { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve following")
@@ -90,12 +90,13 @@ class FollowTests: XCTestCase {
                 XCTAssertTrue(false)
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testGetUsersFollowing() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
-        Octokit().following(session, name: "octocat") { response in
+        let task = Octokit().following(session, name: "octocat") { response in
             switch response {
             case .Success(let users):
                 XCTAssertEqual(users.count, 1)
@@ -103,12 +104,13 @@ class FollowTests: XCTestCase {
                 XCTAssert(false, "should not get an error")
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testFailToGetUsersFollowing() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        Octokit().following(session, name: "octocat") { response in
+        let task = Octokit().following(session, name: "octocat") { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve following")
@@ -119,6 +121,7 @@ class FollowTests: XCTestCase {
                 XCTAssertTrue(false)
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 }

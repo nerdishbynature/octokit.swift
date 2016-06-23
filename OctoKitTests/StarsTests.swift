@@ -7,7 +7,7 @@ class StarsTests: XCTestCase {
     func testGetStarredRepositories() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred?access_token=12345", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
         let config = TokenConfiguration("12345")
-        Octokit(config).myStars(session) { response in
+        let task = Octokit(config).myStars(session) { response in
             switch response {
             case .Success(let repositories):
                 XCTAssertEqual(repositories.count, 1)
@@ -15,13 +15,14 @@ class StarsTests: XCTestCase {
                 XCTAssert(false, "should not get an error")
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testFailToGetStarredRepositories() {
         let config = TokenConfiguration("12345")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred?access_token=12345", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        Octokit(config).myStars(session) { response in
+        let task = Octokit(config).myStars(session) { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve repositories")
@@ -32,12 +33,13 @@ class StarsTests: XCTestCase {
                 XCTAssertTrue(false)
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testGetUsersStarredRepositories() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
-        Octokit().stars(session, name: "octocat") { response in
+        let task = Octokit().stars(session, name: "octocat") { response in
             switch response {
             case .Success(let repositories):
                 XCTAssertEqual(repositories.count, 1)
@@ -45,12 +47,13 @@ class StarsTests: XCTestCase {
                 XCTAssert(false, "should not get an error")
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testFailToGetUsersStarredRepositories() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        Octokit().stars(session, name: "octocat") { response in
+        let task = Octokit().stars(session, name: "octocat") { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve repositories")
@@ -61,6 +64,7 @@ class StarsTests: XCTestCase {
                 XCTAssertTrue(false)
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 }

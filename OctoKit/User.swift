@@ -49,9 +49,9 @@ public extension Octokit {
         - parameter name: The name of the user or organization.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func user(session: RequestKitURLSession = NSURLSession.sharedSession(), name: String, completion: (response: Response<User>) -> Void) {
+    public func user(session: RequestKitURLSession = NSURLSession.sharedSession(), name: String, completion: (response: Response<User>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.ReadUser(name, self.configuration)
-        router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -68,9 +68,9 @@ public extension Octokit {
         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func me(session: RequestKitURLSession = NSURLSession.sharedSession(), completion: (response: Response<User>) -> Void) {
+    public func me(session: RequestKitURLSession = NSURLSession.sharedSession(), completion: (response: Response<User>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.ReadAuthenticatedUser(self.configuration)
-        router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
