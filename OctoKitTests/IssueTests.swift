@@ -7,7 +7,7 @@ class IssueTests: XCTestCase {
     func testGetMyIssues() {
         let config = TokenConfiguration("12345")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/issues?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "issues", statusCode: 200)
-        Octokit(config).myIssues(session) { response in
+        let task = Octokit(config).myIssues(session) { response in
             switch response {
             case .Success(let issues):
                 XCTAssertEqual(issues.count, 1)
@@ -15,12 +15,13 @@ class IssueTests: XCTestCase {
                 XCTAssert(false, "should not get an error")
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testGetIssue() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1347", expectedHTTPMethod: "GET", jsonFile: "issue", statusCode: 200)
-        Octokit().issue(session, owner: "octocat", repository: "Hello-World", number: 1347) { response in
+        let task = Octokit().issue(session, owner: "octocat", repository: "Hello-World", number: 1347) { response in
             switch response {
             case .Success(let issue):
                 XCTAssertEqual(issue.number, 1347)
@@ -28,6 +29,7 @@ class IssueTests: XCTestCase {
                 XCTAssert(false, "should not get an error")
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 

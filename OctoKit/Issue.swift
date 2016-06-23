@@ -85,9 +85,9 @@ public extension Octokit {
      - parameter perPage: Number of issues per page. `100` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    public func myIssues(session: RequestKitURLSession = NSURLSession.sharedSession(), page: String = "1", perPage: String = "100", completion: (response: Response<[Issue]>) -> Void) {
+    public func myIssues(session: RequestKitURLSession = NSURLSession.sharedSession(), page: String = "1", perPage: String = "100", completion: (response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.ReadAuthenticatedIssues(configuration, page, perPage)
-        router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -107,9 +107,9 @@ public extension Octokit {
      - parameter number: The number of the issue.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    public func issue(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String, repository: String, number: Int, completion: (response: Response<Issue>) -> Void) {
+    public func issue(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String, repository: String, number: Int, completion: (response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.ReadIssue(configuration, owner, repository, number)
-        router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -131,9 +131,9 @@ public extension Octokit {
      - parameter assignee: The name of the user to assign the issue to. This parameter is ignored if the user lacks push access to the repository.
      - parameter completion: Callback for the issue that is created.
      */
-    public func postIssue(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, completion: (response:Response<Issue>) -> Void) {
+    public func postIssue(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, completion: (response:Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.PostIssue(configuration, owner, repository, title, body, assignee)
-        router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -157,9 +157,9 @@ public extension Octokit {
      - parameter state: Whether the issue is open or closed.
      - parameter completion: Callback for the issue that is created.
      */
-    public func patchIssue(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: Openness? = nil, completion: (response:Response<Issue>) -> Void) {
+    public func patchIssue(session: RequestKitURLSession = NSURLSession.sharedSession(), owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: Openness? = nil, completion: (response:Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.PatchIssue(configuration, owner, repository, number, title, body, assignee, state)
-        router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
