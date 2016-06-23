@@ -7,7 +7,7 @@ class UserTests: XCTestCase {
     func testGetUser() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/mietzmithut", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
         let username = "mietzmithut"
-        Octokit().user(session, name: username) { response in
+        let task = Octokit().user(session, name: username) { response in
             switch response {
             case .Success(let user):
                 XCTAssertEqual(user.login, username)
@@ -15,13 +15,14 @@ class UserTests: XCTestCase {
                 XCTAssert(false, "should not get an user")
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testFailingToGetUser() {
         let username = "notexisting"
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/notexisting", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        Octokit().user(session, name: username) { response in
+        let task = Octokit().user(session, name: username) { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve user")
@@ -32,12 +33,13 @@ class UserTests: XCTestCase {
                 XCTAssertTrue(false)
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testGettingAuthenticatedUser() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user?access_token=token", expectedHTTPMethod: "GET", jsonFile: "user_me", statusCode: 200)
-        Octokit(TokenConfiguration("token")).me(session) { response in
+        let task = Octokit(TokenConfiguration("token")).me(session) { response in
             switch response {
             case .Success(let user):
                 XCTAssertEqual(user.login, "pietbrauer")
@@ -45,13 +47,14 @@ class UserTests: XCTestCase {
                 XCTAssert(false, "should not retrieve an error \(error)")
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testFailToGetAuthenticatedUser() {
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", response: json, statusCode: 401)
-        Octokit().me(session) { response in
+        let task = Octokit().me(session) { response in
             switch response {
             case .Success:
                 XCTAssert(false, "should not retrieve user")
@@ -62,6 +65,7 @@ class UserTests: XCTestCase {
                 XCTAssertTrue(false)
             }
         }
+        XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 

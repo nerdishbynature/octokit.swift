@@ -9,9 +9,9 @@ public extension Octokit {
         - parameter name: The user who starred repositories.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func stars(session: RequestKitURLSession = NSURLSession.sharedSession(), name: String, completion: (response: Response<[Repository]>) -> Void) {
+    public func stars(session: RequestKitURLSession = NSURLSession.sharedSession(), name: String, completion: (response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.ReadStars(name, configuration)
-        router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
@@ -28,9 +28,9 @@ public extension Octokit {
         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func myStars(session: RequestKitURLSession = NSURLSession.sharedSession(), completion: (response: Response<[Repository]>) -> Void) {
+    public func myStars(session: RequestKitURLSession = NSURLSession.sharedSession(), completion: (response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.ReadAuthenticatedStars(configuration)
-        router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(response: Response.Failure(error))
             } else {
