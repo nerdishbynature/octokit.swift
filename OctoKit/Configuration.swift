@@ -39,7 +39,7 @@ public struct OAuthConfiguration: Configuration {
         return OAuthRouter.authorize(self).URLRequest?.url
     }
 
-    public func authorize(_ session: RequestKitURLSession = URLSession.shared(), code: String, completion: (config: TokenConfiguration) -> Void) {
+    public func authorize(_ session: RequestKitURLSession = URLSession.shared, code: String, completion: (config: TokenConfiguration) -> Void) {
         let request = OAuthRouter.accessToken(self, code).URLRequest
         if let request = request {
             let task = session.dataTaskWithRequest(request) { data, response, err in
@@ -61,7 +61,7 @@ public struct OAuthConfiguration: Configuration {
         }
     }
 
-    public func handleOpenURL(_ session: RequestKitURLSession = URLSession.shared(), url: URL, completion: (config: TokenConfiguration) -> Void) {
+    public func handleOpenURL(_ session: RequestKitURLSession = URLSession.shared, url: URL, completion: (config: TokenConfiguration) -> Void) {
         let urlString: String? = url.absoluteString
         if let code = urlString?.components(separatedBy: "=").last {
             authorize(session, code: code) { (config) in
