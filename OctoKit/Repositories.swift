@@ -53,7 +53,7 @@ public extension Octokit {
         - parameter perPage: Number of repositories per page. `100` by default.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func repositories(_ session: RequestKitURLSession = URLSession.shared(), owner: String? = nil, page: String = "1", perPage: String = "100", completion: (response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func repositories(_ session: RequestKitURLSession = URLSession.shared, owner: String? = nil, page: String = "1", perPage: String = "100", completion: (response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = (owner != nil)
             ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.readAuthenticatedRepositories(configuration, page, perPage)
@@ -76,7 +76,7 @@ public extension Octokit {
         - parameter name: The name of the repository to fetch.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func repository(_ session: RequestKitURLSession = URLSession.shared(), owner: String, name: String, completion: (response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String, completion: (response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
         return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
