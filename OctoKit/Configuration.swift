@@ -62,7 +62,12 @@ public struct OAuthConfiguration: Configuration {
     }
 
     public func handleOpenURL(session: RequestKitURLSession = NSURLSession.sharedSession(), url: NSURL, completion: (config: TokenConfiguration) -> Void) {
-        if let code = url.absoluteString?.componentsSeparatedByString("=").last {
+        #if swift(>=2.3)
+            guard let urlString = url.absoluteString else { return }
+        #else
+            let urlString = url.absoluteString
+        #endif
+        if let code = urlString.componentsSeparatedByString("=").last {
             authorize(session, code: code) { (config) in
                 completion(config: config)
             }
