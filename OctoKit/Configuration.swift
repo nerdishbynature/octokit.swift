@@ -63,7 +63,7 @@ public struct OAuthConfiguration: Configuration {
 
     public func handleOpenURL(session: RequestKitURLSession = NSURLSession.sharedSession(), url: NSURL, completion: (config: TokenConfiguration) -> Void) {
         #if swift(>=2.3)
-            let urlString = url.absoluteString?
+            guard let urlString = url.absoluteString else { return }
         #else
             let urlString = url.absoluteString
         #endif
