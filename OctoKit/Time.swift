@@ -11,8 +11,8 @@ struct Time {
     private static var rfc3339DateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy'-'MM'-'dd'T'HH':'mm':'ss'Z'"
-        formatter.locale = Locale(localeIdentifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(forSecondsFromGMT: 0)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
         return formatter
     }()
 
