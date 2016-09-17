@@ -9,7 +9,7 @@ public extension Octokit {
         - parameter name: The user who starred repositories.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func stars(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: (_ response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func stars(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.readStars(name, configuration)
         return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
@@ -28,7 +28,7 @@ public extension Octokit {
         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func myStars(_ session: RequestKitURLSession = URLSession.shared, completion: (_ response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func myStars(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.readAuthenticatedStars(configuration)
         return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
