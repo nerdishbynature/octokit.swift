@@ -34,7 +34,7 @@ class OctoKitURLTestSession: RequestKitURLSession {
         self.statusCode = statusCode
     }
 
-    func dataTaskWithRequest(_ request: URLRequest, completionHandler: (Data?, URLResponse?, NSError?) -> Void) -> URLSessionDataTaskProtocol {
+    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
         XCTAssertEqual(request.url?.absoluteString, expectedURL)
         XCTAssertEqual(request.httpMethod, expectedHTTPMethod)
         let data = responseString?.data(using: String.Encoding.utf8)
@@ -44,7 +44,7 @@ class OctoKitURLTestSession: RequestKitURLSession {
         return MockURLSessionDataTask()
     }
 
-    func uploadTaskWithRequest(_ request: URLRequest, fromData bodyData: Data?, completionHandler: (Data?, URLResponse?, NSError?) -> Void) -> URLSessionDataTaskProtocol {
+    func uploadTask(with request: URLRequest, fromData bodyData: Data?, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
         XCTAssertEqual(request.url?.absoluteString, expectedURL)
         XCTAssertEqual(request.httpMethod, expectedHTTPMethod)
         let data = responseString?.data(using: String.Encoding.utf8)
