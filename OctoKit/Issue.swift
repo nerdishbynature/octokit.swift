@@ -34,22 +34,22 @@ public enum Openness: String {
     public init(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
             self.id = id
-            if let urlString = json["url"] as? String, url = URL(string: urlString) {
+            if let urlString = json["url"] as? String, let url = URL(string: urlString) {
                 self.url = url
             }
-            if let urlString = json["repository_url"] as? String, url = URL(string: urlString) {
+            if let urlString = json["repository_url"] as? String, let url = URL(string: urlString) {
                 repositoryURL = url
             }
-            if let urlString = json["labels_url"] as? String, url = URL(string: urlString) {
+            if let urlString = json["labels_url"] as? String, let url = URL(string: urlString) {
                 labelsURL = url
             }
-            if let urlString = json["comments_url"] as? String, url = URL(string: urlString) {
+            if let urlString = json["comments_url"] as? String, let url = URL(string: urlString) {
                 commentsURL = url
             }
-            if let urlString = json["events_url"] as? String, url = URL(string: urlString) {
+            if let urlString = json["events_url"] as? String, let url = URL(string: urlString) {
                 eventsURL = url
             }
-            if let urlString = json["html_url"] as? String, url = URL(string: urlString) {
+            if let urlString = json["html_url"] as? String, let url = URL(string: urlString) {
                 htmlURL = url
             }
             number = json["number"] as? Int
@@ -85,15 +85,15 @@ public extension Octokit {
      - parameter perPage: Number of issues per page. `100` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    public func myIssues(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100", completion: (response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func myIssues(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100", completion: (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage)
         return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
-                completion(response: Response.failure(error))
+                completion(Response.failure(error))
             } else {
                 if let json = json {
                     let parsedIssues = json.map { Issue($0) }
-                    completion(response: Response.success(parsedIssues))
+                    completion(Response.success(parsedIssues))
                 }
             }
         }
@@ -107,15 +107,15 @@ public extension Octokit {
      - parameter number: The number of the issue.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    public func issue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, completion: (response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func issue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, completion: (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssue(configuration, owner, repository, number)
         return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
-                completion(response: Response.failure(error))
+                completion(Response.failure(error))
             } else {
                 if let json = json {
                     let issue = Issue(json)
-                    completion(response: Response.success(issue))
+                    completion(Response.success(issue))
                 }
             }
         }
@@ -131,15 +131,15 @@ public extension Octokit {
      - parameter assignee: The name of the user to assign the issue to. This parameter is ignored if the user lacks push access to the repository.
      - parameter completion: Callback for the issue that is created.
      */
-    public func postIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, completion: (response:Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func postIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, completion: (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee)
         return router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
-                completion(response: Response.failure(error))
+                completion(Response.failure(error))
             } else {
                 if let json = json {
                     let issue = Issue(json)
-                    completion(response: Response.success(issue))
+                    completion(Response.success(issue))
                 }
             }
         }
@@ -157,15 +157,15 @@ public extension Octokit {
      - parameter state: Whether the issue is open or closed.
      - parameter completion: Callback for the issue that is created.
      */
-    public func patchIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: Openness? = nil, completion: (response:Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func patchIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: Openness? = nil, completion: (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
         return router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
-                completion(response: Response.failure(error))
+                completion(Response.failure(error))
             } else {
                 if let json = json {
                     let issue = Issue(json)
-                    completion(response: Response.success(issue))
+                    completion(Response.success(issue))
                 }
             }
         }
@@ -207,7 +207,7 @@ enum IssueRouter: JSONPostRouter {
         }
     }
     
-    var params: [String: AnyObject] {
+    var params: [String: Any] {
         switch self {
         case .readAuthenticatedIssues(_, let page, let perPage):
             return ["per_page": perPage, "page": page]
