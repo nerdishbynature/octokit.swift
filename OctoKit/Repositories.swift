@@ -53,18 +53,18 @@ public extension Octokit {
         - parameter perPage: Number of repositories per page. `100` by default.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func repositories(_ session: RequestKitURLSession = URLSession.shared, owner: String? = nil, page: String = "1", perPage: String = "100", completion: (response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func repositories(_ session: RequestKitURLSession = URLSession.shared, owner: String? = nil, page: String = "1", perPage: String = "100", completion: (_ response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = (owner != nil)
             ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.readAuthenticatedRepositories(configuration, page, perPage)
         return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
-                completion(response: Response.failure(error))
+                completion(Response.failure(error))
             }
 
             if let json = json {
                 let repos = json.map { Repository($0) }
-                completion(response: Response.success(repos))
+                completion(Response.success(repos))
             }
         }
     }
@@ -76,15 +76,15 @@ public extension Octokit {
         - parameter name: The name of the repository to fetch.
         - parameter completion: Callback for the outcome of the fetch.
     */
-    public func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String, completion: (response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String, completion: (_ response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
         return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
-                completion(response: Response.failure(error))
+                completion(Response.failure(error))
             } else {
                 if let json = json {
                     let repo = Repository(json)
-                    completion(response: Response.success(repo))
+                    completion(Response.success(repo))
                 }
             }
         }
@@ -114,7 +114,7 @@ enum RepositoryRouter: Router {
         return .url
     }
 
-    var params: [String: AnyObject] {
+    var params: [String: Any] {
         switch self {
         case .readRepositories(_, _, let page, let perPage):
             return ["per_page": perPage, "page": page]
