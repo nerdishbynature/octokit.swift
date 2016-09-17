@@ -39,19 +39,19 @@ public struct OAuthConfiguration: Configuration {
         return OAuthRouter.authorize(self).URLRequest?.url
     }
 
-    public func authorize(_ session: RequestKitURLSession = URLSession.shared, code: String, completion: (config: TokenConfiguration) -> Void) {
+    public func authorize(_ session: RequestKitURLSession = URLSession.shared, code: String, completion: (_ config: TokenConfiguration) -> Void) {
         let request = OAuthRouter.accessToken(self, code).URLRequest
         if let request = request {
-            let task = session.dataTaskWithRequest(request) { data, response, err in
+            let task = session.dataTask(with: request) { data, response, err in
                 if let response = response as? HTTPURLResponse {
                     if response.statusCode != 200 {
                         return
                     } else {
-                        if let data = data, string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
+                        if let data = data, let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
                             let accessToken = self.accessTokenFromResponse(string)
                             if let accessToken = accessToken {
                                 let config = TokenConfiguration(accessToken, url: self.apiEndpoint)
-                                completion(config: config)
+                                completion(config)
                             }
                         }
                     }
@@ -61,11 +61,11 @@ public struct OAuthConfiguration: Configuration {
         }
     }
 
-    public func handleOpenURL(_ session: RequestKitURLSession = URLSession.shared, url: URL, completion: (config: TokenConfiguration) -> Void) {
+    public func handleOpenURL(_ session: RequestKitURLSession = URLSession.shared, url: URL, completion: (_ config: TokenConfiguration) -> Void) {
         let urlString: String? = url.absoluteString
         if let code = urlString?.components(separatedBy: "=").last {
             authorize(session, code: code) { (config) in
-                completion(config: config)
+                completion(config)
             }
         }
     }
@@ -117,7 +117,7 @@ enum OAuthRouter: Router {
         }
     }
 
-    var params: [String: AnyObject] {
+    var params: [String: Any] {
         switch self {
         case .authorize(let config):
             let scope = (config.scopes as NSArray).componentsJoined(by: ",")

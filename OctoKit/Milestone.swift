@@ -19,10 +19,10 @@ import Foundation
     
     public init?(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
-            if let urlString = json["html_url"] as? String, url = URL(string: urlString) {
+            if let urlString = json["html_url"] as? String, let url = URL(string: urlString) {
                 htmlURL = url
             }
-            if let urlString = json["labels_url"] as? String, url = URL(string: urlString) {
+            if let urlString = json["labels_url"] as? String, let url = URL(string: urlString) {
                 labelsURL = url
             }
             self.id = id

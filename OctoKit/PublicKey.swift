@@ -4,14 +4,14 @@ import RequestKit
 // MARK: request
 
 public extension Octokit {
-    public func postPublicKey(_ session: RequestKitURLSession = URLSession.shared, publicKey: String, title: String, completion: (response:Response<String>) -> Void) -> URLSessionDataTaskProtocol? {
+    public func postPublicKey(_ session: RequestKitURLSession = URLSession.shared, publicKey: String, title: String, completion: (_ response: Response<String>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PublicKeyRouter.postPublicKey(publicKey, title, configuration)
         return router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
             if let error = error {
-                completion(response: Response.failure(error))
+                completion(Response.failure(error))
             } else {
                 if let _ = json {
-                    completion(response: Response.success(publicKey))
+                    completion(Response.success(publicKey))
                 }
             }
         }
@@ -48,7 +48,7 @@ enum PublicKeyRouter: JSONPostRouter {
         }
     }
 
-    var params: [String: AnyObject] {
+    var params: [String: Any] {
         switch self {
         case .postPublicKey(let publicKey, let title, _):
             return ["title": title, "key": publicKey]
