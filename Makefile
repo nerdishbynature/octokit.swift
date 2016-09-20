@@ -2,7 +2,7 @@ SHA=$(shell git rev-parse HEAD)
 BRANCH=$(shell git name-rev --name-only HEAD)
 
 install:
-	brew install carthage
+	brew outdated carthage || brew upgrade carthage || brew install carthage
 	carthage bootstrap
 
 test:
