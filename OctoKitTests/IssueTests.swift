@@ -9,9 +9,9 @@ class IssueTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/issues?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "issues", statusCode: 200)
         let task = Octokit(config).myIssues(session) { response in
             switch response {
-            case .Success(let issues):
+            case .success(let issues):
                 XCTAssertEqual(issues.count, 1)
-            case .Failure:
+            case .failure:
                 XCTAssert(false, "should not get an error")
             }
         }
@@ -23,9 +23,9 @@ class IssueTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1347", expectedHTTPMethod: "GET", jsonFile: "issue", statusCode: 200)
         let task = Octokit().issue(session, owner: "octocat", repository: "Hello-World", number: 1347) { response in
             switch response {
-            case .Success(let issue):
+            case .success(let issue):
                 XCTAssertEqual(issue.number, 1347)
-            case .Failure:
+            case .failure:
                 XCTAssert(false, "should not get an error")
             }
         }
@@ -43,7 +43,7 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(subject.id, 1)
         XCTAssertEqual(subject.number, 1347)
         XCTAssertEqual(subject.title, "Found a bug")
-        XCTAssertEqual(subject.htmlURL, NSURL(string: "https://github.com/octocat/Hello-World/issues/1347"))
+        XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/octocat/Hello-World/issues/1347"))
         XCTAssertEqual(subject.state, Openness.Open)
         XCTAssertEqual(subject.locked, false)
     }

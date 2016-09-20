@@ -14,7 +14,7 @@ extension Color {
         let green = Int(String(hexChars.prefix(2)), radix: 16)
         hexChars = hexChars.dropFirst(2)
         let blue = Int(String(hexChars), radix: 16)
-        if let red = red, green = green, blue = blue {
+        if let red = red, let green = green, let blue = blue {
             self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1)
         } else {
             return nil
@@ -23,7 +23,7 @@ extension Color {
 }
 
 @objc public class Label: NSObject {
-    public var url: NSURL?
+    public var url: URL?
     public var name: String?
     #if os(OSX)
         public var color: NSColor?
@@ -32,7 +32,7 @@ extension Color {
     #endif
     
     public init(_ json: [String: AnyObject]) {
-        if let urlString = json["url"] as? String, url = NSURL(string: urlString) {
+        if let urlString = json["url"] as? String, let url = URL(string: urlString) {
             self.url = url
         }
         name = json["name"] as? String
