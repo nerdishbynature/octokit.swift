@@ -18,9 +18,39 @@ class RepositoryTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+    func testGetRepositoriesEnterprise() {
+        let config = TokenConfiguration(url: "https://enterprise.nerdishbynature.com/api/v3/")
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/users/octocat/repos?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
+        let task = Octokit(config).repositories(session, owner: "octocat") { response in
+            switch response {
+            case .Success(let repositories):
+                XCTAssertEqual(repositories.count, 1)
+            case .Failure:
+                XCTAssert(false, "should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
     func testGetAuthenticatedRepositories() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
         let config = TokenConfiguration("12345")
+        let task = Octokit(config).repositories(session) { response in
+            switch response {
+            case .Success(let repositories):
+                XCTAssertEqual(repositories.count, 1)
+            case .Failure:
+                XCTAssert(false, "should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testGetAuthenticatedRepositoriesEnterprise() {
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/user/repos?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
+        let config = TokenConfiguration("12345", url: "https://enterprise.nerdishbynature.com/api/v3/")
         let task = Octokit(config).repositories(session) { response in
             switch response {
             case .Success(let repositories):
@@ -56,6 +86,23 @@ class RepositoryTests: XCTestCase {
         let (owner, name) = ("mietzmithut", "Test")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
         let task = Octokit().repository(session, owner: owner, name: name) { response in
+            switch response {
+            case .Success(let repo):
+                XCTAssertEqual(repo.name, name)
+                XCTAssertEqual(repo.owner.login, owner)
+            case .Failure:
+                XCTAssert(false, "should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testGetRepositoryEnterprise() {
+        let config = TokenConfiguration(url: "https://enterprise.nerdishbynature.com/api/v3/")
+        let (owner, name) = ("mietzmithut", "Test")
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
+        let task = Octokit(config).repository(session, owner: owner, name: name) { response in
             switch response {
             case .Success(let repo):
                 XCTAssertEqual(repo.name, name)
