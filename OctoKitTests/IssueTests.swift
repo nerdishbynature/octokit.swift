@@ -6,7 +6,7 @@ class IssueTests: XCTestCase {
     
     func testGetMyIssues() {
         let config = TokenConfiguration("12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/issues?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "issues", statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/issues?access_token=12345&page=1&per_page=100&state=open", expectedHTTPMethod: "GET", jsonFile: "issues", statusCode: 200)
         let task = Octokit(config).myIssues(session) { response in
             switch response {
             case .success(let issues):
