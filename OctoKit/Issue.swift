@@ -6,6 +6,7 @@ import RequestKit
 public enum Openness: String {
     case Open = "open"
     case Closed = "closed"
+    case All = "all"
 }
 
 @objc public class Issue: NSObject {
@@ -80,13 +81,14 @@ public extension Octokit {
     
     /**
      Fetches the issues of the authenticated user
-     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter state: Issue state. Defaults to open if not specified.
      - parameter page: Current page for issue pagination. `1` by default.
      - parameter perPage: Number of issues per page. `100` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    public func myIssues(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage)
+    public func myIssues(_ session: RequestKitURLSession = URLSession.shared, state: Openness = .Open, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
         return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
             if let error = error {
                 completion(Response.failure(error))
@@ -101,7 +103,7 @@ public extension Octokit {
     
     /**
      Fetches an issue in a repository
-     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter number: The number of the issue.
@@ -120,10 +122,34 @@ public extension Octokit {
             }
         }
     }
-    
+
+    /**
+     Fetches all issues in a repository
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter state: Issue state. Defaults to open if not specified.
+     - parameter page: Current page for issue pagination. `1` by default.
+     - parameter perPage: Number of issues per page. `100` by default.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    public func issues(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, state: Openness = .Open, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
+        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+            if let error = error {
+                completion(Response.failure(error))
+            } else {
+                if let json = json {
+                    let parsedIssues = json.map { Issue($0) }
+                    completion(Response.success(parsedIssues))
+                }
+            }
+        }
+    }
+
     /**
      Creates an issue in a repository.
-     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter title: The title of the issue.
@@ -147,7 +173,7 @@ public extension Octokit {
     
     /**
      Edits an issue in a repository.
-     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter number: The number of the issue.
@@ -175,8 +201,9 @@ public extension Octokit {
 // MARK: Router
 
 enum IssueRouter: JSONPostRouter {
-    case readAuthenticatedIssues(Configuration, String, String)
+    case readAuthenticatedIssues(Configuration, String, String, Openness)
     case readIssue(Configuration, String, String, Int)
+    case readIssues(Configuration, String, String, String, String, Openness)
     case postIssue(Configuration, String, String, String, String?, String?)
     case patchIssue(Configuration, String, String, Int, String?, String?, String?, Openness?)
     
@@ -200,8 +227,9 @@ enum IssueRouter: JSONPostRouter {
     
     var configuration: Configuration {
         switch self {
-        case .readAuthenticatedIssues(let config, _, _): return config
+        case .readAuthenticatedIssues(let config, _, _, _): return config
         case .readIssue(let config, _, _, _): return config
+        case .readIssues(let config, _, _, _, _, _): return config
         case .postIssue(let config, _, _, _, _, _): return config
         case .patchIssue(let config, _, _, _, _, _, _, _): return config
         }
@@ -209,10 +237,12 @@ enum IssueRouter: JSONPostRouter {
     
     var params: [String: Any] {
         switch self {
-        case .readAuthenticatedIssues(_, let page, let perPage):
-            return ["per_page": perPage, "page": page]
+        case .readAuthenticatedIssues(_, let page, let perPage, let state):
+            return ["per_page": perPage, "page": page, "state": state.rawValue]
         case .readIssue:
             return [:]
+        case .readIssues(_, _, _, let page, let perPage, let state):
+            return ["per_page": perPage, "page": page, "state": state.rawValue]
         case .postIssue(_, _, _, let title, let body, let assignee):
             var params = ["title": title]
             if let body = body {
@@ -246,6 +276,8 @@ enum IssueRouter: JSONPostRouter {
             return "issues"
         case .readIssue(_, let owner, let repository, let number):
             return "repos/\(owner)/\(repository)/issues/\(number)"
+        case .readIssues(_, let owner, let repository, _, _, _):
+            return "repos/\(owner)/\(repository)/issues"
         case .postIssue(_, let owner, let repository, _, _, _):
             return "repos/\(owner)/\(repository)/issues"
         case .patchIssue(_, let owner, let repository, let number, _, _, _, _):
