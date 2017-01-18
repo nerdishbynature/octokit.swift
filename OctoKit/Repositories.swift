@@ -128,11 +128,11 @@ enum RepositoryRouter: Router {
     var path: String {
         switch self {
         case .readRepositories(_, let owner, _, _):
-            return "/users/\(owner)/repos"
+            return "users/\(owner)/repos"
         case .readAuthenticatedRepositories:
-            return "/user/repos"
+            return "user/repos"
         case .readRepository(_, let owner, let name):
-            return "/repos/\(owner)/\(name)"
+            return "repos/\(owner)/\(name)"
         }
     }
 }
