@@ -3,20 +3,20 @@ import RequestKit
 
 // MARK: model
 
-@objc public class User: NSObject {
-    public let id: Int
-    public var login: String?
-    public var avatarURL: String?
-    public var gravatarID: String?
-    public var type: String?
-    public var name: String?
-    public var company: String?
-    public var blog: String?
-    public var location: String?
-    public var email: String?
-    public var numberOfPublicRepos: Int?
-    public var numberOfPublicGists: Int?
-    public var numberOfPrivateRepos: Int?
+@objc open class User: NSObject {
+    open let id: Int
+    open var login: String?
+    open var avatarURL: String?
+    open var gravatarID: String?
+    open var type: String?
+    open var name: String?
+    open var company: String?
+    open var blog: String?
+    open var location: String?
+    open var email: String?
+    open var numberOfPublicRepos: Int?
+    open var numberOfPublicGists: Int?
+    open var numberOfPrivateRepos: Int?
 
     public init(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {

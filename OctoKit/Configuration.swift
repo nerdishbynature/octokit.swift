@@ -47,7 +47,7 @@ public struct OAuthConfiguration: Configuration {
                     if response.statusCode != 200 {
                         return
                     } else {
-                        if let data = data, let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String {
+                        if let data = data, let string = String(data: data, encoding: .utf8) {
                             let accessToken = self.accessTokenFromResponse(string)
                             if let accessToken = accessToken {
                                 let config = TokenConfiguration(accessToken, url: self.apiEndpoint)

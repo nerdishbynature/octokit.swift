@@ -22,11 +22,11 @@ extension Color {
     }
 }
 
-@objc public class Label: NSObject {
-    public var url: URL?
-    public var name: String?
+@objc open class Label: NSObject {
+    open var url: URL?
+    open var name: String?
     #if os(OSX)
-        public var color: NSColor?
+        open var color: NSColor?
     #elseif os(iOS) || os(tvOS) || os(watchOS)
         public var color: UIColor?
     #endif

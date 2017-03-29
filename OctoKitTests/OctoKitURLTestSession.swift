@@ -2,7 +2,7 @@ import RequestKit
 import XCTest
 
 class MockURLSessionDataTask: URLSessionDataTaskProtocol {
-    private (set) var resumeWasCalled = false
+    fileprivate (set) var resumeWasCalled = false
 
     func resume() {
         resumeWasCalled = true
