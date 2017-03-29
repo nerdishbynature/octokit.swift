@@ -3,20 +3,20 @@ import RequestKit
 
 // MARK: model
 
-@objc public class Repository: NSObject {
-    public let id: Int
-    public let owner: User
-    public var name: String?
-    public var fullName: String?
-    public var isPrivate: Bool
-    public var repositoryDescription: String?
-    public var isFork: Bool?
-    public var gitURL: String?
-    public var sshURL: String?
-    public var cloneURL: String?
-    public var htmlURL: String?
-    public var size: Int
-    public var lastPush: Date?
+@objc open class Repository: NSObject {
+    open let id: Int
+    open let owner: User
+    open var name: String?
+    open var fullName: String?
+    open var isPrivate: Bool
+    open var repositoryDescription: String?
+    open var isFork: Bool?
+    open var gitURL: String?
+    open var sshURL: String?
+    open var cloneURL: String?
+    open var htmlURL: String?
+    open var size: Int
+    open var lastPush: Date?
 
     public init(_ json: [String: AnyObject]) {
         owner = User(json["owner"] as? [String: AnyObject] ?? [:])

@@ -9,28 +9,28 @@ public enum Openness: String {
     case All = "all"
 }
 
-@objc public class Issue: NSObject {
-    public var id: Int
-    public var url: URL?
-    public var repositoryURL: URL?
-    public var labelsURL: URL?
-    public var commentsURL: URL?
-    public var eventsURL: URL?
-    public var htmlURL: URL?
-    public var number: Int?
-    public var state: Openness?
-    public var title: String?
-    public var body: String?
-    public var user: User?
-    public var labels: [Label]?
-    public var assignee: User?
-    public var milestone: Milestone?
-    public var locked: Bool?
-    public var comments: Int?
-    public var closedAt: Date?
-    public var createdAt: Date?
-    public var updatedAt: Date?
-    public var closedBy: User?
+@objc open class Issue: NSObject {
+    open var id: Int
+    open var url: URL?
+    open var repositoryURL: URL?
+    open var labelsURL: URL?
+    open var commentsURL: URL?
+    open var eventsURL: URL?
+    open var htmlURL: URL?
+    open var number: Int?
+    open var state: Openness?
+    open var title: String?
+    open var body: String?
+    open var user: User?
+    open var labels: [Label]?
+    open var assignee: User?
+    open var milestone: Milestone?
+    open var locked: Bool?
+    open var comments: Int?
+    open var closedAt: Date?
+    open var createdAt: Date?
+    open var updatedAt: Date?
+    open var closedBy: User?
     
     public init(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
