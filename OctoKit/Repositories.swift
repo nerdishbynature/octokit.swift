@@ -17,6 +17,7 @@ import RequestKit
     open var htmlURL: String?
     open var size: Int
     open var lastPush: Date?
+    open var language:String?
 
     public init(_ json: [String: AnyObject]) {
         owner = User(json["owner"] as? [String: AnyObject] ?? [:])
@@ -33,6 +34,7 @@ import RequestKit
             htmlURL = json["html_url"] as? String
             size = json["size"] as? Int ?? 0
             lastPush = Time.rfc3339Date(json["pushed_at"] as? String)
+            language = json["language"] as? String
         } else {
             id = -1
             isPrivate = false
