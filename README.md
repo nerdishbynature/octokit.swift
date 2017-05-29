@@ -301,3 +301,27 @@ Octokit(config).patchIssue("owner", repository: "repo", number: 1347, title: "Fo
     }
 }
 ```
+## Pull requests
+
+### Get a single pull request
+```swift
+let task = Octokit().pullRequest(session, owner: "octocat", repository: "Hello-World", number: 1) { response in
+    switch response {
+        case .success(let pullRequests):
+            // do something with a pull request
+        case .failure:
+            // handle any errors
+     }
+}
+```
+
+### List a pull requests
+```swift
+let task = Octokit().pullRequests(session, owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.Open) { response in
+    switch response {
+        case .success(let pullRequests):
+        // do something with a pull request list
+        case .failure:
+        // handle any errors
+    }
+}
