@@ -19,13 +19,14 @@ the OAuth Flow
 You can initialize a new config for `github.com` as follows:
 
 ```swift
-let config = TokenConfiguration(token: "12345")
+let config = TokenConfiguration()
+config.accessToken = "12345"
 ```
 
 or for Github Enterprise
 
 ```swift
-let config = TokenConfiguration("https://github.example.com/api/v3/", token: "12345")
+let config = TokenConfiguration("12345", url: "https://github.example.com/api/v3/")
 ```
 
 After you got your token you can use it with `Octokit`
@@ -33,10 +34,10 @@ After you got your token you can use it with `Octokit`
 ```swift
 Octokit(config).me() { response in
   switch response {
-  case .Success(let user):
-    println(user.login)
-  case .Failure(let error):
-    println(error)
+  case .success(let user):
+    print(user.login)
+  case .failure(let error):
+    print(error)
   }
 }
 ```
@@ -49,8 +50,16 @@ user has to login to your application. This also handles the OAuth flow.
 You can authenticate an user for `github.com` as follows:
 
 ```swift
-let config = OAuthConfiguration(token: "<Your Client ID>", secret: "<Your Client secret>", scopes: ["repo", "read:org"])
-config.authenticate()
+// AppDelegate.swift
+
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+	let config = OAuthConfiguration(token: "<Your Client ID>", secret: "<Your Client secret>", scopes: ["repo", "read:org"])
+	let url = config.authenticate()
+
+	UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+
+	return true
+}
 
 ```
 
@@ -65,24 +74,22 @@ After you got your config you can authenticate the user:
 ```swift
 // AppDelegate.swift
 
-config.authenticate()
+func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+  config?.handleOpenURL(url: url, completion: { (tokenConfig) in
+	// store access token somewhere
+	let token = token.accessToken
 
-func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-  config.handleOpenURL(url) { config in
-    self.loadCurrentUser(config) // purely optional of course
-  }
+	let _ = Octokit(tokenConfig).me() { response in
+	  	switch response {
+		case .success(let user):
+			print("User login: \(user.login!)")
+		case .failure(let error):
+			print("Error: \(error)")
+		}
+	}
+  })  
+
   return false
-}
-
-func loadCurrentUser(config: TokenConfiguration) {
-  Octokit(config).me() { response in
-    switch response {
-    case .Success(let user):
-      println(user.login)
-    case .Failure(let error):
-      println(error)
-    }
-  }
 }
 ```
 
@@ -92,15 +99,17 @@ necessary to do the OAuth Flow again. You can just use a `TokenConfiguration`.
 
 ```swift
 let token = // get your token from your keychain, user defaults (not recommended) etc.
-let config = TokenConfiguration(token)
-Octokit(config).user("octocat") { response in
+let config = TokenConfiguration()
+config.accessToken = tokenYouStored
+
+let _ = Octokit(config).user("octocat") { response in
   switch response {
-  case .Success(let user):
-    println(user.login)
-  case .Failure(let error):
-    println(error)
+  	case .success(let user):                                                             print("User login: \(user.login!)")
+        case .failure(let error):
+             print("Error: \(error)")
   }
 }
+
 ```
 
 ## Users
