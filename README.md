@@ -81,11 +81,11 @@ func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpe
 
 	let _ = Octokit(tokenConfig).me() { response in
 	  	switch response {
-		case .success(let user):
-			print("User login: \(user.login!)")
-		case .failure(let error):
-			print("Error: \(error)")
-		}
+  			case .success(let user):
+    				print(user.login)
+  			case .failure(let error):
+   				 print(error)
+  		}
 	}
   })  
 
