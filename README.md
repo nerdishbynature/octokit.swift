@@ -104,7 +104,8 @@ config.accessToken = tokenYouStored
 
 let _ = Octokit(config).user("octocat") { response in
   switch response {
-  	case .success(let user):                                                             print("User login: \(user.login!)")
+  	case .success(let user):
+             print("User login: \(user.login!)")
         case .failure(let error):
              print("Error: \(error)")
   }
