@@ -100,7 +100,7 @@ necessary to do the OAuth Flow again. You can just use a `TokenConfiguration`.
 ```swift
 let token = // get your token from your keychain, user defaults (not recommended) etc.
 let config = TokenConfiguration()
-config.accessToken = tokenYouStored
+config.accessToken = token
 
 let _ = Octokit(config).user("octocat") { response in
   switch response {
