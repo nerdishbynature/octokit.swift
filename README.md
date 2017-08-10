@@ -25,7 +25,7 @@ let config = TokenConfiguration(token: "12345")
 or for Github Enterprise
 
 ```swift
-let config = TokenConfiguration("https://github.example.com/api/v3/", token: "12345")
+let config = TokenConfiguration("12345", url: "https://github.example.com/api/v3/")
 ```
 
 After you got your token you can use it with `Octokit`
@@ -33,10 +33,10 @@ After you got your token you can use it with `Octokit`
 ```swift
 Octokit(config).me() { response in
   switch response {
-  case .Success(let user):
-    println(user.login)
-  case .Failure(let error):
-    println(error)
+  case .success(let user):
+    print(user.login)
+  case .failure(let error):
+    print(error)
   }
 }
 ```
@@ -50,8 +50,7 @@ You can authenticate an user for `github.com` as follows:
 
 ```swift
 let config = OAuthConfiguration(token: "<Your Client ID>", secret: "<Your Client secret>", scopes: ["repo", "read:org"])
-config.authenticate()
-
+let url = config.authenticate()
 ```
 
 or for Github Enterprise
@@ -77,10 +76,10 @@ func application(application: UIApplication, openURL url: NSURL, sourceApplicati
 func loadCurrentUser(config: TokenConfiguration) {
   Octokit(config).me() { response in
     switch response {
-    case .Success(let user):
-      println(user.login)
-    case .Failure(let error):
-      println(error)
+    case .success(let user):
+      print(user.login)
+    case .failure(let error):
+      print(error)
     }
   }
 }
@@ -95,12 +94,13 @@ let token = // get your token from your keychain, user defaults (not recommended
 let config = TokenConfiguration(token)
 Octokit(config).user("octocat") { response in
   switch response {
-  case .Success(let user):
-    println(user.login)
-  case .Failure(let error):
-    println(error)
+  case .success(let user):
+  	print("User login: \(user.login!)")
+  case .failure(let error):
+  	print("Error: \(error)")
   }
 }
+
 ```
 
 ## Users
@@ -111,9 +111,9 @@ Octokit(config).user("octocat") { response in
 let username = ... // set the username
 Octokit().user(username) { response in
   switch response {
-    case .Success(let user):
+    case .success(let user):
       // do something with the user
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -124,9 +124,9 @@ Octokit().user(username) { response in
 ```swift
 Octokit().me() { response in
   switch response {
-    case .Success(let user):
+    case .success(let user):
       // do something with the user
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 ```
@@ -139,9 +139,9 @@ Octokit().me() { response in
 let (owner, name) = ("owner", "name") // replace with actual owner and name
 Octokit().repository(owner, name) { response in
   switch response {
-    case .Success(let repository):
+    case .success(let repository):
       // do something with the repository
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -152,9 +152,9 @@ Octokit().repository(owner, name) { response in
 ```swift
 Octokit().repositories() { response in
   switch response {
-    case .Success(let repository):
+    case .success(let repository):
       // do something
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -168,9 +168,9 @@ Octokit().repositories() { response in
 let username = "username"
 Octokit().stars(username) { response in
   switch response {
-    case .Success(let repositories):
+    case .success(let repositories):
       // do something with the repositories
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -181,9 +181,9 @@ Octokit().stars(username) { response in
 ```swift
 Octokit().myStars() { response in
   switch response {
-    case .Success(let repositories):
+    case .success(let repositories):
       // do something with the repositories
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -197,9 +197,9 @@ Octokit().myStars() { response in
 let username = "username"
 Octokit().followers(username) { response in
   switch response {
-    case .Success(let users):
+    case .success(let users):
       // do something with the users
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -210,9 +210,9 @@ Octokit().followers(username) { response in
 ```swift
 Octokit().myFollowers() { response in
   switch response {
-    case .Success(let users):
+    case .success(let users):
       // do something with the users
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -224,9 +224,9 @@ Octokit().myFollowers() { response in
 let username = "username"
 Octokit().following(username) { response in
   switch response {
-    case .Success(let users):
+    case .success(let users):
       // do something with the users
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -237,9 +237,9 @@ Octokit().following(username) { response in
 ```swift
 Octokit().myFollowing() { response in
   switch response {
-    case .Success(let users):
+    case .success(let users):
       // do something with the users
-    case .Failure(let error):
+    case .failure(let error):
       // handle any errors
   }
 }
@@ -254,9 +254,9 @@ Get all issues across all the authenticated user's visible repositories includin
 ```swift
 Octokit(config).myIssues() { response in
     switch response {
-        case .Success(let issues):
+        case .success(let issues):
         // do something with the issues
-    case .Failure:
+    case .failure:
         // handle any errors
     }   
 }
@@ -268,9 +268,9 @@ Octokit(config).myIssues() { response in
 let (owner, repo, number) = ("owner", "repo", 1347) // replace with actual owner, repo name, and issue number
 Octokit(config).issue(owner, repository: repo, number: number) { response in
     switch response {
-    case .Success(let issue):
+    case .success(let issue):
         // do something with the issue
-    case .Failure:
+    case .failure:
         // handle any errors
     }
 }
@@ -281,9 +281,9 @@ Octokit(config).issue(owner, repository: repo, number: number) { response in
 ```swift
 Octokit(config).postIssue("owner", repository: "repo", title: "Found a bug", body: "I'm having a problem with this.", assignee: "octocat") { response in
     switch response {
-    case .Success(let issue):
+    case .success(let issue):
         // do something with the issue
-    case .Failure:
+    case .failure:
         // handle any errors
     }
 }
@@ -294,9 +294,9 @@ Octokit(config).postIssue("owner", repository: "repo", title: "Found a bug", bod
 ```swift
 Octokit(config).patchIssue("owner", repository: "repo", number: 1347, title: "Found a bug", body: "I'm having a problem with this.", assignee: "octocat", state: .Closed) { response in
     switch response {
-    case .Success(let issue):
+    case .success(let issue):
         // do something with the issue
-    case .Failure:
+    case .failure:
         // handle any errors
     }
 }
