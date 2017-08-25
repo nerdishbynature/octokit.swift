@@ -17,6 +17,7 @@ import RequestKit
     open var htmlURL: String?
     open var size: Int
     open var lastPush: Date?
+    open var language:String?
 
     public init(_ json: [String: AnyObject]) {
         owner = User(json["owner"] as? [String: AnyObject] ?? [:])
@@ -33,6 +34,7 @@ import RequestKit
             htmlURL = json["html_url"] as? String
             size = json["size"] as? Int ?? 0
             lastPush = Time.rfc3339Date(json["pushed_at"] as? String)
+            language = json["language"] as? String
         } else {
             id = -1
             isPrivate = false
@@ -44,15 +46,15 @@ import RequestKit
 // MARK: request
 
 public extension Octokit {
-
+    
     /**
-        Fetches the Repositories for a user or organization
-        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-        - parameter owner: The user or organization that owns the repositories. If `nil`, fetches repositories for the authenticated user.
-        - parameter page: Current page for repository pagination. `1` by default.
-        - parameter perPage: Number of repositories per page. `100` by default.
-        - parameter completion: Callback for the outcome of the fetch.
-    */
+     Fetches the Repositories for a user or organization
+     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repositories. If `nil`, fetches repositories for the authenticated user.
+     - parameter page: Current page for repository pagination. `1` by default.
+     - parameter perPage: Number of repositories per page. `100` by default.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
     public func repositories(_ session: RequestKitURLSession = URLSession.shared, owner: String? = nil, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = (owner != nil)
             ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
@@ -61,21 +63,21 @@ public extension Octokit {
             if let error = error {
                 completion(Response.failure(error))
             }
-
+            
             if let json = json {
                 let repos = json.map { Repository($0) }
                 completion(Response.success(repos))
             }
         }
     }
-
+    
     /**
-        Fetches a repository for a user or organization
-        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-        - parameter owner: The user or organization that owns the repositories.
-        - parameter name: The name of the repository to fetch.
-        - parameter completion: Callback for the outcome of the fetch.
-    */
+     Fetches a repository for a user or organization
+     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter name: The name of the repository to fetch.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
     public func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String, completion: @escaping (_ response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
         return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
@@ -89,6 +91,33 @@ public extension Octokit {
             }
         }
     }
+    
+    /**
+     Fetches a repository README file for a repository
+     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter name: The name of the repository to fetch.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    public func readme(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String, completion: @escaping (_ response: Response<String>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = RepositoryRouter.readRepositoryReadme(configuration, owner, name)
+        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+            if let error = error {
+                completion(Response.failure(error))
+            } else {
+                if let json = json {
+                    let base64Encoded = json["content"] as? String
+                    if base64Encoded != nil {
+                        let decodedData = Data(base64Encoded: base64Encoded!, options: .ignoreUnknownCharacters)!
+                        let decodedString = NSString(data: decodedData, encoding: String.Encoding.utf8.rawValue)!
+                        completion(Response.success(decodedString as String))
+                    }else{
+                        completion(Response.success("" as String))
+                    }
+                }
+            }
+        }
+    }
 }
 
 // MARK: Router
@@ -97,23 +126,25 @@ enum RepositoryRouter: Router {
     case readRepositories(Configuration, String, String, String)
     case readAuthenticatedRepositories(Configuration, String, String)
     case readRepository(Configuration, String, String)
-
+    case readRepositoryReadme(Configuration, String, String)
+    
     var configuration: Configuration {
         switch self {
         case .readRepositories(let config, _, _, _): return config
         case .readAuthenticatedRepositories(let config, _, _): return config
         case .readRepository(let config, _, _): return config
+        case .readRepositoryReadme(let config, _, _): return config
         }
     }
-
+    
     var method: HTTPMethod {
         return .GET
     }
-
+    
     var encoding: HTTPEncoding {
         return .url
     }
-
+    
     var params: [String: Any] {
         switch self {
         case .readRepositories(_, _, let page, let perPage):
@@ -122,9 +153,11 @@ enum RepositoryRouter: Router {
             return ["per_page": perPage, "page": page]
         case .readRepository:
             return [:]
+        case .readRepositoryReadme(_, _, _):
+            return [:]
         }
     }
-
+    
     var path: String {
         switch self {
         case .readRepositories(_, let owner, _, _):
@@ -133,6 +166,8 @@ enum RepositoryRouter: Router {
             return "user/repos"
         case .readRepository(_, let owner, let name):
             return "repos/\(owner)/\(name)"
+        case .readRepositoryReadme(_, let owner, let repo):
+            return "repos/\(owner)/\(repo)/readme"
         }
     }
 }
