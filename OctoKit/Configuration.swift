@@ -1,8 +1,8 @@
 import Foundation
 import RequestKit
 
-let githubBaseURL = "https://api.github.com"
-let githubWebURL = "https://github.com"
+public let githubBaseURL = "https://api.github.com"
+public let githubWebURL = "https://github.com"
 
 public let OctoKitErrorDomain = "com.nerdishbynature.octokit"
 

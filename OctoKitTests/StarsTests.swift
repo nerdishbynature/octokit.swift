@@ -29,8 +29,6 @@ class StarsTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
@@ -60,8 +58,6 @@ class StarsTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)

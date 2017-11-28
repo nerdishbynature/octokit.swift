@@ -4,21 +4,21 @@ import RequestKit
 // MARK: model
 
 @objc open class Repository: NSObject {
-    open let id: Int
-    open let owner: User
-    open var name: String?
-    open var fullName: String?
-    open var isPrivate: Bool
-    open var repositoryDescription: String?
+    @objc open let id: Int
+    @objc open let owner: User
+    @objc open var name: String?
+    @objc open var fullName: String?
+    @objc open var isPrivate: Bool
+    @objc open var repositoryDescription: String?
     open var isFork: Bool?
-    open var gitURL: String?
-    open var sshURL: String?
-    open var cloneURL: String?
-    open var htmlURL: String?
-    open var size: Int
-    open var lastPush: Date?
+    @objc open var gitURL: String?
+    @objc open var sshURL: String?
+    @objc open var cloneURL: String?
+    @objc open var htmlURL: String?
+    @objc open var size: Int
+    @objc open var lastPush: Date?
 
-    public init(_ json: [String: AnyObject]) {
+    @objc public init(_ json: [String: AnyObject]) {
         owner = User(json["owner"] as? [String: AnyObject] ?? [:])
         if let id = json["id"] as? Int {
             self.id = id

@@ -27,8 +27,6 @@ class FollowTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
@@ -58,8 +56,6 @@ class FollowTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
@@ -91,8 +87,6 @@ class FollowTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
@@ -122,8 +116,6 @@ class FollowTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
