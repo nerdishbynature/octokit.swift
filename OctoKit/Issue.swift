@@ -10,29 +10,29 @@ public enum Openness: String {
 }
 
 @objc open class Issue: NSObject {
-    open var id: Int
-    open var url: URL?
-    open var repositoryURL: URL?
-    open var labelsURL: URL?
-    open var commentsURL: URL?
-    open var eventsURL: URL?
-    open var htmlURL: URL?
+    @objc open var id: Int
+    @objc open var url: URL?
+    @objc open var repositoryURL: URL?
+    @objc open var labelsURL: URL?
+    @objc open var commentsURL: URL?
+    @objc open var eventsURL: URL?
+    @objc open var htmlURL: URL?
     open var number: Int?
     open var state: Openness?
-    open var title: String?
-    open var body: String?
-    open var user: User?
-    open var labels: [Label]?
-    open var assignee: User?
-    open var milestone: Milestone?
+    @objc open var title: String?
+    @objc open var body: String?
+    @objc open var user: User?
+    @objc open var labels: [Label]?
+    @objc open var assignee: User?
+    @objc open var milestone: Milestone?
     open var locked: Bool?
     open var comments: Int?
-    open var closedAt: Date?
-    open var createdAt: Date?
-    open var updatedAt: Date?
-    open var closedBy: User?
+    @objc open var closedAt: Date?
+    @objc open var createdAt: Date?
+    @objc open var updatedAt: Date?
+    @objc open var closedBy: User?
     
-    public init(_ json: [String: AnyObject]) {
+    @objc public init(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
             self.id = id
             if let urlString = json["url"] as? String, let url = URL(string: urlString) {

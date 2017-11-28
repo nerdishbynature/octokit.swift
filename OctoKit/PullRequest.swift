@@ -3,36 +3,36 @@ import RequestKit
 
 @objc open class PullRequest: NSObject {
 
-    open var id: Int
-    open var url: URL?
+    @objc open var id: Int
+    @objc open var url: URL?
 
-    open var htmlURL: URL?
-    open var diffURL: URL?
-    open var patchURL: URL?
-    open var issueURL: URL?
-    open var commitsURL: URL?
-    open var reviewCommentsURL: URL?
-    open var reviewCommentURL: URL?
-    open var commentsURL: URL?
-    open var statusesURL: URL?
+    @objc open var htmlURL: URL?
+    @objc open var diffURL: URL?
+    @objc open var patchURL: URL?
+    @objc open var issueURL: URL?
+    @objc open var commitsURL: URL?
+    @objc open var reviewCommentsURL: URL?
+    @objc open var reviewCommentURL: URL?
+    @objc open var commentsURL: URL?
+    @objc open var statusesURL: URL?
 
     open var number: Int?
     open var state: Openness?
-    open var title: String?
-    open var body: String?
+    @objc open var title: String?
+    @objc open var body: String?
 
-    open var assignee: User?
-    open var milestone: Milestone?
+    @objc open var assignee: User?
+    @objc open var milestone: Milestone?
 
     open var locked: Bool?
-    open var createdAt: Date?
-    open var updatedAt: Date?
-    open var closedAt: Date?
-    open var mergedAt: Date?
+    @objc open var createdAt: Date?
+    @objc open var updatedAt: Date?
+    @objc open var closedAt: Date?
+    @objc open var mergedAt: Date?
 
-    open var user: User?
+    @objc open var user: User?
 
-    public init(_ json: [String: AnyObject]) {
+    @objc public init(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
             self.id = id
 

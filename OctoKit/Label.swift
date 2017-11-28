@@ -7,9 +7,9 @@
 #endif
 
 extension Color {
-    convenience init?(hexTriplet hex: String) {
-        var hexChars = hex.characters
-        let red = Int(String(hexChars.prefix(2)), radix: 16)
+    @objc convenience init?(hexTriplet hex: String) {
+        var hexChars = Substring(hex)
+        let red = Int(String(hex.prefix(2)), radix: 16)
         hexChars = hexChars.dropFirst(2)
         let green = Int(String(hexChars.prefix(2)), radix: 16)
         hexChars = hexChars.dropFirst(2)
@@ -23,15 +23,15 @@ extension Color {
 }
 
 @objc open class Label: NSObject {
-    open var url: URL?
-    open var name: String?
+    @objc open var url: URL?
+    @objc open var name: String?
     #if os(OSX)
         open var color: NSColor?
     #elseif os(iOS) || os(tvOS) || os(watchOS)
-        public var color: UIColor?
+        @objc public var color: UIColor?
     #endif
     
-    public init(_ json: [String: AnyObject]) {
+    @objc public init(_ json: [String: AnyObject]) {
         if let urlString = json["url"] as? String, let url = URL(string: urlString) {
             self.url = url
         }

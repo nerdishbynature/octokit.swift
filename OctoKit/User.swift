@@ -4,21 +4,21 @@ import RequestKit
 // MARK: model
 
 @objc open class User: NSObject {
-    open let id: Int
-    open var login: String?
-    open var avatarURL: String?
-    open var gravatarID: String?
-    open var type: String?
-    open var name: String?
-    open var company: String?
-    open var blog: String?
-    open var location: String?
-    open var email: String?
+    @objc open let id: Int
+    @objc open var login: String?
+    @objc open var avatarURL: String?
+    @objc open var gravatarID: String?
+    @objc open var type: String?
+    @objc open var name: String?
+    @objc open var company: String?
+    @objc open var blog: String?
+    @objc open var location: String?
+    @objc open var email: String?
     open var numberOfPublicRepos: Int?
     open var numberOfPublicGists: Int?
     open var numberOfPrivateRepos: Int?
 
-    public init(_ json: [String: AnyObject]) {
+    @objc public init(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
             self.id = id
             login = json["login"] as? String

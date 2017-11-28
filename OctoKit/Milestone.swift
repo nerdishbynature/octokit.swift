@@ -1,23 +1,23 @@
 import Foundation
 
 @objc open class Milestone: NSObject {
-    open var url: URL?
-    open var htmlURL: URL?
-    open var labelsURL: URL?
-    open var id: Int
+    @objc open var url: URL?
+    @objc open var htmlURL: URL?
+    @objc open var labelsURL: URL?
+    @objc open var id: Int
     open var number: Int?
     open var state: Openness?
-    open var title: String?
-    open var milestoneDescription: String?
-    open var creator: User?
+    @objc open var title: String?
+    @objc open var milestoneDescription: String?
+    @objc open var creator: User?
     open var openIssues: Int?
     open var closedIssues: Int?
-    open var createdAt: Date?
-    open var updatedAt: Date?
-    open var closedAt: Date?
-    open var dueOn: Date?
+    @objc open var createdAt: Date?
+    @objc open var updatedAt: Date?
+    @objc open var closedAt: Date?
+    @objc open var dueOn: Date?
     
-    public init?(_ json: [String: AnyObject]) {
+    @objc public init?(_ json: [String: AnyObject]) {
         if let id = json["id"] as? Int {
             if let urlString = json["html_url"] as? String, let url = URL(string: urlString) {
                 htmlURL = url
