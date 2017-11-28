@@ -3,8 +3,8 @@ import RequestKit
 
 // MARK: model
 
-@objc open class User: NSObject {
-    @objc open let id: Int
+@objc open class User: NSObject, Codable {
+    @objc open internal(set) var id: Int = -1
     @objc open var login: String?
     @objc open var avatarURL: String?
     @objc open var gravatarID: String?
@@ -18,24 +18,20 @@ import RequestKit
     open var numberOfPublicGists: Int?
     open var numberOfPrivateRepos: Int?
 
-    @objc public init(_ json: [String: AnyObject]) {
-        if let id = json["id"] as? Int {
-            self.id = id
-            login = json["login"] as? String
-            avatarURL = json["avatar_url"] as? String
-            gravatarID = json["gravatar_id"] as? String
-            type = json["type"] as? String
-            name = json["name"] as? String
-            company = json["company"] as? String
-            blog = json["blog"] as? String
-            location = json["location"] as? String
-            email = json["email"] as? String
-            numberOfPublicRepos = json["public_repos"] as? Int
-            numberOfPublicGists = json["public_gists"] as? Int
-            numberOfPrivateRepos = json["total_private_repos"] as? Int
-        } else {
-            id = -1
-        }
+    enum CodingKeys: String, CodingKey {
+        case id
+        case login
+        case avatarURL = "avatar_url"
+        case gravatarID = "gravatar_id"
+        case type
+        case name
+        case company
+        case blog
+        case location
+        case email
+        case numberOfPublicRepos = "public_repos"
+        case numberOfPublicGists = "public_gists"
+        case numberOfPrivateRepos = "total_private_repos"
     }
 }
 
@@ -51,13 +47,12 @@ public extension Octokit {
     */
     public func user(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<User>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readUser(name, self.configuration)
-        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.load(session, expectedResultType: User.self) { user, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let parsedUser = User(json)
-                    completion(Response.success(parsedUser))
+                if let user = user {
+                    completion(Response.success(user))
                 }
             }
         }
@@ -70,13 +65,12 @@ public extension Octokit {
     */
     public func me(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<User>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readAuthenticatedUser(self.configuration)
-        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.load(session, expectedResultType: User.self) { user, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let parsedUser = User(json)
-                    completion(Response.success(parsedUser))
+                if let user = user {
+                    completion(Response.success(user))
                 }
             }
         }

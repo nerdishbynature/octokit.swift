@@ -1,6 +1,7 @@
 import Foundation
 
-struct Time {
+@objc public class Time: NSObject, Codable {
+    private(set) var string: String? = nil
 
     /**
         A date formatter for RFC 3339 style timestamps. Uses POSIX locale and GMT timezone so that date values are parsed as absolutes.
@@ -21,7 +22,7 @@ struct Time {
         - parameter string: The string representation of the date
         - returns: An `NSDate` with a successful parse, otherwise `nil`
      */
-    static func rfc3339Date(_ string: String?) -> Date? {
+    @objc func rfc3339Date() -> Date? {
         guard let string = string else { return nil }
         return Time.rfc3339DateFormatter.date(from: string)
     }

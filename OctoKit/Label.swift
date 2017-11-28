@@ -22,22 +22,8 @@ extension Color {
     }
 }
 
-@objc open class Label: NSObject {
+@objc open class Label: NSObject, Codable {
     @objc open var url: URL?
     @objc open var name: String?
-    #if os(OSX)
-        open var color: NSColor?
-    #elseif os(iOS) || os(tvOS) || os(watchOS)
-        @objc public var color: UIColor?
-    #endif
-    
-    @objc public init(_ json: [String: AnyObject]) {
-        if let urlString = json["url"] as? String, let url = URL(string: urlString) {
-            self.url = url
-        }
-        name = json["name"] as? String
-        if let colorString = json["color"] as? String {
-            color = Color(hexTriplet: colorString)
-        }
-    }
+    @objc open var color: String?
 }

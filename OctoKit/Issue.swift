@@ -3,14 +3,14 @@ import RequestKit
 
 // MARK: model
 
-public enum Openness: String {
+public enum Openness: String, Codable {
     case Open = "open"
     case Closed = "closed"
     case All = "all"
 }
 
-@objc open class Issue: NSObject {
-    @objc open var id: Int
+@objc open class Issue: NSObject, Codable {
+    @objc open private(set) var id: Int = 01
     @objc open var url: URL?
     @objc open var repositoryURL: URL?
     @objc open var labelsURL: URL?
@@ -27,51 +27,33 @@ public enum Openness: String {
     @objc open var milestone: Milestone?
     open var locked: Bool?
     open var comments: Int?
-    @objc open var closedAt: Date?
-    @objc open var createdAt: Date?
-    @objc open var updatedAt: Date?
+    @objc open var closedAt: Time?
+    @objc open var createdAt: Time?
+    @objc open var updatedAt: Time?
     @objc open var closedBy: User?
-    
-    @objc public init(_ json: [String: AnyObject]) {
-        if let id = json["id"] as? Int {
-            self.id = id
-            if let urlString = json["url"] as? String, let url = URL(string: urlString) {
-                self.url = url
-            }
-            if let urlString = json["repository_url"] as? String, let url = URL(string: urlString) {
-                repositoryURL = url
-            }
-            if let urlString = json["labels_url"] as? String, let url = URL(string: urlString) {
-                labelsURL = url
-            }
-            if let urlString = json["comments_url"] as? String, let url = URL(string: urlString) {
-                commentsURL = url
-            }
-            if let urlString = json["events_url"] as? String, let url = URL(string: urlString) {
-                eventsURL = url
-            }
-            if let urlString = json["html_url"] as? String, let url = URL(string: urlString) {
-                htmlURL = url
-            }
-            number = json["number"] as? Int
-            state = Openness(rawValue: json["state"] as? String ?? "")
-            title = json["title"] as? String
-            body = json["body"] as? String
-            user = User(json["user"] as? [String: AnyObject] ?? [:])
-            if let labelDictionaries = json["labels"] as? [[String: AnyObject]] {
-                labels = labelDictionaries.flatMap { Label($0) }
-            }
-            assignee = User(json["assignee"] as? [String: AnyObject] ?? [:])
-            milestone = Milestone(json["milestone"] as? [String: AnyObject] ?? [:])
-            locked = json["locked"] as? Bool
-            comments = json["comments"] as? Int
-            closedAt = Time.rfc3339Date(json["closed_at"] as? String)
-            createdAt = Time.rfc3339Date(json["created_at"] as? String)
-            updatedAt = Time.rfc3339Date(json["updated_at"] as? String)
-            closedBy = User(json["closed_by"] as? [String: AnyObject] ?? [:])
-        } else {
-            id = -1
-        }
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case url
+        case repositoryURL = "repository_url"
+        case labelsURL = "labels_url"
+        case commentsURL = "comments_url"
+        case eventsURL = "events_url"
+        case htmlURL = "html_url"
+        case number
+        case state
+        case title
+        case body
+        case user
+        case labels
+        case assignee
+        case milestone
+        case locked
+        case comments
+        case closedAt = "closed_at"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case closedBy = "closed_by"
     }
 }
 
@@ -89,13 +71,12 @@ public extension Octokit {
      */
     public func myIssues(_ session: RequestKitURLSession = URLSession.shared, state: Openness = .Open, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
-        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+        return router.load(session, expectedResultType: [Issue].self) { issues, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let parsedIssues = json.map { Issue($0) }
-                    completion(Response.success(parsedIssues))
+                if let issues = issues {
+                    completion(Response.success(issues))
                 }
             }
         }
@@ -111,12 +92,11 @@ public extension Octokit {
      */
     public func issue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssue(configuration, owner, repository, number)
-        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.load(session, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let issue = Issue(json)
+                if let issue = issue {
                     completion(Response.success(issue))
                 }
             }
@@ -135,13 +115,12 @@ public extension Octokit {
      */
     public func issues(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, state: Openness = .Open, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
-        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+        return router.load(session, expectedResultType: [Issue].self) { issues, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let parsedIssues = json.map { Issue($0) }
-                    completion(Response.success(parsedIssues))
+                if let issues = issues {
+                    completion(Response.success(issues))
                 }
             }
         }
@@ -159,12 +138,11 @@ public extension Octokit {
      */
     public func postIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee)
-        return router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.post(session, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let issue = Issue(json)
+                if let issue = issue {
                     completion(Response.success(issue))
                 }
             }
@@ -185,12 +163,11 @@ public extension Octokit {
      */
     public func patchIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: Openness? = nil, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
-        return router.postJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.post(session, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let issue = Issue(json)
+                if let issue = issue {
                     completion(Response.success(issue))
                 }
             }
