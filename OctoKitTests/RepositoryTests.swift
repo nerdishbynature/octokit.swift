@@ -132,7 +132,7 @@ class RepositoryTests: XCTestCase {
     // MARK: Model Tests
 
     func testUserParsingFullRepository() {
-        let subject = Repository(Helper.JSONFromFile("repo") as! [String: AnyObject])
+        let subject = Helper.codableFromFile("repo", type: Repository.self)
         XCTAssertEqual(subject.owner.login, "mietzmithut")
         XCTAssertEqual(subject.owner.id, 4672699)
 

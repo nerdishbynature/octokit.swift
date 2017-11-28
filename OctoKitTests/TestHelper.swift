@@ -19,4 +19,11 @@ internal class Helper {
         options: JSONSerialization.ReadingOptions.mutableContainers)
         return dict!
     }
+
+    internal class func codableFromFile<T>(_ name: String, type: T.Type) -> T where T: Codable {
+        let bundle = Bundle(for: self)
+        let path = bundle.path(forResource: name, ofType: "json")!
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path))
+        return try! JSONDecoder().decode(T.self, from: data)
+    }
 }

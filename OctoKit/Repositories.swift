@@ -3,41 +3,35 @@ import RequestKit
 
 // MARK: model
 
-@objc open class Repository: NSObject {
-    @objc open let id: Int
-    @objc open let owner: User
+@objc open class Repository: NSObject, Codable {
+    @objc open private(set) var id: Int = -1
+    @objc open private(set) var owner = User()
     @objc open var name: String?
     @objc open var fullName: String?
-    @objc open var isPrivate: Bool
+    @objc open private(set) var isPrivate: Bool = false
     @objc open var repositoryDescription: String?
-    open var isFork: Bool?
+    @objc open private(set) var isFork: Bool = false
     @objc open var gitURL: String?
     @objc open var sshURL: String?
     @objc open var cloneURL: String?
     @objc open var htmlURL: String?
-    @objc open var size: Int
-    @objc open var lastPush: Date?
+    @objc open private(set) var size: Int = -1
+//    @objc open var lastPush: Date?
 
-    @objc public init(_ json: [String: AnyObject]) {
-        owner = User(json["owner"] as? [String: AnyObject] ?? [:])
-        if let id = json["id"] as? Int {
-            self.id = id
-            name = json["name"] as? String
-            fullName = json["full_name"] as? String
-            isPrivate = json["private"] as? Bool ?? false
-            repositoryDescription = json["description"] as? String
-            isFork = json["fork"] as? Bool
-            gitURL = json["git_url"] as? String
-            sshURL = json["ssh_url"] as? String
-            cloneURL = json["clone_url"] as? String
-            htmlURL = json["html_url"] as? String
-            size = json["size"] as? Int ?? 0
-            lastPush = Time.rfc3339Date(json["pushed_at"] as? String)
-        } else {
-            id = -1
-            isPrivate = false
-            size = 0
-        }
+    enum CodingKeys: String, CodingKey {
+        case id
+        case owner
+        case name
+        case fullName = "full_name"
+        case isPrivate = "private"
+        case repositoryDescription = "description"
+        case isFork = "fork"
+        case gitURL = "git_url"
+        case sshURL = "ssh_url"
+        case cloneURL = "clone_url"
+        case htmlURL = "html_url"
+        case size
+//        case lastPush = "pushed_at"
     }
 }
 
@@ -57,13 +51,12 @@ public extension Octokit {
         let router = (owner != nil)
             ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.readAuthenticatedRepositories(configuration, page, perPage)
-        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+        return router.load(session, expectedResultType: [Repository].self) { repos, error in
             if let error = error {
                 completion(Response.failure(error))
             }
 
-            if let json = json {
-                let repos = json.map { Repository($0) }
+            if let repos = repos {
                 completion(Response.success(repos))
             }
         }
@@ -78,12 +71,11 @@ public extension Octokit {
     */
     public func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String, completion: @escaping (_ response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
-        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.load(session, expectedResultType: Repository.self) { repo, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let repo = Repository(json)
+                if let repo = repo {
                     completion(Response.success(repo))
                 }
             }

@@ -69,14 +69,14 @@ import RequestKit
             title = json["title"] as? String
             body = json["body"] as? String
 
-            assignee = User(json["assignee"] as? [String: AnyObject] ?? [:])
-            milestone = Milestone(json["milestone"] as? [String: AnyObject] ?? [:])
+//            assignee = User(json["assignee"] as? [String: AnyObject] ?? [:])
+//            milestone = Milestone(json["milestone"] as? [String: AnyObject] ?? [:])
 
             locked = json["locked"] as? Bool
-            closedAt = Time.rfc3339Date(json["closed_at"] as? String)
-            createdAt = Time.rfc3339Date(json["created_at"] as? String)
-            updatedAt = Time.rfc3339Date(json["updated_at"] as? String)
-            mergedAt = Time.rfc3339Date(json["merged_at"] as? String)
+//            closedAt = Time.rfc3339Date(json["closed_at"] as? String)
+//            createdAt = Time.rfc3339Date(json["created_at"] as? String)
+//            updatedAt = Time.rfc3339Date(json["updated_at"] as? String)
+//            mergedAt = Time.rfc3339Date(json["merged_at"] as? String)
         } else {
             id = -1
         }
