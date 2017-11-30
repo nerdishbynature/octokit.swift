@@ -16,8 +16,8 @@ class PullRequeastTests: XCTestCase {
                 XCTAssertEqual(pullRequests.id, 1)
                 XCTAssertEqual(pullRequests.title, "new-feature")
                 XCTAssertEqual(pullRequests.body, "Please pull these awesome changes")
-            case .failure:
-                XCTAssert(false, "should not get an error")
+            case .failure(let error):
+                XCTAssertNil(error)
             }
         }
         XCTAssertNotNil(task)
@@ -37,8 +37,8 @@ class PullRequeastTests: XCTestCase {
                 XCTAssertEqual(pullRequests.count, 1)
                 XCTAssertEqual(pullRequests.first?.title, "new-feature")
                 XCTAssertEqual(pullRequests.first?.body, "Please pull these awesome changes")
-            case .failure:
-                XCTAssert(false, "should not get an error")
+            case .failure(let error):
+                XCTAssertNil(error)
             }
         }
         XCTAssertNotNil(task)
