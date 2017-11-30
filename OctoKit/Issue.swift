@@ -27,9 +27,9 @@ public enum Openness: String, Codable {
     @objc open var milestone: Milestone?
     open var locked: Bool?
     open var comments: Int?
-    @objc open var closedAt: Time?
-    @objc open var createdAt: Time?
-    @objc open var updatedAt: Time?
+    @objc open var closedAt: String?
+    @objc open var createdAt: String?
+    @objc open var updatedAt: String?
     @objc open var closedBy: User?
 
     enum CodingKeys: String, CodingKey {

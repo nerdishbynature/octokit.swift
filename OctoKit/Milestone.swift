@@ -12,10 +12,10 @@ import Foundation
     @objc open var creator: User?
     open var openIssues: Int?
     open var closedIssues: Int?
-    @objc open var createdAt: Time?
-    @objc open var updatedAt: Time?
-    @objc open var closedAt: Time?
-    @objc open var dueOn: Time?
+    @objc open var createdAt: String?
+    @objc open var updatedAt: String?
+    @objc open var closedAt: String?
+    @objc open var dueOn: String?
 
     enum CodingKeys: String, CodingKey {
         case id

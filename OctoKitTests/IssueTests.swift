@@ -11,8 +11,8 @@ class IssueTests: XCTestCase {
             switch response {
             case .success(let issues):
                 XCTAssertEqual(issues.count, 1)
-            case .failure:
-                XCTAssert(false, "should not get an error")
+            case .failure(let error):
+                XCTAssertNil(error)
             }
         }
         XCTAssertNotNil(task)
@@ -36,7 +36,7 @@ class IssueTests: XCTestCase {
     // MARK: Model Tests
     
     func testParsingIssue() {
-        let subject = Issue(Helper.JSONFromFile("issue") as! [String: AnyObject])
+        let subject = Helper.codableFromFile("issue", type: Issue.self)
         XCTAssertEqual(subject.user?.login, "octocat")
         XCTAssertEqual(subject.user?.id, 1)
         
