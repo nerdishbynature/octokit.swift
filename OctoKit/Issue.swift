@@ -10,7 +10,7 @@ public enum Openness: String, Codable {
 }
 
 @objc open class Issue: NSObject, Codable {
-    @objc open private(set) var id: Int = 01
+    @objc open private(set) var id: Int = -1
     @objc open var url: URL?
     @objc open var repositoryURL: URL?
     @objc open var labelsURL: URL?
