@@ -16,7 +16,7 @@ import RequestKit
     @objc open var cloneURL: String?
     @objc open var htmlURL: String?
     @objc open private(set) var size: Int = -1
-//    @objc open var lastPush: Date?
+    @objc open var lastPush: Date?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -31,7 +31,7 @@ import RequestKit
         case cloneURL = "clone_url"
         case htmlURL = "html_url"
         case size
-//        case lastPush = "pushed_at"
+        case lastPush = "pushed_at"
     }
 }
 
@@ -51,7 +51,7 @@ public extension Octokit {
         let router = (owner != nil)
             ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.readAuthenticatedRepositories(configuration, page, perPage)
-        return router.load(session, expectedResultType: [Repository].self) { repos, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self) { repos, error in
             if let error = error {
                 completion(Response.failure(error))
             }
@@ -71,7 +71,7 @@ public extension Octokit {
     */
     public func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String, completion: @escaping (_ response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
-        return router.load(session, expectedResultType: Repository.self) { repo, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Repository.self) { repo, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {

@@ -27,9 +27,9 @@ public enum Openness: String, Codable {
     @objc open var milestone: Milestone?
     open var locked: Bool?
     open var comments: Int?
-    @objc open var closedAt: String?
-    @objc open var createdAt: String?
-    @objc open var updatedAt: String?
+    @objc open var closedAt: Date?
+    @objc open var createdAt: Date?
+    @objc open var updatedAt: Date?
     @objc open var closedBy: User?
 
     enum CodingKeys: String, CodingKey {
@@ -71,7 +71,7 @@ public extension Octokit {
      */
     public func myIssues(_ session: RequestKitURLSession = URLSession.shared, state: Openness = .Open, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
-        return router.load(session, expectedResultType: [Issue].self) { issues, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self) { issues, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -92,7 +92,7 @@ public extension Octokit {
      */
     public func issue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssue(configuration, owner, repository, number)
-        return router.load(session, expectedResultType: Issue.self) { issue, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -115,7 +115,7 @@ public extension Octokit {
      */
     public func issues(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, state: Openness = .Open, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
-        return router.load(session, expectedResultType: [Issue].self) { issues, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self) { issues, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {

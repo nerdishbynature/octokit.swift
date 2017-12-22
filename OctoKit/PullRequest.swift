@@ -25,10 +25,10 @@ import RequestKit
     @objc open var milestone: Milestone?
 
     open var locked: Bool?
-    @objc open var createdAt: String?
-    @objc open var updatedAt: String?
-    @objc open var closedAt: String?
-    @objc open var mergedAt: String?
+    @objc open var createdAt: Date?
+    @objc open var updatedAt: Date?
+    @objc open var closedAt: Date?
+    @objc open var mergedAt: Date?
 
     @objc open var user: User?
 
@@ -75,7 +75,7 @@ public extension Octokit {
                             completion: @escaping (_ response: Response<PullRequest>) -> Void) -> URLSessionDataTaskProtocol? {
 
         let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
-        return router.load(session, expectedResultType: PullRequest.self) { pullRequest, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -106,7 +106,7 @@ public extension Octokit {
                              completion: @escaping (_ response: Response<[PullRequest]>) -> Void) -> URLSessionDataTaskProtocol? {
 
         let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, state, sort, direction)
-        return router.load(session, expectedResultType: [PullRequest].self) { pullRequests, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
