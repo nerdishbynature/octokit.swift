@@ -1,4 +1,5 @@
 import Foundation
+import OctoKit
 
 internal class Helper {
     internal class func stringFromFile(_ name: String) -> String? {
@@ -24,6 +25,8 @@ internal class Helper {
         let bundle = Bundle(for: self)
         let path = bundle.path(forResource: name, ofType: "json")!
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
-        return try! JSONDecoder().decode(T.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try! decoder.decode(T.self, from: data)
     }
 }
