@@ -29,8 +29,6 @@ class UserTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
@@ -61,8 +59,6 @@ class UserTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 401)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
@@ -72,7 +68,7 @@ class UserTests: XCTestCase {
     // MARK: Model Tests
 
     func testUserParsingFullUser() {
-        let subject = User(Helper.JSONFromFile("user_me") as! [String: AnyObject])
+        let subject = Helper.codableFromFile("user_me", type: User.self)
         XCTAssertEqual(subject.login, "pietbrauer")
         XCTAssertEqual(subject.id, 759730)
         XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/759730?v=3")
@@ -89,19 +85,19 @@ class UserTests: XCTestCase {
     }
 
     func testUserParsingMinimalUser() {
-        let subject = User(Helper.JSONFromFile("user_mietzmithut") as! [String: AnyObject])
-        XCTAssertEqual(subject.login!, "mietzmithut")
+        let subject = Helper.codableFromFile("user_mietzmithut", type: User.self)
+        XCTAssertEqual(subject.login, "mietzmithut")
         XCTAssertEqual(subject.id, 4672699)
-        XCTAssertEqual(subject.avatarURL!, "https://avatars.githubusercontent.com/u/4672699?v=3")
-        XCTAssertEqual(subject.gravatarID!, "")
-        XCTAssertEqual(subject.type!, "User")
-        XCTAssertEqual(subject.name!, "Julia Kallenberg")
-        XCTAssertEqual(subject.company!, "")
-        XCTAssertEqual(subject.blog!, "")
-        XCTAssertEqual(subject.location!, "Hamburg")
-        XCTAssertEqual(subject.email!, "")
-        XCTAssertEqual(subject.numberOfPublicRepos!, 7)
-        XCTAssertEqual(subject.numberOfPublicGists!, 0)
+        XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/4672699?v=3")
+        XCTAssertEqual(subject.gravatarID, "")
+        XCTAssertEqual(subject.type, "User")
+        XCTAssertEqual(subject.name, "Julia Kallenberg")
+        XCTAssertEqual(subject.company, "")
+        XCTAssertEqual(subject.blog, "")
+        XCTAssertEqual(subject.location, "Hamburg")
+        XCTAssertEqual(subject.email, "")
+        XCTAssertEqual(subject.numberOfPublicRepos, 7)
+        XCTAssertEqual(subject.numberOfPublicGists, 0)
         XCTAssertNil(subject.numberOfPrivateRepos)
     }
 }

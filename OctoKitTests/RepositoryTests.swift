@@ -74,8 +74,6 @@ class RepositoryTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 401)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
@@ -125,8 +123,6 @@ class RepositoryTests: XCTestCase {
             case .failure(let error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            case .failure:
-                XCTAssertTrue(false)
             }
         }
         XCTAssertNotNil(task)
@@ -136,7 +132,7 @@ class RepositoryTests: XCTestCase {
     // MARK: Model Tests
 
     func testUserParsingFullRepository() {
-        let subject = Repository(Helper.JSONFromFile("repo") as! [String: AnyObject])
+        let subject = Helper.codableFromFile("repo", type: Repository.self)
         XCTAssertEqual(subject.owner.login, "mietzmithut")
         XCTAssertEqual(subject.owner.id, 4672699)
 
