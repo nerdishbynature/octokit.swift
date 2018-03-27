@@ -1,85 +1,58 @@
 import Foundation
 import RequestKit
 
-@objc open class PullRequest: NSObject {
+@objc open class PullRequest: NSObject, Codable {
 
-    open var id: Int
-    open var url: URL?
+    @objc private(set) open var id: Int = -1
+    @objc open var url: URL?
 
-    open var htmlURL: URL?
-    open var diffURL: URL?
-    open var patchURL: URL?
-    open var issueURL: URL?
-    open var commitsURL: URL?
-    open var reviewCommentsURL: URL?
-    open var reviewCommentURL: URL?
-    open var commentsURL: URL?
-    open var statusesURL: URL?
+    @objc open var htmlURL: URL?
+    @objc open var diffURL: URL?
+    @objc open var patchURL: URL?
+    @objc open var issueURL: URL?
+    @objc open var commitsURL: URL?
+    @objc open var reviewCommentsURL: URL?
+    @objc open var reviewCommentURL: URL?
+    @objc open var commentsURL: URL?
+    @objc open var statusesURL: URL?
 
     open var number: Int?
     open var state: Openness?
-    open var title: String?
-    open var body: String?
+    @objc open var title: String?
+    @objc open var body: String?
 
-    open var assignee: User?
-    open var milestone: Milestone?
+    @objc open var assignee: User?
+    @objc open var milestone: Milestone?
 
     open var locked: Bool?
-    open var createdAt: Date?
-    open var updatedAt: Date?
-    open var closedAt: Date?
-    open var mergedAt: Date?
+    @objc open var createdAt: Date?
+    @objc open var updatedAt: Date?
+    @objc open var closedAt: Date?
+    @objc open var mergedAt: Date?
 
-    open var user: User?
+    @objc open var user: User?
 
-    public init(_ json: [String: AnyObject]) {
-        if let id = json["id"] as? Int {
-            self.id = id
-
-            if let urlString = json["url"] as? String, let url = URL(string: urlString) {
-                self.url = url
-            }
-            if let diffURL = json["diff_url"] as? String, let url = URL(string: diffURL) {
-                self.diffURL = url
-            }
-            if let patchURL = json["patch_url"] as? String, let url = URL(string: patchURL) {
-                self.patchURL = url
-            }
-            if let issueURL = json["issue_url"] as? String, let url = URL(string: issueURL) {
-                self.patchURL = url
-            }
-            if let commitsURL = json["commits_url"] as? String, let url = URL(string: commitsURL) {
-                self.commitsURL = url
-            }
-            if let reviewCommentsURL = json["review_comments_url"] as? String,
-               let url = URL(string: reviewCommentsURL) {
-                self.reviewCommentsURL = url
-            }
-            if let reviewCommentURL = json["review_comment_url"] as? String, let url = URL(string: reviewCommentURL) {
-                self.reviewCommentURL = url
-            }
-            if let commentsURL = json["comments_url"] as? String, let url = URL(string: commentsURL) {
-                self.commentsURL = url
-            }
-            if let statusesURL = json["statuses_url"] as? String, let url = URL(string: statusesURL) {
-                self.statusesURL = url
-            }
-            number = json["number"] as? Int
-            state = Openness(rawValue: json["state"] as? String ?? "")
-            title = json["title"] as? String
-            body = json["body"] as? String
-
-            assignee = User(json["assignee"] as? [String: AnyObject] ?? [:])
-            milestone = Milestone(json["milestone"] as? [String: AnyObject] ?? [:])
-
-            locked = json["locked"] as? Bool
-            closedAt = Time.rfc3339Date(json["closed_at"] as? String)
-            createdAt = Time.rfc3339Date(json["created_at"] as? String)
-            updatedAt = Time.rfc3339Date(json["updated_at"] as? String)
-            mergedAt = Time.rfc3339Date(json["merged_at"] as? String)
-        } else {
-            id = -1
-        }
+    enum CodingKeys: String, CodingKey {
+        case id
+        case url
+        case diffURL = "diff_url"
+        case patchURL = "patch_url"
+        case issueURL = "issue_url"
+        case commitsURL = "commits_url"
+        case reviewCommentsURL = "review_comments_url"
+        case commentsURL = "comments_url"
+        case statusesURL = "statuses_url"
+        case number
+        case state
+        case title
+        case body
+        case assignee
+        case milestone
+        case locked
+        case closedAt = "closed_at"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case mergedAt = "merged_at"
     }
 }
 
@@ -102,13 +75,12 @@ public extension Octokit {
                             completion: @escaping (_ response: Response<PullRequest>) -> Void) -> URLSessionDataTaskProtocol? {
 
         let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
-        return router.loadJSON(session, expectedResultType: [String: AnyObject].self) { json, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let parsedPullRequest = PullRequest(json)
-                    completion(Response.success(parsedPullRequest))
+                if let pullRequest = pullRequest {
+                    completion(Response.success(pullRequest))
                 }
             }
         }
@@ -134,15 +106,12 @@ public extension Octokit {
                              completion: @escaping (_ response: Response<[PullRequest]>) -> Void) -> URLSessionDataTaskProtocol? {
 
         let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, state, sort, direction)
-        return router.loadJSON(session, expectedResultType: [[String: AnyObject]].self) { json, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
-                if let json = json {
-                    let parsedPullRequest = json.map {
-                        PullRequest($0)
-                    }
-                    completion(Response.success(parsedPullRequest))
+                if let pullRequests = pullRequests {
+                    completion(Response.success(pullRequests))
                 }
             }
         }

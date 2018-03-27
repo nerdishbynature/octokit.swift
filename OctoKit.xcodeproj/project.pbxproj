@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		230B589C1FD079C7000FE68A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230B589B1FD079C7000FE68A /* RequestKit.framework */; };
+		230B589E1FD079D5000FE68A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230B589D1FD079D5000FE68A /* RequestKit.framework */; };
+		230B58A01FD079E2000FE68A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230B589F1FD079E2000FE68A /* RequestKit.framework */; };
+		230B58A21FD079ED000FE68A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230B58A11FD079ED000FE68A /* RequestKit.framework */; };
+		2343596F1FED332300DEA02A /* OctoKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23CAF2621C7AB5FB005011C4 /* OctoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		234359701FED338900DEA02A /* OctoKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 239BE7C91B8C47A100D2CE22 /* OctoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		234359711FED339300DEA02A /* OctoKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23CAF27E1C7AB60C005011C4 /* OctoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		234F4BAE1BDDE31A00A58EF7 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239BE7C91B8C47A100D2CE22 /* OctoKit.framework */; };
 		234F4BD01BDDE3F900A58EF7 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BC91BDDE3F900A58EF7 /* ConfigurationTests.swift */; };
 		234F4BD21BDDE3F900A58EF7 /* OctokitSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */; };
@@ -19,8 +26,6 @@
 		234F4BDF1BDDE44600A58EF7 /* user_me.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDA1BDDE44600A58EF7 /* user_me.json */; };
 		234F4BE01BDDE44600A58EF7 /* user_mietzmithut.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDB1BDDE44600A58EF7 /* user_mietzmithut.json */; };
 		234F4BE11BDDE44600A58EF7 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
-		234F4C3F1BDE0FE200A58EF7 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */; };
-		234F4C401BDE113800A58EF7 /* RequestKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		237F91E41E5AEC82005FAA6B /* URL+URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F91E31E5AEC82005FAA6B /* URL+URLParameters.swift */; };
 		237F91E51E5AEC87005FAA6B /* URL+URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F91E31E5AEC82005FAA6B /* URL+URLParameters.swift */; };
 		237F91E61E5AEC88005FAA6B /* URL+URLParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 237F91E31E5AEC82005FAA6B /* URL+URLParameters.swift */; };
@@ -79,11 +84,6 @@
 		23CAF2CC1C7AB728005011C4 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		23CAF2CE1C7AB73D005011C4 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		23CAF2D11C7AB759005011C4 /* OctoKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 239BE7CD1B8C47A100D2CE22 /* OctoKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		23CAF2D51C7AB9C0005011C4 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF2D41C7AB9C0005011C4 /* RequestKit.framework */; };
-		23CAF2D91C7AB9DB005011C4 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF2D81C7AB9DB005011C4 /* RequestKit.framework */; };
-		23CAF2DA1C7ABA67005011C4 /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF2D61C7AB9CE005011C4 /* RequestKit.framework */; };
-		23F6433F1C7AEED7000427B3 /* RequestKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23CAF2D41C7AB9C0005011C4 /* RequestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		23F643451C7AEF37000427B3 /* RequestKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23CAF2D61C7AB9CE005011C4 /* RequestKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		23F643461C7AEF63000427B3 /* public_key.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BD81BDDE44600A58EF7 /* public_key.json */; };
 		23F643471C7AEF63000427B3 /* public_key.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BD81BDDE44600A58EF7 /* public_key.json */; };
 		23F643481C7AEF66000427B3 /* repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BD91BDDE44600A58EF7 /* repo.json */; };
@@ -173,7 +173,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				234F4C401BDE113800A58EF7 /* RequestKit.framework in Carthage embed */,
+				234359701FED338900DEA02A /* OctoKit.framework in Carthage embed */,
 			);
 			name = "Carthage embed";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -184,7 +184,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				23F6433F1C7AEED7000427B3 /* RequestKit.framework in Carthage embed */,
+				2343596F1FED332300DEA02A /* OctoKit.framework in Carthage embed */,
 			);
 			name = "Carthage embed";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,7 +195,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				23F643451C7AEF37000427B3 /* RequestKit.framework in Carthage embed */,
+				234359711FED339300DEA02A /* OctoKit.framework in Carthage embed */,
 			);
 			name = "Carthage embed";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,6 +203,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		230B589B1FD079C7000FE68A /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/iOS/RequestKit.framework; sourceTree = "<group>"; };
+		230B589D1FD079D5000FE68A /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/tvOS/RequestKit.framework; sourceTree = "<group>"; };
+		230B589F1FD079E2000FE68A /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/Mac/RequestKit.framework; sourceTree = "<group>"; };
+		230B58A11FD079ED000FE68A /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/watchOS/RequestKit.framework; sourceTree = "<group>"; };
 		234F4BA91BDDE31A00A58EF7 /* OctoKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OctoKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		234F4BAD1BDDE31A00A58EF7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		234F4BC91BDDE3F900A58EF7 /* ConfigurationTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigurationTests.swift; sourceTree = "<group>"; };
@@ -216,7 +220,6 @@
 		234F4BDA1BDDE44600A58EF7 /* user_me.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_me.json; path = Fixtures/user_me.json; sourceTree = "<group>"; };
 		234F4BDB1BDDE44600A58EF7 /* user_mietzmithut.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_mietzmithut.json; path = Fixtures/user_mietzmithut.json; sourceTree = "<group>"; };
 		234F4BDC1BDDE44600A58EF7 /* user_repos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = user_repos.json; path = Fixtures/user_repos.json; sourceTree = "<group>"; };
-		234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/iOS/RequestKit.framework; sourceTree = "<group>"; };
 		237F91E31E5AEC82005FAA6B /* URL+URLParameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "URL+URLParameters.swift"; sourceTree = "<group>"; };
 		239BE7C91B8C47A100D2CE22 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		239BE7CC1B8C47A100D2CE22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -233,9 +236,6 @@
 		23CAF27E1C7AB60C005011C4 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23CAF2871C7AB60D005011C4 /* OctoKit MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OctoKit MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		23CAF29A1C7AB619005011C4 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		23CAF2D41C7AB9C0005011C4 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/tvOS/RequestKit.framework; sourceTree = "<group>"; };
-		23CAF2D61C7AB9CE005011C4 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/Mac/RequestKit.framework; sourceTree = "<group>"; };
-		23CAF2D81C7AB9DB005011C4 /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/watchOS/RequestKit.framework; sourceTree = "<group>"; };
 		23F6433C1C7AEEB6000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/tvOS/Nocilla.framework; sourceTree = "<group>"; };
 		23F643421C7AEF2F000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/Mac/Nocilla.framework; sourceTree = "<group>"; };
 		BF8C72B985869B84F46B4E9D /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
@@ -270,7 +270,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				234F4C3F1BDE0FE200A58EF7 /* RequestKit.framework in Frameworks */,
+				230B589C1FD079C7000FE68A /* RequestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +278,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23CAF2D51C7AB9C0005011C4 /* RequestKit.framework in Frameworks */,
+				230B589E1FD079D5000FE68A /* RequestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +294,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23CAF2DA1C7ABA67005011C4 /* RequestKit.framework in Frameworks */,
+				230B58A01FD079E2000FE68A /* RequestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +310,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23CAF2D91C7AB9DB005011C4 /* RequestKit.framework in Frameworks */,
+				230B58A21FD079ED000FE68A /* RequestKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -388,12 +388,12 @@
 		B975D5A3F8B0384EFB0C5863 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				230B589B1FD079C7000FE68A /* RequestKit.framework */,
+				230B589D1FD079D5000FE68A /* RequestKit.framework */,
+				230B589F1FD079E2000FE68A /* RequestKit.framework */,
+				230B58A11FD079ED000FE68A /* RequestKit.framework */,
 				23F643421C7AEF2F000427B3 /* Nocilla.framework */,
 				23F6433C1C7AEEB6000427B3 /* Nocilla.framework */,
-				23CAF2D81C7AB9DB005011C4 /* RequestKit.framework */,
-				23CAF2D61C7AB9CE005011C4 /* RequestKit.framework */,
-				23CAF2D41C7AB9C0005011C4 /* RequestKit.framework */,
-				234F4C3E1BDE0FE200A58EF7 /* RequestKit.framework */,
 				23B2679C1BDDDBBE003887E3 /* Nocilla.framework */,
 			);
 			name = Frameworks;
@@ -598,24 +598,26 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "nerdish by nature";
 				TargetAttributes = {
 					234F4BA81BDDE31A00A58EF7 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0910;
+						ProvisioningStyle = Manual;
 					};
 					239BE7C81B8C47A100D2CE22 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 3NPZ2HXWU8;
 						DevelopmentTeamName = "Piet Brauer";
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0910;
 					};
 					23CAF2611C7AB5FB005011C4 = {
 						CreatedOnToolsVersion = 7.2.1;
 					};
 					23CAF26A1C7AB5FC005011C4 = {
 						CreatedOnToolsVersion = 7.2.1;
+						ProvisioningStyle = Manual;
 					};
 					23CAF27D1C7AB60C005011C4 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -899,38 +901,42 @@
 		234F4BB21BDDE31A00A58EF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = OctoKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		234F4BB31BDDE31A00A58EF7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = OctoKitTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -955,10 +961,11 @@
 					"$(inherited)",
 				);
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -983,10 +990,11 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1013,7 +1021,6 @@
 				SDKROOT = appletvos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1041,7 +1048,6 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 3;
-				TVOS_DEPLOYMENT_TARGET = 9.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -1050,38 +1056,42 @@
 		23CAF2751C7AB5FC005011C4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = OctoKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
-				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Debug;
 		};
 		23CAF2761C7AB5FC005011C4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = OctoKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = appletvos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				TVOS_DEPLOYMENT_TARGET = 9.1;
 			};
 			name = Release;
 		};
@@ -1104,7 +1114,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1133,7 +1143,7 @@
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1155,8 +1165,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = OctoKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1177,8 +1186,7 @@
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = OctoKitTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -1210,7 +1218,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Debug;
 		};
@@ -1239,7 +1247,7 @@
 				TARGETED_DEVICE_FAMILY = 4;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
-				WATCHOS_DEPLOYMENT_TARGET = 2.1;
+				WATCHOS_DEPLOYMENT_TARGET = 3.0;
 			};
 			name = Release;
 		};
@@ -1251,14 +1259,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1282,7 +1296,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = OctoKit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKit;
@@ -1301,14 +1315,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1325,7 +1345,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = OctoKit/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKit;
 				PRODUCT_NAME = OctoKit;
