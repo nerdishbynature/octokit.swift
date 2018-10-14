@@ -27,3 +27,7 @@ fastlane/report.xml
 Pods/
 Carthage/
 Checkouts/
+
+# Swift PM
+.build
+Package.resolved
