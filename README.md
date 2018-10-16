@@ -1,7 +1,23 @@
 # Octokit.swift
 
 [![Build Status](https://travis-ci.org/nerdishbynature/octokit.swift.svg?branch=master)](https://travis-ci.org/nerdishbynature/octokit.swift)
+[![CocoaPods](https://img.shields.io/cocoapods/v/OctoKit.swift.svg)](https://cocoapods.org/pods/OctoKit.swift)
 [![codecov.io](https://codecov.io/github/nerdishbynature/octokit.swift/coverage.svg?branch=master)](https://codecov.io/github/nerdishbynature/octokit.swift?branch=master)
+
+## Installation
+
+- **Using [Swift Package Manager](https://swift.org/package-manager)**:
+
+    ```swift
+    import PackageDescription
+
+    let package = Package(
+      name: "MyAwesomeApp",
+      dependencies: [
+        .Package(url: "https://github.com/nerdishbynature/octokit.swift", from: "0.8.0"),
+      ]
+    )
+    ```
 
 ## Authentication
 
