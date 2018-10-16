@@ -12,7 +12,7 @@ let package = Package(
             targets: ["OctoKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/shkhaliq/RequestKit", .branch("support-for-swift4")),
+        .package(url: "https://github.com/nerdishbynature/RequestKit.git", .branch("master")),
     ],
     targets: [
         .target(
