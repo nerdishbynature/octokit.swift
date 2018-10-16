@@ -28,7 +28,7 @@ internal class Helper {
             path = bundlePath
         }
         else {
-            let bundle = Bundle(path: "Fixtures")
+            let bundle = Bundle(path: "OctoKitTests/Fixtures")
             path = bundle!.path(forResource: name, ofType: "json")!
         }
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
