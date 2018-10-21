@@ -8,16 +8,16 @@
 
 - **Using [Swift Package Manager](https://swift.org/package-manager)**:
 
-    ```swift
-    import PackageDescription
+```swift
+import PackageDescription
 
-    let package = Package(
-      name: "MyAwesomeApp",
-      dependencies: [
-        .Package(url: "https://github.com/nerdishbynature/octokit.swift", from: "0.8.0"),
-      ]
-    )
-    ```
+let package = Package(
+  name: "MyAwesomeApp",
+    dependencies: [
+      .Package(url: "https://github.com/nerdishbynature/octokit.swift", from: "0.8.0"),
+    ]
+  )
+```
 
 ## Authentication
 
