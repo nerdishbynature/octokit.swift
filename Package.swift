@@ -12,7 +12,7 @@ let package = Package(
             targets: ["OctoKit"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/nerdishbynature/RequestKit.git", .branch("master")),
+        .package(url: "https://github.com/nerdishbynature/RequestKit.git", .exact("2.3.0")),
     ],
     targets: [
         .target(
