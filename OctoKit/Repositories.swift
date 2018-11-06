@@ -2,7 +2,39 @@ import Foundation
 import RequestKit
 
 // MARK: model
-
+#if os(Linux)
+open class Repository: Codable {
+    open private(set) var id: Int = -1
+    open private(set) var owner = User()
+    open var name: String?
+    open var fullName: String?
+    open private(set) var isPrivate: Bool = false
+    open var repositoryDescription: String?
+    open private(set) var isFork: Bool = false
+    open var gitURL: String?
+    open var sshURL: String?
+    open var cloneURL: String?
+    open var htmlURL: String?
+    open private(set) var size: Int = -1
+    open var lastPush: Date?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case owner
+        case name
+        case fullName = "full_name"
+        case isPrivate = "private"
+        case repositoryDescription = "description"
+        case isFork = "fork"
+        case gitURL = "git_url"
+        case sshURL = "ssh_url"
+        case cloneURL = "clone_url"
+        case htmlURL = "html_url"
+        case size
+        case lastPush = "pushed_at"
+    }
+}
+#else
 @objc open class Repository: NSObject, Codable {
     @objc open private(set) var id: Int = -1
     @objc open private(set) var owner = User()
@@ -34,6 +66,7 @@ import RequestKit
         case lastPush = "pushed_at"
     }
 }
+#endif
 
 // MARK: request
 

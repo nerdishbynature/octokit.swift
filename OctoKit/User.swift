@@ -2,7 +2,39 @@ import Foundation
 import RequestKit
 
 // MARK: model
-
+#if os(Linux)
+open class User: Codable {
+    open internal(set) var id: Int = -1
+    open var login: String?
+    open var avatarURL: String?
+    open var gravatarID: String?
+    open var type: String?
+    open var name: String?
+    open var company: String?
+    open var blog: String?
+    open var location: String?
+    open var email: String?
+    open var numberOfPublicRepos: Int?
+    open var numberOfPublicGists: Int?
+    open var numberOfPrivateRepos: Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case login
+        case avatarURL = "avatar_url"
+        case gravatarID = "gravatar_id"
+        case type
+        case name
+        case company
+        case blog
+        case location
+        case email
+        case numberOfPublicRepos = "public_repos"
+        case numberOfPublicGists = "public_gists"
+        case numberOfPrivateRepos = "total_private_repos"
+    }
+}
+#else
 @objc open class User: NSObject, Codable {
     @objc open internal(set) var id: Int = -1
     @objc open var login: String?
@@ -34,6 +66,7 @@ import RequestKit
         case numberOfPrivateRepos = "total_private_repos"
     }
 }
+#endif
 
 // MARK: request
 

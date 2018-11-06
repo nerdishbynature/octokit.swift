@@ -9,28 +9,29 @@ public enum Openness: String, Codable {
     case All = "all"
 }
 
-@objc open class Issue: NSObject, Codable {
-    @objc open private(set) var id: Int = -1
-    @objc open var url: URL?
-    @objc open var repositoryURL: URL?
-    @objc open var labelsURL: URL?
-    @objc open var commentsURL: URL?
-    @objc open var eventsURL: URL?
-    @objc open var htmlURL: URL?
+#if os(Linux)
+open class Issue: Codable {
+    open private(set) var id: Int = -1
+    open var url: URL?
+    open var repositoryURL: URL?
+    open var labelsURL: URL?
+    open var commentsURL: URL?
+    open var eventsURL: URL?
+    open var htmlURL: URL?
     open var number: Int?
     open var state: Openness?
-    @objc open var title: String?
-    @objc open var body: String?
-    @objc open var user: User?
-    @objc open var labels: [Label]?
-    @objc open var assignee: User?
-    @objc open var milestone: Milestone?
+    open var title: String?
+    open var body: String?
+    open var user: User?
+    open var labels: [Label]?
+    open var assignee: User?
+    open var milestone: Milestone?
     open var locked: Bool?
     open var comments: Int?
-    @objc open var closedAt: Date?
-    @objc open var createdAt: Date?
-    @objc open var updatedAt: Date?
-    @objc open var closedBy: User?
+    open var closedAt: Date?
+    open var createdAt: Date?
+    open var updatedAt: Date?
+    open var closedBy: User?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -56,6 +57,55 @@ public enum Openness: String, Codable {
         case closedBy = "closed_by"
     }
 }
+#else
+@objc open class Issue: NSObject, Codable {
+    @objc open private(set) var id: Int = -1
+    @objc open var url: URL?
+    @objc open var repositoryURL: URL?
+    @objc open var labelsURL: URL?
+    @objc open var commentsURL: URL?
+    @objc open var eventsURL: URL?
+    @objc open var htmlURL: URL?
+    open var number: Int?
+    open var state: Openness?
+    @objc open var title: String?
+    @objc open var body: String?
+    @objc open var user: User?
+    @objc open var labels: [Label]?
+    @objc open var assignee: User?
+    @objc open var milestone: Milestone?
+    open var locked: Bool?
+    open var comments: Int?
+    @objc open var closedAt: Date?
+    @objc open var createdAt: Date?
+    @objc open var updatedAt: Date?
+    @objc open var closedBy: User?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case url
+        case repositoryURL = "repository_url"
+        case labelsURL = "labels_url"
+        case commentsURL = "comments_url"
+        case eventsURL = "events_url"
+        case htmlURL = "html_url"
+        case number
+        case state
+        case title
+        case body
+        case user
+        case labels
+        case assignee
+        case milestone
+        case locked
+        case comments
+        case closedAt = "closed_at"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case closedBy = "closed_by"
+    }
+}
+#endif
 
 // MARK: request
 
