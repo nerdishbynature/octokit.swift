@@ -334,7 +334,8 @@
 				234F4BAD1BDDE31A00A58EF7 /* Info.plist */,
 				BF8C76EB002802C14A08F63E /* PullRequestTests.swift */,
 			);
-			path = OctoKitTests;
+			name = OctoKitTests;
+			path = Tests/OctoKitTests;
 			sourceTree = "<group>";
 		};
 		234F4BD71BDDE40400A58EF7 /* Fixtures */ = {
