@@ -8,14 +8,11 @@ internal class Helper {
         let path = currentDirectoryPath + "/Tests/OctoKitTests/" + name + ".json"
         #else
         let bundle = Bundle(for: self)
-        let path = bundle.path(forResource: name, ofType: "json")
+        let path = bundle.path(forResource: name, ofType: "json")!
         #endif
         
-        if let path = path {
-            let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
-            return string
-        }
-        return nil
+        let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
+        return string
     }
 
     internal class func JSONFromFile(_ name: String) -> Any {
