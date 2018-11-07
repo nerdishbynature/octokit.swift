@@ -24,8 +24,7 @@ internal class Helper {
             path = bundlePath
         }
         else {
-            let bundle = Bundle(path: "OctoKitTests/Fixtures")
-            path = bundle!.path(forResource: name, ofType: "json")!
+            path = jsonFixturesFilePath(resourceName: name)
         }
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
         let decoder = JSONDecoder()
@@ -40,6 +39,18 @@ internal class Helper {
         #else
         let bundle = Bundle(for: self)
         let path = bundle.path(forResource: resourceName, ofType: "json")!
+        #endif
+        
+        return path
+    }
+    
+    private class func jsonFixturesFilePath(resourceName: String) -> String {
+        #if os(Linux)
+        let currentDirectoryPath = FileManager.default.currentDirectoryPath
+        let path = currentDirectoryPath + "/Tests/OctoKitTests/Fixtures/" + resourceName + ".json"
+        #else
+        let bundle = Bundle(path: "OctoKitTests/Fixtures")
+        let path = bundle!.path(forResource: resourceName, ofType: "json")!
         #endif
         
         return path
