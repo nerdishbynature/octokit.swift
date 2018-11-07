@@ -910,7 +910,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -931,7 +931,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1065,7 +1065,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1086,7 +1086,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/tvOS",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1165,7 +1165,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1186,7 +1186,7 @@
 					"$(PROJECT_DIR)/Carthage/Build/Mac",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = OctoKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks $(FRAMEWORK_SEARCH_PATHS)";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.nerdishbynature.OctoKit-MacTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
