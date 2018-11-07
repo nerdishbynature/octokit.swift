@@ -3,7 +3,11 @@ import OctoKit
 
 internal class Helper {
     internal class func stringFromFile(_ name: String) -> String? {
+        #if os(Linux)
+        let bundle = Bundle.allBundles.filter() { $0.bundlePath.hasSuffix(".xctest") }.first!
+        #else
         let bundle = Bundle(for: self)
+        #endif
         let path = bundle.path(forResource: name, ofType: "json")
         if let path = path {
             let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
