@@ -2,6 +2,14 @@ import XCTest
 import OctoKit
 
 class StarsTests: XCTestCase {
+    static var allTests = [
+        ("testGetStarredRepositories", testGetStarredRepositories),
+        ("testFailToGetStarredRepositories", testFailToGetStarredRepositories),
+        ("testGetUsersStarredRepositories", testGetUsersStarredRepositories),
+        ("testFailToGetUsersStarredRepositories", testFailToGetUsersStarredRepositories),
+        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
+    ]
+    
     // MARK: Actual Request tests
 
     func testGetStarredRepositories() {
@@ -62,5 +70,14 @@ class StarsTests: XCTestCase {
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        let thisClass = type(of: self)
+        let linuxCount = thisClass.allTests.count
+        let darwinCount = thisClass.defaultTestSuite.tests.count
+        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

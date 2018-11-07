@@ -2,6 +2,19 @@ import XCTest
 import OctoKit
 
 class RepositoryTests: XCTestCase {
+    static var allTests = [
+        ("testGetRepositories", testGetRepositories),
+        ("testGetRepositoriesEnterprise", testGetRepositoriesEnterprise),
+        ("testGetAuthenticatedRepositories", testGetAuthenticatedRepositories),
+        ("testGetAuthenticatedRepositoriesEnterprise", testGetAuthenticatedRepositoriesEnterprise),
+        ("testFailToGetRepositories", testFailToGetRepositories),
+        ("testGetRepository", testGetRepository),
+        ("testGetRepositoryEnterprise", testGetRepositoryEnterprise),
+        ("testFailToGetRepository", testFailToGetRepository),
+        ("testUserParsingFullRepository", testUserParsingFullRepository),
+        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
+    ]
+    
     // MARK: Actual Request tests
 
     func testGetRepositories() {
@@ -146,5 +159,14 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.sshURL, "git@github.com:mietzmithut/Test.git")
         XCTAssertEqual(subject.cloneURL, "https://github.com/mietzmithut/Test.git")
         XCTAssertEqual(subject.size, 132)
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        let thisClass = type(of: self)
+        let linuxCount = thisClass.allTests.count
+        let darwinCount = thisClass.defaultTestSuite.tests.count
+        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

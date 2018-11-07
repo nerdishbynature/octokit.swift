@@ -2,6 +2,18 @@ import XCTest
 import OctoKit
 
 class FollowTests: XCTestCase {
+    static var allTests = [
+        ("testGetMyFollowers", testGetMyFollowers),
+        ("testFailToGetMyFollowers", testFailToGetMyFollowers),
+        ("testGetUsersFollowers", testGetUsersFollowers),
+        ("testFailToGetUsersFollowers", testFailToGetUsersFollowers),
+        ("testGetMyFollowing", testGetMyFollowing),
+        ("testFailToGetMyFollowing", testFailToGetMyFollowing),
+        ("testGetUsersFollowing", testGetUsersFollowing),
+        ("testFailToGetUsersFollowing", testFailToGetUsersFollowing),
+        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
+    ]
+    
     func testGetMyFollowers() {
         let config = TokenConfiguration("12345")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers?access_token=12345", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
@@ -120,5 +132,14 @@ class FollowTests: XCTestCase {
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        let thisClass = type(of: self)
+        let linuxCount = thisClass.allTests.count
+        let darwinCount = thisClass.defaultTestSuite.tests.count
+        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

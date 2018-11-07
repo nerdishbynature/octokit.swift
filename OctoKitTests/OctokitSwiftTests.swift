@@ -4,6 +4,12 @@ import OctoKit
 let enterpriseURL = "https://enterprise.myserver.com"
 
 class OctokitSwiftTests: XCTestCase {
+    static var allTests = [
+        ("testOctokitInitializerWithEmptyConfig", testOctokitInitializerWithEmptyConfig),
+        ("testOctokitInitializerWithConfig", testOctokitInitializerWithConfig),
+        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
+    ]
+    
     func testOctokitInitializerWithEmptyConfig() {
         let subject = Octokit()
         XCTAssertEqual(subject.configuration.apiEndpoint, "https://api.github.com")
@@ -13,5 +19,14 @@ class OctokitSwiftTests: XCTestCase {
         let config = TokenConfiguration("12345", url: enterpriseURL)
         let subject = Octokit(config)
         XCTAssertEqual(subject.configuration.apiEndpoint, "https://enterprise.myserver.com")
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        let thisClass = type(of: self)
+        let linuxCount = thisClass.allTests.count
+        let darwinCount = thisClass.defaultTestSuite.tests.count
+        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }

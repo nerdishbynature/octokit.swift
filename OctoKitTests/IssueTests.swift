@@ -2,6 +2,13 @@ import XCTest
 import OctoKit
 
 class IssueTests: XCTestCase {
+    static var allTests = [
+        ("testGetMyIssues", testGetMyIssues),
+        ("testGetIssue", testGetIssue),
+        ("testParsingIssue", testParsingIssue),
+        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
+    ]
+    
     // MARK: Actual Request tests
     
     func testGetMyIssues() {
@@ -46,5 +53,14 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/octocat/Hello-World/issues/1347"))
         XCTAssertEqual(subject.state, Openness.Open)
         XCTAssertEqual(subject.locked, false)
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        let thisClass = type(of: self)
+        let linuxCount = thisClass.allTests.count
+        let darwinCount = thisClass.defaultTestSuite.tests.count
+        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }
