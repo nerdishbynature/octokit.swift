@@ -19,7 +19,7 @@ matrix:
     - os: linux
       sudo: required
       dist: trusty
-      env: SWIFT_VERSION=4.1
+      env: SWIFT_VERSION=4.2
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./Script/travis-install-linux; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./Script/travis-install-macos; fi
