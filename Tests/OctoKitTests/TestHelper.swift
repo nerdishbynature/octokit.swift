@@ -3,21 +3,14 @@ import OctoKit
 
 internal class Helper {
     internal class func stringFromFile(_ name: String) -> String? {
-        #if os(Linux)
-        let currentDirectoryPath = FileManager.default.currentDirectoryPath
-        let path = currentDirectoryPath + "/Tests/OctoKitTests/" + name + ".json"
-        #else
-        let bundle = Bundle(for: self)
-        let path = bundle.path(forResource: name, ofType: "json")!
-        #endif
+        let path = jsonFilePath(resourceName: name)
         
         let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
         return string
     }
 
     internal class func JSONFromFile(_ name: String) -> Any {
-        let bundle = Bundle(for: self)
-        let path = bundle.path(forResource: name, ofType: "json")!
+        let path = jsonFilePath(resourceName: name)
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
         let dict: Any? = try? JSONSerialization.jsonObject(with: data,
         options: JSONSerialization.ReadingOptions.mutableContainers)
@@ -26,8 +19,8 @@ internal class Helper {
 
     internal class func codableFromFile<T>(_ name: String, type: T.Type) -> T where T: Codable {
         var path: String
-        let bundle = Bundle(for: self)
-        if let bundlePath = bundle.path(forResource: name, ofType: "json") {
+        let bundlePath = jsonFilePath(resourceName: name)
+        if FileManager.default.fileExists(atPath: bundlePath) {
             path = bundlePath
         }
         else {
@@ -38,5 +31,17 @@ internal class Helper {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return try! decoder.decode(T.self, from: data)
+    }
+    
+    private class func jsonFilePath(resourceName: String) -> String {
+        #if os(Linux)
+        let currentDirectoryPath = FileManager.default.currentDirectoryPath
+        let path = currentDirectoryPath + "/Tests/OctoKitTests/" + name + ".json"
+        #else
+        let bundle = Bundle(for: self)
+        let path = bundle.path(forResource: resourceName, ofType: "json")!
+        #endif
+        
+        return path
     }
 }
