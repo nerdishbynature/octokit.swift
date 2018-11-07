@@ -23,7 +23,7 @@ let package = Package(
         .testTarget(
             name: "OctoKitTests",
             dependencies: ["OctoKit"],
-            path: "OctoKitTests",
-            sources: ["."]),
+            path: ".",
+            sources: ["OctoKitTests"]),
     ]
 )
