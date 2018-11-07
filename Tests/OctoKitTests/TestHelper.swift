@@ -36,7 +36,7 @@ internal class Helper {
     private class func jsonFilePath(resourceName: String) -> String {
         #if os(Linux)
         let currentDirectoryPath = FileManager.default.currentDirectoryPath
-        let path = currentDirectoryPath + "/Tests/OctoKitTests/" + name + ".json"
+        let path = currentDirectoryPath + "/Tests/OctoKitTests/" + resourceName + ".json"
         #else
         let bundle = Bundle(for: self)
         let path = bundle.path(forResource: resourceName, ofType: "json")!
