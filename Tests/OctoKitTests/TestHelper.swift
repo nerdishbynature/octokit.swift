@@ -4,11 +4,13 @@ import OctoKit
 internal class Helper {
     internal class func stringFromFile(_ name: String) -> String? {
         #if os(Linux)
-        let bundle = Bundle.allBundles.filter() { $0.bundlePath.hasSuffix(".xctest") }.first!
+        let currentDirectoryPath = FileManager.default.currentDirectoryPath
+        let path = currentDirectoryPath + "/Tests/OctoKitTests/" + name + ".json"
         #else
         let bundle = Bundle(for: self)
-        #endif
         let path = bundle.path(forResource: name, ofType: "json")
+        #endif
+        
         if let path = path {
             let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
             return string
