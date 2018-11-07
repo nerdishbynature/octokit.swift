@@ -21,11 +21,11 @@ matrix:
       dist: trusty
       env: SWIFT_VERSION=4.1
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./script/travis-install-linux; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./script/travis-install-macos; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./Script/travis-install-linux; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./Script/travis-install-macos; fi
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./script/travis-script-linux; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./script/travis-script-macos; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./Script/travis-script-linux; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./Script/travis-script-macos; fi
 after_success:
   - if [ "$FASTLANE_LANE" == "code_coverage" ]; then
      make post_coverage;
