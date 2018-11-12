@@ -1,4 +1,4 @@
-language: objective-c
+language: generic
 osx_image: xcode9.2
 sudo: false
 env:
@@ -8,20 +8,24 @@ env:
   - FASTLANE_LANE=ci_commit
 matrix:
   include:
-    - osx_image: xcode9.2
+    - os: osx
       env: FASTLANE_LANE=code_coverage FASTLANE_ENV=default
-    - osx_image: xcode9.2
+    - os: osx
       env: FASTLANE_ENV=ios93
-    - osx_image: xcode9.2
+    - os: osx
       env: FASTLANE_ENV=tvos92
-    - osx_image: xcode9.2
+    - os: osx
       env: FASTLANE_ENV=osx
+    - os: linux
+      sudo: required
+      dist: trusty
+      env: SWIFT_VERSION=4.2
 before_install:
-  - make install
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./Script/travis-install-linux; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./Script/travis-install-macos; fi
 script:
-  - set -o pipefail
-  - bundle exec fastlane $FASTLANE_LANE configuration:Debug --env $FASTLANE_ENV
-  - bundle exec fastlane $FASTLANE_LANE configuration:Release --env $FASTLANE_ENV
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./Script/travis-script-linux; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./Script/travis-script-macos; fi
 after_success:
   - if [ "$FASTLANE_LANE" == "code_coverage" ]; then
      make post_coverage;

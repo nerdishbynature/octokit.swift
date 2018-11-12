@@ -1,8 +1,13 @@
 import XCTest
 import OctoKit
 
-class PullRequeastTests: XCTestCase {
-
+class PullRequestTests: XCTestCase {
+    static var allTests = [
+        ("testGetPullRequest", testGetPullRequest),
+        ("testGetPullRequests", testGetPullRequests),
+        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
+    ]
+    
     func testGetPullRequest() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1",
                 expectedHTTPMethod: "GET",
@@ -45,4 +50,16 @@ class PullRequeastTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        let thisClass = type(of: self)
+        let linuxCount = thisClass.allTests.count
+        #if os(iOS)
+        let darwinCount = thisClass.defaultTestSuite.tests.count
+        #else
+        let darwinCount = thisClass.defaultTestSuite().tests.count
+        #endif
+        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
+    }
 }
