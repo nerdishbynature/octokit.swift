@@ -3,6 +3,16 @@ import Foundation
 import OctoKit
 
 class ConfigurationTests: XCTestCase {
+    static var allTests = [
+        ("testTokenConfiguration", testTokenConfiguration),
+        ("testEnterpriseTokenConfiguration", testEnterpriseTokenConfiguration),
+        ("testOAuthConfiguration", testOAuthConfiguration),
+        ("testOAuthTokenConfiguration", testOAuthTokenConfiguration),
+        ("testAccessTokenFromResponse", testAccessTokenFromResponse),
+        ("testHandleOpenURL", testHandleOpenURL),
+        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
+    ]
+    
     func testTokenConfiguration() {
         let subject = TokenConfiguration("12345")
         XCTAssertEqual(subject.accessToken, "12345")
@@ -47,5 +57,18 @@ class ConfigurationTests: XCTestCase {
         }
         XCTAssertEqual(token, "017ec60f4a182")
         XCTAssertTrue(session.wasCalled)
+    }
+    
+    func testLinuxTestSuiteIncludesAllTests() {
+        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+        let thisClass = type(of: self)
+        let linuxCount = thisClass.allTests.count
+        #if os(iOS)
+        let darwinCount = thisClass.defaultTestSuite.tests.count
+        #else
+        let darwinCount = thisClass.defaultTestSuite().tests.count
+        #endif
+        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
+        #endif
     }
 }
