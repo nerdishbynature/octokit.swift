@@ -68,6 +68,7 @@ public extension Octokit {
     - parameter number: The number of the PR to fetch.
     - parameter completion: Callback for the outcome of the fetch.
     */
+    @discardableResult
     public func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
                             owner: String,
                             repository: String,
@@ -96,6 +97,7 @@ public extension Octokit {
     - parameter direction: The direction of the sort.
     - parameter completion: Callback for the outcome of the fetch.
     */
+    @discardableResult
     public func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
                              owner: String,
                              repository: String,
