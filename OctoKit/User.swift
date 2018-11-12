@@ -44,6 +44,7 @@ public extension Octokit {
         - parameter name: The name of the user or organization.
         - parameter completion: Callback for the outcome of the fetch.
     */
+    @discardableResult
     public func user(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<User>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readUser(name, self.configuration)
         return router.load(session, expectedResultType: User.self) { user, error in
@@ -62,6 +63,7 @@ public extension Octokit {
         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
         - parameter completion: Callback for the outcome of the fetch.
     */
+    @discardableResult
     public func me(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<User>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readAuthenticatedUser(self.configuration)
         return router.load(session, expectedResultType: User.self) { user, error in
