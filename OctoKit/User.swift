@@ -16,7 +16,7 @@ open class User: Codable {
     open var numberOfPublicRepos: Int?
     open var numberOfPublicGists: Int?
     open var numberOfPrivateRepos: Int?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case login
