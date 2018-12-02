@@ -21,7 +21,7 @@ let package = Package(
 
 ## Authentication
 
-Octokit supports both, Github and Github Enterprise.
+Octokit supports both, GitHub and GitHub Enterprise.
 Authentication is handled using Configurations.
 
 There are two types of Configurations, `TokenConfiguration` and `OAuthConfiguration`.
@@ -38,7 +38,7 @@ You can initialize a new config for `github.com` as follows:
 let config = TokenConfiguration(token: "12345")
 ```
 
-or for Github Enterprise
+or for GitHub Enterprise
 
 ```swift
 let config = TokenConfiguration("12345", url: "https://github.example.com/api/v3/")
@@ -69,7 +69,7 @@ let config = OAuthConfiguration(token: "<Your Client ID>", secret: "<Your Client
 let url = config.authenticate()
 ```
 
-or for Github Enterprise
+or for GitHub Enterprise
 
 ```swift
 let config = OAuthConfiguration("https://github.example.com/api/v3/", webURL: "https://github.example.com/", token: "<Your Client ID>", secret: "<Your Client secret>", scopes: ["repo", "read:org"])
