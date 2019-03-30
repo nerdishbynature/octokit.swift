@@ -13,7 +13,6 @@ open class Issue: Codable {
     open private(set) var id: Int = -1
     open var url: URL?
     open var repositoryURL: URL?
-    open var labelsURL: URL?
     open var commentsURL: URL?
     open var eventsURL: URL?
     open var htmlURL: URL?
@@ -36,7 +35,6 @@ open class Issue: Codable {
         case id
         case url
         case repositoryURL = "repository_url"
-        case labelsURL = "labels_url"
         case commentsURL = "comments_url"
         case eventsURL = "events_url"
         case htmlURL = "html_url"
