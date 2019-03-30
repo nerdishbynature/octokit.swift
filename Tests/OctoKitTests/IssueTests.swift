@@ -6,6 +6,7 @@ class IssueTests: XCTestCase {
         ("testGetMyIssues", testGetMyIssues),
         ("testGetIssue", testGetIssue),
         ("testParsingIssue", testParsingIssue),
+		("testParsingIssue2", testParsingIssue2),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
     ]
     
@@ -55,6 +56,19 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(subject.locked, false)
     }
     
+	func testParsingIssue2() {
+		let subject = Helper.codableFromFile("issue2", type: Issue.self)
+		XCTAssertEqual(subject.user?.login, "vincode-io")
+		XCTAssertEqual(subject.user?.id, 16448027)
+		
+		XCTAssertEqual(subject.id, 427231234)
+		XCTAssertEqual(subject.number, 36)
+		XCTAssertEqual(subject.title, "Add Request: Test File")
+		XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/vincode-io/FeedCompass/issues/36"))
+		XCTAssertEqual(subject.state, Openness.Open)
+		XCTAssertEqual(subject.locked, false)
+	}
+	
     func testLinuxTestSuiteIncludesAllTests() {
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
         let thisClass = type(of: self)
