@@ -1313,7 +1313,7 @@
 				PRODUCT_NAME = OctoKit;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1360,7 +1360,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKit;
 				PRODUCT_NAME = OctoKit;
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
