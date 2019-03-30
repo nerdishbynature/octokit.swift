@@ -5,6 +5,7 @@ class IssueTests: XCTestCase {
     static var allTests = [
         ("testGetMyIssues", testGetMyIssues),
         ("testGetIssue", testGetIssue),
+		("testPostIssue", testGetIssue),
         ("testParsingIssue", testParsingIssue),
 		("testParsingIssue2", testParsingIssue2),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
@@ -41,6 +42,20 @@ class IssueTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+	func testPostIssue() {
+		let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues", expectedHTTPMethod: "POST", jsonFile: "issue2", statusCode: 200)
+		let task = Octokit().postIssue(session, owner: "octocat", repository: "Hello-World", title: "Title", body: "Body") { response in
+			switch response {
+			case .success(let issue):
+				XCTAssertEqual(issue.number, 36)
+			case .failure:
+				XCTAssert(false, "should not get an error")
+			}
+		}
+		XCTAssertNotNil(task)
+		XCTAssertTrue(session.wasCalled)
+	}
+	
     // MARK: Model Tests
     
     func testParsingIssue() {
