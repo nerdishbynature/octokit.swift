@@ -70,7 +70,7 @@ public extension Octokit {
     - parameter completion: Callback for the outcome of the fetch.
     */
     @discardableResult
-    public func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
+    func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
                             owner: String,
                             repository: String,
                             number: Int,
@@ -99,7 +99,7 @@ public extension Octokit {
     - parameter completion: Callback for the outcome of the fetch.
     */
     @discardableResult
-    public func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
+    func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
                              owner: String,
                              repository: String,
                              base: String? = nil,

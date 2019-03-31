@@ -9,7 +9,7 @@ public extension Octokit {
         - parameter completion: Callback for the outcome of the fetch.
     */
     @discardableResult
-    public func myFollowers(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myFollowers(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
         return router.load(session, expectedResultType: [User].self) { users, error in
             if let error = error {
@@ -29,7 +29,7 @@ public extension Octokit {
         - parameter completion: Callback for the outcome of the fetch.
     */
     @discardableResult
-    public func followers(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func followers(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowers(name, configuration)
         return router.load(session, expectedResultType: [User].self) { users, error in
             if let error = error {
@@ -48,7 +48,7 @@ public extension Octokit {
         - parameter completion: Callback for the outcome of the fetch.
     */
     @discardableResult
-    public func myFollowing(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myFollowing(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
         return router.load(session, expectedResultType: [User].self) { users, error in
             if let error = error {
@@ -68,7 +68,7 @@ public extension Octokit {
         - parameter completion: Callback for the outcome of the fetch.
     */
     @discardableResult
-    public func following(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func following(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowing(name, configuration)
         return router.load(session, expectedResultType: [User].self) { users, error in
             if let error = error {
