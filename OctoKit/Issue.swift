@@ -13,6 +13,8 @@ open class Issue: Codable {
     open private(set) var id: Int = -1
     open var url: URL?
     open var repositoryURL: URL?
+    @available(*, deprecated)
+    open var labelsURL: URL?
     open var commentsURL: URL?
     open var eventsURL: URL?
     open var htmlURL: URL?
@@ -140,9 +142,9 @@ public extension Octokit {
     @discardableResult
     func postIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee)
-		let decoder = JSONDecoder()
-		decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-		return router.post(session, decoder: decoder, expectedResultType: Issue.self) { issue, error in
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
