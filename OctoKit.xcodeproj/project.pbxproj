@@ -96,6 +96,9 @@
 		23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
 		23F643501C7AEF72000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 		23F643511C7AEF73000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
+		515337A9224FC3760024544D /* issue2.json in Resources */ = {isa = PBXBuildFile; fileRef = 515337A8224FC3760024544D /* issue2.json */; };
+		515337AA224FC3760024544D /* issue2.json in Resources */ = {isa = PBXBuildFile; fileRef = 515337A8224FC3760024544D /* issue2.json */; };
+		515337AB224FC3760024544D /* issue2.json in Resources */ = {isa = PBXBuildFile; fileRef = 515337A8224FC3760024544D /* issue2.json */; };
 		BF8C711C2C6B42F9F323FCFE /* pull_requests.json in Resources */ = {isa = PBXBuildFile; fileRef = BF8C79B71035B425F7748392 /* pull_requests.json */; };
 		BF8C716EB8D5CA2CBBA745CB /* pull_request.json in Resources */ = {isa = PBXBuildFile; fileRef = BF8C77314F563A710F11E2F6 /* pull_request.json */; };
 		BF8C719220F02AC04EF3D137 /* PullRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C76EB002802C14A08F63E /* PullRequestTests.swift */; };
@@ -238,6 +241,7 @@
 		23CAF29A1C7AB619005011C4 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F6433C1C7AEEB6000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/tvOS/Nocilla.framework; sourceTree = "<group>"; };
 		23F643421C7AEF2F000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/Mac/Nocilla.framework; sourceTree = "<group>"; };
+		515337A8224FC3760024544D /* issue2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = issue2.json; path = Fixtures/issue2.json; sourceTree = "<group>"; };
 		BF8C72B985869B84F46B4E9D /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequest.swift; sourceTree = "<group>"; };
 		BF8C76EB002802C14A08F63E /* PullRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTests.swift; sourceTree = "<group>"; };
@@ -342,6 +346,7 @@
 			isa = PBXGroup;
 			children = (
 				DABBDE4F1C8C0C20008F57CD /* issue.json */,
+				515337A8224FC3760024544D /* issue2.json */,
 				E7EDEA6D1C871D0E006BAAF2 /* issues.json */,
 				234F4BD81BDDE44600A58EF7 /* public_key.json */,
 				234F4BD91BDDE44600A58EF7 /* repo.json */,
@@ -409,6 +414,7 @@
 				B975D5A3F8B0384EFB0C5863 /* Frameworks */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		F01C6F351A6429CC0072FA44 /* Products */ = {
 			isa = PBXGroup;
@@ -664,6 +670,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7EE59E01BE139FD0012E3D2 /* users.json in Resources */,
+				515337A9224FC3760024544D /* issue2.json in Resources */,
 				234F4BDF1BDDE44600A58EF7 /* user_me.json in Resources */,
 				234F4BDD1BDDE44600A58EF7 /* public_key.json in Resources */,
 				DABBDE501C8C0C20008F57CD /* issue.json in Resources */,
@@ -695,6 +702,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23F643501C7AEF72000427B3 /* users.json in Resources */,
+				515337AA224FC3760024544D /* issue2.json in Resources */,
 				23F6434A1C7AEF69000427B3 /* user_me.json in Resources */,
 				23F643461C7AEF63000427B3 /* public_key.json in Resources */,
 				DABBDE511C8C0C20008F57CD /* issue.json in Resources */,
@@ -719,6 +727,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23F643511C7AEF73000427B3 /* users.json in Resources */,
+				515337AB224FC3760024544D /* issue2.json in Resources */,
 				23F6434B1C7AEF6A000427B3 /* user_me.json in Resources */,
 				23F643471C7AEF63000427B3 /* public_key.json in Resources */,
 				DABBDE521C8C0C20008F57CD /* issue.json in Resources */,
@@ -1383,7 +1392,7 @@
 				PRODUCT_NAME = OctoKit;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1433,7 +1442,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKit;
 				PRODUCT_NAME = OctoKit;
 				SDKROOT = iphoneos;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

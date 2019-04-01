@@ -5,7 +5,9 @@ class IssueTests: XCTestCase {
     static var allTests = [
         ("testGetMyIssues", testGetMyIssues),
         ("testGetIssue", testGetIssue),
+        ("testPostIssue", testGetIssue),
         ("testParsingIssue", testParsingIssue),
+        ("testParsingIssue2", testParsingIssue2),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
     ]
     
@@ -40,6 +42,20 @@ class IssueTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+    func testPostIssue() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues", expectedHTTPMethod: "POST", jsonFile: "issue2", statusCode: 200)
+        let task = Octokit().postIssue(session, owner: "octocat", repository: "Hello-World", title: "Title", body: "Body") { response in
+            switch response {
+            case .success(let issue):
+                XCTAssertEqual(issue.number, 36)
+            case .failure:
+                XCTAssert(false, "should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+    
     // MARK: Model Tests
     
     func testParsingIssue() {
@@ -51,6 +67,19 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(subject.number, 1347)
         XCTAssertEqual(subject.title, "Found a bug")
         XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/octocat/Hello-World/issues/1347"))
+        XCTAssertEqual(subject.state, Openness.Open)
+        XCTAssertEqual(subject.locked, false)
+    }
+    
+    func testParsingIssue2() {
+        let subject = Helper.codableFromFile("issue2", type: Issue.self)
+        XCTAssertEqual(subject.user?.login, "vincode-io")
+        XCTAssertEqual(subject.user?.id, 16448027)
+        
+        XCTAssertEqual(subject.id, 427231234)
+        XCTAssertEqual(subject.number, 36)
+        XCTAssertEqual(subject.title, "Add Request: Test File")
+        XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/vincode-io/FeedCompass/issues/36"))
         XCTAssertEqual(subject.state, Openness.Open)
         XCTAssertEqual(subject.locked, false)
     }
