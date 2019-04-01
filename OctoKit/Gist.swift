@@ -117,8 +117,8 @@ public extension Octokit {
      - parameter completion: Callback for the gist that is created.
      */
     @discardableResult
-    func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = GistRouter.postGistFile(configuration, description, filename, fileContent)
+    func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, publicAccess: Bool, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = GistRouter.postGistFile(configuration, description, filename, fileContent, publicAccess)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Gist.self) { gist, error in
@@ -164,7 +164,7 @@ enum GistRouter: JSONPostRouter {
     case readAuthenticatedGists(Configuration, String, String)
     case readGists(Configuration, String, String, String)
     case readGist(Configuration, String)
-    case postGistFile(Configuration, String, String, String)
+    case postGistFile(Configuration, String, String, String, Bool)
     case patchGistFile(Configuration, String, String, String, String)
     
     var method: HTTPMethod {
@@ -190,7 +190,7 @@ enum GistRouter: JSONPostRouter {
         case .readAuthenticatedGists(let config, _, _): return config
         case .readGists(let config, _, _, _): return config
         case .readGist(let config, _): return config
-        case .postGistFile(let config, _, _, _): return config
+        case .postGistFile(let config, _, _, _, _): return config
         case .patchGistFile(let config, _, _, _, _): return config
         }
     }
@@ -203,8 +203,9 @@ enum GistRouter: JSONPostRouter {
             return ["per_page": perPage, "page": page]
         case .readGist:
             return [:]
-        case .postGistFile(_, let description, let filename, let fileContent):
+        case .postGistFile(_, let description, let filename, let fileContent, let publicAccess):
             var params = [String: Any]()
+            params["public"] = publicAccess
             params["description"] = description
             var file = [String: Any]()
             file["content"] = fileContent
@@ -227,12 +228,12 @@ enum GistRouter: JSONPostRouter {
     var path: String {
         switch self {
         case .readAuthenticatedGists(_, _, _):
-            return "/gists"
+            return "gists"
         case .readGists(_, let owner, _, _):
             return "users/\(owner)/gists"
         case .readGist(_, let id):
             return "gists/\(id)"
-        case .postGistFile(_, _, _, _):
+        case .postGistFile(_, _, _, _, _):
             return "gists"
         case .patchGistFile(_, let id, _, _, _):
             return "gists/\(id)"

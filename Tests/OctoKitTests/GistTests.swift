@@ -62,7 +62,7 @@ class GistTests: XCTestCase {
     
     func testPostGist() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists", expectedHTTPMethod: "POST", jsonFile: "gist", statusCode: 200)
-        let task = Octokit().postGistFile(session, description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program") { response in
+        let task = Octokit().postGistFile(session, description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program", publicAccess: true) { response in
             switch response {
             case .success(let gist):
                 XCTAssertEqual(gist.id, "aa5a315d61ae9438b18d")
