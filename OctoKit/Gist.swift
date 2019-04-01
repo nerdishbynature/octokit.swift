@@ -98,7 +98,9 @@ public extension Octokit {
     @discardableResult
     func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.postGistFile(configuration, description, filename, fileContent)
-        return router.post(session, expectedResultType: Issue.self) { issue, error in
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -124,7 +126,9 @@ public extension Octokit {
     @discardableResult
     func patchIssue(_ session: RequestKitURLSession = URLSession.shared, id: String, description: String, filename: String, fileContent: String, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.patchGistFile(configuration, id, description, filename, fileContent)
-        return router.post(session, expectedResultType: Gist.self) { gist, error in
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: Gist.self) { gist, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
