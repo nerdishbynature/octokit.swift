@@ -89,7 +89,7 @@ public extension Octokit {
     }
     
     /**
-     Fetches an gist in a repository
+     Fetches an gist
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter id: The id of the gist.
      - parameter completion: Callback for the outcome of the fetch.
@@ -114,7 +114,7 @@ public extension Octokit {
      - parameter description: The description of the gist.
      - parameter filename: The name of the file in the gist.
      - parameter fileContent: The content of the file in the gist.
-     - parameter completion: Callback for the issue that is created.
+     - parameter completion: Callback for the gist that is created.
      */
     @discardableResult
     func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
@@ -133,16 +133,13 @@ public extension Octokit {
     }
     
     /**
-     Edits an issue in a repository.
+     Edits an gist with a single file.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
-     - parameter owner: The user or organization that owns the repository.
-     - parameter repository: The name of the repository.
-     - parameter number: The number of the issue.
-     - parameter title: The title of the issue.
-     - parameter body: The body text of the issue in GitHub-flavored Markdown format.
-     - parameter assignee: The name of the user to assign the issue to. This parameter is ignored if the user lacks push access to the repository.
-     - parameter state: Whether the issue is open or closed.
-     - parameter completion: Callback for the issue that is created.
+     - parameter id: The of the gist to update.
+     - parameter description: The description of the gist.
+     - parameter filename: The name of the file in the gist.
+     - parameter fileContent: The content of the file in the gist.
+     - parameter completion: Callback for the gist that is created.
      */
     @discardableResult
     func patchGistFile(_ session: RequestKitURLSession = URLSession.shared, id: String, description: String, filename: String, fileContent: String, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
