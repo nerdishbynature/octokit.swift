@@ -141,7 +141,7 @@ class FollowTests: XCTestCase {
         #if os(iOS)
         let darwinCount = thisClass.defaultTestSuite.tests.count
         #else
-        let darwinCount = thisClass.defaultTestSuite().tests.count
+        let darwinCount = thisClass.defaultTestSuite.tests.count
         #endif
         XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
         #endif
