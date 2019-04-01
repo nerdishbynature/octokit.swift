@@ -1,8 +1,7 @@
 
 import Foundation
 
-public typealias FileDict = [String: File]
-public typealias Files = [FileDict]
+public typealias Files = [String: File]
 
 open class File: Codable {
     open private(set) var id: Int = -1
