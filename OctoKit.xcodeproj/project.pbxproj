@@ -136,6 +136,9 @@
 		D4D28F6C2299D87300F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6D2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6E2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
+		D4D28F702299DBE600F8E92A /* labels.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F6F2299DBE600F8E92A /* labels.json */; };
+		D4D28F712299DBE600F8E92A /* labels.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F6F2299DBE600F8E92A /* labels.json */; };
+		D4D28F722299DBE600F8E92A /* labels.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F6F2299DBE600F8E92A /* labels.json */; };
 		D4D28F742299DCE700F8E92A /* label.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F732299DCE700F8E92A /* label.json */; };
 		D4D28F752299DCE700F8E92A /* label.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F732299DCE700F8E92A /* label.json */; };
 		D4D28F762299DCE700F8E92A /* label.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F732299DCE700F8E92A /* label.json */; };
@@ -280,6 +283,7 @@
 		BF8C77314F563A710F11E2F6 /* pull_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_request.json; sourceTree = "<group>"; };
 		BF8C79B71035B425F7748392 /* pull_requests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_requests.json; sourceTree = "<group>"; };
 		D4D28F6B2299D87300F8E92A /* LabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTests.swift; sourceTree = "<group>"; };
+		D4D28F6F2299DBE600F8E92A /* labels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = labels.json; path = Fixtures/labels.json; sourceTree = "<group>"; };
 		D4D28F732299DCE700F8E92A /* label.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = label.json; path = Fixtures/label.json; sourceTree = "<group>"; };
 		D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PercentEncoding.swift"; sourceTree = "<group>"; };
 		DABBDE4F1C8C0C20008F57CD /* issue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = issue.json; path = Fixtures/issue.json; sourceTree = "<group>"; };
@@ -388,6 +392,7 @@
 				515337A8224FC3760024544D /* issue2.json */,
 				E7EDEA6D1C871D0E006BAAF2 /* issues.json */,
 				D4D28F732299DCE700F8E92A /* label.json */,
+				D4D28F6F2299DBE600F8E92A /* labels.json */,
 				234F4BD81BDDE44600A58EF7 /* public_key.json */,
 				234F4BD91BDDE44600A58EF7 /* repo.json */,
 				234F4BDA1BDDE44600A58EF7 /* user_me.json */,
@@ -723,6 +728,7 @@
 				234F4BE01BDDE44600A58EF7 /* user_mietzmithut.json in Resources */,
 				515337F622529E7B0024544D /* gists.json in Resources */,
 				515337FA2252A0410024544D /* gist.json in Resources */,
+				D4D28F702299DBE600F8E92A /* labels.json in Resources */,
 				E7EDEA6E1C871D0E006BAAF2 /* issues.json in Resources */,
 				BF8C78845606511558E7B929 /* pull_requests.json in Resources */,
 				BF8C7B976A0652C486FAF736 /* pull_request.json in Resources */,
@@ -758,6 +764,7 @@
 				23F6434C1C7AEF6C000427B3 /* user_mietzmithut.json in Resources */,
 				515337F722529E7B0024544D /* gists.json in Resources */,
 				515337FB2252A0410024544D /* gist.json in Resources */,
+				D4D28F712299DBE600F8E92A /* labels.json in Resources */,
 				E7EDEA741C871FA8006BAAF2 /* issues.json in Resources */,
 				BF8C7923F427B3CFC6833337 /* pull_requests.json in Resources */,
 				BF8C7A686709462323C702D8 /* pull_request.json in Resources */,
@@ -786,6 +793,7 @@
 				23F6434D1C7AEF6D000427B3 /* user_mietzmithut.json in Resources */,
 				515337F822529E7B0024544D /* gists.json in Resources */,
 				515337FC2252A0410024544D /* gist.json in Resources */,
+				D4D28F722299DBE600F8E92A /* labels.json in Resources */,
 				E7EDEA751C871FA9006BAAF2 /* issues.json in Resources */,
 				BF8C711C2C6B42F9F323FCFE /* pull_requests.json in Resources */,
 				BF8C716EB8D5CA2CBBA745CB /* pull_request.json in Resources */,
