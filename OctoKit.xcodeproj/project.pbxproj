@@ -133,6 +133,16 @@
 		BF8C7BE0F4071324EBDCA204 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
 		BF8C7DEE90DD25CBCA4AEE71 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C72B985869B84F46B4E9D /* Parameters.swift */; };
 		BF8C7FFFDDAFA560EBEC35EE /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
+		D4D28F6C2299D87300F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
+		D4D28F6D2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
+		D4D28F6E2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
+		D4D28F742299DCE700F8E92A /* label.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F732299DCE700F8E92A /* label.json */; };
+		D4D28F752299DCE700F8E92A /* label.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F732299DCE700F8E92A /* label.json */; };
+		D4D28F762299DCE700F8E92A /* label.json in Resources */ = {isa = PBXBuildFile; fileRef = D4D28F732299DCE700F8E92A /* label.json */; };
+		D4D28F782299E9F200F8E92A /* String+PercentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */; };
+		D4D28FA0229A02A900F8E92A /* String+PercentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */; };
+		D4D28FA1229A02A900F8E92A /* String+PercentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */; };
+		D4D28FA2229A02AA00F8E92A /* String+PercentEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */; };
 		DABBDE501C8C0C20008F57CD /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = DABBDE4F1C8C0C20008F57CD /* issue.json */; };
 		DABBDE511C8C0C20008F57CD /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = DABBDE4F1C8C0C20008F57CD /* issue.json */; };
 		DABBDE521C8C0C20008F57CD /* issue.json in Resources */ = {isa = PBXBuildFile; fileRef = DABBDE4F1C8C0C20008F57CD /* issue.json */; };
@@ -269,6 +279,9 @@
 		BF8C76EB002802C14A08F63E /* PullRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTests.swift; sourceTree = "<group>"; };
 		BF8C77314F563A710F11E2F6 /* pull_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_request.json; sourceTree = "<group>"; };
 		BF8C79B71035B425F7748392 /* pull_requests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_requests.json; sourceTree = "<group>"; };
+		D4D28F6B2299D87300F8E92A /* LabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTests.swift; sourceTree = "<group>"; };
+		D4D28F732299DCE700F8E92A /* label.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = label.json; path = Fixtures/label.json; sourceTree = "<group>"; };
+		D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+PercentEncoding.swift"; sourceTree = "<group>"; };
 		DABBDE4F1C8C0C20008F57CD /* issue.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = issue.json; path = Fixtures/issue.json; sourceTree = "<group>"; };
 		DAEFC58F1C83D85100CF3785 /* Label.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		DAEFC5941C83EF0D00CF3785 /* Milestone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Milestone.swift; sourceTree = "<group>"; };
@@ -351,6 +364,7 @@
 				E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */,
 				515337F022529C380024544D /* GistTests.swift */,
 				E7EDEA6B1C871D01006BAAF2 /* IssueTests.swift */,
+				D4D28F6B2299D87300F8E92A /* LabelTests.swift */,
 				234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */,
 				234F4BCC1BDDE3F900A58EF7 /* PublicKeyTests.swift */,
 				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
@@ -373,6 +387,7 @@
 				DABBDE4F1C8C0C20008F57CD /* issue.json */,
 				515337A8224FC3760024544D /* issue2.json */,
 				E7EDEA6D1C871D0E006BAAF2 /* issues.json */,
+				D4D28F732299DCE700F8E92A /* label.json */,
 				234F4BD81BDDE44600A58EF7 /* public_key.json */,
 				234F4BD91BDDE44600A58EF7 /* repo.json */,
 				234F4BDA1BDDE44600A58EF7 /* user_me.json */,
@@ -406,6 +421,7 @@
 				239BE7CB1B8C47A100D2CE22 /* Supporting Files */,
 				BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */,
 				BF8C72B985869B84F46B4E9D /* Parameters.swift */,
+				D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */,
 			);
 			path = OctoKit;
 			sourceTree = "<group>";
@@ -698,6 +714,7 @@
 			files = (
 				E7EE59E01BE139FD0012E3D2 /* users.json in Resources */,
 				515337A9224FC3760024544D /* issue2.json in Resources */,
+				D4D28F742299DCE700F8E92A /* label.json in Resources */,
 				234F4BDF1BDDE44600A58EF7 /* user_me.json in Resources */,
 				234F4BDD1BDDE44600A58EF7 /* public_key.json in Resources */,
 				DABBDE501C8C0C20008F57CD /* issue.json in Resources */,
@@ -732,6 +749,7 @@
 			files = (
 				23F643501C7AEF72000427B3 /* users.json in Resources */,
 				515337AA224FC3760024544D /* issue2.json in Resources */,
+				D4D28F752299DCE700F8E92A /* label.json in Resources */,
 				23F6434A1C7AEF69000427B3 /* user_me.json in Resources */,
 				23F643461C7AEF63000427B3 /* public_key.json in Resources */,
 				DABBDE511C8C0C20008F57CD /* issue.json in Resources */,
@@ -759,6 +777,7 @@
 			files = (
 				23F643511C7AEF73000427B3 /* users.json in Resources */,
 				515337AB224FC3760024544D /* issue2.json in Resources */,
+				D4D28F762299DCE700F8E92A /* label.json in Resources */,
 				23F6434B1C7AEF6A000427B3 /* user_me.json in Resources */,
 				23F643471C7AEF63000427B3 /* public_key.json in Resources */,
 				DABBDE521C8C0C20008F57CD /* issue.json in Resources */,
@@ -788,6 +807,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				234F4BD61BDDE3F900A58EF7 /* UserTests.swift in Sources */,
+				D4D28F6C2299D87300F8E92A /* LabelTests.swift in Sources */,
 				234F4BD31BDDE3F900A58EF7 /* PublicKeyTests.swift in Sources */,
 				E7EDEA6C1C871D01006BAAF2 /* IssueTests.swift in Sources */,
 				234F4BD41BDDE3F900A58EF7 /* RepositoryTests.swift in Sources */,
@@ -808,6 +828,7 @@
 			files = (
 				E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */,
 				23B2678A1BDDD756003887E3 /* Configuration.swift in Sources */,
+				D4D28F782299E9F200F8E92A /* String+PercentEncoding.swift in Sources */,
 				E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */,
 				23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */,
 				F8711EA21BFCAE9F005DDACA /* Time.swift in Sources */,
@@ -831,6 +852,7 @@
 			files = (
 				23CAF2A51C7AB6C2005011C4 /* Follow.swift in Sources */,
 				23CAF2AE1C7AB6CD005011C4 /* Repositories.swift in Sources */,
+				D4D28FA0229A02A900F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B11C7AB6D1005011C4 /* User.swift in Sources */,
 				23CAF2A21C7AB6BE005011C4 /* Configuration.swift in Sources */,
 				23CAF2B71C7AB6EB005011C4 /* Time.swift in Sources */,
@@ -853,6 +875,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23CAF2BC1C7AB6FC005011C4 /* FollowTests.swift in Sources */,
+				D4D28F6D2299D87A00F8E92A /* LabelTests.swift in Sources */,
 				23CAF2C41C7AB708005011C4 /* StarsTests.swift in Sources */,
 				E7EDEA721C871F94006BAAF2 /* IssueTests.swift in Sources */,
 				23CAF2C61C7AB70B005011C4 /* TestHelper.swift in Sources */,
@@ -873,6 +896,7 @@
 			files = (
 				23CAF2A61C7AB6C2005011C4 /* Follow.swift in Sources */,
 				23CAF2AF1C7AB6CD005011C4 /* Repositories.swift in Sources */,
+				D4D28FA1229A02A900F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B21C7AB6D1005011C4 /* User.swift in Sources */,
 				23CAF2A31C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				23CAF2B81C7AB6EB005011C4 /* Time.swift in Sources */,
@@ -895,6 +919,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23CAF2BD1C7AB6FC005011C4 /* FollowTests.swift in Sources */,
+				D4D28F6E2299D87A00F8E92A /* LabelTests.swift in Sources */,
 				23CAF2C51C7AB709005011C4 /* StarsTests.swift in Sources */,
 				E7EDEA731C871F95006BAAF2 /* IssueTests.swift in Sources */,
 				23CAF2C71C7AB70C005011C4 /* TestHelper.swift in Sources */,
@@ -915,6 +940,7 @@
 			files = (
 				23CAF2A71C7AB6C3005011C4 /* Follow.swift in Sources */,
 				23CAF2B01C7AB6CE005011C4 /* Repositories.swift in Sources */,
+				D4D28FA2229A02AA00F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B31C7AB6D2005011C4 /* User.swift in Sources */,
 				23CAF2A41C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				23CAF2B91C7AB6EC005011C4 /* Time.swift in Sources */,
