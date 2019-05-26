@@ -1,0 +1,58 @@
+[
+  {
+    "id": 107942188,
+    "node_id": "MDU6TGFiZWwxMDc5NDIxODg=",
+    "url": "https://api.github.com/repos/octocat/hello-worId/labels/bug",
+    "name": "bug",
+    "color": "fc2929",
+    "default": true
+  },
+  {
+    "id": 107942189,
+    "node_id": "MDU6TGFiZWwxMDc5NDIxODk=",
+    "url": "https://api.github.com/repos/octocat/hello-worId/labels/duplicate",
+    "name": "duplicate",
+    "color": "cccccc",
+    "default": true
+  },
+  {
+    "id": 107942190,
+    "node_id": "MDU6TGFiZWwxMDc5NDIxOTA=",
+    "url": "https://api.github.com/repos/octocat/hello-worId/labels/enhancement",
+    "name": "enhancement",
+    "color": "84b6eb",
+    "default": true
+  },
+  {
+    "id": 107942191,
+    "node_id": "MDU6TGFiZWwxMDc5NDIxOTE=",
+    "url": "https://api.github.com/repos/octocat/hello-worId/labels/help%20wanted",
+    "name": "help wanted",
+    "color": "159818",
+    "default": true
+  },
+  {
+    "id": 107942192,
+    "node_id": "MDU6TGFiZWwxMDc5NDIxOTI=",
+    "url": "https://api.github.com/repos/octocat/hello-worId/labels/invalid",
+    "name": "invalid",
+    "color": "e6e6e6",
+    "default": true
+  },
+  {
+    "id": 107942193,
+    "node_id": "MDU6TGFiZWwxMDc5NDIxOTM=",
+    "url": "https://api.github.com/repos/octocat/hello-worId/labels/question",
+    "name": "question",
+    "color": "cc317c",
+    "default": true
+  },
+  {
+    "id": 107942194,
+    "node_id": "MDU6TGFiZWwxMDc5NDIxOTQ=",
+    "url": "https://api.github.com/repos/octocat/hello-worId/labels/wontfix",
+    "name": "wontfix",
+    "color": "ffffff",
+    "default": true
+  }
+]
