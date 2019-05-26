@@ -7,6 +7,7 @@ class LabelTests: XCTestCase {
         ("testGetLabelEncodesSpaceCorrectly", testGetLabelEncodesSpaceCorrectly),
         ("testGetLabels", testGetLabels),
         ("testGetLabelsSetsPagination", testGetLabelsSetsPagination),
+        ("testCreateLabel", testCreateLabel),
         ("testParsingLabel", testParsingLabel),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
     ]
@@ -68,6 +69,20 @@ class LabelTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+    func testCreateLabel() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels", expectedHTTPMethod: "POST", jsonFile: "label", statusCode: 200)
+        let task = Octokit().postLabel(session, owner: "octocat", repository: "hello-world", name: "test label", color: "ffffff") { response in
+            switch response {
+            case .success(let label):
+                XCTAssertNotNil(label)
+            case .failure:
+                XCTAssert(false, "should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+    
     
     // MARK: Parsing Tests
     func testParsingLabel() {
