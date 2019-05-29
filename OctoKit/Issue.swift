@@ -137,11 +137,12 @@ public extension Octokit {
      - parameter title: The title of the issue.
      - parameter body: The body text of the issue in GitHub-flavored Markdown format.
      - parameter assignee: The name of the user to assign the issue to. This parameter is ignored if the user lacks push access to the repository.
+     - parameter labels: An array of label names to add to the issue. If the labels do not exist, GitHub will create them automatically. This parameter is ignored if the user lacks push access to the repository.
      - parameter completion: Callback for the issue that is created.
      */
     @discardableResult
-    func postIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee)
+    func postIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, labels: [String] = [], completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee, labels)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Issue.self) { issue, error in
@@ -188,7 +189,7 @@ enum IssueRouter: JSONPostRouter {
     case readAuthenticatedIssues(Configuration, String, String, Openness)
     case readIssue(Configuration, String, String, Int)
     case readIssues(Configuration, String, String, String, String, Openness)
-    case postIssue(Configuration, String, String, String, String?, String?)
+    case postIssue(Configuration, String, String, String, String?, String?, [String])
     case patchIssue(Configuration, String, String, Int, String?, String?, String?, Openness?)
     
     var method: HTTPMethod {
@@ -214,7 +215,7 @@ enum IssueRouter: JSONPostRouter {
         case .readAuthenticatedIssues(let config, _, _, _): return config
         case .readIssue(let config, _, _, _): return config
         case .readIssues(let config, _, _, _, _, _): return config
-        case .postIssue(let config, _, _, _, _, _): return config
+        case .postIssue(let config, _, _, _, _, _, _): return config
         case .patchIssue(let config, _, _, _, _, _, _, _): return config
         }
     }
@@ -227,13 +228,16 @@ enum IssueRouter: JSONPostRouter {
             return [:]
         case .readIssues(_, _, _, let page, let perPage, let state):
             return ["per_page": perPage, "page": page, "state": state.rawValue]
-        case .postIssue(_, _, _, let title, let body, let assignee):
-            var params = ["title": title]
+        case .postIssue(_, _, _, let title, let body, let assignee, let labels):
+            var params: [String: Any] = ["title": title]
             if let body = body {
                 params["body"] = body
             }
             if let assignee = assignee {
                 params["assignee"] = assignee
+            }
+            if !labels.isEmpty {
+                params["labels"] = labels
             }
             return params
         case .patchIssue(_, _, _, _, let title, let body, let assignee, let state):
@@ -262,7 +266,7 @@ enum IssueRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/issues/\(number)"
         case .readIssues(_, let owner, let repository, _, _, _):
             return "repos/\(owner)/\(repository)/issues"
-        case .postIssue(_, let owner, let repository, _, _, _):
+        case .postIssue(_, let owner, let repository, _, _, _, _):
             return "repos/\(owner)/\(repository)/issues"
         case .patchIssue(_, let owner, let repository, let number, _, _, _, _):
             return "repos/\(owner)/\(repository)/issues/\(number)"
