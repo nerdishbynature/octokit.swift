@@ -295,7 +295,7 @@ Octokit(config).issue(owner, repository: repo, number: number) { response in
 ### Open a new issue
 
 ```swift
-Octokit(config).postIssue("owner", repository: "repo", title: "Found a bug", body: "I'm having a problem with this.", assignee: "octocat") { response in
+Octokit(config).postIssue("owner", repository: "repo", title: "Found a bug", body: "I'm having a problem with this.", assignee: "octocat", labels: ["bug", "duplicate"]) { response in
     switch response {
     case .success(let issue):
         // do something with the issue
