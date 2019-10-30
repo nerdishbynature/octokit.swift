@@ -4,7 +4,7 @@ import RequestKit
 public extension Octokit {
 
     /**
-     Fetches the authenticated user
+     Fetches all recent Events on the server
      - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
      - parameter completion: Callback for the outcome of the fetch.
      */
@@ -13,6 +13,48 @@ public extension Octokit {
                   completion: @escaping (_ response: Response<[Event]>) -> Void) -> URLSessionDataTaskProtocol? {
 
         let router = EventRouter.allEvents(self.configuration)
+        return router.load(session, expectedResultType: [Event].self) { events, error in
+            if let error = error {
+                completion(Response.failure(error))
+            } else {
+                if let events = events {
+                    completion(Response.success(events))
+                }
+            }
+        }
+    }
+
+    /**
+     Fetches all Received Events
+     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func myReceivedEvents(_ session: RequestKitURLSession = URLSession.shared,
+                   completion: @escaping (_ response: Response<[Event]>) -> Void) -> URLSessionDataTaskProtocol? {
+
+        let router = EventRouter.myReceivedEvents(configuration, "j0r010l")
+        return router.load(session, expectedResultType: [Event].self) { events, error in
+            if let error = error {
+                completion(Response.failure(error))
+            } else {
+                if let events = events {
+                    completion(Response.success(events))
+                }
+            }
+        }
+    }
+
+    /**
+     Fetches all Created Events
+     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func myCreatedEvents(_ session: RequestKitURLSession = URLSession.shared,
+                          completion: @escaping (_ response: Response<[Event]>) -> Void) -> URLSessionDataTaskProtocol? {
+
+        let router = EventRouter.myCreatedEvents(configuration, "j0r010l")
         return router.load(session, expectedResultType: [Event].self) { events, error in
             if let error = error {
                 completion(Response.failure(error))
@@ -60,11 +102,23 @@ open class Event: Codable {
 }
 
 enum EventRouter: Router {
+    // GET /events
     case allEvents(Configuration)
+
+    // GET /users/:username/received_events
+    case myReceivedEvents(Configuration, String)
+
+    // GET /users/:username/events
+    case myCreatedEvents(Configuration, String)
 
     var configuration: Configuration {
         switch self {
-        case .allEvents(let config): return config
+        case .allEvents(let config):
+            return config
+        case .myReceivedEvents(let config, _):
+            return config
+        case .myCreatedEvents(let config, _):
+            return config
         }
     }
 
@@ -80,6 +134,10 @@ enum EventRouter: Router {
         switch self {
         case .allEvents:
             return "events"
+        case .myReceivedEvents(_, let user):
+            return "users/\(user)/received_events"
+        case .myCreatedEvents(_, let user):
+            return "users/\(user)/events"
         }
     }
 
