@@ -26,36 +26,36 @@ public extension Octokit {
 }
 
 open class Event: Codable {
-    var id: String
-    var type: String
-    var `public`: Bool
-    // var payload: Any // TODO: what is this thing
+    open var id: String
+    open var type: String
+    open var `public`: Bool
+    // open var payload: Any // TODO: what is this thing
 
-    var created_at: String // TODO: Update to decode Date
-    var org: Org
-    var actor: Actor
-    var repo: Repo
+    open var created_at: String // TODO: Update to decode Date
+    open var org: Org?
+    open var actor: Actor
+    open var repo: Repo
 
-    struct Org: Codable {
-        var id: Int
-        var login: String
-        var gravatar_id: String
-        var url: String // TODO should be URL
-        var avatar_url: String // TODO should be URL
+    open class Org: Codable {
+        open var id: Int
+        open var login: String
+        open var gravatar_id: String
+        open var url: String // TODO should be URL
+        open var avatar_url: String // TODO should be URL
     }
 
-    struct Actor: Codable {
-        var id: Int
-        var login: String
-        var gravatar_id: String
-        var avatar_url: String // TODO should be URL
-        var url: String // TODO should be URL
+    open class Actor: Codable {
+        open var id: Int
+        open var login: String
+        open var gravatar_id: String
+        open var avatar_url: String // TODO should be URL
+        open var url: String // TODO should be URL
     }
 
-    struct Repo: Codable {
-        var id: Int
-        var name: String // "octocat/Hello-World",
-        var url: String // TODO should be URL
+    open class Repo: Codable {
+        open var id: Int
+        open var name: String // "octocat/Hello-World",
+        open var url: String // TODO should be URL
     }
 }
 
