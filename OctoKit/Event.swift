@@ -1,6 +1,17 @@
 import Foundation
 import RequestKit
 
+open class Event: Codable {
+    open var id: String
+    open var type: String
+    open var `public`: Bool
+    // open var payload: Any // TODO: what is this thing
+
+    open var created_at: String // TODO: Update to decode Date
+    open var actor: User
+    open var repo: Repository
+}
+
 public extension Octokit {
 
     /**
@@ -10,16 +21,18 @@ public extension Octokit {
      */
     @discardableResult
     func allEvents(_ session: RequestKitURLSession = URLSession.shared,
-                  completion: @escaping (_ response: Response<[Event]>) -> Void) -> URLSessionDataTaskProtocol? {
+                   completion: @escaping (_ response: Response<[Event]>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
 
         let router = EventRouter.allEvents(self.configuration)
         return router.load(session, expectedResultType: [Event].self) { events, error in
-            if let error = error {
-                completion(Response.failure(error))
-            } else {
-                if let events = events {
-                    completion(Response.success(events))
-                }
+             if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            if let events = events {
+                completion(.success(events))
             }
         }
     }
@@ -30,17 +43,20 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myReceivedEvents(_ session: RequestKitURLSession = URLSession.shared,
-                   completion: @escaping (_ response: Response<[Event]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func receivedEvents(_ session: RequestKitURLSession = URLSession.shared,
+                        user: String,
+                        completion: @escaping (_ response: Response<[Event]>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
 
-        let router = EventRouter.myReceivedEvents(configuration, "j0r010l")
+        let router = EventRouter.receivedEvents(configuration, user)
         return router.load(session, expectedResultType: [Event].self) { events, error in
             if let error = error {
-                completion(Response.failure(error))
-            } else {
-                if let events = events {
-                    completion(Response.success(events))
-                }
+                completion(.failure(error))
+                return
+            }
+
+            if let events = events {
+                completion(.success(events))
             }
         }
     }
@@ -51,53 +67,21 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myCreatedEvents(_ session: RequestKitURLSession = URLSession.shared,
-                          completion: @escaping (_ response: Response<[Event]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func createdEvents(_ session: RequestKitURLSession = URLSession.shared,
+                       user: String,
+                       completion: @escaping (_ response: Response<[Event]>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
 
-        let router = EventRouter.myCreatedEvents(configuration, "j0r010l")
+        let router = EventRouter.createdEvents(configuration, user)
         return router.load(session, expectedResultType: [Event].self) { events, error in
             if let error = error {
-                completion(Response.failure(error))
-            } else {
-                if let events = events {
-                    completion(Response.success(events))
-                }
+                completion(.failure(error))
+            }
+
+            if let events = events {
+                completion(.success(events))
             }
         }
-    }
-}
-
-open class Event: Codable {
-    open var id: String
-    open var type: String
-    open var `public`: Bool
-    // open var payload: Any // TODO: what is this thing
-
-    open var created_at: String // TODO: Update to decode Date
-    open var org: Org?
-    open var actor: Actor
-    open var repo: Repo
-
-    open class Org: Codable {
-        open var id: Int
-        open var login: String
-        open var gravatar_id: String
-        open var url: String // TODO should be URL
-        open var avatar_url: String // TODO should be URL
-    }
-
-    open class Actor: Codable {
-        open var id: Int
-        open var login: String
-        open var gravatar_id: String
-        open var avatar_url: String // TODO should be URL
-        open var url: String // TODO should be URL
-    }
-
-    open class Repo: Codable {
-        open var id: Int
-        open var name: String // "octocat/Hello-World",
-        open var url: String // TODO should be URL
     }
 }
 
@@ -106,18 +90,18 @@ enum EventRouter: Router {
     case allEvents(Configuration)
 
     // GET /users/:username/received_events
-    case myReceivedEvents(Configuration, String)
+    case receivedEvents(Configuration, String)
 
     // GET /users/:username/events
-    case myCreatedEvents(Configuration, String)
+    case createdEvents(Configuration, String)
 
     var configuration: Configuration {
         switch self {
         case .allEvents(let config):
             return config
-        case .myReceivedEvents(let config, _):
+        case .receivedEvents(let config, _):
             return config
-        case .myCreatedEvents(let config, _):
+        case .createdEvents(let config, _):
             return config
         }
     }
@@ -134,9 +118,9 @@ enum EventRouter: Router {
         switch self {
         case .allEvents:
             return "events"
-        case .myReceivedEvents(_, let user):
+        case .receivedEvents(_, let user):
             return "users/\(user)/received_events"
-        case .myCreatedEvents(_, let user):
+        case .createdEvents(_, let user):
             return "users/\(user)/events"
         }
     }
