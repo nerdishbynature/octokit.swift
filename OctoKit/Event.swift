@@ -9,7 +9,7 @@ open class Event: Codable {
 
     open var created_at: String // TODO: Update to decode Date
 //    open var actor: User
-//    open var repo: Repository
+        open var repo: Repository
 }
 
 public extension Octokit {
