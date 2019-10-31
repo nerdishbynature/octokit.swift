@@ -12,7 +12,7 @@ open class Event: Codable {
     open var repo: Repo
 
     open class Repo: Codable {
-        open private(set) id: Int
+        open private(set) var id: Int
         open var name: String?
         open var url: String?
     }
