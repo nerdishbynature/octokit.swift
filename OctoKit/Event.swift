@@ -8,8 +8,8 @@ open class Event: Codable {
     // open var payload: Any // TODO: what is this thing
 
     open var created_at: String // TODO: Update to decode Date
-    open var actor: User
-    open var repo: Repository
+//    open var actor: User
+//    open var repo: Repository
 }
 
 public extension Octokit {
