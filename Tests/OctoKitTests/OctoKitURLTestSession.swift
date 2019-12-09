@@ -1,5 +1,8 @@
 import RequestKit
 import XCTest
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 class MockURLSessionDataTask: URLSessionDataTaskProtocol {
     fileprivate (set) var resumeWasCalled = false
