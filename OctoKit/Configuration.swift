@@ -1,5 +1,8 @@
 import Foundation
 import RequestKit
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public let githubBaseURL = "https://api.github.com"
 public let githubWebURL = "https://github.com"
@@ -126,7 +129,13 @@ enum OAuthRouter: Router {
         }
     }
 
-    var URLRequest: Foundation.URLRequest? {
+#if canImport(FoundationNetworking)
+    typealias FoundationURLRequestType = FoundationNetworking.URLRequest
+#else
+    typealias FoundationURLRequestType = Foundation.URLRequest
+#endif
+
+    var URLRequest: FoundationURLRequestType? {
         switch self {
         case .authorize(let config):
             let url = URL(string: path, relativeTo: URL(string: config.webEndpoint)!)
