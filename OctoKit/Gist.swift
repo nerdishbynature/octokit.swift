@@ -1,5 +1,8 @@
 import Foundation
 import RequestKit
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 // MARK: model
 
