@@ -1,5 +1,8 @@
 import Foundation
 import RequestKit
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 open class PullRequest: Codable {
     private(set) open var id: Int = -1

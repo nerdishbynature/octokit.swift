@@ -1,5 +1,5 @@
 language: generic
-osx_image: xcode9.2
+osx_image: xcode10.2
 sudo: false
 env:
   global:
@@ -11,15 +11,19 @@ matrix:
     - os: osx
       env: FASTLANE_LANE=code_coverage FASTLANE_ENV=default
     - os: osx
-      env: FASTLANE_ENV=ios93
+      env: FASTLANE_ENV=ios12_2
     - os: osx
-      env: FASTLANE_ENV=tvos92
+      env: FASTLANE_ENV=tvos12_2
     - os: osx
       env: FASTLANE_ENV=osx
     - os: linux
       sudo: required
       dist: trusty
       env: SWIFT_VERSION=4.2
+    - os: linux
+      sudo: required
+      dist: trusty
+      env: SWIFT_VERSION=5.1
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ./Script/travis-install-linux; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./Script/travis-install-macos; fi
