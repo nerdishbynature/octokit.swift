@@ -1,5 +1,8 @@
 import Foundation
 import RequestKit
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 open class Label: Codable {
     open var url: URL?
