@@ -55,7 +55,7 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     dotenv (2.2.1)
     escape (0.0.4)
-    excon (0.60.0)
+    excon (0.71.0)
     faraday (0.13.1)
       multipart-post (>= 1.2, < 3)
     faraday-cookie_jar (0.0.6)
