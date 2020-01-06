@@ -41,20 +41,20 @@ let config = TokenConfiguration(token: "12345")
 or for GitHub Enterprise
 
 ```swift
-let config = TokenConfiguration("12345", url: "https://github.example.com/api/v3/")
+let config = TokenConfiguration("2beef4ace", url: "https://github.example.com/api/v3/")
 ```
 
 After you got your token you can use it with `Octokit`
 
 ```swift
 Octokit(config).me() { response in
-  switch response {
-  case .success(let user):
-    print(user.login)
-  case .failure(let error):
-    print(error)
-  }
-}
+      switch response {
+      case .success(let user):
+        print(user.login as Any)
+      case .failure(let error):
+        print(error)
+      }
+    }
 ```
 
 ### OAuthConfiguration
