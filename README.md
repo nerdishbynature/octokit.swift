@@ -35,13 +35,13 @@ the OAuth Flow
 You can initialize a new config for `github.com` as follows:
 
 ```swift
-let config = TokenConfiguration(token: "12345")
+let config = TokenConfiguration("YOUR_PRIVATE_GITHUB_TOKEN_HERE")
 ```
 
 or for GitHub Enterprise
 
 ```swift
-let config = TokenConfiguration("12345", url: "https://github.example.com/api/v3/")
+let config = TokenConfiguration("YOUR_PRIVATE_GITHUB_TOKEN_HERE", url: "https://github.example.com/api/v3/")
 ```
 
 After you got your token you can use it with `Octokit`
