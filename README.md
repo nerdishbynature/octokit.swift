@@ -50,7 +50,7 @@ After you got your token you can use it with `Octokit`
 Octokit(config).me() { response in
   switch response {
   case .success(let user):
-    print(user.login)
+    print(user.login as Any)
   case .failure(let error):
     print(error)
   }
