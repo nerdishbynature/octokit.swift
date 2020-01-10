@@ -19,6 +19,7 @@ open class Repository: Codable {
     open var htmlURL: String?
     open private(set) var size: Int = -1
     open var lastPush: Date?
+    open var stargazersCount: Int?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -34,6 +35,7 @@ open class Repository: Codable {
         case htmlURL = "html_url"
         case size
         case lastPush = "pushed_at"
+        case stargazersCount = "stargazers_count"
     }
 }
 
