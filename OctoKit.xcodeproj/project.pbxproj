@@ -658,14 +658,14 @@
 				TargetAttributes = {
 					234F4BA81BDDE31A00A58EF7 = {
 						CreatedOnToolsVersion = 7.1;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1130;
 						ProvisioningStyle = Manual;
 					};
 					239BE7C81B8C47A100D2CE22 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 3NPZ2HXWU8;
 						DevelopmentTeamName = "Piet Brauer";
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1130;
 					};
 					23CAF2611C7AB5FB005011C4 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -689,10 +689,9 @@
 			};
 			buildConfigurationList = F01C6F2F1A6429CC0072FA44 /* Build configuration list for PBXProject "OctoKit" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -1008,7 +1007,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1036,7 +1035,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1069,7 +1068,7 @@
 				);
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -1103,7 +1102,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
