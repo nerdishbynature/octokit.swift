@@ -194,10 +194,11 @@ enum IssueRouter: JSONPostRouter {
     case readIssues(Configuration, String, String, String, String, Openness)
     case postIssue(Configuration, String, String, String, String?, String?, [String])
     case patchIssue(Configuration, String, String, Int, String?, String?, String?, Openness?)
-    
+    case commentIssue(Configuration, owner: String, repo: String, number: Int, body: String)
+
     var method: HTTPMethod {
         switch self {
-        case .postIssue, .patchIssue:
+        case .postIssue, .patchIssue, .commentIssue:
             return .POST
         default:
             return .GET
@@ -206,7 +207,7 @@ enum IssueRouter: JSONPostRouter {
     
     var encoding: HTTPEncoding {
         switch self {
-        case .postIssue, .patchIssue:
+        case .postIssue, .patchIssue, .commentIssue:
             return .json
         default:
             return .url
@@ -220,6 +221,7 @@ enum IssueRouter: JSONPostRouter {
         case .readIssues(let config, _, _, _, _, _): return config
         case .postIssue(let config, _, _, _, _, _, _): return config
         case .patchIssue(let config, _, _, _, _, _, _, _): return config
+        case .commentIssue(let config, _, _, _, _): return config
         }
     }
     
@@ -258,6 +260,8 @@ enum IssueRouter: JSONPostRouter {
                 params["state"] = state.rawValue
             }
             return params
+        case .commentIssue(_, _, _, _, let body):
+            return ["body": body]
         }
     }
     
@@ -273,6 +277,8 @@ enum IssueRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/issues"
         case .patchIssue(_, let owner, let repository, let number, _, _, _, _):
             return "repos/\(owner)/\(repository)/issues/\(number)"
+        case .commentIssue(_, let owner, let repository, let number, _):
+            return "repos/\(owner)/\(repository)/issues/\(number)/comments"
         }
     }
 }
