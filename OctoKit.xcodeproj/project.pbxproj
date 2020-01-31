@@ -96,6 +96,7 @@
 		23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
 		23F643501C7AEF72000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 		23F643511C7AEF73000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
+		5090ED7223E483820062C763 /* issue_comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 5090ED7123E483820062C763 /* issue_comment.json */; };
 		515337A9224FC3760024544D /* issue2.json in Resources */ = {isa = PBXBuildFile; fileRef = 515337A8224FC3760024544D /* issue2.json */; };
 		515337AA224FC3760024544D /* issue2.json in Resources */ = {isa = PBXBuildFile; fileRef = 515337A8224FC3760024544D /* issue2.json */; };
 		515337AB224FC3760024544D /* issue2.json in Resources */ = {isa = PBXBuildFile; fileRef = 515337A8224FC3760024544D /* issue2.json */; };
@@ -271,6 +272,7 @@
 		23CAF29A1C7AB619005011C4 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F6433C1C7AEEB6000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/tvOS/Nocilla.framework; sourceTree = "<group>"; };
 		23F643421C7AEF2F000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/Mac/Nocilla.framework; sourceTree = "<group>"; };
+		5090ED7123E483820062C763 /* issue_comment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = issue_comment.json; path = Fixtures/issue_comment.json; sourceTree = "<group>"; };
 		515337A8224FC3760024544D /* issue2.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = issue2.json; path = Fixtures/issue2.json; sourceTree = "<group>"; };
 		515337C1225166600024544D /* Gist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gist.swift; sourceTree = "<group>"; };
 		515337C3225179FB0024544D /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
@@ -388,6 +390,7 @@
 			children = (
 				515337F92252A0410024544D /* gist.json */,
 				515337F522529E7B0024544D /* gists.json */,
+				5090ED7123E483820062C763 /* issue_comment.json */,
 				DABBDE4F1C8C0C20008F57CD /* issue.json */,
 				515337A8224FC3760024544D /* issue2.json */,
 				E7EDEA6D1C871D0E006BAAF2 /* issues.json */,
@@ -721,6 +724,7 @@
 				D4D28F742299DCE700F8E92A /* label.json in Resources */,
 				234F4BDF1BDDE44600A58EF7 /* user_me.json in Resources */,
 				234F4BDD1BDDE44600A58EF7 /* public_key.json in Resources */,
+				5090ED7223E483820062C763 /* issue_comment.json in Resources */,
 				DABBDE501C8C0C20008F57CD /* issue.json in Resources */,
 				234F4BDE1BDDE44600A58EF7 /* repo.json in Resources */,
 				234F4BE11BDDE44600A58EF7 /* user_repos.json in Resources */,
