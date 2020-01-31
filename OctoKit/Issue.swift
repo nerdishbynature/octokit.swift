@@ -60,6 +60,23 @@ open class Issue: Codable {
     }
 }
 
+public struct Comment: Codable {
+    public let id: Int
+    public let url: URL
+    public let htmlURL: URL
+    public let body: String
+    public let user: User
+    public let createdAt: Date
+    public let updatedAt: Date
+
+    enum CodingKeys: String, CodingKey {
+        case id, url, body, user
+        case htmlURL = "html_url"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+    }
+}
+
 // MARK: request
 
 public extension Octokit {
@@ -184,6 +201,31 @@ public extension Octokit {
             }
         }
     }
+
+
+    /// Posts a comment on an issue using the given body.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the issue.
+    ///   - body: The contents of the comment.
+    ///   - completion: Callback for the comment that is created.
+    @discardableResult
+    func commentIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String, completion: @escaping (_ response: Response<Comment>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: Comment.self) { issue, error in
+            if let error = error {
+                completion(Response.failure(error))
+            } else {
+                if let issue = issue {
+                    completion(Response.success(issue))
+                }
+            }
+        }
+    }
 }
 
 // MARK: Router
@@ -194,7 +236,7 @@ enum IssueRouter: JSONPostRouter {
     case readIssues(Configuration, String, String, String, String, Openness)
     case postIssue(Configuration, String, String, String, String?, String?, [String])
     case patchIssue(Configuration, String, String, Int, String?, String?, String?, Openness?)
-    case commentIssue(Configuration, owner: String, repo: String, number: Int, body: String)
+    case commentIssue(Configuration, String, String, Int, String)
 
     var method: HTTPMethod {
         switch self {
