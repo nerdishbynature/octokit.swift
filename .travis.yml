@@ -1,5 +1,5 @@
 language: generic
-osx_image: xcode10.2
+osx_image: xcode11.2
 sudo: false
 env:
   global:
