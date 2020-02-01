@@ -11,9 +11,9 @@ matrix:
     - os: osx
       env: FASTLANE_LANE=code_coverage FASTLANE_ENV=default
     - os: osx
-      env: FASTLANE_ENV=ios13_2
+      env: FASTLANE_ENV=ios12_2
     - os: osx
-      env: FASTLANE_ENV=tvos13_2
+      env: FASTLANE_ENV=tvos12_2
     - os: osx
       env: FASTLANE_ENV=osx
     - os: linux
