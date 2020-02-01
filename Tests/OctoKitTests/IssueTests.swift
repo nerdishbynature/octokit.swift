@@ -6,6 +6,7 @@ class IssueTests: XCTestCase {
         ("testGetMyIssues", testGetMyIssues),
         ("testGetIssue", testGetIssue),
         ("testPostIssue", testGetIssue),
+        ("testPostComment", testPostComment),
         ("testParsingIssue", testParsingIssue),
         ("testParsingIssue2", testParsingIssue2),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
