@@ -65,7 +65,7 @@ public extension Octokit {
     ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
     ///   - completion: Callback for the outcome of the created release.
     @discardableResult
-    func postRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, tagName: String, targetCommitish: String, name: String, body: String, prerelease: Bool = false, draft: Bool = false, completion: @escaping (_ response: Response<Release>) -> Void) -> URLSessionDataTaskProtocol? {
+    func postRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, tagName: String, targetCommitish: String? = nil, name: String? = nil, body: String? = nil, prerelease: Bool = false, draft: Bool = false, completion: @escaping (_ response: Response<Release>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -84,7 +84,7 @@ public extension Octokit {
 // MARK: Router
 
 enum ReleaseRouter: JSONPostRouter {
-    case postRelease(Configuration, String, String, String, String, String, String, Bool, Bool)
+    case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool)
 
     var configuration: Configuration {
         switch self {
@@ -103,14 +103,21 @@ enum ReleaseRouter: JSONPostRouter {
     var params: [String: Any] {
         switch self {
         case .postRelease(_, _, _, let tagName, let targetCommitish, let name, let body, let prerelease, let draft):
-            return [
+            var params: [String: Any] = [
                 "tag_name": tagName,
-                "target_commitish": targetCommitish,
-                "name": name,
-                "body": body,
                 "prerelease": prerelease,
                 "draft": draft
             ]
+            if let targetCommitish = targetCommitish {
+                params["target_commitish"] = targetCommitish
+            }
+            if let name = name {
+                params["name"] = name
+            }
+            if let body = body {
+                params["body"] = body
+            }
+            return params
         }
     }
 
