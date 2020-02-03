@@ -96,6 +96,8 @@
 		23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
 		23F643501C7AEF72000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 		23F643511C7AEF73000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
+		502C70FC23E8535900384775 /* issue_comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 5090ED7123E483820062C763 /* issue_comment.json */; };
+		502C70FD23E8535A00384775 /* issue_comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 5090ED7123E483820062C763 /* issue_comment.json */; };
 		5090ED7223E483820062C763 /* issue_comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 5090ED7123E483820062C763 /* issue_comment.json */; };
 		515337A9224FC3760024544D /* issue2.json in Resources */ = {isa = PBXBuildFile; fileRef = 515337A8224FC3760024544D /* issue2.json */; };
 		515337AA224FC3760024544D /* issue2.json in Resources */ = {isa = PBXBuildFile; fileRef = 515337A8224FC3760024544D /* issue2.json */; };
@@ -761,6 +763,7 @@
 				D4D28F752299DCE700F8E92A /* label.json in Resources */,
 				23F6434A1C7AEF69000427B3 /* user_me.json in Resources */,
 				23F643461C7AEF63000427B3 /* public_key.json in Resources */,
+				502C70FC23E8535900384775 /* issue_comment.json in Resources */,
 				DABBDE511C8C0C20008F57CD /* issue.json in Resources */,
 				23F643481C7AEF66000427B3 /* repo.json in Resources */,
 				23F6434E1C7AEF6F000427B3 /* user_repos.json in Resources */,
@@ -790,6 +793,7 @@
 				D4D28F762299DCE700F8E92A /* label.json in Resources */,
 				23F6434B1C7AEF6A000427B3 /* user_me.json in Resources */,
 				23F643471C7AEF63000427B3 /* public_key.json in Resources */,
+				502C70FD23E8535A00384775 /* issue_comment.json in Resources */,
 				DABBDE521C8C0C20008F57CD /* issue.json in Resources */,
 				23F643491C7AEF67000427B3 /* repo.json in Resources */,
 				23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */,
