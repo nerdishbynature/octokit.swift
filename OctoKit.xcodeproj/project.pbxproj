@@ -96,6 +96,9 @@
 		23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */ = {isa = PBXBuildFile; fileRef = 234F4BDC1BDDE44600A58EF7 /* user_repos.json */; };
 		23F643501C7AEF72000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
 		23F643511C7AEF73000427B3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = E7EE59DF1BE139FD0012E3D2 /* users.json */; };
+		502C70FC23E8535900384775 /* issue_comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 5090ED7123E483820062C763 /* issue_comment.json */; };
+		502C70FD23E8535A00384775 /* issue_comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 5090ED7123E483820062C763 /* issue_comment.json */; };
+		5090ED7223E483820062C763 /* issue_comment.json in Resources */ = {isa = PBXBuildFile; fileRef = 5090ED7123E483820062C763 /* issue_comment.json */; };
 		5090ED7423E48AA80062C763 /* Releases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5090ED7323E48AA80062C763 /* Releases.swift */; };
 		5090ED7623E48EE60062C763 /* ReleasesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5090ED7523E48EE60062C763 /* ReleasesTests.swift */; };
 		5090ED7823E48FBC0062C763 /* post_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 5090ED7723E48FBC0062C763 /* post_release.json */; };
@@ -274,6 +277,7 @@
 		23CAF29A1C7AB619005011C4 /* OctoKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OctoKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F6433C1C7AEEB6000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/tvOS/Nocilla.framework; sourceTree = "<group>"; };
 		23F643421C7AEF2F000427B3 /* Nocilla.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nocilla.framework; path = Carthage/Build/Mac/Nocilla.framework; sourceTree = "<group>"; };
+		5090ED7123E483820062C763 /* issue_comment.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = issue_comment.json; path = Fixtures/issue_comment.json; sourceTree = "<group>"; };
 		5090ED7323E48AA80062C763 /* Releases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Releases.swift; sourceTree = "<group>"; };
 		5090ED7523E48EE60062C763 /* ReleasesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleasesTests.swift; sourceTree = "<group>"; };
 		5090ED7723E48FBC0062C763 /* post_release.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = post_release.json; path = Fixtures/post_release.json; sourceTree = "<group>"; };
@@ -395,6 +399,7 @@
 			children = (
 				515337F92252A0410024544D /* gist.json */,
 				515337F522529E7B0024544D /* gists.json */,
+				5090ED7123E483820062C763 /* issue_comment.json */,
 				DABBDE4F1C8C0C20008F57CD /* issue.json */,
 				515337A8224FC3760024544D /* issue2.json */,
 				E7EDEA6D1C871D0E006BAAF2 /* issues.json */,
@@ -730,6 +735,7 @@
 				D4D28F742299DCE700F8E92A /* label.json in Resources */,
 				234F4BDF1BDDE44600A58EF7 /* user_me.json in Resources */,
 				234F4BDD1BDDE44600A58EF7 /* public_key.json in Resources */,
+				5090ED7223E483820062C763 /* issue_comment.json in Resources */,
 				DABBDE501C8C0C20008F57CD /* issue.json in Resources */,
 				234F4BDE1BDDE44600A58EF7 /* repo.json in Resources */,
 				234F4BE11BDDE44600A58EF7 /* user_repos.json in Resources */,
@@ -767,6 +773,7 @@
 				D4D28F752299DCE700F8E92A /* label.json in Resources */,
 				23F6434A1C7AEF69000427B3 /* user_me.json in Resources */,
 				23F643461C7AEF63000427B3 /* public_key.json in Resources */,
+				502C70FC23E8535900384775 /* issue_comment.json in Resources */,
 				DABBDE511C8C0C20008F57CD /* issue.json in Resources */,
 				23F643481C7AEF66000427B3 /* repo.json in Resources */,
 				23F6434E1C7AEF6F000427B3 /* user_repos.json in Resources */,
@@ -796,6 +803,7 @@
 				D4D28F762299DCE700F8E92A /* label.json in Resources */,
 				23F6434B1C7AEF6A000427B3 /* user_me.json in Resources */,
 				23F643471C7AEF63000427B3 /* public_key.json in Resources */,
+				502C70FD23E8535A00384775 /* issue_comment.json in Resources */,
 				DABBDE521C8C0C20008F57CD /* issue.json in Resources */,
 				23F643491C7AEF67000427B3 /* repo.json in Resources */,
 				23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */,
