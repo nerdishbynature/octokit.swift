@@ -341,3 +341,18 @@ let task = Octokit().pullRequests(session, owner: "octocat", repository: "Hello-
         // handle any errors
     }
 }
+```
+
+## Releases
+
+### Create a new release
+```swift
+let task = Octokit().postRelease(session, owner: "octocat", repository: "Hello-World", tagName: "v1.0.0", targetCommitish: "master", name: "v1.0.0 Release", body: "The changelog of this release", prerelease: false, draft: false) { response in
+	switch response {
+        case .success(let release):
+        // do something with the release
+        case .failure:
+        // handle any errors
+    }
+}
+```
