@@ -317,6 +317,20 @@ Octokit(config).patchIssue("owner", repository: "repo", number: 1347, title: "Fo
     }
 }
 ```
+
+### Comment an issue
+
+```swift
+let task = Octokit().commentIssue(session, owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
+    switch response {
+    case .success(let comment):
+        // do something with the comment
+    case .failure:
+        // handle any errors
+    }
+}
+```
+
 ## Pull requests
 
 ### Get a single pull request
