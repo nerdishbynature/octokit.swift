@@ -18,7 +18,7 @@ public struct Release: Codable {
     public let url: URL
     public let htmlURL: URL
     public let assetsURL: URL
-    public let uploadURL: URL
+    public let uploadURL: URL?
     public let tarballURL: URL
     public let zipballURL: URL
     public let nodeId: String
