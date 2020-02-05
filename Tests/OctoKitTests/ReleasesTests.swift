@@ -28,8 +28,8 @@ final class ReleasesTests: XCTestCase {
                 XCTAssertEqual(release.body, "The changelog of this release")
                 XCTAssertFalse(release.prerelease)
                 XCTAssertFalse(release.draft)
-            case .failure:
-                XCTAssert(false, "should not get an error")
+            case .failure(let error):
+                XCTAssert(false, "Endpoint failed with error \(error)")
             }
         }
         XCTAssertNotNil(task)
