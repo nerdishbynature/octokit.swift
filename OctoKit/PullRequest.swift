@@ -31,7 +31,7 @@ open class PullRequest: Codable {
     open var mergedAt: Date?
     
     open var user: User?
-    open var number: Int?
+    open var number: Int
     open var state: Openness?
     
     enum CodingKeys: String, CodingKey {
