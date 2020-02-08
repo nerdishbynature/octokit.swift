@@ -1,5 +1,8 @@
 import RequestKit
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 
 public struct Review {
     public let body: String
