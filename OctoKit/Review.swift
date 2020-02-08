@@ -1,4 +1,5 @@
 import RequestKit
+import Foundation
 
 public struct Review {
     public let body: String
