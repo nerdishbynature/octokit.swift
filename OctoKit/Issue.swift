@@ -21,7 +21,7 @@ open class Issue: Codable {
     open var commentsURL: URL?
     open var eventsURL: URL?
     open var htmlURL: URL?
-    open var number: Int?
+    open var number: Int
     open var state: Openness?
     open var title: String?
     open var body: String?

@@ -18,7 +18,6 @@ public struct Release: Codable {
     public let url: URL
     public let htmlURL: URL
     public let assetsURL: URL
-    public let uploadURL: URL
     public let tarballURL: URL
     public let zipballURL: URL
     public let nodeId: String
@@ -37,7 +36,6 @@ public struct Release: Codable {
 
         case htmlURL = "html_url"
         case assetsURL = "assets_url"
-        case uploadURL = "upload_url"
         case tarballURL = "tarball_url"
         case zipballURL = "zipball_url"
         case nodeId = "node_id"
@@ -69,6 +67,7 @@ public extension Octokit {
         let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+
         return router.post(session, decoder: decoder, expectedResultType: Release.self) { issue, error in
             if let error = error {
                 completion(Response.failure(error))
