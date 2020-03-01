@@ -52,6 +52,7 @@ open class PullRequest: Codable {
         case assignee
         case milestone
         case locked
+        case user
         case closedAt = "closed_at"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
