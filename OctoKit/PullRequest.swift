@@ -33,6 +33,7 @@ open class PullRequest: Codable {
     open var user: User?
     open var number: Int
     open var state: Openness?
+    open var labels: [Label]?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -53,6 +54,7 @@ open class PullRequest: Codable {
         case milestone
         case locked
         case user
+        case labels
         case closedAt = "closed_at"
         case createdAt = "created_at"
         case updatedAt = "updated_at"
