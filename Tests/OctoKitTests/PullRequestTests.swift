@@ -21,7 +21,8 @@ class PullRequestTests: XCTestCase {
                 XCTAssertEqual(pullRequests.id, 1)
                 XCTAssertEqual(pullRequests.title, "new-feature")
                 XCTAssertEqual(pullRequests.body, "Please pull these awesome changes")
-                XCTAssertEqual(pullRequests.user?.login ?? "", "octocat")
+                XCTAssertEqual(pullRequests.labels?.count, 1)
+                XCTAssertEqual(pullRequests.user?.login, "octocat")
             case .failure(let error):
                 XCTAssertNil(error)
             }
@@ -43,7 +44,8 @@ class PullRequestTests: XCTestCase {
                 XCTAssertEqual(pullRequests.count, 1)
                 XCTAssertEqual(pullRequests.first?.title, "new-feature")
                 XCTAssertEqual(pullRequests.first?.body, "Please pull these awesome changes")
-                XCTAssertEqual(pullRequests.first?.user?.login ?? "", "octocat")
+                XCTAssertEqual(pullRequests.first?.labels?.count, 1)
+                XCTAssertEqual(pullRequests.first?.user?.login, "octocat")
             case .failure(let error):
                 XCTAssertNil(error)
             }
