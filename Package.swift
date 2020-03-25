@@ -17,9 +17,7 @@ let package = Package(
     targets: [
         .target(
             name: "OctoKit",
-            dependencies: ["RequestKit"],
-            path: ".",
-            sources: ["OctoKit"]),
+            dependencies: ["RequestKit"]),
         .testTarget(
             name: "OctoKitTests",
             dependencies: ["OctoKit"]),
