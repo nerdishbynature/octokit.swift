@@ -30,3 +30,4 @@ Checkouts/
 
 # Swift PM
 .build
+.swiftpm
