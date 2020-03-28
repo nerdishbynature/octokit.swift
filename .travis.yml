@@ -1,4 +1,5 @@
 language: swift
+osx_image: xcode11.3
 sudo: false
 env:
   global:
@@ -8,16 +9,12 @@ env:
 matrix:
   include:
     - os: osx
-      osx_image: xcode11.3
       env: FASTLANE_LANE=code_coverage FASTLANE_ENV=default
     - os: osx
-      osx_image: xcode11.3
       env: FASTLANE_ENV=ios12_2
     - os: osx
-      osx_image: xcode11.3
       env: FASTLANE_ENV=tvos12_2
     - os: osx
-      osx_image: xcode11.3
       env: FASTLANE_ENV=osx
     - os: linux
       language: generic
