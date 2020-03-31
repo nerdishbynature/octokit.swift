@@ -1,5 +1,5 @@
-language: generic
-osx_image: xcode11.2
+language: swift
+osx_image: xcode11.3
 sudo: false
 env:
   global:
