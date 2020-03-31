@@ -17,10 +17,12 @@ matrix:
     - os: osx
       env: FASTLANE_ENV=osx
     - os: linux
+      language: generic
       sudo: required
       dist: trusty
       env: SWIFT_VERSION=4.2
     - os: linux
+      language: generic
       sudo: required
       dist: trusty
       env: SWIFT_VERSION=5.1
