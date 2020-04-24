@@ -13,8 +13,10 @@ class StarsTests: XCTestCase {
     // MARK: Actual Request tests
 
     func testGetStarredRepositories() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred?access_token=12345", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
-        let config = TokenConfiguration("12345")
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
         let task = Octokit(config).myStars(session) { response in
             switch response {
             case .success(let repositories):
@@ -28,8 +30,10 @@ class StarsTests: XCTestCase {
     }
 
     func testFailToGetStarredRepositories() {
-        let config = TokenConfiguration("12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred?access_token=12345", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: nil, statusCode: 404)
         let task = Octokit(config).myStars(session) { response in
             switch response {
             case .success:
