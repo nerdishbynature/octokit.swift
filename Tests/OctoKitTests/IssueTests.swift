@@ -15,8 +15,10 @@ class IssueTests: XCTestCase {
     // MARK: Actual Request tests
     
     func testGetMyIssues() {
-        let config = TokenConfiguration("12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/issues?access_token=12345&page=1&per_page=100&state=open", expectedHTTPMethod: "GET", jsonFile: "issues", statusCode: 200)
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/issues?page=1&per_page=100&state=open", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "issues", statusCode: 200)
         let task = Octokit(config).myIssues(session) { response in
             switch response {
             case .success(let issues):

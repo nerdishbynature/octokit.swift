@@ -15,13 +15,9 @@ public struct TokenConfiguration: Configuration {
     public let errorDomain = OctoKitErrorDomain
     public let authorizationHeader: String? = "Basic"
 
-    public init(_ token: String? = nil, username: String? = nil, url: String = githubBaseURL) {
+    public init(_ token: String? = nil, url: String = githubBaseURL) {
         apiEndpoint = url
-        if let username = username, let token = token {
-            accessToken = "\(username):\(token)".data(using: .utf8)!.base64EncodedString()
-        } else {
-            accessToken = token
-        }
+        accessToken = token?.data(using: .utf8)!.base64EncodedString()
     }
 }
 
