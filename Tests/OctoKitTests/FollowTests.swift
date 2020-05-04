@@ -15,8 +15,10 @@ class FollowTests: XCTestCase {
     ]
     
     func testGetMyFollowers() {
-        let config = TokenConfiguration("12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers?access_token=12345", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "users", statusCode: 200)
         let task = Octokit(config).myFollowers(session) { response in
             switch response {
             case .success(let users):
@@ -30,8 +32,10 @@ class FollowTests: XCTestCase {
     }
 
     func testFailToGetMyFollowers() {
-        let config = TokenConfiguration("12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers?access_token=12345", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: nil, statusCode: 404)
         let task = Octokit(config).myFollowers(session) { response in
             switch response {
             case .success:
@@ -75,8 +79,10 @@ class FollowTests: XCTestCase {
     }
 
     func testGetMyFollowing() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following?access_token=12345", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
-        let config = TokenConfiguration("12345")
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "users", statusCode: 200)
         let task = Octokit(config).myFollowing(session) { response in
             switch response {
             case .success(let users):
@@ -90,8 +96,10 @@ class FollowTests: XCTestCase {
     }
 
     func testFailToGetMyFollowing() {
-        let config = TokenConfiguration("12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following?access_token=12345", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: nil, statusCode: 404)
         let task = Octokit(config).myFollowing(session) { response in
             switch response {
             case .success:

@@ -17,8 +17,10 @@ class GistTests: XCTestCase {
     // MARK: Actual Request tests
     
     func testGetMyGists() {
-        let config = TokenConfiguration("12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "gists", statusCode: 200)
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists?page=1&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "gists", statusCode: 200)
         let task = Octokit(config).myGists(session) { response in
             switch response {
             case .success(let gists):
@@ -32,8 +34,10 @@ class GistTests: XCTestCase {
     }
     
     func testGetGists() {
-        let config = TokenConfiguration("12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/vincode-io/gists?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "gists", statusCode: 200)
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/vincode-io/gists?page=1&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "gists", statusCode: 200)
         let task = Octokit(config).gists(session, owner: "vincode-io") { response in
             switch response {
             case .success(let gists):

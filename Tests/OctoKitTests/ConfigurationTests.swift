@@ -15,13 +15,13 @@ class ConfigurationTests: XCTestCase {
     
     func testTokenConfiguration() {
         let subject = TokenConfiguration("12345")
-        XCTAssertEqual(subject.accessToken, "12345")
+        XCTAssertEqual(subject.accessToken, "12345".data(using: .utf8)?.base64EncodedString())
         XCTAssertEqual(subject.apiEndpoint, "https://api.github.com")
     }
 
     func testEnterpriseTokenConfiguration() {
         let subject = TokenConfiguration("12345", url: enterpriseURL)
-        XCTAssertEqual(subject.accessToken, "12345")
+        XCTAssertEqual(subject.accessToken, "12345".data(using: .utf8)?.base64EncodedString())
         XCTAssertEqual(subject.apiEndpoint, enterpriseURL)
     }
 
@@ -55,7 +55,7 @@ class ConfigurationTests: XCTestCase {
         config.handleOpenURL(session, url: url) { accessToken in
             token = accessToken.accessToken
         }
-        XCTAssertEqual(token, "017ec60f4a182")
+        XCTAssertEqual(token, "017ec60f4a182".data(using: .utf8)?.base64EncodedString())
         XCTAssertTrue(session.wasCalled)
     }
     
