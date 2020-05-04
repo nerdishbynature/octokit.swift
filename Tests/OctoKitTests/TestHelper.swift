@@ -32,6 +32,13 @@ internal class Helper {
         return try! decoder.decode(T.self, from: data)
     }
     
+    internal class func makeAuthHeader(username: String, password: String) -> [String: String] {
+        let token = "\(username):\(password)".data(using: .utf8)!.base64EncodedString()
+        return [
+            "Authorization": "Basic \(token)"
+        ]
+    }
+    
     private class func jsonFilePath(resourceName: String) -> String {
         #if os(Linux)
         let currentDirectoryPath = FileManager.default.currentDirectoryPath

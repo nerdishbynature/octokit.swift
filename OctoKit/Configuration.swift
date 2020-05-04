@@ -13,10 +13,11 @@ public struct TokenConfiguration: Configuration {
     public var apiEndpoint: String
     public var accessToken: String?
     public let errorDomain = OctoKitErrorDomain
+    public let authorizationHeader: String? = "Basic"
 
     public init(_ token: String? = nil, url: String = githubBaseURL) {
         apiEndpoint = url
-        accessToken = token
+        accessToken = token?.data(using: .utf8)!.base64EncodedString()
     }
 }
 

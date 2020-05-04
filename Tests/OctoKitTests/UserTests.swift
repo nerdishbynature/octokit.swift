@@ -46,8 +46,11 @@ class UserTests: XCTestCase {
     }
 
     func testGettingAuthenticatedUser() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user?access_token=token", expectedHTTPMethod: "GET", jsonFile: "user_me", statusCode: 200)
-        let task = Octokit(TokenConfiguration("token")).me(session) { response in
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_me", statusCode: 200)
+        let task = Octokit(config).me(session) { response in
             switch response {
             case .success(let user):
                 XCTAssertEqual(user.login, "pietbrauer")

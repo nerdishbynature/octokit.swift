@@ -47,8 +47,10 @@ class RepositoryTests: XCTestCase {
     }
 
     func testGetAuthenticatedRepositories() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
-        let config = TokenConfiguration("12345")
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?page=1&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
         let task = Octokit(config).repositories(session) { response in
             switch response {
             case .success(let repositories):
@@ -62,8 +64,10 @@ class RepositoryTests: XCTestCase {
     }
 
     func testGetAuthenticatedRepositoriesEnterprise() {
-        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/user/repos?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
-        let config = TokenConfiguration("12345", url: "https://enterprise.nerdishbynature.com/api/v3/")
+        let config = TokenConfiguration("user:12345", url: "https://enterprise.nerdishbynature.com/api/v3/")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/user/repos?page=1&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
         let task = Octokit(config).repositories(session) { response in
             switch response {
             case .success(let repositories):
@@ -77,9 +81,11 @@ class RepositoryTests: XCTestCase {
     }
 
     func testFailToGetRepositories() {
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+        
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?access_token=12345&page=1&per_page=100", expectedHTTPMethod: "GET", response: json, statusCode: 401)
-        let config = TokenConfiguration("12345")
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?page=1&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, response: json, statusCode: 401)
         let task = Octokit(config).repositories(session) { response in
             switch response {
             case .success:
