@@ -38,7 +38,7 @@ class PullRequestTests: XCTestCase {
                 statusCode: 200
         )
 
-        let task = Octokit().pullRequests(session, owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.Open) { response in
+        let task = Octokit().pullRequests(session, owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.open) { response in
             switch response {
             case .success(let pullRequests):
                 XCTAssertEqual(pullRequests.count, 1)
