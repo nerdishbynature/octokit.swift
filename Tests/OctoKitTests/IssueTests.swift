@@ -84,7 +84,7 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(subject.number, 1347)
         XCTAssertEqual(subject.title, "Found a bug")
         XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/octocat/Hello-World/issues/1347"))
-        XCTAssertEqual(subject.state, Openness.Open)
+        XCTAssertEqual(subject.state, Openness.open)
         XCTAssertEqual(subject.locked, false)
     }
     
@@ -97,7 +97,7 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(subject.number, 36)
         XCTAssertEqual(subject.title, "Add Request: Test File")
         XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/vincode-io/FeedCompass/issues/36"))
-        XCTAssertEqual(subject.state, Openness.Open)
+        XCTAssertEqual(subject.state, Openness.open)
         XCTAssertEqual(subject.locked, false)
     }
     
