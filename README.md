@@ -321,7 +321,7 @@ Octokit(config).patchIssue("owner", repository: "repo", number: 1347, title: "Fo
 ### Comment an issue
 
 ```swift
-let task = Octokit().commentIssue(session, owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
+Octokit().commentIssue(owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
     switch response {
     case .success(let comment):
         // do something with the comment
@@ -335,7 +335,7 @@ let task = Octokit().commentIssue(session, owner: "octocat", repository: "Hello-
 
 ### Get a single pull request
 ```swift
-let task = Octokit().pullRequest(session, owner: "octocat", repository: "Hello-World", number: 1) { response in
+Octokit().pullRequest(owner: "octocat", repository: "Hello-World", number: 1) { response in
     switch response {
         case .success(let pullRequests):
             // do something with a pull request
@@ -347,7 +347,7 @@ let task = Octokit().pullRequest(session, owner: "octocat", repository: "Hello-W
 
 ### List a pull requests
 ```swift
-let task = Octokit().pullRequests(session, owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.Open) { response in
+Octokit().pullRequests(owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.Open) { response in
     switch response {
         case .success(let pullRequests):
         // do something with a pull request list
@@ -361,7 +361,7 @@ let task = Octokit().pullRequests(session, owner: "octocat", repository: "Hello-
 
 ### Create a new release
 ```swift
-let task = Octokit().postRelease(session, owner: "octocat", repository: "Hello-World", tagName: "v1.0.0", targetCommitish: "master", name: "v1.0.0 Release", body: "The changelog of this release", prerelease: false, draft: false) { response in
+Octokit().postRelease(owner: "octocat", repository: "Hello-World", tagName: "v1.0.0", targetCommitish: "master", name: "v1.0.0 Release", body: "The changelog of this release", prerelease: false, draft: false) { response in
 	switch response {
         case .success(let release):
         // do something with the release
