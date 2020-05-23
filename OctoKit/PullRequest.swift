@@ -109,7 +109,7 @@ public extension Octokit {
                              owner: String,
                              repository: String,
                              base: String? = nil,
-                             state: Openness = .Open,
+                             state: Openness = .open,
                              sort: SortType = .created,
                              direction: SortDirection = .desc,
                              completion: @escaping (_ response: Response<[PullRequest]>) -> Void) -> URLSessionDataTaskProtocol? {
