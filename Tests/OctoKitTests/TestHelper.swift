@@ -40,26 +40,17 @@ internal class Helper {
     }
     
     private class func jsonFilePath(resourceName: String) -> String {
-        #if os(Linux)
-        let currentDirectoryPath = FileManager.default.currentDirectoryPath
-        let path = currentDirectoryPath + "/Tests/OctoKitTests/" + resourceName + ".json"
-        #else
-        let bundle = Bundle(for: self)
-        let path = bundle.path(forResource: resourceName, ofType: "json")!
-        #endif
-        
-        return path
+        return URL(fileURLWithPath: #file)
+            .deletingLastPathComponent()
+            .appendingPathComponent("\(resourceName).json")
+            .path
     }
     
     private class func jsonFixturesFilePath(resourceName: String) -> String {
-        #if os(Linux)
-        let currentDirectoryPath = FileManager.default.currentDirectoryPath
-        let path = currentDirectoryPath + "/Tests/OctoKitTests/Fixtures/" + resourceName + ".json"
-        #else
-        let bundle = Bundle(path: "OctoKitTests/Fixtures")
-        let path = bundle!.path(forResource: resourceName, ofType: "json")!
-        #endif
-        
-        return path
+        return URL(fileURLWithPath: #file)
+            .deletingLastPathComponent()
+            .appendingPathComponent("Fixtures")
+            .appendingPathComponent("\(resourceName).json")
+            .path
     }
 }
