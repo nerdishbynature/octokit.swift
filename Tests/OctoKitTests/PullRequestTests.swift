@@ -23,6 +23,18 @@ class PullRequestTests: XCTestCase {
                 XCTAssertEqual(pullRequests.body, "Please pull these awesome changes")
                 XCTAssertEqual(pullRequests.labels?.count, 1)
                 XCTAssertEqual(pullRequests.user?.login, "octocat")
+
+                XCTAssertEqual(pullRequests.base?.label, "master")
+                XCTAssertEqual(pullRequests.base?.ref, "master")
+                XCTAssertEqual(pullRequests.base?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                XCTAssertEqual(pullRequests.base?.user?.login, "octocat")
+                XCTAssertEqual(pullRequests.base?.repo?.name, "Hello-World")
+
+                XCTAssertEqual(pullRequests.head?.label, "new-topic")
+                XCTAssertEqual(pullRequests.head?.ref, "new-topic")
+                XCTAssertEqual(pullRequests.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                XCTAssertEqual(pullRequests.head?.user?.login, "octocat")
+                XCTAssertEqual(pullRequests.head?.repo?.name, "Hello-World")
             case .failure(let error):
                 XCTAssertNil(error)
             }
@@ -46,6 +58,18 @@ class PullRequestTests: XCTestCase {
                 XCTAssertEqual(pullRequests.first?.body, "Please pull these awesome changes")
                 XCTAssertEqual(pullRequests.first?.labels?.count, 1)
                 XCTAssertEqual(pullRequests.first?.user?.login, "octocat")
+
+                XCTAssertEqual(pullRequests.first?.base?.label, "master")
+                XCTAssertEqual(pullRequests.first?.base?.ref, "master")
+                XCTAssertEqual(pullRequests.first?.base?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                XCTAssertEqual(pullRequests.first?.base?.user?.login, "octocat")
+                XCTAssertEqual(pullRequests.first?.base?.repo?.name, "Hello-World")
+
+                XCTAssertEqual(pullRequests.first?.head?.label, "new-topic")
+                XCTAssertEqual(pullRequests.first?.head?.ref, "new-topic")
+                XCTAssertEqual(pullRequests.first?.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                XCTAssertEqual(pullRequests.first?.head?.user?.login, "octocat")
+                XCTAssertEqual(pullRequests.first?.head?.repo?.name, "Hello-World")
             case .failure(let error):
                 XCTAssertNil(error)
             }
