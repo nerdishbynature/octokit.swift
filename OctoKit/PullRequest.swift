@@ -34,6 +34,9 @@ open class PullRequest: Codable {
     open var number: Int
     open var state: Openness?
     open var labels: [Label]?
+
+    open var head: PullRequest.Branch?
+    open var base: PullRequest.Branch?
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -59,9 +62,18 @@ open class PullRequest: Codable {
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case mergedAt = "merged_at"
+        case head
+        case base
+    }
+
+    open class Branch: Codable {
+        open var label: String?
+        open var ref: String?
+        open var sha: String?
+        open var user: User?
+        open var repo: Repository?
     }
 }
-
 
 // MARK: Request
 
