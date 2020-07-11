@@ -45,6 +45,18 @@ open class Status: Codable {
 
 public extension Octokit {
 
+    /**
+     Creates a commit status
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter sha: The commit SHA.
+     - parameter state: The state of the status. Can be one of `.error`, `.failure`, `.pending`, or `.success`.
+     - parameter targetURL: The target URL to associate with this status. This URL will be linked from the GitHub UI to allow users to easily see the source of the status.
+     - parameter description: A short description of the status.
+     - parameter context: A string label to differentiate this status from the status of other systems.
+     - parameter completion: Callback for the outcome of the request.
+     */
     @discardableResult
     func createCommitStatus(_ session: RequestKitURLSession = URLSession.shared,
                             owner: String,
@@ -70,6 +82,14 @@ public extension Octokit {
         }
     }
 
+    /**
+     Fetches commit statuses for a reference
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter ref: SHA, a branch name, or a tag name.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
     func listCommitStatuses(_ session: RequestKitURLSession = URLSession.shared,
                             owner: String,
