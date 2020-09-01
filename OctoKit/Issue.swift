@@ -349,7 +349,7 @@ enum IssueRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/issues/\(number)"
         case .commentIssue(_, let owner, let repository, let number, _):
             return "repos/\(owner)/\(repository)/issues/\(number)/comments"
-        case .readCommentsIssue(_, let owner, let repository, let number, _):
+        case .readCommentsIssue(_, let owner, let repository, let number, _, _):
             return "repos/\(owner)/\(repository)/issues/\(number)/comments"
         }
     }
