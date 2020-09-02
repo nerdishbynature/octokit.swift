@@ -16,6 +16,7 @@ open class User: Codable {
     open var blog: String?
     open var location: String?
     open var email: String?
+    open var htmlUrl: String?
     open var numberOfPublicRepos: Int?
     open var numberOfPublicGists: Int?
     open var numberOfPrivateRepos: Int?
@@ -31,6 +32,7 @@ open class User: Codable {
         case blog
         case location
         case email
+        case htmlUrl = "html_url"
         case numberOfPublicRepos = "public_repos"
         case numberOfPublicGists = "public_gists"
         case numberOfPrivateRepos = "total_private_repos"

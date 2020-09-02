@@ -14,10 +14,15 @@ public struct TokenConfiguration: Configuration {
     public var accessToken: String?
     public let errorDomain = OctoKitErrorDomain
     public let authorizationHeader: String? = "Basic"
+    public var githubCustomHeaders: Array<HTTPHeader>?
 
     public init(_ token: String? = nil, url: String = githubBaseURL) {
         apiEndpoint = url
         accessToken = token?.data(using: .utf8)!.base64EncodedString()
+    }
+
+    public var customHeaders: Array<HTTPHeader>? {
+        return githubCustomHeaders
     }
 }
 
