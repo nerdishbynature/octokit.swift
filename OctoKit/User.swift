@@ -19,6 +19,31 @@ open class User: Codable {
     open var numberOfPublicRepos: Int?
     open var numberOfPublicGists: Int?
     open var numberOfPrivateRepos: Int?
+    open var nodeId: String?
+    open var url: String?
+    open var htmlURL: String?
+    open var followersURL: String?
+    open var followingURL: String?
+    open var gistsURL: String?
+    open var starredURL: String?
+    open var subscriptionsURL: String?
+    open var reposURL: String?
+    open var eventsURL: String?
+    open var receivedEventsURL: String?
+    open var siteAdmin: Bool?
+    open var hireable: Bool?
+    open var bio: String?
+    open var twitterUsername: String?
+    open var numberOfFollowers: Int?
+    open var numberOfFollowing: Int?
+    open var createdAt: Date?
+    open var updatedAt: Date?
+    open var numberOfPrivateGists: Int?
+    open var numberOfOwnPrivateRepos: Int?
+    open var amountDiskUsage: Int?
+    open var numberOfCollaborators: Int?
+    open var twoFactorAuthenticationEnabled: Bool?
+    open var subscriptionPlan: Plan?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -34,6 +59,31 @@ open class User: Codable {
         case numberOfPublicRepos = "public_repos"
         case numberOfPublicGists = "public_gists"
         case numberOfPrivateRepos = "total_private_repos"
+        case nodeId = "node_id"
+        case url
+        case htmlURL = "html_url"
+        case followersURL = "followers_url"
+        case followingURL = "following_url"
+        case gistsURL = "gists_url"
+        case starredURL = "starred_url"
+        case subscriptionsURL = "subscriptions_url"
+        case reposURL = "repos_url"
+        case eventsURL = "events_url"
+        case receivedEventsURL = "received_events_url"
+        case siteAdmin = "site_admin"
+        case hireable
+        case bio
+        case twitterUsername = "twitter_username"
+        case numberOfFollowers = "followers"
+        case numberOfFollowing = "following"
+        case createdAt = "created_at"
+        case updatedAt = "updated_at"
+        case numberOfPrivateGists = "private_gists"
+        case numberOfOwnPrivateRepos = "owned_private_repos"
+        case amountDiskUsage = "disk_usage"
+        case numberOfCollaborators = "collaborators"
+        case twoFactorAuthenticationEnabled = "two_factor_authentication"
+        case subscriptionPlan = "plan"
     }
 }
 
