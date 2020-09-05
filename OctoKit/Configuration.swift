@@ -29,7 +29,7 @@ public struct TokenConfiguration: Configuration {
     public init(_ token: String? = nil, url: String = githubBaseURL, previewHeaders: [PreviewHeader] = []) {
         apiEndpoint = url
         accessToken = token?.data(using: .utf8)!.base64EncodedString()
-        previewCustomHeaders = previewHeaders.map(\.header)
+        previewCustomHeaders = previewHeaders.map { $0.header }
     }
 }
 
@@ -60,7 +60,7 @@ public struct OAuthConfiguration: Configuration {
             self.token = token
             self.secret = secret
             self.scopes = scopes
-            previewCustomHeaders = previewHeaders.map(\.header)
+            previewCustomHeaders = previewHeaders.map { $0.header }
     }
 
     public func authenticate() -> URL? {
