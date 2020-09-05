@@ -183,6 +183,9 @@
 		D1EAE8742503DAF60023806C /* reactions.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8732503DAF60023806C /* reactions.json */; };
 		D1EAE8752503DAF60023806C /* reactions.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8732503DAF60023806C /* reactions.json */; };
 		D1EAE8762503DAF60023806C /* reactions.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8732503DAF60023806C /* reactions.json */; };
+		D1EAE8782503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
+		D1EAE8792503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
+		D1EAE87A2503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
 		D4D28F6C2299D87300F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6D2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6E2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
@@ -348,6 +351,7 @@
 		D1EAE86A2503D9280023806C /* Reactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactions.swift; sourceTree = "<group>"; };
 		D1EAE86F2503DAAD0023806C /* ReactionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsTest.swift; sourceTree = "<group>"; };
 		D1EAE8732503DAF60023806C /* reactions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reactions.json; sourceTree = "<group>"; };
+		D1EAE8772503E3260023806C /* issue_comments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = issue_comments.json; sourceTree = "<group>"; };
 		D4D28F6B2299D87300F8E92A /* LabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTests.swift; sourceTree = "<group>"; };
 		D4D28F6F2299DBE600F8E92A /* labels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = labels.json; path = Fixtures/labels.json; sourceTree = "<group>"; };
 		D4D28F732299DCE700F8E92A /* label.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = label.json; path = Fixtures/label.json; sourceTree = "<group>"; };
@@ -477,6 +481,7 @@
 				BF8C77314F563A710F11E2F6 /* pull_request.json */,
 				9D9ADDE223EEFF5C000AC34D /* reviews.json */,
 				D1EAE8732503DAF60023806C /* reactions.json */,
+				D1EAE8772503E3260023806C /* issue_comments.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -812,6 +817,7 @@
 				515337F622529E7B0024544D /* gists.json in Resources */,
 				515337FA2252A0410024544D /* gist.json in Resources */,
 				665D5D6324A639DF0045E3B4 /* statuses.json in Resources */,
+				D1EAE8782503E3260023806C /* issue_comments.json in Resources */,
 				665D5D6224A639DF0045E3B4 /* status.json in Resources */,
 				D4D28F702299DBE600F8E92A /* labels.json in Resources */,
 				E7EDEA6E1C871D0E006BAAF2 /* issues.json in Resources */,
@@ -855,6 +861,7 @@
 				515337F722529E7B0024544D /* gists.json in Resources */,
 				515337FB2252A0410024544D /* gist.json in Resources */,
 				665D5D6524A639E00045E3B4 /* statuses.json in Resources */,
+				D1EAE8792503E3260023806C /* issue_comments.json in Resources */,
 				665D5D6424A639E00045E3B4 /* status.json in Resources */,
 				50AFBB1C23EAC890004D30A8 /* post_release.json in Resources */,
 				D4D28F712299DBE600F8E92A /* labels.json in Resources */,
@@ -890,6 +897,7 @@
 				515337F822529E7B0024544D /* gists.json in Resources */,
 				515337FC2252A0410024544D /* gist.json in Resources */,
 				665D5D6724A639E00045E3B4 /* statuses.json in Resources */,
+				D1EAE87A2503E3260023806C /* issue_comments.json in Resources */,
 				665D5D6624A639E00045E3B4 /* status.json in Resources */,
 				50AFBB1D23EAC891004D30A8 /* post_release.json in Resources */,
 				D4D28F722299DBE600F8E92A /* labels.json in Resources */,

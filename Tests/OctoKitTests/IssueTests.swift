@@ -7,6 +7,7 @@ class IssueTests: XCTestCase {
         ("testGetIssue", testGetIssue),
         ("testPostIssue", testGetIssue),
         ("testPostComment", testPostComment),
+        ("testCommentsIssue", testCommentsIssue),
         ("testParsingIssue", testParsingIssue),
         ("testParsingIssue2", testParsingIssue2),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
@@ -65,6 +66,22 @@ class IssueTests: XCTestCase {
             switch response {
             case .success(let comment):
                 XCTAssertEqual(comment.body, "Testing a comment")
+            case .failure:
+                XCTAssert(false, "should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testCommentsIssue() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1/comments?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "issue_comments", statusCode: 200)
+        let task = Octokit().commentsIssue(session, owner: "octocat", repository: "Hello-World", number: 1) { response in
+            switch response {
+            case .success(let comments):
+                XCTAssertEqual(comments.count, 1)
+                XCTAssertEqual(comments[0].body, "Testing fetching comments for an issue")
+                XCTAssertEqual(comments[0].reactions!.totalCount, 5)
             case .failure:
                 XCTAssert(false, "should not get an error")
             }
