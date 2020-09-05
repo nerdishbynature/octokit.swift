@@ -166,6 +166,16 @@
 		BF8C7BE0F4071324EBDCA204 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
 		BF8C7DEE90DD25CBCA4AEE71 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C72B985869B84F46B4E9D /* Parameters.swift */; };
 		BF8C7FFFDDAFA560EBEC35EE /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
+		D1EAE8482503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
+		D1EAE8492503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
+		D1EAE84A2503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
+		D1EAE84B2503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
+		D1EAE85625038BBE0023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
+		D1EAE85725038BBF0023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
+		D1EAE85825038BC00023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
+		D1EAE85925038BD00023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
+		D1EAE85A25038BD10023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
+		D1EAE85B25038BD10023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
 		D4D28F6C2299D87300F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6D2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6E2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
@@ -326,6 +336,9 @@
 		BF8C76EB002802C14A08F63E /* PullRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTests.swift; sourceTree = "<group>"; };
 		BF8C77314F563A710F11E2F6 /* pull_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_request.json; sourceTree = "<group>"; };
 		BF8C79B71035B425F7748392 /* pull_requests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_requests.json; sourceTree = "<group>"; };
+		D1EAE8472503886C0023806C /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
+		D1EAE84C25038A910023806C /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
+		D1EAE85125038B460023806C /* plan.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = plan.json; sourceTree = "<group>"; };
 		D4D28F6B2299D87300F8E92A /* LabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTests.swift; sourceTree = "<group>"; };
 		D4D28F6F2299DBE600F8E92A /* labels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = labels.json; path = Fixtures/labels.json; sourceTree = "<group>"; };
 		D4D28F732299DCE700F8E92A /* label.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = label.json; path = Fixtures/label.json; sourceTree = "<group>"; };
@@ -424,6 +437,7 @@
 				BF8C76EB002802C14A08F63E /* PullRequestTests.swift */,
 				5090ED7523E48EE60062C763 /* ReleasesTests.swift */,
 				9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */,
+				D1EAE84C25038A910023806C /* PlanTests.swift */,
 			);
 			name = OctoKitTests;
 			path = Tests/OctoKitTests;
@@ -452,6 +466,7 @@
 				BF8C79B71035B425F7748392 /* pull_requests.json */,
 				BF8C77314F563A710F11E2F6 /* pull_request.json */,
 				9D9ADDE223EEFF5C000AC34D /* reviews.json */,
+				D1EAE85125038B460023806C /* plan.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -481,6 +496,7 @@
 				BF8C72B985869B84F46B4E9D /* Parameters.swift */,
 				9D9ADDE023EEFDE0000AC34D /* Review.swift */,
 				D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */,
+				D1EAE8472503886C0023806C /* Plan.swift */,
 			);
 			path = OctoKit;
 			sourceTree = "<group>";
@@ -784,6 +800,7 @@
 				515337F622529E7B0024544D /* gists.json in Resources */,
 				515337FA2252A0410024544D /* gist.json in Resources */,
 				665D5D6324A639DF0045E3B4 /* statuses.json in Resources */,
+				D1EAE85925038BD00023806C /* plan.json in Resources */,
 				665D5D6224A639DF0045E3B4 /* status.json in Resources */,
 				D4D28F702299DBE600F8E92A /* labels.json in Resources */,
 				E7EDEA6E1C871D0E006BAAF2 /* issues.json in Resources */,
@@ -826,6 +843,7 @@
 				515337F722529E7B0024544D /* gists.json in Resources */,
 				515337FB2252A0410024544D /* gist.json in Resources */,
 				665D5D6524A639E00045E3B4 /* statuses.json in Resources */,
+				D1EAE85A25038BD10023806C /* plan.json in Resources */,
 				665D5D6424A639E00045E3B4 /* status.json in Resources */,
 				50AFBB1C23EAC890004D30A8 /* post_release.json in Resources */,
 				D4D28F712299DBE600F8E92A /* labels.json in Resources */,
@@ -860,6 +878,7 @@
 				515337F822529E7B0024544D /* gists.json in Resources */,
 				515337FC2252A0410024544D /* gist.json in Resources */,
 				665D5D6724A639E00045E3B4 /* statuses.json in Resources */,
+				D1EAE85B25038BD10023806C /* plan.json in Resources */,
 				665D5D6624A639E00045E3B4 /* status.json in Resources */,
 				50AFBB1D23EAC891004D30A8 /* post_release.json in Resources */,
 				D4D28F722299DBE600F8E92A /* labels.json in Resources */,
@@ -894,6 +913,7 @@
 				23A0521F1CA924950068BFF7 /* OctoKitURLTestSession.swift in Sources */,
 				665D5D6A24A639FE0045E3B4 /* StatusesTest.swift in Sources */,
 				234F4BD01BDDE3F900A58EF7 /* ConfigurationTests.swift in Sources */,
+				D1EAE85625038BBE0023806C /* PlanTests.swift in Sources */,
 				515337F222529D590024544D /* GistTests.swift in Sources */,
 				234F4BD21BDDE3F900A58EF7 /* OctokitSwiftTests.swift in Sources */,
 				E7EE59DA1BE10DA60012E3D2 /* StarsTests.swift in Sources */,
@@ -908,6 +928,7 @@
 			files = (
 				E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */,
 				23B2678A1BDDD756003887E3 /* Configuration.swift in Sources */,
+				D1EAE8482503886C0023806C /* Plan.swift in Sources */,
 				D4D28F782299E9F200F8E92A /* String+PercentEncoding.swift in Sources */,
 				E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */,
 				23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */,
@@ -937,6 +958,7 @@
 				23CAF2AE1C7AB6CD005011C4 /* Repositories.swift in Sources */,
 				D4D28FA0229A02A900F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B11C7AB6D1005011C4 /* User.swift in Sources */,
+				D1EAE8492503886C0023806C /* Plan.swift in Sources */,
 				665D5D5B24A6399D0045E3B4 /* Statuses.swift in Sources */,
 				23CAF2A21C7AB6BE005011C4 /* Configuration.swift in Sources */,
 				50AFBB1E23EAC89E004D30A8 /* Releases.swift in Sources */,
@@ -967,6 +989,7 @@
 				665D5D6B24A639FE0045E3B4 /* StatusesTest.swift in Sources */,
 				23CAF2BE1C7AB6FE005011C4 /* OctokitSwiftTests.swift in Sources */,
 				23CAF2C01C7AB702005011C4 /* PublicKeyTests.swift in Sources */,
+				D1EAE85725038BBF0023806C /* PlanTests.swift in Sources */,
 				50AFBB1A23EAC885004D30A8 /* ReleasesTests.swift in Sources */,
 				23A052201CA924950068BFF7 /* OctoKitURLTestSession.swift in Sources */,
 				23CAF2CA1C7AB711005011C4 /* UserTests.swift in Sources */,
@@ -985,6 +1008,7 @@
 				23CAF2AF1C7AB6CD005011C4 /* Repositories.swift in Sources */,
 				D4D28FA1229A02A900F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B21C7AB6D1005011C4 /* User.swift in Sources */,
+				D1EAE84A2503886C0023806C /* Plan.swift in Sources */,
 				665D5D5C24A6399D0045E3B4 /* Statuses.swift in Sources */,
 				23CAF2A31C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				50AFBB1F23EAC89F004D30A8 /* Releases.swift in Sources */,
@@ -1015,6 +1039,7 @@
 				665D5D6C24A639FF0045E3B4 /* StatusesTest.swift in Sources */,
 				23CAF2BF1C7AB6FF005011C4 /* OctokitSwiftTests.swift in Sources */,
 				23CAF2C11C7AB702005011C4 /* PublicKeyTests.swift in Sources */,
+				D1EAE85825038BC00023806C /* PlanTests.swift in Sources */,
 				50AFBB1B23EAC886004D30A8 /* ReleasesTests.swift in Sources */,
 				23A052211CA924950068BFF7 /* OctoKitURLTestSession.swift in Sources */,
 				23CAF2CB1C7AB712005011C4 /* UserTests.swift in Sources */,
@@ -1033,6 +1058,7 @@
 				23CAF2B01C7AB6CE005011C4 /* Repositories.swift in Sources */,
 				D4D28FA2229A02AA00F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B31C7AB6D2005011C4 /* User.swift in Sources */,
+				D1EAE84B2503886C0023806C /* Plan.swift in Sources */,
 				665D5D5D24A6399E0045E3B4 /* Statuses.swift in Sources */,
 				23CAF2A41C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				50AFBB2023EAC8A0004D30A8 /* Releases.swift in Sources */,
