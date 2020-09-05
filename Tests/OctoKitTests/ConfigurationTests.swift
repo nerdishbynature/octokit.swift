@@ -5,6 +5,7 @@ import OctoKit
 class ConfigurationTests: XCTestCase {
     static var allTests = [
         ("testTokenConfiguration", testTokenConfiguration),
+        ("testTokenConfigurationWithPreviewHeaders", testTokenConfigurationWithPreviewHeaders),
         ("testEnterpriseTokenConfiguration", testEnterpriseTokenConfiguration),
         ("testOAuthConfiguration", testOAuthConfiguration),
         ("testOAuthTokenConfiguration", testOAuthTokenConfiguration),
@@ -17,6 +18,15 @@ class ConfigurationTests: XCTestCase {
         let subject = TokenConfiguration("12345")
         XCTAssertEqual(subject.accessToken, "12345".data(using: .utf8)?.base64EncodedString())
         XCTAssertEqual(subject.apiEndpoint, "https://api.github.com")
+        XCTAssertTrue(subject.customHeaders?.isEmpty ?? true)
+    }
+
+    func testTokenConfigurationWithPreviewHeaders() {
+        let subject = TokenConfiguration("12345", previewHeaders: [.reactions])
+        XCTAssertEqual(subject.accessToken, "12345".data(using: .utf8)?.base64EncodedString())
+        XCTAssertEqual(subject.apiEndpoint, "https://api.github.com")
+        XCTAssertNotNil(subject.customHeaders)
+        XCTAssertTrue(subject.customHeaders!.contains { $0.headerField == "Accept" && $0.value == "application/vnd.github.squirrel-girl-preview" })
     }
 
     func testEnterpriseTokenConfiguration() {
