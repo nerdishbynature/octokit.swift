@@ -166,6 +166,10 @@
 		BF8C7BE0F4071324EBDCA204 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
 		BF8C7DEE90DD25CBCA4AEE71 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C72B985869B84F46B4E9D /* Parameters.swift */; };
 		BF8C7FFFDDAFA560EBEC35EE /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
+		D1EAE8622503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
+		D1EAE8632503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
+		D1EAE8642503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
+		D1EAE8652503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
 		D4D28F6C2299D87300F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6D2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6E2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
@@ -326,6 +330,7 @@
 		BF8C76EB002802C14A08F63E /* PullRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTests.swift; sourceTree = "<group>"; };
 		BF8C77314F563A710F11E2F6 /* pull_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_request.json; sourceTree = "<group>"; };
 		BF8C79B71035B425F7748392 /* pull_requests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_requests.json; sourceTree = "<group>"; };
+		D1EAE8612503D33B0023806C /* PreviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHeader.swift; sourceTree = "<group>"; };
 		D4D28F6B2299D87300F8E92A /* LabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTests.swift; sourceTree = "<group>"; };
 		D4D28F6F2299DBE600F8E92A /* labels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = labels.json; path = Fixtures/labels.json; sourceTree = "<group>"; };
 		D4D28F732299DCE700F8E92A /* label.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = label.json; path = Fixtures/label.json; sourceTree = "<group>"; };
@@ -481,6 +486,7 @@
 				BF8C72B985869B84F46B4E9D /* Parameters.swift */,
 				9D9ADDE023EEFDE0000AC34D /* Review.swift */,
 				D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */,
+				D1EAE8612503D33B0023806C /* PreviewHeader.swift */,
 			);
 			path = OctoKit;
 			sourceTree = "<group>";
@@ -907,6 +913,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */,
+				D1EAE8622503D33B0023806C /* PreviewHeader.swift in Sources */,
 				23B2678A1BDDD756003887E3 /* Configuration.swift in Sources */,
 				D4D28F782299E9F200F8E92A /* String+PercentEncoding.swift in Sources */,
 				E7EE59D81BDFEFB30012E3D2 /* Stars.swift in Sources */,
@@ -934,6 +941,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23CAF2A51C7AB6C2005011C4 /* Follow.swift in Sources */,
+				D1EAE8632503D33B0023806C /* PreviewHeader.swift in Sources */,
 				23CAF2AE1C7AB6CD005011C4 /* Repositories.swift in Sources */,
 				D4D28FA0229A02A900F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B11C7AB6D1005011C4 /* User.swift in Sources */,
@@ -982,6 +990,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23CAF2A61C7AB6C2005011C4 /* Follow.swift in Sources */,
+				D1EAE8642503D33B0023806C /* PreviewHeader.swift in Sources */,
 				23CAF2AF1C7AB6CD005011C4 /* Repositories.swift in Sources */,
 				D4D28FA1229A02A900F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B21C7AB6D1005011C4 /* User.swift in Sources */,
@@ -1030,6 +1039,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23CAF2A71C7AB6C3005011C4 /* Follow.swift in Sources */,
+				D1EAE8652503D33B0023806C /* PreviewHeader.swift in Sources */,
 				23CAF2B01C7AB6CE005011C4 /* Repositories.swift in Sources */,
 				D4D28FA2229A02AA00F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B31C7AB6D2005011C4 /* User.swift in Sources */,
