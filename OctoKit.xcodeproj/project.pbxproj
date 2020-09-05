@@ -170,6 +170,9 @@
 		D1EAE8632503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
 		D1EAE8642503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
 		D1EAE8652503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
+		D1EAE8672503D8470023806C /* PreviewHeaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */; };
+		D1EAE8682503D8470023806C /* PreviewHeaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */; };
+		D1EAE8692503D8470023806C /* PreviewHeaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */; };
 		D4D28F6C2299D87300F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6D2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6E2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
@@ -331,6 +334,7 @@
 		BF8C77314F563A710F11E2F6 /* pull_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_request.json; sourceTree = "<group>"; };
 		BF8C79B71035B425F7748392 /* pull_requests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_requests.json; sourceTree = "<group>"; };
 		D1EAE8612503D33B0023806C /* PreviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHeader.swift; sourceTree = "<group>"; };
+		D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHeaderTest.swift; sourceTree = "<group>"; };
 		D4D28F6B2299D87300F8E92A /* LabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTests.swift; sourceTree = "<group>"; };
 		D4D28F6F2299DBE600F8E92A /* labels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = labels.json; path = Fixtures/labels.json; sourceTree = "<group>"; };
 		D4D28F732299DCE700F8E92A /* label.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = label.json; path = Fixtures/label.json; sourceTree = "<group>"; };
@@ -429,6 +433,7 @@
 				BF8C76EB002802C14A08F63E /* PullRequestTests.swift */,
 				5090ED7523E48EE60062C763 /* ReleasesTests.swift */,
 				9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */,
+				D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */,
 			);
 			name = OctoKitTests;
 			path = Tests/OctoKitTests;
@@ -895,6 +900,7 @@
 				E7EDEA6C1C871D01006BAAF2 /* IssueTests.swift in Sources */,
 				234F4BD41BDDE3F900A58EF7 /* RepositoryTests.swift in Sources */,
 				E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */,
+				D1EAE8672503D8470023806C /* PreviewHeaderTest.swift in Sources */,
 				234F4BD51BDDE3F900A58EF7 /* TestHelper.swift in Sources */,
 				5090ED7623E48EE60062C763 /* ReleasesTests.swift in Sources */,
 				23A0521F1CA924950068BFF7 /* OctoKitURLTestSession.swift in Sources */,
@@ -980,6 +986,7 @@
 				23CAF2CA1C7AB711005011C4 /* UserTests.swift in Sources */,
 				515337F322529D5A0024544D /* GistTests.swift in Sources */,
 				23CAF2C21C7AB705005011C4 /* RepositoryTests.swift in Sources */,
+				D1EAE8682503D8470023806C /* PreviewHeaderTest.swift in Sources */,
 				23CAF2BA1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */,
 				BF8C725A44F262E5305385CC /* PullRequestTests.swift in Sources */,
 			);
@@ -1029,6 +1036,7 @@
 				23CAF2CB1C7AB712005011C4 /* UserTests.swift in Sources */,
 				515337F422529D5C0024544D /* GistTests.swift in Sources */,
 				23CAF2C31C7AB706005011C4 /* RepositoryTests.swift in Sources */,
+				D1EAE8692503D8470023806C /* PreviewHeaderTest.swift in Sources */,
 				23CAF2BB1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */,
 				BF8C732A1D13EFA1DE994A6B /* PullRequestTests.swift in Sources */,
 			);
