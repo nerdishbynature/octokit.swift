@@ -4,8 +4,8 @@
 /// there is no API available directly for `Reactions`.
 public struct Reactions: Codable {
     public let totalCount: Int?
-    public let plus1: Int?
-    public let minus1: Int?
+    public let thumbsUp: Int?
+    public let thumbsDown: Int?
     public let laugh: Int?
     public let confused: Int?
     public let heart: Int?
@@ -17,7 +17,7 @@ public struct Reactions: Codable {
     enum CodingKeys: String, CodingKey {
         case laugh, confused, heart, hooray, url, eyes, rocket
         case totalCount = "total_count"
-        case plus1 = "+1"
-        case minus1 = "-1"
+        case thumbsUp = "+1"
+        case thumbsDown = "-1"
     }
 }

@@ -12,8 +12,8 @@ class ReactionsTests: XCTestCase {
     func testFullResponse() {
         let subject = Helper.codableFromFile("reactions", type: Reactions.self)
         XCTAssertEqual(subject.totalCount, 13)
-        XCTAssertEqual(subject.plus1, 3)
-        XCTAssertEqual(subject.minus1, 1)
+        XCTAssertEqual(subject.thumbsUp, 3)
+        XCTAssertEqual(subject.thumbsDown, 1)
         XCTAssertEqual(subject.laugh, 0)
         XCTAssertEqual(subject.confused, 0)
         XCTAssertEqual(subject.heart, 1)
