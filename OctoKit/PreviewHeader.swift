@@ -1,7 +1,7 @@
 import Foundation
 import RequestKit
 
-/// Some API provide additional data for new (preview) API if a custom header is added to the request.
+/// Some APIs provide additional data for new (preview) APIs if a custom header is added to the request.
 ///
 /// - Note: Preview APIs are subject to change.
 public enum PreviewHeader {
@@ -15,6 +15,3 @@ public enum PreviewHeader {
         }
     }
 }
-
-
-

@@ -76,7 +76,7 @@ class IssueTests: XCTestCase {
 
     func testCommentsIssue() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1/comments?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "issue_comments", statusCode: 200)
-        let task = Octokit().commentsIssue(session, owner: "octocat", repository: "Hello-World", number: 1) { response in
+        let task = Octokit().issueComments(session, owner: "octocat", repository: "Hello-World", number: 1) { response in
             switch response {
             case .success(let comments):
                 XCTAssertEqual(comments.count, 1)
