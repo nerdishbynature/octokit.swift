@@ -22,7 +22,7 @@
     "location": "Hamburg",
     "email": null,
     "hireable": true,
-    "bio": null,
+    "bio": "Tweeting about iOS and Drumming",
     "public_repos": 6,
     "public_gists": 10,
     "followers": 41,
@@ -34,6 +34,8 @@
     "owned_private_repos": 4,
     "disk_usage": 49064,
     "collaborators": 2,
+    "node_id": "MDQ6VXNlcjE=",
+    "twitter_username": "pietbrauer",
     "plan": {
         "name": "micro",
         "space": 614400,

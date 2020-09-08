@@ -59,7 +59,7 @@ open class User: Codable {
         case numberOfPublicRepos = "public_repos"
         case numberOfPublicGists = "public_gists"
         case numberOfPrivateRepos = "total_private_repos"
-        case nodeId = "node_id"
+        case nodeID = "node_id"
         case url
         case htmlURL = "html_url"
         case followersURL = "followers_url"
