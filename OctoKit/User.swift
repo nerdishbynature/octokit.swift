@@ -19,7 +19,7 @@ open class User: Codable {
     open var numberOfPublicRepos: Int?
     open var numberOfPublicGists: Int?
     open var numberOfPrivateRepos: Int?
-    open var nodeId: String?
+    open var nodeID: String?
     open var url: String?
     open var htmlURL: String?
     open var followersURL: String?
