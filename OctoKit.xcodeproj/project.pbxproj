@@ -166,6 +166,26 @@
 		BF8C7BE0F4071324EBDCA204 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
 		BF8C7DEE90DD25CBCA4AEE71 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C72B985869B84F46B4E9D /* Parameters.swift */; };
 		BF8C7FFFDDAFA560EBEC35EE /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
+		D1EAE8622503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
+		D1EAE8632503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
+		D1EAE8642503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
+		D1EAE8652503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
+		D1EAE8672503D8470023806C /* PreviewHeaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */; };
+		D1EAE8682503D8470023806C /* PreviewHeaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */; };
+		D1EAE8692503D8470023806C /* PreviewHeaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */; };
+		D1EAE86B2503D9280023806C /* Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE86A2503D9280023806C /* Reactions.swift */; };
+		D1EAE86C2503D9280023806C /* Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE86A2503D9280023806C /* Reactions.swift */; };
+		D1EAE86D2503D9280023806C /* Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE86A2503D9280023806C /* Reactions.swift */; };
+		D1EAE86E2503D9280023806C /* Reactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE86A2503D9280023806C /* Reactions.swift */; };
+		D1EAE8702503DAAD0023806C /* ReactionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE86F2503DAAD0023806C /* ReactionsTest.swift */; };
+		D1EAE8712503DAAD0023806C /* ReactionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE86F2503DAAD0023806C /* ReactionsTest.swift */; };
+		D1EAE8722503DAAD0023806C /* ReactionsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE86F2503DAAD0023806C /* ReactionsTest.swift */; };
+		D1EAE8742503DAF60023806C /* reactions.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8732503DAF60023806C /* reactions.json */; };
+		D1EAE8752503DAF60023806C /* reactions.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8732503DAF60023806C /* reactions.json */; };
+		D1EAE8762503DAF60023806C /* reactions.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8732503DAF60023806C /* reactions.json */; };
+		D1EAE8782503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
+		D1EAE8792503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
+		D1EAE87A2503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
 		D1EAE8482503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
 		D1EAE8492503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
 		D1EAE84A2503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
@@ -336,6 +356,12 @@
 		BF8C76EB002802C14A08F63E /* PullRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTests.swift; sourceTree = "<group>"; };
 		BF8C77314F563A710F11E2F6 /* pull_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_request.json; sourceTree = "<group>"; };
 		BF8C79B71035B425F7748392 /* pull_requests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_requests.json; sourceTree = "<group>"; };
+		D1EAE8612503D33B0023806C /* PreviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHeader.swift; sourceTree = "<group>"; };
+		D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHeaderTest.swift; sourceTree = "<group>"; };
+		D1EAE86A2503D9280023806C /* Reactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactions.swift; sourceTree = "<group>"; };
+		D1EAE86F2503DAAD0023806C /* ReactionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsTest.swift; sourceTree = "<group>"; };
+		D1EAE8732503DAF60023806C /* reactions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reactions.json; sourceTree = "<group>"; };
+		D1EAE8772503E3260023806C /* issue_comments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = issue_comments.json; sourceTree = "<group>"; };
 		D1EAE8472503886C0023806C /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		D1EAE84C25038A910023806C /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
 		D1EAE85125038B460023806C /* plan.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = plan.json; sourceTree = "<group>"; };
@@ -437,6 +463,8 @@
 				BF8C76EB002802C14A08F63E /* PullRequestTests.swift */,
 				5090ED7523E48EE60062C763 /* ReleasesTests.swift */,
 				9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */,
+				D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */,
+				D1EAE86F2503DAAD0023806C /* ReactionsTest.swift */,
 				D1EAE84C25038A910023806C /* PlanTests.swift */,
 			);
 			name = OctoKitTests;
@@ -466,6 +494,8 @@
 				BF8C79B71035B425F7748392 /* pull_requests.json */,
 				BF8C77314F563A710F11E2F6 /* pull_request.json */,
 				9D9ADDE223EEFF5C000AC34D /* reviews.json */,
+				D1EAE8732503DAF60023806C /* reactions.json */,
+				D1EAE8772503E3260023806C /* issue_comments.json */,
 				D1EAE85125038B460023806C /* plan.json */,
 			);
 			name = Fixtures;
@@ -496,6 +526,8 @@
 				BF8C72B985869B84F46B4E9D /* Parameters.swift */,
 				9D9ADDE023EEFDE0000AC34D /* Review.swift */,
 				D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */,
+				D1EAE8612503D33B0023806C /* PreviewHeader.swift */,
+				D1EAE86A2503D9280023806C /* Reactions.swift */,
 				D1EAE8472503886C0023806C /* Plan.swift */,
 			);
 			path = OctoKit;
@@ -796,10 +828,12 @@
 				234F4BDE1BDDE44600A58EF7 /* repo.json in Resources */,
 				234F4BE11BDDE44600A58EF7 /* user_repos.json in Resources */,
 				9D9ADDE323EEFFAA000AC34D /* reviews.json in Resources */,
+				D1EAE8742503DAF60023806C /* reactions.json in Resources */,
 				234F4BE01BDDE44600A58EF7 /* user_mietzmithut.json in Resources */,
 				515337F622529E7B0024544D /* gists.json in Resources */,
 				515337FA2252A0410024544D /* gist.json in Resources */,
 				665D5D6324A639DF0045E3B4 /* statuses.json in Resources */,
+				D1EAE8782503E3260023806C /* issue_comments.json in Resources */,
 				D1EAE85925038BD00023806C /* plan.json in Resources */,
 				665D5D6224A639DF0045E3B4 /* status.json in Resources */,
 				D4D28F702299DBE600F8E92A /* labels.json in Resources */,
@@ -839,10 +873,12 @@
 				23F643481C7AEF66000427B3 /* repo.json in Resources */,
 				23F6434E1C7AEF6F000427B3 /* user_repos.json in Resources */,
 				23F6434C1C7AEF6C000427B3 /* user_mietzmithut.json in Resources */,
+				D1EAE8752503DAF60023806C /* reactions.json in Resources */,
 				9D9ADDE423EEFFAB000AC34D /* reviews.json in Resources */,
 				515337F722529E7B0024544D /* gists.json in Resources */,
 				515337FB2252A0410024544D /* gist.json in Resources */,
 				665D5D6524A639E00045E3B4 /* statuses.json in Resources */,
+				D1EAE8792503E3260023806C /* issue_comments.json in Resources */,
 				D1EAE85A25038BD10023806C /* plan.json in Resources */,
 				665D5D6424A639E00045E3B4 /* status.json in Resources */,
 				50AFBB1C23EAC890004D30A8 /* post_release.json in Resources */,
@@ -874,10 +910,12 @@
 				23F643491C7AEF67000427B3 /* repo.json in Resources */,
 				23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */,
 				23F6434D1C7AEF6D000427B3 /* user_mietzmithut.json in Resources */,
+				D1EAE8762503DAF60023806C /* reactions.json in Resources */,
 				9D9ADDE523EEFFAC000AC34D /* reviews.json in Resources */,
 				515337F822529E7B0024544D /* gists.json in Resources */,
 				515337FC2252A0410024544D /* gist.json in Resources */,
 				665D5D6724A639E00045E3B4 /* statuses.json in Resources */,
+				D1EAE87A2503E3260023806C /* issue_comments.json in Resources */,
 				D1EAE85B25038BD10023806C /* plan.json in Resources */,
 				665D5D6624A639E00045E3B4 /* status.json in Resources */,
 				50AFBB1D23EAC891004D30A8 /* post_release.json in Resources */,
@@ -908,6 +946,8 @@
 				E7EDEA6C1C871D01006BAAF2 /* IssueTests.swift in Sources */,
 				234F4BD41BDDE3F900A58EF7 /* RepositoryTests.swift in Sources */,
 				E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */,
+				D1EAE8702503DAAD0023806C /* ReactionsTest.swift in Sources */,
+				D1EAE8672503D8470023806C /* PreviewHeaderTest.swift in Sources */,
 				234F4BD51BDDE3F900A58EF7 /* TestHelper.swift in Sources */,
 				5090ED7623E48EE60062C763 /* ReleasesTests.swift in Sources */,
 				23A0521F1CA924950068BFF7 /* OctoKitURLTestSession.swift in Sources */,
@@ -926,7 +966,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1EAE86B2503D9280023806C /* Reactions.swift in Sources */,
 				E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */,
+				D1EAE8622503D33B0023806C /* PreviewHeader.swift in Sources */,
 				23B2678A1BDDD756003887E3 /* Configuration.swift in Sources */,
 				D1EAE8482503886C0023806C /* Plan.swift in Sources */,
 				D4D28F782299E9F200F8E92A /* String+PercentEncoding.swift in Sources */,
@@ -955,6 +997,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23CAF2A51C7AB6C2005011C4 /* Follow.swift in Sources */,
+				D1EAE8632503D33B0023806C /* PreviewHeader.swift in Sources */,
 				23CAF2AE1C7AB6CD005011C4 /* Repositories.swift in Sources */,
 				D4D28FA0229A02A900F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B11C7AB6D1005011C4 /* User.swift in Sources */,
@@ -965,6 +1008,7 @@
 				23CAF2B71C7AB6EB005011C4 /* Time.swift in Sources */,
 				23CAF2B41C7AB6D4005011C4 /* Stars.swift in Sources */,
 				23CAF2AB1C7AB6C9005011C4 /* PublicKey.swift in Sources */,
+				D1EAE86C2503D9280023806C /* Reactions.swift in Sources */,
 				237F91E51E5AEC87005FAA6B /* URL+URLParameters.swift in Sources */,
 				DAEFC5961C83EF0D00CF3785 /* Milestone.swift in Sources */,
 				23CAF2A81C7AB6C6005011C4 /* Octokit.swift in Sources */,
@@ -992,9 +1036,11 @@
 				D1EAE85725038BBF0023806C /* PlanTests.swift in Sources */,
 				50AFBB1A23EAC885004D30A8 /* ReleasesTests.swift in Sources */,
 				23A052201CA924950068BFF7 /* OctoKitURLTestSession.swift in Sources */,
+				D1EAE8712503DAAD0023806C /* ReactionsTest.swift in Sources */,
 				23CAF2CA1C7AB711005011C4 /* UserTests.swift in Sources */,
 				515337F322529D5A0024544D /* GistTests.swift in Sources */,
 				23CAF2C21C7AB705005011C4 /* RepositoryTests.swift in Sources */,
+				D1EAE8682503D8470023806C /* PreviewHeaderTest.swift in Sources */,
 				23CAF2BA1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */,
 				BF8C725A44F262E5305385CC /* PullRequestTests.swift in Sources */,
 			);
@@ -1005,6 +1051,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23CAF2A61C7AB6C2005011C4 /* Follow.swift in Sources */,
+				D1EAE8642503D33B0023806C /* PreviewHeader.swift in Sources */,
 				23CAF2AF1C7AB6CD005011C4 /* Repositories.swift in Sources */,
 				D4D28FA1229A02A900F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B21C7AB6D1005011C4 /* User.swift in Sources */,
@@ -1015,6 +1062,7 @@
 				23CAF2B81C7AB6EB005011C4 /* Time.swift in Sources */,
 				23CAF2B51C7AB6D5005011C4 /* Stars.swift in Sources */,
 				23CAF2AC1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
+				D1EAE86D2503D9280023806C /* Reactions.swift in Sources */,
 				237F91E61E5AEC88005FAA6B /* URL+URLParameters.swift in Sources */,
 				DAEFC5971C83EF0D00CF3785 /* Milestone.swift in Sources */,
 				23CAF2A91C7AB6C6005011C4 /* Octokit.swift in Sources */,
@@ -1042,9 +1090,11 @@
 				D1EAE85825038BC00023806C /* PlanTests.swift in Sources */,
 				50AFBB1B23EAC886004D30A8 /* ReleasesTests.swift in Sources */,
 				23A052211CA924950068BFF7 /* OctoKitURLTestSession.swift in Sources */,
+				D1EAE8722503DAAD0023806C /* ReactionsTest.swift in Sources */,
 				23CAF2CB1C7AB712005011C4 /* UserTests.swift in Sources */,
 				515337F422529D5C0024544D /* GistTests.swift in Sources */,
 				23CAF2C31C7AB706005011C4 /* RepositoryTests.swift in Sources */,
+				D1EAE8692503D8470023806C /* PreviewHeaderTest.swift in Sources */,
 				23CAF2BB1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */,
 				BF8C732A1D13EFA1DE994A6B /* PullRequestTests.swift in Sources */,
 			);
@@ -1055,6 +1105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				23CAF2A71C7AB6C3005011C4 /* Follow.swift in Sources */,
+				D1EAE8652503D33B0023806C /* PreviewHeader.swift in Sources */,
 				23CAF2B01C7AB6CE005011C4 /* Repositories.swift in Sources */,
 				D4D28FA2229A02AA00F8E92A /* String+PercentEncoding.swift in Sources */,
 				23CAF2B31C7AB6D2005011C4 /* User.swift in Sources */,
@@ -1065,6 +1116,7 @@
 				23CAF2B91C7AB6EC005011C4 /* Time.swift in Sources */,
 				23CAF2B61C7AB6D5005011C4 /* Stars.swift in Sources */,
 				23CAF2AD1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
+				D1EAE86E2503D9280023806C /* Reactions.swift in Sources */,
 				237F91E71E5AEC89005FAA6B /* URL+URLParameters.swift in Sources */,
 				DAEFC5981C83EF0D00CF3785 /* Milestone.swift in Sources */,
 				23CAF2AA1C7AB6C7005011C4 /* Octokit.swift in Sources */,
