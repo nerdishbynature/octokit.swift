@@ -15,9 +15,21 @@ public struct TokenConfiguration: Configuration {
     public let errorDomain = OctoKitErrorDomain
     public let authorizationHeader: String? = "Basic"
 
-    public init(_ token: String? = nil, url: String = githubBaseURL) {
+    /// Custom `Accept` header for API previews.
+    ///
+    /// Used for preview support of new APIs, for instance Reaction API.
+    /// see: https://developer.github.com/changes/2016-05-12-reactions-api-preview/
+    private var previewCustomHeaders: Array<HTTPHeader>?
+
+    public var customHeaders: Array<HTTPHeader>? {
+        // More (non-preview) headers can be appended if needed in the future
+        return previewCustomHeaders
+    }
+
+    public init(_ token: String? = nil, url: String = githubBaseURL, previewHeaders: [PreviewHeader] = []) {
         apiEndpoint = url
         accessToken = token?.data(using: .utf8)!.base64EncodedString()
+        previewCustomHeaders = previewHeaders.map { $0.header }
     }
 }
 
@@ -30,13 +42,25 @@ public struct OAuthConfiguration: Configuration {
     public let webEndpoint: String
     public let errorDomain = OctoKitErrorDomain
 
+    /// Custom `Accept` header for API previews.
+    ///
+    /// Used for preview support of new APIs, for instance Reaction API.
+    /// see: https://developer.github.com/changes/2016-05-12-reactions-api-preview/
+    private var previewCustomHeaders: Array<HTTPHeader>?
+
+    public var customHeaders: Array<HTTPHeader>? {
+        // More (non-preview) headers can be appended if needed in the future
+        return previewCustomHeaders
+    }
+
     public init(_ url: String = githubBaseURL, webURL: String = githubWebURL,
-        token: String, secret: String, scopes: [String]) {
+        token: String, secret: String, scopes: [String],  previewHeaders: [PreviewHeader] = []) {
             apiEndpoint = url
             webEndpoint = webURL
             self.token = token
             self.secret = secret
             self.scopes = scopes
+            previewCustomHeaders = previewHeaders.map { $0.header }
     }
 
     public func authenticate() -> URL? {
