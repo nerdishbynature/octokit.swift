@@ -24,8 +24,7 @@ final class ReleasesTests: XCTestCase {
             switch $0 {
             case let .success(releases):
                 XCTAssertEqual(releases.count, 2)
-                do {
-                    let release = try XCTUnwrap(releases.first)
+                if let release = releases.first {
                     XCTAssertEqual(release.tagName, "v1.0.0")
                     XCTAssertEqual(release.commitish, "master")
                     XCTAssertEqual(release.name, "v1.0.0 Release")
@@ -35,11 +34,10 @@ final class ReleasesTests: XCTestCase {
                     XCTAssertNil(release.tarballURL)
                     XCTAssertNil(release.zipballURL)
                     XCTAssertNil(release.publishedAt)
-                } catch {
-                    XCTFail("Unwrap failed with error \(error)")
+                } else {
+                    XCTFail("Failed to unwrap `releases.first`")
                 }
-                do {
-                    let release = try XCTUnwrap(releases.last)
+                if let release = releases.last {
                     XCTAssertEqual(release.tagName, "v1.0.0")
                     XCTAssertEqual(release.commitish, "master")
                     XCTAssertEqual(release.name, "v1.0.0 Release")
@@ -49,8 +47,8 @@ final class ReleasesTests: XCTestCase {
                     XCTAssertNotNil(release.tarballURL)
                     XCTAssertNotNil(release.zipballURL)
                     XCTAssertNotNil(release.publishedAt)
-                } catch {
-                    XCTFail("Unwrap failed with error \(error)")
+                } else {
+                    XCTFail("Failed to unwrap `releases.last`")
                 }
             case let .failure(error):
                 XCTAssert(false, "Endpoint failed with error \(error)")
