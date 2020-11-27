@@ -49,6 +49,25 @@ public struct Release: Codable {
 // MARK: request
 
 public extension Octokit {
+    /// Fetches the list of releases.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
+    ///   - owner: The user or organization that owns the repositories.
+    ///   - repository: The name of the repository.
+    ///   - completion: Callback for the outcome of the fetch.
+    @discardableResult
+    func listReleases(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, completion: @escaping (_ response: Response<[Release]>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = ReleaseRouter.listReleases(configuration, owner, repository)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self) { releases, error in
+            if let error = error {
+                completion(Response.failure(error))
+            } else {
+                if let releases = releases {
+                    completion(Response.success(releases))
+                }
+            }
+        }
+    }
 
     /// Creates a new release.
     /// - Parameters:
@@ -83,16 +102,23 @@ public extension Octokit {
 // MARK: Router
 
 enum ReleaseRouter: JSONPostRouter {
+    case listReleases(Configuration, String, String)
     case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool)
 
     var configuration: Configuration {
         switch self {
+        case .listReleases(let config, _, _): return config
         case .postRelease(let config, _, _, _, _, _, _, _, _): return config
         }
     }
 
     var method: HTTPMethod {
-        return .POST
+        switch self {
+        case .listReleases:
+            return .GET
+        case .postRelease:
+            return .POST
+        }
     }
 
     var encoding: HTTPEncoding {
@@ -101,6 +127,8 @@ enum ReleaseRouter: JSONPostRouter {
 
     var params: [String: Any] {
         switch self {
+        case .listReleases:
+            return [:]
         case .postRelease(_, _, _, let tagName, let targetCommitish, let name, let body, let prerelease, let draft):
             var params: [String: Any] = [
                 "tag_name": tagName,
@@ -122,6 +150,8 @@ enum ReleaseRouter: JSONPostRouter {
 
     var path: String {
         switch self {
+        case let .listReleases(_, owner, repo):
+            return "repos/\(owner)/\(repo)/releases"
         case .postRelease(_, let owner, let repo, _, _, _, _, _, _):
             return "repos/\(owner)/\(repo)/releases"
         }
