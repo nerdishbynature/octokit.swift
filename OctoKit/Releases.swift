@@ -18,8 +18,8 @@ public struct Release: Codable {
     public let url: URL
     public let htmlURL: URL
     public let assetsURL: URL
-    public let tarballURL: URL
-    public let zipballURL: URL
+    public let tarballURL: URL?
+    public let zipballURL: URL?
     public let nodeId: String
     public let tagName: String
     public let commitish: String
@@ -28,7 +28,7 @@ public struct Release: Codable {
     public let draft: Bool
     public let prerelease: Bool
     public let createdAt: Date
-    public let publishedAt: Date
+    public let publishedAt: Date?
     public let author: User
 
     enum CodingKeys: String, CodingKey {
@@ -122,7 +122,12 @@ enum ReleaseRouter: JSONPostRouter {
     }
 
     var encoding: HTTPEncoding {
-        return .json
+        switch self {
+        case .listReleases:
+            return .url
+        case .postRelease:
+            return .json
+        }
     }
 
     var params: [String: Any] {
