@@ -44,9 +44,9 @@ final class ReleasesTests: XCTestCase {
                     XCTAssertEqual(release.body, "The changelog of this release")
                     XCTAssertFalse(release.prerelease)
                     XCTAssertFalse(release.draft)
-                    XCTAssertNotNil(release.tarballURL)
-                    XCTAssertNotNil(release.zipballURL)
-                    XCTAssertNotNil(release.publishedAt)
+                    XCTAssertEqual(release.tarballURL?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/tarball/v1.0.0")
+                    XCTAssertEqual(release.zipballURL?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/zipball/v1.0.0")
+                    XCTAssertEqual(release.publishedAt, Date(timeIntervalSince1970: 1361993732.0))
                 } else {
                     XCTFail("Failed to unwrap `releases.last`")
                 }
