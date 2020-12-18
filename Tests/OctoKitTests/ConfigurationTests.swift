@@ -1,6 +1,6 @@
-import XCTest
 import Foundation
 import OctoKit
+import XCTest
 
 class ConfigurationTests: XCTestCase {
     static var allTests = [
@@ -13,7 +13,7 @@ class ConfigurationTests: XCTestCase {
         ("testHandleOpenURL", testHandleOpenURL),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
     ]
-    
+
     func testTokenConfiguration() {
         let subject = TokenConfiguration("12345")
         XCTAssertEqual(subject.accessToken, "12345".data(using: .utf8)?.base64EncodedString())
@@ -26,7 +26,8 @@ class ConfigurationTests: XCTestCase {
         XCTAssertEqual(subject.accessToken, "12345".data(using: .utf8)?.base64EncodedString())
         XCTAssertEqual(subject.apiEndpoint, "https://api.github.com")
         XCTAssertNotNil(subject.customHeaders)
-        XCTAssertTrue(subject.customHeaders!.contains { $0.headerField == "Accept" && $0.value == "application/vnd.github.squirrel-girl-preview" })
+        XCTAssertTrue(subject.customHeaders!
+            .contains { $0.headerField == "Accept" && $0.value == "application/vnd.github.squirrel-girl-preview" })
     }
 
     func testEnterpriseTokenConfiguration() {
@@ -59,16 +60,21 @@ class ConfigurationTests: XCTestCase {
     func testHandleOpenURL() {
         let config = OAuthConfiguration(token: "12345", secret: "6789", scopes: ["repo", "read:org"])
         let response = "access_token=017ec60f4a182&scope=read%3Aorg%2Crepo&token_type=bearer"
-        let session = OctoKitURLTestSession(expectedURL: "https://github.com/login/oauth/access_token", expectedHTTPMethod: "POST", response: response, statusCode: 200)
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://github.com/login/oauth/access_token",
+            expectedHTTPMethod: "POST",
+            response: response,
+            statusCode: 200
+        )
         let url = URL(string: "urlscheme://authorize?code=dhfjgh23493&state=")!
-        var token: String? = nil
+        var token: String?
         config.handleOpenURL(session, url: url) { accessToken in
             token = accessToken.accessToken
         }
         XCTAssertEqual(token, "017ec60f4a182".data(using: .utf8)?.base64EncodedString())
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     func testLinuxTestSuiteIncludesAllTests() {
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
         let thisClass = type(of: self)

@@ -4,7 +4,7 @@ import OctoKit
 internal class Helper {
     internal class func stringFromFile(_ name: String) -> String? {
         let path = jsonFilePath(resourceName: name)
-        
+
         let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
         return string
     }
@@ -13,17 +13,16 @@ internal class Helper {
         let path = jsonFilePath(resourceName: name)
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
         let dict: Any? = try? JSONSerialization.jsonObject(with: data,
-        options: JSONSerialization.ReadingOptions.mutableContainers)
+                                                           options: JSONSerialization.ReadingOptions.mutableContainers)
         return dict!
     }
 
-    internal class func codableFromFile<T>(_ name: String, type: T.Type) -> T where T: Codable {
+    internal class func codableFromFile<T>(_ name: String, type _: T.Type) -> T where T: Codable {
         var path: String
         let bundlePath = jsonFilePath(resourceName: name)
         if FileManager.default.fileExists(atPath: bundlePath) {
             path = bundlePath
-        }
-        else {
+        } else {
             path = jsonFixturesFilePath(resourceName: name)
         }
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
@@ -31,21 +30,21 @@ internal class Helper {
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return try! decoder.decode(T.self, from: data)
     }
-    
+
     internal class func makeAuthHeader(username: String, password: String) -> [String: String] {
         let token = "\(username):\(password)".data(using: .utf8)!.base64EncodedString()
         return [
             "Authorization": "Basic \(token)"
         ]
     }
-    
+
     private class func jsonFilePath(resourceName: String) -> String {
         return URL(fileURLWithPath: #file)
             .deletingLastPathComponent()
             .appendingPathComponent("\(resourceName).json")
             .path
     }
-    
+
     private class func jsonFixturesFilePath(resourceName: String) -> String {
         return URL(fileURLWithPath: #file)
             .deletingLastPathComponent()

@@ -1,5 +1,5 @@
-import XCTest
 import OctoKit
+import XCTest
 
 class FollowTests: XCTestCase {
     static var allTests = [
@@ -13,15 +13,21 @@ class FollowTests: XCTestCase {
         ("testFailToGetUsersFollowing", testFailToGetUsersFollowing),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
     ]
-    
+
     func testGetMyFollowers() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "users", statusCode: 200)
+
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/user/followers",
+            expectedHTTPMethod: "GET",
+            expectedHTTPHeaders: headers,
+            jsonFile: "users",
+            statusCode: 200
+        )
         let task = Octokit(config).myFollowers(session) { response in
             switch response {
-            case .success(let users):
+            case let .success(users):
                 XCTAssertEqual(users.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -34,13 +40,19 @@ class FollowTests: XCTestCase {
     func testFailToGetMyFollowers() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: nil, statusCode: 404)
+
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/user/followers",
+            expectedHTTPMethod: "GET",
+            expectedHTTPHeaders: headers,
+            jsonFile: nil,
+            statusCode: 404
+        )
         let task = Octokit(config).myFollowers(session) { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve followers")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }
@@ -50,10 +62,15 @@ class FollowTests: XCTestCase {
     }
 
     func testGetUsersFollowers() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/followers", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/users/octocat/followers",
+            expectedHTTPMethod: "GET",
+            jsonFile: "users",
+            statusCode: 200
+        )
         let task = Octokit().followers(session, name: "octocat") { response in
             switch response {
-            case .success(let users):
+            case let .success(users):
                 XCTAssertEqual(users.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -64,12 +81,17 @@ class FollowTests: XCTestCase {
     }
 
     func testFailToGetUsersFollowers() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/followers", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/users/octocat/followers",
+            expectedHTTPMethod: "GET",
+            jsonFile: nil,
+            statusCode: 404
+        )
         let task = Octokit().followers(session, name: "octocat") { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve followers")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }
@@ -81,11 +103,17 @@ class FollowTests: XCTestCase {
     func testGetMyFollowing() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "users", statusCode: 200)
+
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/user/following",
+            expectedHTTPMethod: "GET",
+            expectedHTTPHeaders: headers,
+            jsonFile: "users",
+            statusCode: 200
+        )
         let task = Octokit(config).myFollowing(session) { response in
             switch response {
-            case .success(let users):
+            case let .success(users):
                 XCTAssertEqual(users.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -98,13 +126,19 @@ class FollowTests: XCTestCase {
     func testFailToGetMyFollowing() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: nil, statusCode: 404)
+
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/user/following",
+            expectedHTTPMethod: "GET",
+            expectedHTTPHeaders: headers,
+            jsonFile: nil,
+            statusCode: 404
+        )
         let task = Octokit(config).myFollowing(session) { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve following")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }
@@ -114,10 +148,15 @@ class FollowTests: XCTestCase {
     }
 
     func testGetUsersFollowing() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/users/octocat/following",
+            expectedHTTPMethod: "GET",
+            jsonFile: "users",
+            statusCode: 200
+        )
         let task = Octokit().following(session, name: "octocat") { response in
             switch response {
-            case .success(let users):
+            case let .success(users):
                 XCTAssertEqual(users.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -128,12 +167,17 @@ class FollowTests: XCTestCase {
     }
 
     func testFailToGetUsersFollowing() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/users/octocat/following",
+            expectedHTTPMethod: "GET",
+            jsonFile: nil,
+            statusCode: 404
+        )
         let task = Octokit().following(session, name: "octocat") { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve following")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }
@@ -141,7 +185,7 @@ class FollowTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     func testLinuxTestSuiteIncludesAllTests() {
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
         let thisClass = type(of: self)

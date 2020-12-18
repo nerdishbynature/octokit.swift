@@ -1,5 +1,5 @@
-import RequestKit
 import Foundation
+import RequestKit
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -18,14 +18,14 @@ extension Review: Codable {
         case body
         case commitID = "commit_id"
         case id
-        case state = "state"
+        case state
         case submittedAt = "submitted_at"
         case user
     }
 }
 
-extension Review {
-    public enum State: String, Codable, Equatable {
+public extension Review {
+    enum State: String, Codable, Equatable {
         case approved = "APPROVED"
         case comment = "COMMENT"
         case dismissed = "DISMISSED"
@@ -33,15 +33,21 @@ extension Review {
     }
 }
 
-extension Octokit {
+public extension Octokit {
     @discardableResult
-    public func listReviews(_ session: RequestKitURLSession = URLSession.shared,
-                             owner: String,
-                             repository: String,
-                             pullRequestNumber: Int,
-                             completion: @escaping (_ response: Response<[Review]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func listReviews(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        pullRequestNumber: Int,
+        completion: @escaping (_ response: Response<[Review]>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self) { pullRequests, error in
+        return router.load(
+            session,
+            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
+            expectedResultType: [Review].self
+        ) { pullRequests, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {

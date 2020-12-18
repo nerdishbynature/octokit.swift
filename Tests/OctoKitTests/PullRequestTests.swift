@@ -1,5 +1,5 @@
-import XCTest
 import OctoKit
+import XCTest
 
 class PullRequestTests: XCTestCase {
     static var allTests = [
@@ -7,17 +7,16 @@ class PullRequestTests: XCTestCase {
         ("testGetPullRequests", testGetPullRequests),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
     ]
-    
+
     func testGetPullRequest() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1",
-                expectedHTTPMethod: "GET",
-                jsonFile: "pull_request",
-                statusCode: 200
-        )
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_request",
+                                            statusCode: 200)
 
         let task = Octokit().pullRequest(session, owner: "octocat", repository: "Hello-World", number: 1) { response in
             switch response {
-            case .success(let pullRequests):
+            case let .success(pullRequests):
                 XCTAssertEqual(pullRequests.id, 1)
                 XCTAssertEqual(pullRequests.title, "new-feature")
                 XCTAssertEqual(pullRequests.body, "Please pull these awesome changes")
@@ -35,7 +34,7 @@ class PullRequestTests: XCTestCase {
                 XCTAssertEqual(pullRequests.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
                 XCTAssertEqual(pullRequests.head?.user?.login, "octocat")
                 XCTAssertEqual(pullRequests.head?.repo?.name, "Hello-World")
-            case .failure(let error):
+            case let .failure(error):
                 XCTAssertNil(error)
             }
         }
@@ -44,36 +43,39 @@ class PullRequestTests: XCTestCase {
     }
 
     func testGetPullRequests() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?base=develop&direction=desc&sort=created&state=open",
-                expectedHTTPMethod: "GET",
-                jsonFile: "pull_requests",
-                statusCode: 200
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?base=develop&direction=desc&sort=created&state=open",
+            expectedHTTPMethod: "GET",
+            jsonFile: "pull_requests",
+            statusCode: 200
         )
 
-        let task = Octokit().pullRequests(session, owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.open) { response in
-            switch response {
-            case .success(let pullRequests):
-                XCTAssertEqual(pullRequests.count, 1)
-                XCTAssertEqual(pullRequests.first?.title, "new-feature")
-                XCTAssertEqual(pullRequests.first?.body, "Please pull these awesome changes")
-                XCTAssertEqual(pullRequests.first?.labels?.count, 1)
-                XCTAssertEqual(pullRequests.first?.user?.login, "octocat")
+        let task = Octokit()
+            .pullRequests(session, owner: "octocat", repository: "Hello-World", base: "develop",
+                          state: Openness.open) { response in
+                switch response {
+                case let .success(pullRequests):
+                    XCTAssertEqual(pullRequests.count, 1)
+                    XCTAssertEqual(pullRequests.first?.title, "new-feature")
+                    XCTAssertEqual(pullRequests.first?.body, "Please pull these awesome changes")
+                    XCTAssertEqual(pullRequests.first?.labels?.count, 1)
+                    XCTAssertEqual(pullRequests.first?.user?.login, "octocat")
 
-                XCTAssertEqual(pullRequests.first?.base?.label, "master")
-                XCTAssertEqual(pullRequests.first?.base?.ref, "master")
-                XCTAssertEqual(pullRequests.first?.base?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
-                XCTAssertEqual(pullRequests.first?.base?.user?.login, "octocat")
-                XCTAssertEqual(pullRequests.first?.base?.repo?.name, "Hello-World")
+                    XCTAssertEqual(pullRequests.first?.base?.label, "master")
+                    XCTAssertEqual(pullRequests.first?.base?.ref, "master")
+                    XCTAssertEqual(pullRequests.first?.base?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                    XCTAssertEqual(pullRequests.first?.base?.user?.login, "octocat")
+                    XCTAssertEqual(pullRequests.first?.base?.repo?.name, "Hello-World")
 
-                XCTAssertEqual(pullRequests.first?.head?.label, "new-topic")
-                XCTAssertEqual(pullRequests.first?.head?.ref, "new-topic")
-                XCTAssertEqual(pullRequests.first?.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
-                XCTAssertEqual(pullRequests.first?.head?.user?.login, "octocat")
-                XCTAssertEqual(pullRequests.first?.head?.repo?.name, "Hello-World")
-            case .failure(let error):
-                XCTAssertNil(error)
+                    XCTAssertEqual(pullRequests.first?.head?.label, "new-topic")
+                    XCTAssertEqual(pullRequests.first?.head?.ref, "new-topic")
+                    XCTAssertEqual(pullRequests.first?.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                    XCTAssertEqual(pullRequests.first?.head?.user?.login, "octocat")
+                    XCTAssertEqual(pullRequests.first?.head?.repo?.name, "Hello-World")
+                case let .failure(error):
+                    XCTAssertNil(error)
+                }
             }
-        }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
