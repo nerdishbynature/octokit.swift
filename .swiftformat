@@ -3,7 +3,7 @@
 --exclude Tests/LinuxMain.swift,Package.swift
 
 # format options
---swiftversion 4.2
+--swiftversion 4.0
 --allman false
 --commas inline
 --ifdef no-indent
