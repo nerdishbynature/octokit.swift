@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,13 +11,6 @@
 		03CCD2532453A9B8007D5CB3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = 03CCD2512453A9AA007D5CB3 /* users.json */; };
 		03CCD2542453A9BE007D5CB3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = 03CCD2512453A9AA007D5CB3 /* users.json */; };
 		03CCD2552453A9C4007D5CB3 /* users.json in Resources */ = {isa = PBXBuildFile; fileRef = 03CCD2512453A9AA007D5CB3 /* users.json */; };
-		230B589C1FD079C7000FE68A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230B589B1FD079C7000FE68A /* RequestKit.framework */; };
-		230B589E1FD079D5000FE68A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230B589D1FD079D5000FE68A /* RequestKit.framework */; };
-		230B58A01FD079E2000FE68A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230B589F1FD079E2000FE68A /* RequestKit.framework */; };
-		230B58A21FD079ED000FE68A /* RequestKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 230B58A11FD079ED000FE68A /* RequestKit.framework */; };
-		2343596F1FED332300DEA02A /* OctoKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23CAF2621C7AB5FB005011C4 /* OctoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		234359701FED338900DEA02A /* OctoKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 239BE7C91B8C47A100D2CE22 /* OctoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		234359711FED339300DEA02A /* OctoKit.framework in Carthage embed */ = {isa = PBXBuildFile; fileRef = 23CAF27E1C7AB60C005011C4 /* OctoKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		234F4BAE1BDDE31A00A58EF7 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 239BE7C91B8C47A100D2CE22 /* OctoKit.framework */; };
 		234F4BD01BDDE3F900A58EF7 /* ConfigurationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BC91BDDE3F900A58EF7 /* ConfigurationTests.swift */; };
 		234F4BD21BDDE3F900A58EF7 /* OctokitSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */; };
@@ -43,6 +36,15 @@
 		23B2678C1BDDD756003887E3 /* PublicKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267871BDDD756003887E3 /* PublicKey.swift */; };
 		23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267881BDDD756003887E3 /* Repositories.swift */; };
 		23B2678E1BDDD756003887E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267891BDDD756003887E3 /* User.swift */; };
+		23B2F98925B1DD94000A8CE1 /* RequestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 23B2F98825B1DD94000A8CE1 /* RequestKit */; };
+		23B2F98F25B1DE89000A8CE1 /* RequestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 23B2F98E25B1DE89000A8CE1 /* RequestKit */; };
+		23B2F99125B1DE90000A8CE1 /* RequestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 23B2F99025B1DE90000A8CE1 /* RequestKit */; };
+		23B2F99325B1DE97000A8CE1 /* RequestKit in Frameworks */ = {isa = PBXBuildFile; productRef = 23B2F99225B1DE97000A8CE1 /* RequestKit */; };
+		23B2F9A925B1DF25000A8CE1 /* ReviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */; };
+		23B2F9B125B1DF26000A8CE1 /* ReviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */; };
+		23B2F9C125B1DF6F000A8CE1 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDE023EEFDE0000AC34D /* Review.swift */; };
+		23B2F9C925B1DF70000A8CE1 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDE023EEFDE0000AC34D /* Review.swift */; };
+		23B2F9CA25B1DF70000A8CE1 /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDE023EEFDE0000AC34D /* Review.swift */; };
 		23CAF26C1C7AB5FC005011C4 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF2621C7AB5FB005011C4 /* OctoKit.framework */; };
 		23CAF2881C7AB60D005011C4 /* OctoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23CAF27E1C7AB60C005011C4 /* OctoKit.framework */; };
 		23CAF2A21C7AB6BE005011C4 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B267851BDDD756003887E3 /* Configuration.swift */; };
@@ -166,6 +168,16 @@
 		BF8C7BE0F4071324EBDCA204 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
 		BF8C7DEE90DD25CBCA4AEE71 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C72B985869B84F46B4E9D /* Parameters.swift */; };
 		BF8C7FFFDDAFA560EBEC35EE /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
+		D1EAE8482503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
+		D1EAE8492503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
+		D1EAE84A2503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
+		D1EAE84B2503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
+		D1EAE85625038BBE0023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
+		D1EAE85725038BBF0023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
+		D1EAE85825038BC00023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
+		D1EAE85925038BD00023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
+		D1EAE85A25038BD10023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
+		D1EAE85B25038BD10023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
 		D1EAE8622503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
 		D1EAE8632503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
 		D1EAE8642503D33B0023806C /* PreviewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8612503D33B0023806C /* PreviewHeader.swift */; };
@@ -186,16 +198,6 @@
 		D1EAE8782503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
 		D1EAE8792503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
 		D1EAE87A2503E3260023806C /* issue_comments.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE8772503E3260023806C /* issue_comments.json */; };
-		D1EAE8482503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
-		D1EAE8492503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
-		D1EAE84A2503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
-		D1EAE84B2503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
-		D1EAE85625038BBE0023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
-		D1EAE85725038BBF0023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
-		D1EAE85825038BC00023806C /* PlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE84C25038A910023806C /* PlanTests.swift */; };
-		D1EAE85925038BD00023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
-		D1EAE85A25038BD10023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
-		D1EAE85B25038BD10023806C /* plan.json in Resources */ = {isa = PBXBuildFile; fileRef = D1EAE85125038B460023806C /* plan.json */; };
 		D4D28F6C2299D87300F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6D2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
 		D4D28F6E2299D87A00F8E92A /* LabelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D28F6B2299D87300F8E92A /* LabelTests.swift */; };
@@ -261,42 +263,6 @@
 		};
 /* End PBXContainerItemProxy section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		234F4BC21BDDE36300A58EF7 /* Carthage embed */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				234359701FED338900DEA02A /* OctoKit.framework in Carthage embed */,
-			);
-			name = "Carthage embed";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23F6433A1C7AEE7C000427B3 /* Carthage embed */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				2343596F1FED332300DEA02A /* OctoKit.framework in Carthage embed */,
-			);
-			name = "Carthage embed";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		23F643411C7AEF13000427B3 /* Carthage embed */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				234359711FED339300DEA02A /* OctoKit.framework in Carthage embed */,
-			);
-			name = "Carthage embed";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
 		03CCD2512453A9AA007D5CB3 /* users.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = users.json; path = Fixtures/users.json; sourceTree = "<group>"; };
 		230B589B1FD079C7000FE68A /* RequestKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RequestKit.framework; path = Carthage/Build/iOS/RequestKit.framework; sourceTree = "<group>"; };
@@ -356,15 +322,15 @@
 		BF8C76EB002802C14A08F63E /* PullRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTests.swift; sourceTree = "<group>"; };
 		BF8C77314F563A710F11E2F6 /* pull_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_request.json; sourceTree = "<group>"; };
 		BF8C79B71035B425F7748392 /* pull_requests.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pull_requests.json; sourceTree = "<group>"; };
+		D1EAE8472503886C0023806C /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
+		D1EAE84C25038A910023806C /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
+		D1EAE85125038B460023806C /* plan.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = plan.json; sourceTree = "<group>"; };
 		D1EAE8612503D33B0023806C /* PreviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHeader.swift; sourceTree = "<group>"; };
 		D1EAE8662503D8470023806C /* PreviewHeaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHeaderTest.swift; sourceTree = "<group>"; };
 		D1EAE86A2503D9280023806C /* Reactions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reactions.swift; sourceTree = "<group>"; };
 		D1EAE86F2503DAAD0023806C /* ReactionsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsTest.swift; sourceTree = "<group>"; };
 		D1EAE8732503DAF60023806C /* reactions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = reactions.json; sourceTree = "<group>"; };
 		D1EAE8772503E3260023806C /* issue_comments.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = issue_comments.json; sourceTree = "<group>"; };
-		D1EAE8472503886C0023806C /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
-		D1EAE84C25038A910023806C /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
-		D1EAE85125038B460023806C /* plan.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = plan.json; sourceTree = "<group>"; };
 		D4D28F6B2299D87300F8E92A /* LabelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTests.swift; sourceTree = "<group>"; };
 		D4D28F6F2299DBE600F8E92A /* labels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = labels.json; path = Fixtures/labels.json; sourceTree = "<group>"; };
 		D4D28F732299DCE700F8E92A /* label.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = label.json; path = Fixtures/label.json; sourceTree = "<group>"; };
@@ -395,7 +361,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				230B589C1FD079C7000FE68A /* RequestKit.framework in Frameworks */,
+				23B2F98925B1DD94000A8CE1 /* RequestKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,7 +369,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				230B589E1FD079D5000FE68A /* RequestKit.framework in Frameworks */,
+				23B2F98F25B1DE89000A8CE1 /* RequestKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +385,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				230B58A01FD079E2000FE68A /* RequestKit.framework in Frameworks */,
+				23B2F99125B1DE90000A8CE1 /* RequestKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,7 +401,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				230B58A21FD079ED000FE68A /* RequestKit.framework in Frameworks */,
+				23B2F99325B1DE97000A8CE1 /* RequestKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,7 +591,6 @@
 				234F4BA51BDDE31A00A58EF7 /* Sources */,
 				234F4BA61BDDE31A00A58EF7 /* Frameworks */,
 				234F4BA71BDDE31A00A58EF7 /* Resources */,
-				234F4BC21BDDE36300A58EF7 /* Carthage embed */,
 			);
 			buildRules = (
 			);
@@ -651,6 +616,9 @@
 			dependencies = (
 			);
 			name = OctoKit;
+			packageProductDependencies = (
+				23B2F98825B1DD94000A8CE1 /* RequestKit */,
+			);
 			productName = OctoKit;
 			productReference = 239BE7C91B8C47A100D2CE22 /* OctoKit.framework */;
 			productType = "com.apple.product-type.framework";
@@ -669,6 +637,9 @@
 			dependencies = (
 			);
 			name = "OctoKit tvOS";
+			packageProductDependencies = (
+				23B2F98E25B1DE89000A8CE1 /* RequestKit */,
+			);
 			productName = "OctoKit tvOS";
 			productReference = 23CAF2621C7AB5FB005011C4 /* OctoKit.framework */;
 			productType = "com.apple.product-type.framework";
@@ -680,7 +651,6 @@
 				23CAF2671C7AB5FC005011C4 /* Sources */,
 				23CAF2681C7AB5FC005011C4 /* Frameworks */,
 				23CAF2691C7AB5FC005011C4 /* Resources */,
-				23F6433A1C7AEE7C000427B3 /* Carthage embed */,
 			);
 			buildRules = (
 			);
@@ -706,6 +676,9 @@
 			dependencies = (
 			);
 			name = "OctoKit Mac";
+			packageProductDependencies = (
+				23B2F99025B1DE90000A8CE1 /* RequestKit */,
+			);
 			productName = "OctoKit Mac";
 			productReference = 23CAF27E1C7AB60C005011C4 /* OctoKit.framework */;
 			productType = "com.apple.product-type.framework";
@@ -717,7 +690,6 @@
 				23CAF2831C7AB60D005011C4 /* Sources */,
 				23CAF2841C7AB60D005011C4 /* Frameworks */,
 				23CAF2851C7AB60D005011C4 /* Resources */,
-				23F643411C7AEF13000427B3 /* Carthage embed */,
 			);
 			buildRules = (
 			);
@@ -743,6 +715,9 @@
 			dependencies = (
 			);
 			name = "OctoKit watchOS";
+			packageProductDependencies = (
+				23B2F99225B1DE97000A8CE1 /* RequestKit */,
+			);
 			productName = "OctoKit watchOS";
 			productReference = 23CAF29A1C7AB619005011C4 /* OctoKit.framework */;
 			productType = "com.apple.product-type.framework";
@@ -798,6 +773,9 @@
 				Base,
 			);
 			mainGroup = F01C6F2B1A6429CC0072FA44;
+			packageReferences = (
+				23B2F98725B1DD94000A8CE1 /* XCRemoteSwiftPackageReference "RequestKit" */,
+			);
 			productRefGroup = F01C6F351A6429CC0072FA44 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1003,6 +981,7 @@
 				23CAF2B11C7AB6D1005011C4 /* User.swift in Sources */,
 				D1EAE8492503886C0023806C /* Plan.swift in Sources */,
 				665D5D5B24A6399D0045E3B4 /* Statuses.swift in Sources */,
+				23B2F9C125B1DF6F000A8CE1 /* Review.swift in Sources */,
 				23CAF2A21C7AB6BE005011C4 /* Configuration.swift in Sources */,
 				50AFBB1E23EAC89E004D30A8 /* Releases.swift in Sources */,
 				23CAF2B71C7AB6EB005011C4 /* Time.swift in Sources */,
@@ -1039,6 +1018,7 @@
 				D1EAE8712503DAAD0023806C /* ReactionsTest.swift in Sources */,
 				23CAF2CA1C7AB711005011C4 /* UserTests.swift in Sources */,
 				515337F322529D5A0024544D /* GistTests.swift in Sources */,
+				23B2F9A925B1DF25000A8CE1 /* ReviewTests.swift in Sources */,
 				23CAF2C21C7AB705005011C4 /* RepositoryTests.swift in Sources */,
 				D1EAE8682503D8470023806C /* PreviewHeaderTest.swift in Sources */,
 				23CAF2BA1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */,
@@ -1057,6 +1037,7 @@
 				23CAF2B21C7AB6D1005011C4 /* User.swift in Sources */,
 				D1EAE84A2503886C0023806C /* Plan.swift in Sources */,
 				665D5D5C24A6399D0045E3B4 /* Statuses.swift in Sources */,
+				23B2F9C925B1DF70000A8CE1 /* Review.swift in Sources */,
 				23CAF2A31C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				50AFBB1F23EAC89F004D30A8 /* Releases.swift in Sources */,
 				23CAF2B81C7AB6EB005011C4 /* Time.swift in Sources */,
@@ -1093,6 +1074,7 @@
 				D1EAE8722503DAAD0023806C /* ReactionsTest.swift in Sources */,
 				23CAF2CB1C7AB712005011C4 /* UserTests.swift in Sources */,
 				515337F422529D5C0024544D /* GistTests.swift in Sources */,
+				23B2F9B125B1DF26000A8CE1 /* ReviewTests.swift in Sources */,
 				23CAF2C31C7AB706005011C4 /* RepositoryTests.swift in Sources */,
 				D1EAE8692503D8470023806C /* PreviewHeaderTest.swift in Sources */,
 				23CAF2BB1C7AB6F1005011C4 /* ConfigurationTests.swift in Sources */,
@@ -1111,6 +1093,7 @@
 				23CAF2B31C7AB6D2005011C4 /* User.swift in Sources */,
 				D1EAE84B2503886C0023806C /* Plan.swift in Sources */,
 				665D5D5D24A6399E0045E3B4 /* Statuses.swift in Sources */,
+				23B2F9CA25B1DF70000A8CE1 /* Review.swift in Sources */,
 				23CAF2A41C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				50AFBB2023EAC8A0004D30A8 /* Releases.swift in Sources */,
 				23CAF2B91C7AB6EC005011C4 /* Time.swift in Sources */,
@@ -1156,10 +1139,6 @@
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1182,10 +1161,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1214,10 +1189,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1251,10 +1223,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1283,10 +1252,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1314,10 +1279,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1342,10 +1303,6 @@
 				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1369,10 +1326,6 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/tvOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1402,10 +1355,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1435,10 +1384,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				FRAMEWORK_VERSION = A;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -1464,10 +1409,6 @@
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1490,10 +1431,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/Mac",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = Tests/OctoKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1522,10 +1459,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/watchOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1555,10 +1488,6 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/watchOS",
-				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1627,6 +1556,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = OctoKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKit;
@@ -1679,6 +1609,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = OctoKit/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nerdishbynature.OctoKit;
 				PRODUCT_NAME = OctoKit;
@@ -1764,6 +1695,40 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		23B2F98725B1DD94000A8CE1 /* XCRemoteSwiftPackageReference "RequestKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nerdishbynature/RequestKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		23B2F98825B1DD94000A8CE1 /* RequestKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23B2F98725B1DD94000A8CE1 /* XCRemoteSwiftPackageReference "RequestKit" */;
+			productName = RequestKit;
+		};
+		23B2F98E25B1DE89000A8CE1 /* RequestKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23B2F98725B1DD94000A8CE1 /* XCRemoteSwiftPackageReference "RequestKit" */;
+			productName = RequestKit;
+		};
+		23B2F99025B1DE90000A8CE1 /* RequestKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23B2F98725B1DD94000A8CE1 /* XCRemoteSwiftPackageReference "RequestKit" */;
+			productName = RequestKit;
+		};
+		23B2F99225B1DE97000A8CE1 /* RequestKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 23B2F98725B1DD94000A8CE1 /* XCRemoteSwiftPackageReference "RequestKit" */;
+			productName = RequestKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F01C6F2C1A6429CC0072FA44 /* Project object */;
 }
