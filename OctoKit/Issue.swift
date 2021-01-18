@@ -7,9 +7,9 @@ import FoundationNetworking
 // MARK: model
 
 public enum Openness: String, Codable {
-    case open = "open"
-    case closed = "closed"
-    case all = "all"
+    case open
+    case closed
+    case all
 }
 
 open class Issue: Codable {
@@ -81,7 +81,6 @@ public struct Comment: Codable {
 // MARK: request
 
 public extension Octokit {
-    
     /**
      Fetches the issues of the authenticated user
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -91,9 +90,19 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myIssues(_ session: RequestKitURLSession = URLSession.shared, state: Openness = .open, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myIssues(
+        _ session: RequestKitURLSession = URLSession.shared,
+        state: Openness = .open,
+        page: String = "1",
+        perPage: String = "100",
+        completion: @escaping (_ response: Response<[Issue]>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self) { issues, error in
+        return router.load(
+            session,
+            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
+            expectedResultType: [Issue].self
+        ) { issues, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -103,7 +112,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     /**
      Fetches an issue in a repository
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -113,9 +122,19 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func issue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
+    func issue(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        number: Int,
+        completion: @escaping (_ response: Response<Issue>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssue(configuration, owner, repository, number)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Issue.self) { issue, error in
+        return router.load(
+            session,
+            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
+            expectedResultType: Issue.self
+        ) { issue, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -137,9 +156,21 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func issues(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, state: Openness = .open, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func issues(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        state: Openness = .open,
+        page: String = "1",
+        perPage: String = "100",
+        completion: @escaping (_ response: Response<[Issue]>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self) { issues, error in
+        return router.load(
+            session,
+            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
+            expectedResultType: [Issue].self
+        ) { issues, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -162,7 +193,16 @@ public extension Octokit {
      - parameter completion: Callback for the issue that is created.
      */
     @discardableResult
-    func postIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, title: String, body: String? = nil, assignee: String? = nil, labels: [String] = [], completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
+    func postIssue(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        title: String,
+        body: String? = nil,
+        assignee: String? = nil,
+        labels: [String] = [],
+        completion: @escaping (_ response: Response<Issue>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee, labels)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -176,7 +216,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     /**
      Edits an issue in a repository.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -190,7 +230,17 @@ public extension Octokit {
      - parameter completion: Callback for the issue that is created.
      */
     @discardableResult
-    func patchIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, title: String? = nil, body: String? = nil, assignee: String? = nil, state: Openness? = nil, completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol? {
+    func patchIssue(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        number: Int,
+        title: String? = nil,
+        body: String? = nil,
+        assignee: String? = nil,
+        state: Openness? = nil,
+        completion: @escaping (_ response: Response<Issue>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
         return router.post(session, expectedResultType: Issue.self) { issue, error in
             if let error = error {
@@ -203,7 +253,6 @@ public extension Octokit {
         }
     }
 
-
     /// Posts a comment on an issue using the given body.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -213,7 +262,14 @@ public extension Octokit {
     ///   - body: The contents of the comment.
     ///   - completion: Callback for the comment that is created.
     @discardableResult
-    func commentIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String, completion: @escaping (_ response: Response<Comment>) -> Void) -> URLSessionDataTaskProtocol? {
+    func commentIssue(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        number: Int,
+        body: String,
+        completion: @escaping (_ response: Response<Comment>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -238,9 +294,21 @@ public extension Octokit {
     /// - perPage: Number of comments per page. `100` by default.
     /// - completion: Callback for the outcome of the fetch.
     @discardableResult
-    func issueComments(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Comment]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func issueComments(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        number: Int,
+        page: String = "1",
+        perPage: String = "100",
+        completion: @escaping (_ response: Response<[Comment]>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssueComments(configuration, owner, repository, number, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Comment].self) { comments, error in
+        return router.load(
+            session,
+            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
+            expectedResultType: [Comment].self
+        ) { comments, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -271,7 +339,7 @@ enum IssueRouter: JSONPostRouter {
             return .GET
         }
     }
-    
+
     var encoding: HTTPEncoding {
         switch self {
         case .postIssue, .patchIssue, .commentIssue:
@@ -280,28 +348,28 @@ enum IssueRouter: JSONPostRouter {
             return .url
         }
     }
-    
+
     var configuration: Configuration {
         switch self {
-        case .readAuthenticatedIssues(let config, _, _, _): return config
-        case .readIssue(let config, _, _, _): return config
-        case .readIssues(let config, _, _, _, _, _): return config
-        case .postIssue(let config, _, _, _, _, _, _): return config
-        case .patchIssue(let config, _, _, _, _, _, _, _): return config
-        case .commentIssue(let config, _, _, _, _): return config
-        case .readIssueComments(let config, _, _, _, _, _): return config
+        case let .readAuthenticatedIssues(config, _, _, _): return config
+        case let .readIssue(config, _, _, _): return config
+        case let .readIssues(config, _, _, _, _, _): return config
+        case let .postIssue(config, _, _, _, _, _, _): return config
+        case let .patchIssue(config, _, _, _, _, _, _, _): return config
+        case let .commentIssue(config, _, _, _, _): return config
+        case let .readIssueComments(config, _, _, _, _, _): return config
         }
     }
-    
+
     var params: [String: Any] {
         switch self {
-        case .readAuthenticatedIssues(_, let page, let perPage, let state):
+        case let .readAuthenticatedIssues(_, page, perPage, state):
             return ["per_page": perPage, "page": page, "state": state.rawValue]
         case .readIssue:
             return [:]
-        case .readIssues(_, _, _, let page, let perPage, let state):
+        case let .readIssues(_, _, _, page, perPage, state):
             return ["per_page": perPage, "page": page, "state": state.rawValue]
-        case .postIssue(_, _, _, let title, let body, let assignee, let labels):
+        case let .postIssue(_, _, _, title, body, assignee, labels):
             var params: [String: Any] = ["title": title]
             if let body = body {
                 params["body"] = body
@@ -313,7 +381,7 @@ enum IssueRouter: JSONPostRouter {
                 params["labels"] = labels
             }
             return params
-        case .patchIssue(_, _, _, _, let title, let body, let assignee, let state):
+        case let .patchIssue(_, _, _, _, title, body, assignee, state):
             var params: [String: String] = [:]
             if let title = title {
                 params["title"] = title
@@ -328,28 +396,28 @@ enum IssueRouter: JSONPostRouter {
                 params["state"] = state.rawValue
             }
             return params
-        case .commentIssue(_, _, _, _, let body):
+        case let .commentIssue(_, _, _, _, body):
             return ["body": body]
-        case .readIssueComments(_, _, _, _, let page, let perPage):
+        case let .readIssueComments(_, _, _, _, page, perPage):
             return ["per_page": perPage, "page": page]
         }
     }
-    
+
     var path: String {
         switch self {
         case .readAuthenticatedIssues:
             return "issues"
-        case .readIssue(_, let owner, let repository, let number):
+        case let .readIssue(_, owner, repository, number):
             return "repos/\(owner)/\(repository)/issues/\(number)"
-        case .readIssues(_, let owner, let repository, _, _, _):
+        case let .readIssues(_, owner, repository, _, _, _):
             return "repos/\(owner)/\(repository)/issues"
-        case .postIssue(_, let owner, let repository, _, _, _, _):
+        case let .postIssue(_, owner, repository, _, _, _, _):
             return "repos/\(owner)/\(repository)/issues"
-        case .patchIssue(_, let owner, let repository, let number, _, _, _, _):
+        case let .patchIssue(_, owner, repository, number, _, _, _, _):
             return "repos/\(owner)/\(repository)/issues/\(number)"
-        case .commentIssue(_, let owner, let repository, let number, _):
+        case let .commentIssue(_, owner, repository, number, _):
             return "repos/\(owner)/\(repository)/issues/\(number)/comments"
-        case .readIssueComments(_, let owner, let repository, let number, _, _):
+        case let .readIssueComments(_, owner, repository, number, _, _):
             return "repos/\(owner)/\(repository)/issues/\(number)/comments"
         }
     }

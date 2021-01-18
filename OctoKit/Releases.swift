@@ -13,6 +13,7 @@ import FoundationNetworking
 #endif
 
 // MARK: model
+
 public struct Release: Codable {
     public let id: Int
     public let url: URL
@@ -56,9 +57,18 @@ public extension Octokit {
     ///   - repository: The name of the repository.
     ///   - completion: Callback for the outcome of the fetch.
     @discardableResult
-    func listReleases(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, completion: @escaping (_ response: Response<[Release]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func listReleases(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        completion: @escaping (_ response: Response<[Release]>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.listReleases(configuration, owner, repository)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self) { releases, error in
+        return router.load(
+            session,
+            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
+            expectedResultType: [Release].self
+        ) { releases, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -82,8 +92,29 @@ public extension Octokit {
     ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
     ///   - completion: Callback for the outcome of the created release.
     @discardableResult
-    func postRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, tagName: String, targetCommitish: String? = nil, name: String? = nil, body: String? = nil, prerelease: Bool = false, draft: Bool = false, completion: @escaping (_ response: Response<Release>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft)
+    func postRelease(
+        _ session: RequestKitURLSession = URLSession.shared,
+        owner: String,
+        repository: String,
+        tagName: String,
+        targetCommitish: String? = nil,
+        name: String? = nil,
+        body: String? = nil,
+        prerelease: Bool = false,
+        draft: Bool = false,
+        completion: @escaping (_ response: Response<Release>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
+        let router = ReleaseRouter.postRelease(
+            configuration,
+            owner,
+            repository,
+            tagName,
+            targetCommitish,
+            name,
+            body,
+            prerelease,
+            draft
+        )
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
 
@@ -107,8 +138,8 @@ enum ReleaseRouter: JSONPostRouter {
 
     var configuration: Configuration {
         switch self {
-        case .listReleases(let config, _, _): return config
-        case .postRelease(let config, _, _, _, _, _, _, _, _): return config
+        case let .listReleases(config, _, _): return config
+        case let .postRelease(config, _, _, _, _, _, _, _, _): return config
         }
     }
 
@@ -134,7 +165,7 @@ enum ReleaseRouter: JSONPostRouter {
         switch self {
         case .listReleases:
             return [:]
-        case .postRelease(_, _, _, let tagName, let targetCommitish, let name, let body, let prerelease, let draft):
+        case let .postRelease(_, _, _, tagName, targetCommitish, name, body, prerelease, draft):
             var params: [String: Any] = [
                 "tag_name": tagName,
                 "prerelease": prerelease,
@@ -157,7 +188,7 @@ enum ReleaseRouter: JSONPostRouter {
         switch self {
         case let .listReleases(_, owner, repo):
             return "repos/\(owner)/\(repo)/releases"
-        case .postRelease(_, let owner, let repo, _, _, _, _, _, _):
+        case let .postRelease(_, owner, repo, _, _, _, _, _, _):
             return "repos/\(owner)/\(repo)/releases"
         }
     }

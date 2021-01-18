@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Time {
+public enum Time {
     /**
      A date formatter for RFC 3339 style timestamps. Uses POSIX locale and GMT timezone so that date values are parsed as absolutes.
      - [https://tools.ietf.org/html/rfc3339](https://tools.ietf.org/html/rfc3339)

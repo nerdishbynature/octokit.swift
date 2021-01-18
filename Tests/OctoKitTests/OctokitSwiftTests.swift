@@ -1,5 +1,5 @@
-import XCTest
 import OctoKit
+import XCTest
 
 let enterpriseURL = "https://enterprise.myserver.com"
 
@@ -9,7 +9,7 @@ class OctokitSwiftTests: XCTestCase {
         ("testOctokitInitializerWithConfig", testOctokitInitializerWithConfig),
         ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
     ]
-    
+
     func testOctokitInitializerWithEmptyConfig() {
         let subject = Octokit()
         XCTAssertEqual(subject.configuration.apiEndpoint, "https://api.github.com")
@@ -20,7 +20,7 @@ class OctokitSwiftTests: XCTestCase {
         let subject = Octokit(config)
         XCTAssertEqual(subject.configuration.apiEndpoint, "https://enterprise.myserver.com")
     }
-    
+
     func testLinuxTestSuiteIncludesAllTests() {
         #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
         let thisClass = type(of: self)

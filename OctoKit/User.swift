@@ -5,6 +5,7 @@ import FoundationNetworking
 #endif
 
 // MARK: model
+
 open class User: Codable {
     open internal(set) var id: Int = -1
     open var login: String?
@@ -90,16 +91,19 @@ open class User: Codable {
 // MARK: request
 
 public extension Octokit {
-
     /**
-        Fetches a user or organization
-        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-        - parameter name: The name of the user or organization.
-        - parameter completion: Callback for the outcome of the fetch.
-    */
+         Fetches a user or organization
+         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter name: The name of the user or organization.
+         - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
-    func user(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<User>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = UserRouter.readUser(name, self.configuration)
+    func user(
+        _ session: RequestKitURLSession = URLSession.shared,
+        name: String,
+        completion: @escaping (_ response: Response<User>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
+        let router = UserRouter.readUser(name, configuration)
         return router.load(session, expectedResultType: User.self) { user, error in
             if let error = error {
                 completion(Response.failure(error))
@@ -112,13 +116,16 @@ public extension Octokit {
     }
 
     /**
-        Fetches the authenticated user
-        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-        - parameter completion: Callback for the outcome of the fetch.
-    */
+         Fetches the authenticated user
+         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
-    func me(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<User>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = UserRouter.readAuthenticatedUser(self.configuration)
+    func me(
+        _ session: RequestKitURLSession = URLSession.shared,
+        completion: @escaping (_ response: Response<User>) -> Void
+    ) -> URLSessionDataTaskProtocol? {
+        let router = UserRouter.readAuthenticatedUser(configuration)
         return router.load(session, expectedResultType: User.self) { user, error in
             if let error = error {
                 completion(Response.failure(error))
@@ -139,8 +146,8 @@ enum UserRouter: Router {
 
     var configuration: Configuration {
         switch self {
-        case .readAuthenticatedUser(let config): return config
-        case .readUser(_, let config): return config
+        case let .readAuthenticatedUser(config): return config
+        case let .readUser(_, config): return config
         }
     }
 
@@ -156,7 +163,7 @@ enum UserRouter: Router {
         switch self {
         case .readAuthenticatedUser:
             return "user"
-        case .readUser(let username, _):
+        case let .readUser(username, _):
             return "users/\(username)"
         }
     }
