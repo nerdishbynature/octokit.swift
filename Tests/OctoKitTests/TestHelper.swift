@@ -3,14 +3,12 @@ import OctoKit
 
 internal class Helper {
     internal class func stringFromFile(_ name: String) -> String? {
-        let path = jsonFilePath(resourceName: name)
-        
-        let string = try? String(contentsOfFile: path, encoding: String.Encoding.utf8)
-        return string
+        let path = jsonFilePath(for: name)
+        return try! String(contentsOfFile: path, encoding: String.Encoding.utf8)
     }
 
     internal class func JSONFromFile(_ name: String) -> Any {
-        let path = jsonFilePath(resourceName: name)
+        let path = jsonFilePath(for: name)
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
         let dict: Any? = try? JSONSerialization.jsonObject(with: data,
         options: JSONSerialization.ReadingOptions.mutableContainers)
@@ -18,14 +16,7 @@ internal class Helper {
     }
 
     internal class func codableFromFile<T>(_ name: String, type: T.Type) -> T where T: Codable {
-        var path: String
-        let bundlePath = jsonFilePath(resourceName: name)
-        if FileManager.default.fileExists(atPath: bundlePath) {
-            path = bundlePath
-        }
-        else {
-            path = jsonFixturesFilePath(resourceName: name)
-        }
+        let path = jsonFilePath(for: name)
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -39,18 +30,18 @@ internal class Helper {
         ]
     }
     
-    private class func jsonFilePath(resourceName: String) -> String {
-        return URL(fileURLWithPath: #file)
+    private class func jsonFilePath(for resourceName: String) -> String {
+        let baseURL = URL(fileURLWithPath: #file)
             .deletingLastPathComponent()
-            .appendingPathComponent("\(resourceName).json")
-            .path
-    }
-    
-    private class func jsonFixturesFilePath(resourceName: String) -> String {
-        return URL(fileURLWithPath: #file)
-            .deletingLastPathComponent()
-            .appendingPathComponent("Fixtures")
-            .appendingPathComponent("\(resourceName).json")
-            .path
+        let bundlePath = baseURL.appendingPathComponent("\(resourceName).json").path
+
+        if FileManager.default.fileExists(atPath: bundlePath) {
+            return bundlePath
+        } else {
+            return baseURL
+                .appendingPathComponent("Fixtures")
+                .appendingPathComponent("\(resourceName).json")
+                .path
+        }
     }
 }
