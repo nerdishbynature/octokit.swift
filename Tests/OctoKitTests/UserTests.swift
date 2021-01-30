@@ -21,8 +21,9 @@ class UserTests: XCTestCase {
             switch response {
             case .success(let user):
                 XCTAssertEqual(user.login, username)
+                XCTAssertNotNil(user.createdAt)
             case .failure:
-                XCTAssert(false, "should not get an user")
+                XCTAssert(false, "should get a user")
             }
         }
         XCTAssertNotNil(task)
