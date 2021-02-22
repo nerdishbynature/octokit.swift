@@ -38,6 +38,9 @@ open class PullRequest: Codable {
     open var head: PullRequest.Branch?
     open var base: PullRequest.Branch?
     
+    open var requestedReviewers: [User]?
+    open var draft: Bool?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case url
@@ -64,6 +67,8 @@ open class PullRequest: Codable {
         case mergedAt = "merged_at"
         case head
         case base
+        case requestedReviewers = "requested_reviewers"
+        case draft
     }
 
     open class Branch: Codable {
