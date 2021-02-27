@@ -1,13 +1,7 @@
 import XCTest
 import OctoKit
 
-class StatusesTest: XCTestCase {
-    static var allTests = [
-        ("testCreateCommitStatus", testCreateCommitStatus),
-        ("testListCommitStatuses", testListCommitStatuses),
-        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
-    ]
-
+class StatusesTests: XCTestCase {
     // MARK: Actual Request tests
 
     func testCreateCommitStatus() {
@@ -63,18 +57,5 @@ class StatusesTest: XCTestCase {
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
-    }
-
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-        let thisClass = type(of: self)
-        let linuxCount = thisClass.allTests.count
-        #if os(iOS)
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #else
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #endif
-        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }
