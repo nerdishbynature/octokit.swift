@@ -35,6 +35,8 @@ class PullRequestTests: XCTestCase {
                 XCTAssertEqual(pullRequests.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
                 XCTAssertEqual(pullRequests.head?.user?.login, "octocat")
                 XCTAssertEqual(pullRequests.head?.repo?.name, "Hello-World")
+                XCTAssertEqual(pullRequests.requestedReviewers?[0].login, "octocat")
+                XCTAssertEqual(pullRequests.draft, false)
             case .failure(let error):
                 XCTAssertNil(error)
             }
@@ -70,6 +72,8 @@ class PullRequestTests: XCTestCase {
                 XCTAssertEqual(pullRequests.first?.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
                 XCTAssertEqual(pullRequests.first?.head?.user?.login, "octocat")
                 XCTAssertEqual(pullRequests.first?.head?.repo?.name, "Hello-World")
+                XCTAssertEqual(pullRequests.first?.requestedReviewers?[0].login, "octocat")
+                XCTAssertEqual(pullRequests.first?.draft, false)
             case .failure(let error):
                 XCTAssertNil(error)
             }
