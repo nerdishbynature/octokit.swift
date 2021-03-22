@@ -41,4 +41,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: SPM Test
-        run: swift test
+        run: swift test --enable-test-discovery
