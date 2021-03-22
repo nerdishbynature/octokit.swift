@@ -37,10 +37,8 @@ jobs:
   spm:
     name: Test with SPM
     runs-on: ubuntu-latest
+    container: swift:5.3-focal
     steps:
       - uses: actions/checkout@v2
-      - uses: sersoft-gmbh/SwiftyActions@v1
-        with:
-          release-version: 5.3.2
       - name: SPM Test
         run: swift test
