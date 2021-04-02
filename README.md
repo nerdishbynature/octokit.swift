@@ -108,7 +108,7 @@ necessary to do the OAuth Flow again. You can just use a `TokenConfiguration`.
 ```swift
 let token = // get your token from your keychain, user defaults (not recommended) etc.
 let config = TokenConfiguration(token)
-Octokit(config).user("octocat") { response in
+Octokit(config).user(name: "octocat") { response in
   switch response {
   case .success(let user):
   	print("User login: \(user.login!)")
@@ -125,7 +125,7 @@ Octokit(config).user("octocat") { response in
 
 ```swift
 let username = ... // set the username
-Octokit().user(username) { response in
+Octokit().user(name: username) { response in
   switch response {
     case .success(let user):
       // do something with the user

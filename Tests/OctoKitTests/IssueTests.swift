@@ -2,17 +2,6 @@ import XCTest
 import OctoKit
 
 class IssueTests: XCTestCase {
-    static var allTests = [
-        ("testGetMyIssues", testGetMyIssues),
-        ("testGetIssue", testGetIssue),
-        ("testPostIssue", testGetIssue),
-        ("testPostComment", testPostComment),
-        ("testCommentsIssue", testCommentsIssue),
-        ("testParsingIssue", testParsingIssue),
-        ("testParsingIssue2", testParsingIssue2),
-        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
-    ]
-    
     // MARK: Actual Request tests
     
     func testGetMyIssues() {
@@ -116,18 +105,5 @@ class IssueTests: XCTestCase {
         XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/vincode-io/FeedCompass/issues/36"))
         XCTAssertEqual(subject.state, Openness.open)
         XCTAssertEqual(subject.locked, false)
-    }
-    
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-        let thisClass = type(of: self)
-        let linuxCount = thisClass.allTests.count
-        #if os(iOS)
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #else
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #endif
-        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }

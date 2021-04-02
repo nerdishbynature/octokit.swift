@@ -2,16 +2,6 @@ import XCTest
 import OctoKit
 
 class LabelTests: XCTestCase {
-    static var allTests = [
-        ("testGetLabel", testGetLabel),
-        ("testGetLabelEncodesSpaceCorrectly", testGetLabelEncodesSpaceCorrectly),
-        ("testGetLabels", testGetLabels),
-        ("testGetLabelsSetsPagination", testGetLabelsSetsPagination),
-        ("testCreateLabel", testCreateLabel),
-        ("testParsingLabel", testParsingLabel),
-        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
-    ]
-
     // MARK: Request Tests
     func testGetLabel() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels/bug", expectedHTTPMethod: "GET", jsonFile: "label", statusCode: 200)
@@ -90,18 +80,5 @@ class LabelTests: XCTestCase {
         XCTAssertEqual(label.name, "bug")
         XCTAssertEqual(label.color, "fc2929")
         XCTAssertEqual(label.url, URL(string: "https://api.github.com/repos/octocat/hello-worId/labels/bug")!)
-    }
-
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-        let thisClass = type(of: self)
-        let linuxCount = thisClass.allTests.count
-        #if os(iOS)
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #else
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #endif
-        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }

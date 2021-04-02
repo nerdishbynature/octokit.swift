@@ -4,16 +4,6 @@ import XCTest
 import OctoKit
 
 class GistTests: XCTestCase {
-
-    static var allTests = [
-        ("testGetMyGists", testGetGists),
-        ("testGetGists", testGetGists),
-        ("testGetGist", testGetGist),
-        ("testPostGist", testPostGist),
-        ("testPatchGist", testPatchGist),
-        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
-    ]
-    
     // MARK: Actual Request tests
     
     func testGetMyGists() {
@@ -90,18 +80,5 @@ class GistTests: XCTestCase {
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
-    }
-    
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-        let thisClass = type(of: self)
-        let linuxCount = thisClass.allTests.count
-        #if os(iOS)
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #else
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #endif
-        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }
