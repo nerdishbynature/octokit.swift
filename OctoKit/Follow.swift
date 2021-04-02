@@ -14,7 +14,7 @@ public extension Octokit {
     @discardableResult
     func myFollowers(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
-        return router.load(session, expectedResultType: [User].self) { users, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -34,7 +34,7 @@ public extension Octokit {
     @discardableResult
     func followers(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowers(name, configuration)
-        return router.load(session, expectedResultType: [User].self) { users, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -53,7 +53,7 @@ public extension Octokit {
     @discardableResult
     func myFollowing(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
-        return router.load(session, expectedResultType: [User].self) { users, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {
@@ -73,7 +73,7 @@ public extension Octokit {
     @discardableResult
     func following(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowing(name, configuration)
-        return router.load(session, expectedResultType: [User].self) { users, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
                 completion(Response.failure(error))
             } else {

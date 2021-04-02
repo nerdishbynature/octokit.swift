@@ -10,12 +10,6 @@ import XCTest
 import OctoKit
 
 final class ReleasesTests: XCTestCase {
-    static var allTests = [
-        ("testListReleases", testListReleases),
-        ("testPostRelease", testPostRelease),
-        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
-    ]
-
     // MARK: Actual Request tests
 
     func testListReleases() {
@@ -75,18 +69,5 @@ final class ReleasesTests: XCTestCase {
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
-    }
-
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-        let thisClass = type(of: self)
-        let linuxCount = thisClass.allTests.count
-        #if os(iOS)
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #else
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #endif
-        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }
