@@ -9,12 +9,7 @@
 import XCTest
 import OctoKit
 
-final class ReviewTests: XCTestCase {
-    static var allTests = [
-        ("testReviews", testReviews),
-        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
-    ]
-    
+class ReviewTests: XCTestCase {
     func testReviews() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1/reviews", expectedHTTPMethod: "GET", jsonFile: "reviews", statusCode: 201)
         let task = Octokit().listReviews(session, owner: "octocat", repository: "Hello-World", pullRequestNumber: 1) { response in
@@ -45,18 +40,5 @@ final class ReviewTests: XCTestCase {
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
-    }
-    
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-        let thisClass = type(of: self)
-        let linuxCount = thisClass.allTests.count
-        #if os(iOS)
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #else
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #endif
-        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }
