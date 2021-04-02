@@ -1,4 +1,12 @@
-import_from_git(
-  url: 'https://github.com/nerdishbynature/requestkit_fastlane.git', 
-  branch: 'master'
-)
+fastlane_version "2.171.0"
+
+lane :test do |options|
+  if options[:configuration]
+    configuration = options[:configuration]
+  else
+    configuration = "Release"
+  end
+
+  scan(configuration: configuration, code_coverage: true)
+end
+

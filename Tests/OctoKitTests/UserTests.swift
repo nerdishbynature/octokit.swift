@@ -2,16 +2,6 @@ import XCTest
 import OctoKit
 
 class UserTests: XCTestCase {
-    static var allTests = [
-        ("testGetUser", testGetUser),
-        ("testFailingToGetUser", testFailingToGetUser),
-        ("testGettingAuthenticatedUser", testGettingAuthenticatedUser),
-        ("testFailToGetAuthenticatedUser", testFailToGetAuthenticatedUser),
-        ("testUserParsingFullUser", testUserParsingFullUser),
-        ("testUserParsingMinimalUser", testUserParsingMinimalUser),
-        ("testLinuxTestSuiteIncludesAllTests", testLinuxTestSuiteIncludesAllTests)
-    ]
-    
     // MARK: Actual Request tests
 
     func testGetUser() {
@@ -21,8 +11,9 @@ class UserTests: XCTestCase {
             switch response {
             case .success(let user):
                 XCTAssertEqual(user.login, username)
+                XCTAssertNotNil(user.createdAt)
             case .failure:
-                XCTAssert(false, "should not get an user")
+                XCTAssert(false, "should get a user")
             }
         }
         XCTAssertNotNil(task)
@@ -136,18 +127,5 @@ class UserTests: XCTestCase {
         XCTAssertEqual(subject.numberOfPublicRepos, 7)
         XCTAssertEqual(subject.numberOfPublicGists, 0)
         XCTAssertNil(subject.numberOfPrivateRepos)
-    }
-    
-    func testLinuxTestSuiteIncludesAllTests() {
-        #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
-        let thisClass = type(of: self)
-        let linuxCount = thisClass.allTests.count
-        #if os(iOS)
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #else
-        let darwinCount = thisClass.defaultTestSuite.tests.count
-        #endif
-        XCTAssertEqual(linuxCount, darwinCount, "\(darwinCount - linuxCount) tests are missing from allTests")
-        #endif
     }
 }

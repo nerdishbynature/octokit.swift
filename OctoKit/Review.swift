@@ -27,7 +27,8 @@ extension Review: Codable {
 extension Review {
     public enum State: String, Codable, Equatable {
         case approved = "APPROVED"
-        case comment = "COMMENT"
+        case changesRequested = "CHANGES_REQUESTED"
+        case comment = "COMMENTED"
         case dismissed = "DISMISSED"
         case pending = "PENDING"
     }
@@ -87,7 +88,7 @@ enum ReviewsRouter: JSONPostRouter {
     var path: String {
         switch self {
         case let .listReviews(_, owner, repository, pullRequestNumber):
-            return "/repos/\(owner)/\(repository)/pulls/\(pullRequestNumber)/reviews"
+            return "repos/\(owner)/\(repository)/pulls/\(pullRequestNumber)/reviews"
         }
     }
 }

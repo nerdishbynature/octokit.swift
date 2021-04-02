@@ -38,6 +38,9 @@ open class PullRequest: Codable {
     open var head: PullRequest.Branch?
     open var base: PullRequest.Branch?
     
+    open var requestedReviewers: [User]?
+    open var draft: Bool?
+    
     enum CodingKeys: String, CodingKey {
         case id
         case url
@@ -64,6 +67,8 @@ open class PullRequest: Codable {
         case mergedAt = "merged_at"
         case head
         case base
+        case requestedReviewers = "requested_reviewers"
+        case draft
     }
 
     open class Branch: Codable {
@@ -112,6 +117,7 @@ public extension Octokit {
     - parameter owner: The user or organization that owns the repositories.
     - parameter repository: The name of the repository.
     - parameter base: Filter pulls by base branch name.
+    - parameter head: Filter pulls by user or organization and branch name.
     - parameter state: Filter pulls by their state.
     - parameter direction: The direction of the sort.
     - parameter completion: Callback for the outcome of the fetch.
@@ -121,12 +127,13 @@ public extension Octokit {
                              owner: String,
                              repository: String,
                              base: String? = nil,
+                             head: String? = nil,
                              state: Openness = .open,
                              sort: SortType = .created,
                              direction: SortDirection = .desc,
                              completion: @escaping (_ response: Response<[PullRequest]>) -> Void) -> URLSessionDataTaskProtocol? {
 
-        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, state, sort, direction)
+        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
                 completion(Response.failure(error))
@@ -143,7 +150,7 @@ public extension Octokit {
 
 enum PullRequestRouter: JSONPostRouter {
     case readPullRequest(Configuration, String, String, String)
-    case readPullRequests(Configuration, String, String, String?, Openness, SortType, SortDirection)
+    case readPullRequests(Configuration, String, String, String?, String?, Openness, SortType, SortDirection)
 
     var method: HTTPMethod {
         switch self {
@@ -163,7 +170,7 @@ enum PullRequestRouter: JSONPostRouter {
     var configuration: Configuration {
         switch self {
         case .readPullRequest(let config, _, _, _): return config
-        case .readPullRequests(let config, _, _, _, _, _, _): return config
+        case .readPullRequests(let config, _, _, _, _, _, _, _): return config
         }
     }
 
@@ -171,7 +178,7 @@ enum PullRequestRouter: JSONPostRouter {
         switch self {
         case .readPullRequest(_, _, _, _):
             return [:]
-        case .readPullRequests(_, _, _, let base, let state, let sort, let direction):
+        case .readPullRequests(_, _, _, let base, let head, let state, let sort, let direction):
             var parameters = [
                     "state": state.rawValue,
                     "sort": sort.rawValue,
@@ -180,6 +187,10 @@ enum PullRequestRouter: JSONPostRouter {
 
             if let base = base {
                 parameters["base"] = base
+            }
+            
+            if let head = head {
+                parameters["head"] = head
             }
 
             return parameters
@@ -190,7 +201,7 @@ enum PullRequestRouter: JSONPostRouter {
         switch self {
         case .readPullRequest(_, let owner, let repository, let number):
             return "repos/\(owner)/\(repository)/pulls/\(number)"
-        case .readPullRequests(_, let owner, let repository, _, _, _, _):
+        case .readPullRequests(_, let owner, let repository, _, _, _, _, _):
             return "repos/\(owner)/\(repository)/pulls"
         }
     }
