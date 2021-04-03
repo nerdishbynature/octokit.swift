@@ -22,7 +22,7 @@ class NotificationTests: XCTestCase {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
         
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/notifications?all=false&page=1&participating=false&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "notifications_threads", statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/notifications?all=false&page=1&participating=false&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "notification_threads", statusCode: 200)
         let task = Octokit(config).myNotifications(session,all: false,participating: false, page: "1",perPage: "100"){ response in
             switch response {
                 case .success(let notifications):
@@ -53,7 +53,7 @@ class NotificationTests: XCTestCase {
     func testGetNotificationThread(){
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/notifications/threads/1", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "notifications_threads", statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/notifications/threads/1", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "notification_thread", statusCode: 200)
         let task = Octokit(config).getNotificationThread(session,threadId: "1") { response in
             switch response {
                 case .success(let notification):
@@ -115,7 +115,7 @@ class NotificationTests: XCTestCase {
     func testListRepositoryNotifications(){
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/notifications?all=false&page=1&participating=false&perPage=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "notification_thread", statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/notifications?all=false&page=1&participating=false&perPage=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "notification_threads", statusCode: 200)
         let task = Octokit(config).listRepositoryNotifications(session,owner: "octocat",repository: "hello-world") { response in
             switch response {
                 case .success(let notifications):

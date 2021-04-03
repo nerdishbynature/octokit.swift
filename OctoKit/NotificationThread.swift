@@ -23,7 +23,7 @@ open class NotificationThreadSubject: Codable {
 }
 
 open class NotificationThread: Codable {
-    open var id: String?
+    open internal(set) var id: String? = "-1"
     open var unread: Bool?
     open var reason: String?
     open var updatedAt: Date?
@@ -44,7 +44,7 @@ open class NotificationThread: Codable {
 
 
 open class ThreadSubscription: Codable {
-    open internal(set) var id: Int = -1
+    open internal(set) var id: Int? = -1
     open var subscribed: Bool?
     open var ignored: Bool?
     open var reason: String?
@@ -149,7 +149,7 @@ public extension Octokit {
     
     
     /**
-     Get a thread subscription for the authenticated user
+     Sets a thread subscription for the authenticated user
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter threadId: The ID of the Thread.
      - parameter ignored: Whether to block all notifications from a thread `false` by default.
