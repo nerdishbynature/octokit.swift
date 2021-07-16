@@ -73,6 +73,23 @@ public extension Octokit {
     }
 
     /**
+         Fetches the Repositories for a user or organization
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
+         - parameter owner: The user or organization that owns the repositories. If `nil`, fetches repositories for the authenticated user.
+         - parameter page: Current page for repository pagination. `1` by default.
+         - parameter perPage: Number of repositories per page. `100` by default.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func repositories(_ session: RequestKitURLSession = URLSession.shared, owner: String? = nil, page: String = "1", perPage: String = "100") async throws -> [Repository] {
+        let router = (owner != nil)
+            ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
+            : RepositoryRouter.readAuthenticatedRepositories(configuration, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
+    }
+    #endif
+
+    /**
          Fetches a repository for a user or organization
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter owner: The user or organization that owns the repositories.
@@ -94,6 +111,20 @@ public extension Octokit {
             }
         }
     }
+
+    /**
+         Fetches a repository for a user or organization
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
+         - parameter owner: The user or organization that owns the repositories.
+         - parameter name: The name of the repository to fetch.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String) async throws -> Repository {
+        let router = RepositoryRouter.readRepository(configuration, owner, name)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Repository.self)
+    }
+    #endif
 }
 
 // MARK: Router

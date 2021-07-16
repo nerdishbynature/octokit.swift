@@ -77,10 +77,6 @@ public extension Octokit {
     }
 
     /// Fetches a published release with the specified tag.
-    /// - Parameters:
-    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
-    ///   - owner: The user or organization that owns the repositories.
-    ///   - repository: The name of the repository.
     ///   - tag: The specified tag
     ///   - completion: Callback for the outcome of the fetch.
     @discardableResult
@@ -93,8 +89,7 @@ public extension Octokit {
         let router = ReleaseRouter.getReleaseByTag(configuration, owner, repository, tag)
         return router.load(session,
                            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
-                           expectedResultType: Release.self)
-        { release, error in
+                           expectedResultType: Release.self) { release, error in
             if let error = error {
                 completion(.failure(error))
             } else if let release = release {
@@ -102,6 +97,20 @@ public extension Octokit {
             }
         }
     }
+
+    /// Fetches the list of releases.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
+    ///   - owner: The user or organization that owns the repositories.
+    ///   - repository: The name of the repository.
+    ///   - perPage: Results per page (max 100). Default: `30`.2
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func listReleases(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, perPage: Int = 30) async throws -> [Release] {
+        let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self)
+    }
+    #endif
 
     /// Creates a new release.
     /// - Parameters:
@@ -159,6 +168,29 @@ public extension Octokit {
         let router = ReleaseRouter.deleteRelease(configuration, owner, repository, releaseId)
         return router.load(session, completion: completion)
     }
+
+    /// Creates a new release.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
+    ///   - owner: The user or organization that owns the repositories.
+    ///   - repo: The repository on which the release needs to be created.
+    ///   - tagName: The name of the tag.
+    ///   - targetCommitish: Specifies the commitish value that determines where the Git tag is created from. Can be any branch or commit SHA. Unused if the Git tag already exists. Default: the repository's default branch (usually master).
+    ///   - name: The name of the release.
+    ///   - body: Text describing the contents of the tag.
+    ///   - prerelease: `true` to create a draft (unpublished) release, `false` to create a published one. Default: `false`.
+    ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func postRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, tagName: String, targetCommitish: String? = nil, name: String? = nil,
+                     body: String? = nil, prerelease: Bool = false, draft: Bool = false) async throws -> Release
+    {
+        let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Release.self)
+    }
+    #endif
 }
 
 // MARK: Router
