@@ -56,18 +56,32 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myGists(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Gist]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myGists(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Result<[Gist], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.readAuthenticatedGists(configuration, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self) { gists, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gists = gists {
-                    completion(Response.success(gists))
+                    completion(.success(gists))
                 }
             }
         }
     }
+
+    /**
+     Fetches the gists of the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter page: Current page for gist pagination. `1` by default.
+     - parameter perPage: Number of gists per page. `100` by default.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func myGists(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100") async throws -> [Gist] {
+        let router = GistRouter.readAuthenticatedGists(configuration, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self)
+    }
+    #endif
     
     /**
      Fetches the gists of the specified user
@@ -78,18 +92,33 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func gists(_ session: RequestKitURLSession = URLSession.shared, owner: String, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Gist]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func gists(_ session: RequestKitURLSession = URLSession.shared, owner: String, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Result<[Gist], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.readGists(configuration, owner, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self) { gists, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gists = gists {
-                    completion(Response.success(gists))
+                    completion(.success(gists))
                 }
             }
         }
     }
+
+    /**
+     Fetches the gists of the specified user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The username who owns the gists.
+     - parameter page: Current page for gist pagination. `1` by default.
+     - parameter perPage: Number of gists per page. `100` by default.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func gists(_ session: RequestKitURLSession = URLSession.shared, owner: String, page: String = "1", perPage: String = "100") async throws -> [Gist] {
+        let router = GistRouter.readGists(configuration, owner, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self)
+    }
+    #endif
     
     /**
      Fetches an gist
@@ -98,18 +127,31 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func gist(_ session: RequestKitURLSession = URLSession.shared, id: String, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
+    func gist(_ session: RequestKitURLSession = URLSession.shared, id: String, completion: @escaping (_ response: Result<Gist, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.readGist(configuration, id)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Gist.self) { gist, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gist = gist {
-                    completion(Response.success(gist))
+                    completion(.success(gist))
                 }
             }
         }
     }
+
+    /**
+     Fetches an gist
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter id: The id of the gist.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func gist(_ session: RequestKitURLSession = URLSession.shared, id: String) async throws -> Gist {
+        let router = GistRouter.readGist(configuration, id)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Gist.self)
+    }
+    #endif
     
     /**
      Creates an gist with a single file.
@@ -121,20 +163,38 @@ public extension Octokit {
      - parameter completion: Callback for the gist that is created.
      */
     @discardableResult
-    func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, publicAccess: Bool, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
+    func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, publicAccess: Bool, completion: @escaping (_ response: Result<Gist, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.postGistFile(configuration, description, filename, fileContent, publicAccess)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Gist.self) { gist, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gist = gist {
-                    completion(Response.success(gist))
+                    completion(.success(gist))
                 }
             }
         }
     }
+
+    /**
+     Creates an gist with a single file.
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter description: The description of the gist.
+     - parameter filename: The name of the file in the gist.
+     - parameter fileContent: The content of the file in the gist.
+     - parameter publicAccess: The public/private visability of the gist.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, publicAccess: Bool) async throws -> Gist {
+        let router = GistRouter.postGistFile(configuration, description, filename, fileContent, publicAccess)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Gist.self)
+    }
+    #endif
     
     /**
      Edits an gist with a single file.
@@ -146,20 +206,38 @@ public extension Octokit {
      - parameter completion: Callback for the gist that is created.
      */
     @discardableResult
-    func patchGistFile(_ session: RequestKitURLSession = URLSession.shared, id: String, description: String, filename: String, fileContent: String, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
+    func patchGistFile(_ session: RequestKitURLSession = URLSession.shared, id: String, description: String, filename: String, fileContent: String, completion: @escaping (_ response: Result<Gist, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.patchGistFile(configuration, id, description, filename, fileContent)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Gist.self) { gist, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gist = gist {
-                    completion(Response.success(gist))
+                    completion(.success(gist))
                 }
             }
         }
     }
+
+    /**
+     Edits an gist with a single file.
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter id: The of the gist to update.
+     - parameter description: The description of the gist.
+     - parameter filename: The name of the file in the gist.
+     - parameter fileContent: The content of the file in the gist.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func patchGistFile(_ session: RequestKitURLSession = URLSession.shared, id: String, description: String, filename: String, fileContent: String) async throws -> Gist {
+        let router = GistRouter.patchGistFile(configuration, id, description, filename, fileContent)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Gist.self)
+    }
+    #endif
 }
 
 // MARK: Router

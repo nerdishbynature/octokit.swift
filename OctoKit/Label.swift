@@ -22,18 +22,33 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
     */
     @discardableResult
-    func label(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, name: String, completion: @escaping (_ response: Response<Label>) -> Void) -> URLSessionDataTaskProtocol? {
+    func label(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, name: String, completion: @escaping (_ response: Result<Label, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = LabelRouter.readLabel(configuration, owner, repository, name)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Label.self) { label, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let label = label {
-                    completion(Response.success(label))
+                    completion(.success(label))
                 }
             }
         }
     }
+
+    /**
+     Fetches a single label in a repository
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter name: The name of the label.
+    */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func label(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, name: String) async throws -> Label {
+        let router = LabelRouter.readLabel(configuration, owner, repository, name)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Label.self)
+    }
+    #endif
     
     /**
      Fetches all labels in a repository
@@ -45,18 +60,34 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func labels(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Label]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func labels(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Result<[Label], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = LabelRouter.readLabels(configuration, owner, repository, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Label].self) { labels, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let labels = labels {
-                    completion(Response.success(labels))
+                    completion(.success(labels))
                 }
             }
         }
     }
+
+    /**
+     Fetches all labels in a repository
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter page: Current page for label pagination. `1` by default.
+     - parameter perPage: Number of labels per page. `100` by default.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func labels(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, page: String = "1", perPage: String = "100") async throws -> [Label] {
+        let router = LabelRouter.readLabels(configuration, owner, repository, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Label].self)
+    }
+    #endif
     
     /**
      Create a label in a repository
@@ -68,18 +99,34 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the request.
      */
     @discardableResult
-    func postLabel(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, name: String, color: String, completion: @escaping (_ response: Response<Label>) -> Void) -> URLSessionDataTaskProtocol? {
+    func postLabel(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, name: String, color: String, completion: @escaping (_ response: Result<Label, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = LabelRouter.createLabel(configuration, owner, repository, name, color)
         return router.post(session, expectedResultType: Label.self) { label, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let label = label {
-                    completion(Response.success(label))
+                    completion(.success(label))
                 }
             }
         }
     }
+
+    /**
+     Create a label in a repository
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter name: The name of the label.
+     - parameter color: The color of the label, in hexadecimal without the leading `#`.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func postLabel(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, name: String, color: String) async throws -> Label {
+        let router = LabelRouter.createLabel(configuration, owner, repository, name, color)
+        return try await router.post(session, expectedResultType: Label.self)
+    }
+    #endif
 }
 
 enum LabelRouter: JSONPostRouter {

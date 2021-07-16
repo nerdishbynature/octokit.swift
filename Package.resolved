@@ -5,9 +5,9 @@
         "package": "RequestKit",
         "repositoryURL": "https://github.com/nerdishbynature/RequestKit.git",
         "state": {
-          "branch": null,
-          "revision": "fd5e9e99aada7432170366c9e95967011ce13bad",
-          "version": "2.4.0"
+          "branch": "async-await",
+          "revision": "db78c1bfde4e26dce25bf995fbb45fbe73e436b3",
+          "version": null
         }
       }
     ]

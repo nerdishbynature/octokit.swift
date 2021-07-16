@@ -21,6 +21,19 @@ class IssueTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetMyIssuesAsync() async throws {
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/issues?page=1&per_page=100&state=open", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "issues", statusCode: 200)
+        let issues = try await Octokit(config).myIssues(session)
+        XCTAssertEqual(issues.count, 1)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
     func testGetIssue() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1347", expectedHTTPMethod: "GET", jsonFile: "issue", statusCode: 200)
         let task = Octokit().issue(session, owner: "octocat", repository: "Hello-World", number: 1347) { response in
@@ -28,12 +41,22 @@ class IssueTests: XCTestCase {
             case .success(let issue):
                 XCTAssertEqual(issue.number, 1347)
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetIssueAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1347", expectedHTTPMethod: "GET", jsonFile: "issue", statusCode: 200)
+        let issue = try await Octokit().issue(session, owner: "octocat", repository: "Hello-World", number: 1347)
+        XCTAssertEqual(issue.number, 1347)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 
     func testPostIssue() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues", expectedHTTPMethod: "POST", jsonFile: "issue2", statusCode: 200)
@@ -42,12 +65,22 @@ class IssueTests: XCTestCase {
             case .success(let issue):
                 XCTAssertEqual(issue.number, 36)
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testPostIssueAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues", expectedHTTPMethod: "POST", jsonFile: "issue2", statusCode: 200)
+        let issue = try await Octokit().postIssue(session, owner: "octocat", repository: "Hello-World", title: "Title", body: "Body")
+        XCTAssertEqual(issue.number, 36)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 
     func testPostComment() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1/comments", expectedHTTPMethod: "POST", jsonFile: "issue_comment", statusCode: 201)
@@ -56,12 +89,22 @@ class IssueTests: XCTestCase {
             case .success(let comment):
                 XCTAssertEqual(comment.body, "Testing a comment")
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testPostCommentAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1/comments", expectedHTTPMethod: "POST", jsonFile: "issue_comment", statusCode: 201)
+        let comment = try await Octokit().commentIssue(session, owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment")
+        XCTAssertEqual(comment.body, "Testing a comment")
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 
     func testCommentsIssue() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1/comments?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "issue_comments", statusCode: 200)
@@ -72,12 +115,24 @@ class IssueTests: XCTestCase {
                 XCTAssertEqual(comments[0].body, "Testing fetching comments for an issue")
                 XCTAssertEqual(comments[0].reactions!.totalCount, 5)
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testCommentsIssueAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1/comments?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "issue_comments", statusCode: 200)
+        let comments = try await Octokit().issueComments(session, owner: "octocat", repository: "Hello-World", number: 1)
+        XCTAssertEqual(comments.count, 1)
+        XCTAssertEqual(comments[0].body, "Testing fetching comments for an issue")
+        XCTAssertEqual(comments[0].reactions!.totalCount, 5)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
     
     // MARK: Model Tests
     

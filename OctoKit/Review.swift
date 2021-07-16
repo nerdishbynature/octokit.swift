@@ -40,18 +40,29 @@ extension Octokit {
                              owner: String,
                              repository: String,
                              pullRequestNumber: Int,
-                             completion: @escaping (_ response: Response<[Review]>) -> Void) -> URLSessionDataTaskProtocol? {
+                             completion: @escaping (_ response: Result<[Review], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self) { pullRequests, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let pullRequests = pullRequests {
-                    completion(Response.success(pullRequests))
+                    completion(.success(pullRequests))
                 }
             }
         }
     }
+
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    public func reviews(_ session: RequestKitURLSession = URLSession.shared,
+                             owner: String,
+                             repository: String,
+                             pullRequestNumber: Int) async throws -> [Review] {
+        let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self)
+    }
+    #endif
 }
 
 enum ReviewsRouter: JSONPostRouter {

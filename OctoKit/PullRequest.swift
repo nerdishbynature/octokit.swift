@@ -7,7 +7,7 @@ import FoundationNetworking
 open class PullRequest: Codable {
     private(set) open var id: Int = -1
     open var url: URL?
-
+    
     open var htmlURL: URL?
     open var diffURL: URL?
     open var patchURL: URL?
@@ -17,7 +17,7 @@ open class PullRequest: Codable {
     open var reviewCommentURL: URL?
     open var commentsURL: URL?
     open var statusesURL: URL?
-
+    
     open var title: String?
     open var body: String?
     
@@ -34,7 +34,7 @@ open class PullRequest: Codable {
     open var number: Int
     open var state: Openness?
     open var labels: [Label]?
-
+    
     open var head: PullRequest.Branch?
     open var base: PullRequest.Branch?
     
@@ -70,7 +70,7 @@ open class PullRequest: Codable {
         case requestedReviewers = "requested_reviewers"
         case draft
     }
-
+    
     open class Branch: Codable {
         open var label: String?
         open var ref: String?
@@ -83,67 +83,109 @@ open class PullRequest: Codable {
 // MARK: Request
 
 public extension Octokit {
-
+    
     /**
-    Get a single pull request
-    - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-    - parameter owner: The user or organization that owns the repositories.
-    - parameter repository: The name of the repository.
-    - parameter number: The number of the PR to fetch.
-    - parameter completion: Callback for the outcome of the fetch.
-    */
+     Get a single pull request
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repository: The name of the repository.
+     - parameter number: The number of the PR to fetch.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
     func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
-                            owner: String,
-                            repository: String,
-                            number: Int,
-                            completion: @escaping (_ response: Response<PullRequest>) -> Void) -> URLSessionDataTaskProtocol? {
-
+                     owner: String,
+                     repository: String,
+                     number: Int,
+                     completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let pullRequest = pullRequest {
-                    completion(Response.success(pullRequest))
+                    completion(.success(pullRequest))
                 }
             }
         }
     }
-
+    
     /**
-    Get a list of pull requests
-    - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-    - parameter owner: The user or organization that owns the repositories.
-    - parameter repository: The name of the repository.
-    - parameter base: Filter pulls by base branch name.
-    - parameter head: Filter pulls by user or organization and branch name.
-    - parameter state: Filter pulls by their state.
-    - parameter direction: The direction of the sort.
-    - parameter completion: Callback for the outcome of the fetch.
-    */
+     Get a single pull request
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repository: The name of the repository.
+     - parameter number: The number of the PR to fetch.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
+                     owner: String,
+                     repository: String,
+                     number: Int) async throws -> PullRequest {
+        let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self)
+    }
+    #endif
+    
+    /**
+     Get a list of pull requests
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repository: The name of the repository.
+     - parameter base: Filter pulls by base branch name.
+     - parameter head: Filter pulls by user or organization and branch name.
+     - parameter state: Filter pulls by their state.
+     - parameter direction: The direction of the sort.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
     func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
-                             owner: String,
-                             repository: String,
-                             base: String? = nil,
-                             head: String? = nil,
-                             state: Openness = .open,
-                             sort: SortType = .created,
-                             direction: SortDirection = .desc,
-                             completion: @escaping (_ response: Response<[PullRequest]>) -> Void) -> URLSessionDataTaskProtocol? {
-
+                      owner: String,
+                      repository: String,
+                      base: String? = nil,
+                      head: String? = nil,
+                      state: Openness = .open,
+                      sort: SortType = .created,
+                      direction: SortDirection = .desc,
+                      completion: @escaping (_ response: Result<[PullRequest], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        
         let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let pullRequests = pullRequests {
-                    completion(Response.success(pullRequests))
+                    completion(.success(pullRequests))
                 }
             }
         }
     }
+    
+    /**
+     Get a list of pull requests
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repository: The name of the repository.
+     - parameter base: Filter pulls by base branch name.
+     - parameter head: Filter pulls by user or organization and branch name.
+     - parameter state: Filter pulls by their state.
+     - parameter direction: The direction of the sort.
+     */
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
+                      owner: String,
+                      repository: String,
+                      base: String? = nil,
+                      head: String? = nil,
+                      state: Openness = .open,
+                      sort: SortType = .created,
+                      direction: SortDirection = .desc) async throws -> [PullRequest] {
+        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self)
+    }
+    #endif
 }
 
 // MARK: Router
@@ -151,40 +193,40 @@ public extension Octokit {
 enum PullRequestRouter: JSONPostRouter {
     case readPullRequest(Configuration, String, String, String)
     case readPullRequests(Configuration, String, String, String?, String?, Openness, SortType, SortDirection)
-
+    
     var method: HTTPMethod {
         switch self {
         case .readPullRequest,
-             .readPullRequests:
+                .readPullRequests:
             return .GET
         }
     }
-
+    
     var encoding: HTTPEncoding {
         switch self {
         default:
             return .url
         }
     }
-
+    
     var configuration: Configuration {
         switch self {
         case .readPullRequest(let config, _, _, _): return config
         case .readPullRequests(let config, _, _, _, _, _, _, _): return config
         }
     }
-
+    
     var params: [String: Any] {
         switch self {
         case .readPullRequest(_, _, _, _):
             return [:]
         case .readPullRequests(_, _, _, let base, let head, let state, let sort, let direction):
             var parameters = [
-                    "state": state.rawValue,
-                    "sort": sort.rawValue,
-                    "direction": direction.rawValue
+                "state": state.rawValue,
+                "sort": sort.rawValue,
+                "direction": direction.rawValue
             ]
-
+            
             if let base = base {
                 parameters["base"] = base
             }
@@ -192,11 +234,11 @@ enum PullRequestRouter: JSONPostRouter {
             if let head = head {
                 parameters["head"] = head
             }
-
+            
             return parameters
         }
     }
-
+    
     var path: String {
         switch self {
         case .readPullRequest(_, let owner, let repository, let number):

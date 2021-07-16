@@ -13,28 +13,24 @@ class UserTests: XCTestCase {
                 XCTAssertEqual(user.login, username)
                 XCTAssertNotNil(user.createdAt)
             case .failure:
-                XCTAssert(false, "should get a user")
+                XCTFail("should get a user")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
-    func testFailingToGetUser() {
-        let username = "notexisting"
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/notexisting", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        let task = Octokit().user(session, name: username) { response in
-            switch response {
-            case .success:
-                XCTAssert(false, "should not retrieve user")
-            case .failure(let error as NSError):
-                XCTAssertEqual(error.code, 404)
-                XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            }
-        }
-        XCTAssertNotNil(task)
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetUserAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/mietzmithut", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
+        let username = "mietzmithut"
+        let user = try await Octokit().user(session, name: username)
+        XCTAssertEqual(user.login, username)
+        XCTAssertNotNil(user.createdAt)
         XCTAssertTrue(session.wasCalled)
     }
+    #endif
 
     func testGettingAuthenticatedUser() {
         let config = TokenConfiguration("user:12345")
@@ -46,28 +42,25 @@ class UserTests: XCTestCase {
             case .success(let user):
                 XCTAssertEqual(user.login, "pietbrauer")
             case .failure(let error):
-                XCTAssert(false, "should not retrieve an error \(error)")
+                XCTFail("should not retrieve an error \(error)")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
 
-    func testFailToGetAuthenticatedUser() {
-        let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", response: json, statusCode: 401)
-        let task = Octokit().me(session) { response in
-            switch response {
-            case .success:
-                XCTAssert(false, "should not retrieve user")
-            case .failure(let error as NSError):
-                XCTAssertEqual(error.code, 401)
-                XCTAssertEqual(error.domain, OctoKitErrorDomain)
-            }
-        }
-        XCTAssertNotNil(task)
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGettingAuthenticatedUserAsync() async throws {
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_me", statusCode: 200)
+        let user = try await Octokit(config).me(session)
+        XCTAssertEqual(user.login, "pietbrauer")
         XCTAssertTrue(session.wasCalled)
     }
+    #endif
 
     // MARK: Model Tests
 

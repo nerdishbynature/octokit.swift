@@ -10,12 +10,22 @@ class LabelTests: XCTestCase {
             case .success(let label):
                 XCTAssertEqual(label.name, "bug")
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetLabelAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels/bug", expectedHTTPMethod: "GET", jsonFile: "label", statusCode: 200)
+        let label = try await Octokit().label(session, owner: "octocat", repository: "hello-world", name: "bug")
+        XCTAssertEqual(label.name, "bug")
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
     
     func testGetLabelEncodesSpaceCorrectly() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels/help%20wanted", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 200)
@@ -24,7 +34,7 @@ class LabelTests: XCTestCase {
             case .success:
                 XCTAssert(true)
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
@@ -38,12 +48,22 @@ class LabelTests: XCTestCase {
             case .success(let labels):
                 XCTAssertEqual(labels.count, 7)
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetLabelsAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "labels", statusCode: 200)
+        let labels = try await Octokit().labels(session, owner: "octocat", repository: "hello-world")
+        XCTAssertEqual(labels.count, 7)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
     
     func testGetLabelsSetsPagination() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels?page=2&per_page=50", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 200)
@@ -52,7 +72,7 @@ class LabelTests: XCTestCase {
             case .success:
                 XCTAssert(true)
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
@@ -66,13 +86,23 @@ class LabelTests: XCTestCase {
             case .success(let label):
                 XCTAssertNotNil(label)
             case .failure:
-                XCTAssert(false, "should not get an error")
+                XCTFail("should not get an error")
             }
         }
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
+    #if !canImport(FoundationNetworking) && !os(macOS)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testCreateLabelAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels", expectedHTTPMethod: "POST", jsonFile: "label", statusCode: 200)
+        let label = try await Octokit().postLabel(session, owner: "octocat", repository: "hello-world", name: "test label", color: "ffffff")
+        XCTAssertNotNil(label)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
     
     // MARK: Parsing Tests
     func testParsingLabel() {
