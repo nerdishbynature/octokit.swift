@@ -6,6 +6,7 @@
             "id": 1296269,
             "node_id": "MDEwOlJlcG9zaXRvcnkxMjk2MjY5",
             "name": "Hello-World",
+            "size": 132,
             "full_name": "octocat/Hello-World",
             "owner": {
                 "login": "octocat",
