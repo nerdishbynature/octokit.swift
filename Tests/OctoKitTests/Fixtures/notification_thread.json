@@ -3,6 +3,7 @@
         "id": "1",
         "repository": {
             "id": 1296269,
+            "size": 132,
             "node_id": "MDEwOlJlcG9zaXRvcnkxMjk2MjY5",
             "name": "Hello-World",
             "full_name": "octocat/Hello-World",

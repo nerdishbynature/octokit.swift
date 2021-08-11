@@ -6,10 +6,24 @@ import FoundationNetworking
 
 // MARK: - Model
 
+public enum NotificationReason: String, Codable {
+    case assign
+    case author
+    case comment
+    case invitation
+    case manual
+    case mention
+    case reviewRequested = "review_requested"
+    case securityAlert = "security_alert"
+    case stateChange = "state_change"
+    case subscribed
+    case teamMention = "team_mention"
+}
+
 open class NotificationThread: Codable {
     open internal(set) var id: String? = "-1"
     open var unread: Bool?
-    open var reason: String?
+    open var reason: NotificationReason?
     open var updatedAt: Date?
     open var lastReadAt: Date?
     open private(set) var subject = Subject()
@@ -25,7 +39,7 @@ open class NotificationThread: Codable {
         case repository
     }
 
-    class Subject: Codable {
+    public class Subject: Codable {
         open internal(set) var id: Int = -1
         open var title: String?
         open var url: String?
@@ -265,7 +279,7 @@ enum NotificationRouter: Router {
     }
 
     var encoding: HTTPEncoding {
-        return .url
+        .url
     }
 
     var path: String {
