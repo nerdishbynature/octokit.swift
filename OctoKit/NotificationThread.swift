@@ -6,24 +6,10 @@ import FoundationNetworking
 
 // MARK: - Model
 
-public enum NotificationReason: String, Codable {
-    case assign
-    case author
-    case comment
-    case invitation
-    case manual
-    case mention
-    case reviewRequested = "review_requested"
-    case securityAlert = "security_alert"
-    case stateChange = "state_change"
-    case subscribed
-    case teamMention = "team_mention"
-}
-
 open class NotificationThread: Codable {
     open internal(set) var id: String? = "-1"
     open var unread: Bool?
-    open var reason: NotificationReason?
+    open var reason: Reason?
     open var updatedAt: Date?
     open var lastReadAt: Date?
     open private(set) var subject = Subject()
@@ -52,11 +38,22 @@ open class NotificationThread: Codable {
             case latestCommentUrl = "latest_comment_url"
             case type
         }
-
     }
 
+    public enum Reason: String, Codable {
+        case assign
+        case author
+        case comment
+        case invitation
+        case manual
+        case mention
+        case reviewRequested = "review_requested"
+        case securityAlert = "security_alert"
+        case stateChange = "state_change"
+        case subscribed
+        case teamMention = "team_mention"
+    }
 }
-
 
 open class ThreadSubscription: Codable {
     open internal(set) var id: Int? = -1
@@ -79,7 +76,6 @@ open class ThreadSubscription: Codable {
 // MARK: - Request
 
 public extension Octokit {
-
     /**
      List all notifications for the current user, sorted by most recently updated.
      - parameter session: RequestKitURLSession, defaults to URLSession.shared
@@ -135,9 +131,6 @@ public extension Octokit {
             }
         }
     }
-
-    //TODO: mark thread as read function, requires the PATCH update to RequestsKit
-
 
     /**
     Get a thread subscription for the authenticated user
@@ -339,5 +332,4 @@ enum NotificationRouter: Router {
             return params
         }
     }
-
 }
