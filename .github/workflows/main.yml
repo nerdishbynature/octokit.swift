@@ -42,3 +42,18 @@ jobs:
       - uses: actions/checkout@v2
       - name: SPM Test
         run: swift test --enable-test-discovery
+  swiftformat:
+    name: Linting
+    runs-on: ubuntu-latest
+    container: swift:5.3-focal
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install SwiftFormat
+        run: |
+          git clone https://github.com/nicklockwood/SwiftFormat.git
+          cd SwiftFormat
+          swift build -c release
+      - name: Lint
+        run: |
+          cd SwiftFormat
+          swift run -c release swiftformat ../ --lint --exclude .

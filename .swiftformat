@@ -1,0 +1,16 @@
+# file options
+
+--exclude Tests/LinuxMain.swift,Package.swift
+
+# format options
+--swiftversion 4.2
+--allman false
+--commas inline
+--ifdef no-indent
+--importgrouping testable-bottom
+--maxwidth 200
+--wrapparameters after-first
+
+# disabled format
+--disable wrapEnumCases 
+--disable numberFormatting
