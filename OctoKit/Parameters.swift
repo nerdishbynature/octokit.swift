@@ -6,13 +6,13 @@
 import Foundation
 
 public enum SortDirection: String {
-    case asc = "asc"
-    case desc = "desc"
+    case asc
+    case desc
 }
 
 public enum SortType: String {
-    case created = "created"
-    case updated = "updated"
-    case popularity = "popularity"
+    case created
+    case updated
+    case popularity
     case longRunning = "long-running"
 }

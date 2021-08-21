@@ -1,5 +1,5 @@
-import XCTest
 import OctoKit
+import XCTest
 
 class StarsTests: XCTestCase {
     // MARK: Actual Request tests
@@ -7,11 +7,11 @@ class StarsTests: XCTestCase {
     func testGetStarredRepositories() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
+
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
         let task = Octokit(config).myStars(session) { response in
             switch response {
-            case .success(let repositories):
+            case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -24,13 +24,13 @@ class StarsTests: XCTestCase {
     func testFailToGetStarredRepositories() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
+
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: nil, statusCode: 404)
         let task = Octokit(config).myStars(session) { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve repositories")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }
@@ -43,7 +43,7 @@ class StarsTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
         let task = Octokit().stars(session, name: "octocat") { response in
             switch response {
-            case .success(let repositories):
+            case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -59,7 +59,7 @@ class StarsTests: XCTestCase {
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve repositories")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }

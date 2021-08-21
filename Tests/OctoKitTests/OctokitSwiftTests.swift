@@ -1,5 +1,5 @@
-import XCTest
 import OctoKit
+import XCTest
 
 let enterpriseURL = "https://enterprise.myserver.com"
 
