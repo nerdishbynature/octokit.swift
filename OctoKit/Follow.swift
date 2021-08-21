@@ -5,12 +5,11 @@ import FoundationNetworking
 #endif
 
 public extension Octokit {
-
     /**
-        Fetches the followers of the authenticated user
-        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-        - parameter completion: Callback for the outcome of the fetch.
-    */
+         Fetches the followers of the authenticated user
+         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
     func myFollowers(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
@@ -26,11 +25,11 @@ public extension Octokit {
     }
 
     /**
-        Fetches the followers of a user
-        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-        - parameter name: Name of the user
-        - parameter completion: Callback for the outcome of the fetch.
-    */
+         Fetches the followers of a user
+         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter name: Name of the user
+         - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
     func followers(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowers(name, configuration)
@@ -46,10 +45,10 @@ public extension Octokit {
     }
 
     /**
-        Fetches the users following the authenticated user
-        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-        - parameter completion: Callback for the outcome of the fetch.
-    */
+         Fetches the users following the authenticated user
+         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
     func myFollowing(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
@@ -65,11 +64,11 @@ public extension Octokit {
     }
 
     /**
-        Fetches the users following a user
-        - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
-        - parameter name: The name of the user
-        - parameter completion: Callback for the outcome of the fetch.
-    */
+         Fetches the users following a user
+         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter name: The name of the user
+         - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
     func following(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowing(name, configuration)
@@ -101,10 +100,10 @@ enum FollowRouter: Router {
 
     var configuration: Configuration {
         switch self {
-        case .readAuthenticatedFollowers(let config): return config
-        case .readFollowers(_, let config): return config
-        case .readAuthenticatedFollowing(let config): return config
-        case .readFollowing(_, let config): return config
+        case let .readAuthenticatedFollowers(config): return config
+        case let .readFollowers(_, config): return config
+        case let .readAuthenticatedFollowing(config): return config
+        case let .readFollowing(_, config): return config
         }
     }
 
@@ -112,11 +111,11 @@ enum FollowRouter: Router {
         switch self {
         case .readAuthenticatedFollowers:
             return "user/followers"
-        case .readFollowers(let username, _):
+        case let .readFollowers(username, _):
             return "users/\(username)/followers"
         case .readAuthenticatedFollowing:
             return "user/following"
-        case .readFollowing(let username, _):
+        case let .readFollowing(username, _):
             return "users/\(username)/following"
         }
     }

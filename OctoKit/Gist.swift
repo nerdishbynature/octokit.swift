@@ -23,7 +23,7 @@ open class Gist: Codable {
     open var comments: Int?
     open var user: User?
     open var owner: User?
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case url
@@ -47,7 +47,6 @@ open class Gist: Codable {
 // MARK: request
 
 public extension Octokit {
-    
     /**
      Fetches the gists of the authenticated user
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -56,7 +55,9 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myGists(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Gist]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myGists(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100",
+                 completion: @escaping (_ response: Response<[Gist]>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = GistRouter.readAuthenticatedGists(configuration, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self) { gists, error in
             if let error = error {
@@ -68,7 +69,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     /**
      Fetches the gists of the specified user
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -78,7 +79,9 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func gists(_ session: RequestKitURLSession = URLSession.shared, owner: String, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[Gist]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func gists(_ session: RequestKitURLSession = URLSession.shared, owner: String, page: String = "1", perPage: String = "100",
+               completion: @escaping (_ response: Response<[Gist]>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = GistRouter.readGists(configuration, owner, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self) { gists, error in
             if let error = error {
@@ -90,7 +93,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     /**
      Fetches an gist
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -110,7 +113,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     /**
      Creates an gist with a single file.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -121,7 +124,13 @@ public extension Octokit {
      - parameter completion: Callback for the gist that is created.
      */
     @discardableResult
-    func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, publicAccess: Bool, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
+    func postGistFile(_ session: RequestKitURLSession = URLSession.shared,
+                      description: String,
+                      filename: String,
+                      fileContent: String,
+                      publicAccess: Bool,
+                      completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = GistRouter.postGistFile(configuration, description, filename, fileContent, publicAccess)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -135,7 +144,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     /**
      Edits an gist with a single file.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -146,7 +155,13 @@ public extension Octokit {
      - parameter completion: Callback for the gist that is created.
      */
     @discardableResult
-    func patchGistFile(_ session: RequestKitURLSession = URLSession.shared, id: String, description: String, filename: String, fileContent: String, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
+    func patchGistFile(_ session: RequestKitURLSession = URLSession.shared,
+                       id: String,
+                       description: String,
+                       filename: String,
+                       fileContent: String,
+                       completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = GistRouter.patchGistFile(configuration, id, description, filename, fileContent)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -170,7 +185,7 @@ enum GistRouter: JSONPostRouter {
     case readGist(Configuration, String)
     case postGistFile(Configuration, String, String, String, Bool)
     case patchGistFile(Configuration, String, String, String, String)
-    
+
     var method: HTTPMethod {
         switch self {
         case .postGistFile, .patchGistFile:
@@ -179,7 +194,7 @@ enum GistRouter: JSONPostRouter {
             return .GET
         }
     }
-    
+
     var encoding: HTTPEncoding {
         switch self {
         case .postGistFile, .patchGistFile:
@@ -188,26 +203,26 @@ enum GistRouter: JSONPostRouter {
             return .url
         }
     }
-    
+
     var configuration: Configuration {
         switch self {
-        case .readAuthenticatedGists(let config, _, _): return config
-        case .readGists(let config, _, _, _): return config
-        case .readGist(let config, _): return config
-        case .postGistFile(let config, _, _, _, _): return config
-        case .patchGistFile(let config, _, _, _, _): return config
+        case let .readAuthenticatedGists(config, _, _): return config
+        case let .readGists(config, _, _, _): return config
+        case let .readGist(config, _): return config
+        case let .postGistFile(config, _, _, _, _): return config
+        case let .patchGistFile(config, _, _, _, _): return config
         }
     }
-    
+
     var params: [String: Any] {
         switch self {
-        case .readAuthenticatedGists(_, let page, let perPage):
+        case let .readAuthenticatedGists(_, page, perPage):
             return ["per_page": perPage, "page": page]
-        case .readGists(_, _, let page, let perPage):
+        case let .readGists(_, _, page, perPage):
             return ["per_page": perPage, "page": page]
         case .readGist:
             return [:]
-        case .postGistFile(_, let description, let filename, let fileContent, let publicAccess):
+        case let .postGistFile(_, description, filename, fileContent, publicAccess):
             var params = [String: Any]()
             params["public"] = publicAccess
             params["description"] = description
@@ -217,7 +232,7 @@ enum GistRouter: JSONPostRouter {
             files[filename] = file
             params["files"] = files
             return params
-        case .patchGistFile(_, _, let description, let filename, let fileContent):
+        case let .patchGistFile(_, _, description, filename, fileContent):
             var params = [String: Any]()
             params["description"] = description
             var file = [String: Any]()
@@ -228,20 +243,19 @@ enum GistRouter: JSONPostRouter {
             return params
         }
     }
-    
+
     var path: String {
         switch self {
-        case .readAuthenticatedGists(_, _, _):
+        case .readAuthenticatedGists:
             return "gists"
-        case .readGists(_, let owner, _, _):
+        case let .readGists(_, owner, _, _):
             return "users/\(owner)/gists"
-        case .readGist(_, let id):
+        case let .readGist(_, id):
             return "gists/\(id)"
-        case .postGistFile(_, _, _, _, _):
+        case .postGistFile:
             return "gists"
-        case .patchGistFile(_, let id, _, _, _):
+        case let .patchGistFile(_, id, _, _, _):
             return "gists/\(id)"
         }
     }
-    
 }

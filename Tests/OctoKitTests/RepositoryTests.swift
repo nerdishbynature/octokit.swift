@@ -1,5 +1,5 @@
-import XCTest
 import OctoKit
+import XCTest
 
 class RepositoryTests: XCTestCase {
     // MARK: Actual Request tests
@@ -8,7 +8,7 @@ class RepositoryTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/repos?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
         let task = Octokit().repositories(session, owner: "octocat") { response in
             switch response {
-            case .success(let repositories):
+            case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -20,10 +20,15 @@ class RepositoryTests: XCTestCase {
 
     func testGetRepositoriesEnterprise() {
         let config = TokenConfiguration(url: "https://enterprise.nerdishbynature.com/api/v3/")
-        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/users/octocat/repos?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://enterprise.nerdishbynature.com/api/v3/users/octocat/repos?page=1&per_page=100",
+            expectedHTTPMethod: "GET",
+            jsonFile: "user_repos",
+            statusCode: 200
+        )
         let task = Octokit(config).repositories(session, owner: "octocat") { response in
             switch response {
-            case .success(let repositories):
+            case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -36,11 +41,17 @@ class RepositoryTests: XCTestCase {
     func testGetAuthenticatedRepositories() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?page=1&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
+
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/user/repos?page=1&per_page=100",
+            expectedHTTPMethod: "GET",
+            expectedHTTPHeaders: headers,
+            jsonFile: "user_repos",
+            statusCode: 200
+        )
         let task = Octokit(config).repositories(session) { response in
             switch response {
-            case .success(let repositories):
+            case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -53,11 +64,17 @@ class RepositoryTests: XCTestCase {
     func testGetAuthenticatedRepositoriesEnterprise() {
         let config = TokenConfiguration("user:12345", url: "https://enterprise.nerdishbynature.com/api/v3/")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
-        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/user/repos?page=1&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
+
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://enterprise.nerdishbynature.com/api/v3/user/repos?page=1&per_page=100",
+            expectedHTTPMethod: "GET",
+            expectedHTTPHeaders: headers,
+            jsonFile: "user_repos",
+            statusCode: 200
+        )
         let task = Octokit(config).repositories(session) { response in
             switch response {
-            case .success(let repositories):
+            case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
             case .failure:
                 XCTAssert(false, "should not get an error")
@@ -70,14 +87,20 @@ class RepositoryTests: XCTestCase {
     func testFailToGetRepositories() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
+
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?page=1&per_page=100", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, response: json, statusCode: 401)
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/user/repos?page=1&per_page=100",
+            expectedHTTPMethod: "GET",
+            expectedHTTPHeaders: headers,
+            response: json,
+            statusCode: 401
+        )
         let task = Octokit(config).repositories(session) { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve repositories")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 401)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }
@@ -91,7 +114,7 @@ class RepositoryTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
         let task = Octokit().repository(session, owner: owner, name: name) { response in
             switch response {
-            case .success(let repo):
+            case let .success(repo):
                 XCTAssertEqual(repo.name, name)
                 XCTAssertEqual(repo.owner.login, owner)
             case .failure:
@@ -108,7 +131,7 @@ class RepositoryTests: XCTestCase {
         let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
         let task = Octokit(config).repository(session, owner: owner, name: name) { response in
             switch response {
-            case .success(let repo):
+            case let .success(repo):
                 XCTAssertEqual(repo.name, name)
                 XCTAssertEqual(repo.owner.login, owner)
             case .failure:
@@ -126,7 +149,7 @@ class RepositoryTests: XCTestCase {
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve repositories")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }

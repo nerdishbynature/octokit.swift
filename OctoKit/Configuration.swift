@@ -19,9 +19,9 @@ public struct TokenConfiguration: Configuration {
     ///
     /// Used for preview support of new APIs, for instance Reaction API.
     /// see: https://developer.github.com/changes/2016-05-12-reactions-api-preview/
-    private var previewCustomHeaders: Array<HTTPHeader>?
+    private var previewCustomHeaders: [HTTPHeader]?
 
-    public var customHeaders: Array<HTTPHeader>? {
+    public var customHeaders: [HTTPHeader]? {
         // More (non-preview) headers can be appended if needed in the future
         return previewCustomHeaders
     }
@@ -46,21 +46,22 @@ public struct OAuthConfiguration: Configuration {
     ///
     /// Used for preview support of new APIs, for instance Reaction API.
     /// see: https://developer.github.com/changes/2016-05-12-reactions-api-preview/
-    private var previewCustomHeaders: Array<HTTPHeader>?
+    private var previewCustomHeaders: [HTTPHeader]?
 
-    public var customHeaders: Array<HTTPHeader>? {
+    public var customHeaders: [HTTPHeader]? {
         // More (non-preview) headers can be appended if needed in the future
         return previewCustomHeaders
     }
 
     public init(_ url: String = githubBaseURL, webURL: String = githubWebURL,
-        token: String, secret: String, scopes: [String],  previewHeaders: [PreviewHeader] = []) {
-            apiEndpoint = url
-            webEndpoint = webURL
-            self.token = token
-            self.secret = secret
-            self.scopes = scopes
-            previewCustomHeaders = previewHeaders.map { $0.header }
+                token: String, secret: String, scopes: [String], previewHeaders: [PreviewHeader] = [])
+    {
+        apiEndpoint = url
+        webEndpoint = webURL
+        self.token = token
+        self.secret = secret
+        self.scopes = scopes
+        previewCustomHeaders = previewHeaders.map { $0.header }
     }
 
     public func authenticate() -> URL? {
@@ -70,7 +71,7 @@ public struct OAuthConfiguration: Configuration {
     public func authorize(_ session: RequestKitURLSession = URLSession.shared, code: String, completion: @escaping (_ config: TokenConfiguration) -> Void) {
         let request = OAuthRouter.accessToken(self, code).URLRequest
         if let request = request {
-            let task = session.dataTask(with: request) { data, response, err in
+            let task = session.dataTask(with: request) { data, response, _ in
                 if let response = response as? HTTPURLResponse {
                     if response.statusCode != 200 {
                         return
@@ -91,7 +92,7 @@ public struct OAuthConfiguration: Configuration {
 
     public func handleOpenURL(_ session: RequestKitURLSession = URLSession.shared, url: URL, completion: @escaping (_ config: TokenConfiguration) -> Void) {
         if let code = url.URLParameters["code"] {
-            authorize(session, code: code) { (config) in
+            authorize(session, code: code) { config in
                 completion(config)
             }
         }
@@ -112,8 +113,8 @@ enum OAuthRouter: Router {
 
     var configuration: Configuration {
         switch self {
-        case .authorize(let config): return config
-        case .accessToken(let config, _): return config
+        case let .authorize(config): return config
+        case let .accessToken(config, _): return config
         }
     }
 
@@ -146,27 +147,27 @@ enum OAuthRouter: Router {
 
     var params: [String: Any] {
         switch self {
-        case .authorize(let config):
+        case let .authorize(config):
             let scope = (config.scopes as NSArray).componentsJoined(by: ",")
             return ["scope": scope, "client_id": config.token, "allow_signup": "false"]
-        case .accessToken(let config, let code):
+        case let .accessToken(config, code):
             return ["client_id": config.token, "client_secret": config.secret, "code": code]
         }
     }
 
-#if canImport(FoundationNetworking)
+    #if canImport(FoundationNetworking)
     typealias FoundationURLRequestType = FoundationNetworking.URLRequest
-#else
+    #else
     typealias FoundationURLRequestType = Foundation.URLRequest
-#endif
+    #endif
 
     var URLRequest: FoundationURLRequestType? {
         switch self {
-        case .authorize(let config):
+        case let .authorize(config):
             let url = URL(string: path, relativeTo: URL(string: config.webEndpoint)!)
             let components = URLComponents(url: url!, resolvingAgainstBaseURL: true)
             return request(components!, parameters: params)
-        case .accessToken(let config, _):
+        case let .accessToken(config, _):
             let url = URL(string: path, relativeTo: URL(string: config.webEndpoint)!)
             let components = URLComponents(url: url!, resolvingAgainstBaseURL: true)
             return request(components!, parameters: params)

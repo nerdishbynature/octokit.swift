@@ -86,7 +86,13 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myNotifications(_ session: RequestKitURLSession = URLSession.shared, all: Bool = false, participating: Bool = false, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[NotificationThread]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myNotifications(_ session: RequestKitURLSession = URLSession.shared,
+                         all: Bool = false,
+                         participating: Bool = false,
+                         page: String = "1",
+                         perPage: String = "100",
+                         completion: @escaping (_ response: Response<[NotificationThread]>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = NotificationRouter.readNotifications(configuration, all, participating, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self) { notifications, error in
             if let error = error {
@@ -107,7 +113,9 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func markNotificationsRead(_ session: RequestKitURLSession = URLSession.shared, lastReadAt: String = "last_read_at", read: Bool = false, completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+    func markNotificationsRead(_ session: RequestKitURLSession = URLSession.shared, lastReadAt: String = "last_read_at", read: Bool = false,
+                               completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = NotificationRouter.markNotificationsRead(configuration, lastReadAt, read)
         return router.load(session, completion: completion)
     }
@@ -119,7 +127,9 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func getNotificationThread(_ session: RequestKitURLSession = URLSession.shared, threadId: String, completion: @escaping (_ response: Response<NotificationThread>) -> Void) -> URLSessionDataTaskProtocol? {
+    func getNotificationThread(_ session: RequestKitURLSession = URLSession.shared, threadId: String,
+                               completion: @escaping (_ response: Response<NotificationThread>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = NotificationRouter.getNotificationThread(configuration, threadId)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: NotificationThread.self) { notification, error in
             if let error = error {
@@ -133,13 +143,15 @@ public extension Octokit {
     }
 
     /**
-    Get a thread subscription for the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
-     - parameter threadId: The ID of the Thread.
-     - parameter completion: Callback for the outcome of the fetch.
-     */
+     Get a thread subscription for the authenticated user
+      - parameter session: RequestKitURLSession, defaults to URLSession.shared
+      - parameter threadId: The ID of the Thread.
+      - parameter completion: Callback for the outcome of the fetch.
+      */
     @discardableResult
-    func getThreadSubscription(_ session: RequestKitURLSession = URLSession.shared, threadId: String, completion: @escaping (_ response: Response<ThreadSubscription>) -> Void) -> URLSessionDataTaskProtocol? {
+    func getThreadSubscription(_ session: RequestKitURLSession = URLSession.shared, threadId: String,
+                               completion: @escaping (_ response: Response<ThreadSubscription>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = NotificationRouter.getThreadSubscription(configuration, threadId)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self) { thread, error in
             if let error = error {
@@ -160,7 +172,9 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func setThreadSubscription(_ session: RequestKitURLSession = URLSession.shared, threadId: String, ignored: Bool = false, completion: @escaping (_ response: Response<ThreadSubscription>) -> Void) -> URLSessionDataTaskProtocol? {
+    func setThreadSubscription(_ session: RequestKitURLSession = URLSession.shared, threadId: String, ignored: Bool = false,
+                               completion: @escaping (_ response: Response<ThreadSubscription>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = NotificationRouter.setThreadSubscription(configuration, threadId, ignored)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self) { thread, error in
             if let error = error {
@@ -199,7 +213,17 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func listRepositoryNotifications(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, all: Bool = false, participating: Bool = false, since: String? = nil, before: String? = nil, page: String = "1", perPage: String = "100", completion: @escaping (_ response: Response<[NotificationThread]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func listRepositoryNotifications(_ session: RequestKitURLSession = URLSession.shared,
+                                     owner: String,
+                                     repository: String,
+                                     all: Bool = false,
+                                     participating: Bool = false,
+                                     since: String? = nil,
+                                     before: String? = nil,
+                                     page: String = "1",
+                                     perPage: String = "100",
+                                     completion: @escaping (_ response: Response<[NotificationThread]>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = NotificationRouter.listRepositoryNotifications(configuration, owner, repository, all, participating, since, before, perPage, page)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self) { notifications, error in
             if let error = error {
@@ -221,7 +245,12 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func markRepositoryNotificationsRead(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, lastReadAt: String? = nil, completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+    func markRepositoryNotificationsRead(_ session: RequestKitURLSession = URLSession.shared,
+                                         owner: String,
+                                         repository: String,
+                                         lastReadAt: String? = nil,
+                                         completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = NotificationRouter.markRepositoryNotificationsRead(configuration, owner, repository, lastReadAt)
         return router.load(session, completion: completion)
     }
@@ -242,14 +271,14 @@ enum NotificationRouter: Router {
 
     var configuration: Configuration {
         switch self {
-        case .readNotifications(let config, _, _, _, _): return config
-        case .markNotificationsRead(let config, _, _): return config
-        case .getNotificationThread(let config, _), .markNotificationThreadAsRead(let config, _): return config
-        case .getThreadSubscription(let config, _): return config
-        case .setThreadSubscription(let config, _, _): return config
-        case .deleteThreadSubscription(let config, _): return config
-        case .listRepositoryNotifications(let config, _, _, _, _, _, _, _, _): return config
-        case .markRepositoryNotificationsRead(let config, _, _, _): return config
+        case let .readNotifications(config, _, _, _, _): return config
+        case let .markNotificationsRead(config, _, _): return config
+        case let .getNotificationThread(config, _), let .markNotificationThreadAsRead(config, _): return config
+        case let .getThreadSubscription(config, _): return config
+        case let .setThreadSubscription(config, _, _): return config
+        case let .deleteThreadSubscription(config, _): return config
+        case let .listRepositoryNotifications(config, _, _, _, _, _, _, _, _): return config
+        case let .markRepositoryNotificationsRead(config, _, _, _): return config
         }
     }
 
@@ -280,29 +309,29 @@ enum NotificationRouter: Router {
         case .readNotifications,
              .markNotificationsRead:
             return "notifications"
-        case .getNotificationThread(_, let threadID):
+        case let .getNotificationThread(_, threadID):
             return "notifications/threads/\(threadID)"
         case .markNotificationThreadAsRead:
             return "notifications/threads/"
-        case .getThreadSubscription(_, let threadId),
-             .setThreadSubscription(_, let threadId, _),
-             .deleteThreadSubscription(_, let threadId):
+        case let .getThreadSubscription(_, threadId),
+             let .setThreadSubscription(_, threadId, _),
+             let .deleteThreadSubscription(_, threadId):
             return "notifications/threads/\(threadId)/subscription"
-        case .listRepositoryNotifications(_, let owner, let repo, _, _, _, _, _, _),
-             .markRepositoryNotificationsRead(_, let owner, let repo, _):
+        case let .listRepositoryNotifications(_, owner, repo, _, _, _, _, _, _),
+             let .markRepositoryNotificationsRead(_, owner, repo, _):
             return "repos/\(owner)/\(repo)/notifications"
         }
     }
 
     var params: [String: Any] {
         switch self {
-        case .readNotifications(_, let all, let participating, let page, let perPage):
+        case let .readNotifications(_, all, participating, page, perPage):
             return ["all": "\(all)", "participating": "\(participating)", "page": page, "per_page": perPage]
-        case .markNotificationsRead(_, let lastReadAt, let read):
+        case let .markNotificationsRead(_, lastReadAt, read):
             return ["last_read_at": lastReadAt, "read": "\(read)"]
         case .getNotificationThread:
             return [:]
-        case .markNotificationThreadAsRead(_, let threadID):
+        case let .markNotificationThreadAsRead(_, threadID):
             return ["thread_id": threadID]
         case .getThreadSubscription:
             return [:]
@@ -310,7 +339,7 @@ enum NotificationRouter: Router {
             return [:]
         case .deleteThreadSubscription:
             return [:]
-        case .listRepositoryNotifications(_, _, _, let all, let participating, let since, let before, let perPage, let page):
+        case let .listRepositoryNotifications(_, _, _, all, participating, since, before, perPage, page):
             var params: [String: String] = [
                 "all": all.description,
                 "participating": participating.description,
@@ -324,7 +353,7 @@ enum NotificationRouter: Router {
                 params["before"] = before
             }
             return params
-        case .markRepositoryNotificationsRead(_, _, _, let lastReadAt):
+        case let .markRepositoryNotificationsRead(_, _, _, lastReadAt):
             var params: [String: String] = [:]
             if let lastReadAt = lastReadAt {
                 params["last_read_at"] = lastReadAt
