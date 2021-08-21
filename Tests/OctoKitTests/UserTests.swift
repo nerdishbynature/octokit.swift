@@ -1,5 +1,5 @@
-import XCTest
 import OctoKit
+import XCTest
 
 class UserTests: XCTestCase {
     // MARK: Actual Request tests
@@ -9,7 +9,7 @@ class UserTests: XCTestCase {
         let username = "mietzmithut"
         let task = Octokit().user(session, name: username) { response in
             switch response {
-            case .success(let user):
+            case let .success(user):
                 XCTAssertEqual(user.login, username)
                 XCTAssertNotNil(user.createdAt)
             case .failure:
@@ -27,7 +27,7 @@ class UserTests: XCTestCase {
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve user")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 404)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }
@@ -39,13 +39,13 @@ class UserTests: XCTestCase {
     func testGettingAuthenticatedUser() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
-        
+
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_me", statusCode: 200)
         let task = Octokit(config).me(session) { response in
             switch response {
-            case .success(let user):
+            case let .success(user):
                 XCTAssertEqual(user.login, "pietbrauer")
-            case .failure(let error):
+            case let .failure(error):
                 XCTAssert(false, "should not retrieve an error \(error)")
             }
         }
@@ -60,7 +60,7 @@ class UserTests: XCTestCase {
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve user")
-            case .failure(let error as NSError):
+            case let .failure(error as NSError):
                 XCTAssertEqual(error.code, 401)
                 XCTAssertEqual(error.domain, OctoKitErrorDomain)
             }

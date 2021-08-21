@@ -6,15 +6,15 @@
 //  Copyright © 2020 nerdish by nature. All rights reserved.
 //
 
-import XCTest
 import OctoKit
+import XCTest
 
 class ReviewTests: XCTestCase {
     func testReviews() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1/reviews", expectedHTTPMethod: "GET", jsonFile: "reviews", statusCode: 201)
         let task = Octokit().listReviews(session, owner: "octocat", repository: "Hello-World", pullRequestNumber: 1) { response in
             switch response {
-            case .success(let reviews):
+            case let .success(reviews):
                 let review = reviews.first
                 XCTAssertEqual(review?.body, "Here is the body for the review.")
                 XCTAssertEqual(review?.commitID, "ecdd80bb57125d7ba9641ffaa4d7d2c19d3f3091")
