@@ -44,7 +44,6 @@ open class Status: Codable {
 // MARK: - Request
 
 public extension Octokit {
-
     /**
      Creates a commit status
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -66,8 +65,8 @@ public extension Octokit {
                             targetURL: String? = nil,
                             description: String? = nil,
                             context: String? = nil,
-                            completion: @escaping (_ response: Response<Status>) -> Void) -> URLSessionDataTaskProtocol? {
-
+                            completion: @escaping (_ response: Response<Status>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = StatusesRouter.createCommitStatus(configuration, owner: owner, repo: repository, sha: sha, state: state, targetURL: targetURL, description: description, context: context)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -95,8 +94,8 @@ public extension Octokit {
                             owner: String,
                             repository: String,
                             ref: String,
-                            completion: @escaping (_ response: Response<[Status]>) -> Void) -> URLSessionDataTaskProtocol? {
-
+                            completion: @escaping (_ response: Response<[Status]>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Status].self) { statuses, error in
             if let error = error {
@@ -136,16 +135,16 @@ enum StatusesRouter: JSONPostRouter {
 
     var configuration: Configuration {
         switch self {
-        case .createCommitStatus(let config, _, _, _, _, _, _, _):
+        case let .createCommitStatus(config, _, _, _, _, _, _, _):
             return config
-        case .listCommitStatuses(let config, _, _, _):
+        case let .listCommitStatuses(config, _, _, _):
             return config
         }
     }
 
     var params: [String: Any] {
         switch self {
-        case .createCommitStatus(_, _, _, _, let state, let targetURL, let description, let context):
+        case let .createCommitStatus(_, _, _, _, state, targetURL, description, context):
             var params: [String: Any] = ["state": state.rawValue]
             if let targetURL = targetURL {
                 params["target_url"] = targetURL
@@ -164,9 +163,9 @@ enum StatusesRouter: JSONPostRouter {
 
     var path: String {
         switch self {
-        case .createCommitStatus(_, let owner, let repo, let sha, _, _, _, _):
+        case let .createCommitStatus(_, owner, repo, sha, _, _, _, _):
             return "repos/\(owner)/\(repo)/statuses/\(sha)"
-        case .listCommitStatuses(_, let owner, let repo, let ref):
+        case let .listCommitStatuses(_, owner, repo, ref):
             return "repos/\(owner)/\(repo)/commits/\(ref)/statuses"
         }
     }

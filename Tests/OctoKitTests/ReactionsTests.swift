@@ -1,5 +1,5 @@
-import XCTest
 import OctoKit
+import XCTest
 
 class ReactionsTests: XCTestCase {
     // MARK: Model Tests

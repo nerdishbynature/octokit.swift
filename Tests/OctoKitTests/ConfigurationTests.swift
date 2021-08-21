@@ -1,6 +1,6 @@
-import XCTest
 import Foundation
 import OctoKit
+import XCTest
 
 class ConfigurationTests: XCTestCase {
     func testTokenConfiguration() {
@@ -50,7 +50,7 @@ class ConfigurationTests: XCTestCase {
         let response = "access_token=017ec60f4a182&scope=read%3Aorg%2Crepo&token_type=bearer"
         let session = OctoKitURLTestSession(expectedURL: "https://github.com/login/oauth/access_token", expectedHTTPMethod: "POST", response: response, statusCode: 200)
         let url = URL(string: "urlscheme://authorize?code=dhfjgh23493&state=")!
-        var token: String? = nil
+        var token: String?
         config.handleOpenURL(session, url: url) { accessToken in
             token = accessToken.accessToken
         }

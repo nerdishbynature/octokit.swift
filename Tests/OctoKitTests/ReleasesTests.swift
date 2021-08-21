@@ -6,8 +6,8 @@
 //  Copyright © 2020 nerdish by nature. All rights reserved.
 //
 
-import XCTest
 import OctoKit
+import XCTest
 
 final class ReleasesTests: XCTestCase {
     // MARK: Actual Request tests
@@ -54,16 +54,26 @@ final class ReleasesTests: XCTestCase {
 
     func testPostRelease() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases", expectedHTTPMethod: "POST", jsonFile: "post_release", statusCode: 201)
-        let task = Octokit().postRelease(session, owner: "octocat", repository: "Hello-World", tagName: "v1.0.0", targetCommitish: "master", name: "v1.0.0 Release", body: "The changelog of this release", prerelease: false, draft: false) { response in
+        let task = Octokit().postRelease(
+            session,
+            owner: "octocat",
+            repository: "Hello-World",
+            tagName: "v1.0.0",
+            targetCommitish: "master",
+            name: "v1.0.0 Release",
+            body: "The changelog of this release",
+            prerelease: false,
+            draft: false
+        ) { response in
             switch response {
-            case .success(let release):
+            case let .success(release):
                 XCTAssertEqual(release.tagName, "v1.0.0")
                 XCTAssertEqual(release.commitish, "master")
                 XCTAssertEqual(release.name, "v1.0.0 Release")
                 XCTAssertEqual(release.body, "The changelog of this release")
                 XCTAssertFalse(release.prerelease)
                 XCTAssertFalse(release.draft)
-            case .failure(let error):
+            case let .failure(error):
                 XCTAssert(false, "Endpoint failed with error \(error)")
             }
         }
