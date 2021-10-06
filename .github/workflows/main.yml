@@ -11,9 +11,9 @@ on:
 jobs:
   macOS:
     name: Test macOS
-    runs-on: macOS-latest
+    runs-on: macOS-11
     env:
-      DEVELOPER_DIR: /Applications/Xcode_12.3.app/Contents/Developer
+      DEVELOPER_DIR: /Applications/Xcode_13.0.app/Contents/Developer
     strategy:
       matrix:
         include:
@@ -37,8 +37,8 @@ jobs:
   spm:
     name: Test with SPM
     runs-on: ubuntu-latest
-    container: swift:5.3-focal
+    container: swift:5.5-focal
     steps:
       - uses: actions/checkout@v2
       - name: SPM Test
-        run: swift test --enable-test-discovery
+        run: swift test
