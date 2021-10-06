@@ -1,5 +1,5 @@
 //
-//  RepositoriesView.swift
+//  PullRequestsView.swift
 //  Example
 //
 //  Created by Piet Brauer-Kallenberg on 06.10.21.
@@ -8,28 +8,26 @@
 import SwiftUI
 import OctoKit
 
-struct RepositoriesView: View {
-    @StateObject var viewModel = RepositoriesViewModel()
+struct PullRequestsView: View {
+    @StateObject var viewModel: PullRequestsViewModel
 
     var body: some View {
         ZStack {
             List {
-                ForEach(viewModel.repositories, id: \.id) { repository in
-                    NavigationLink(destination: RepositoryView(repository: repository)) {
-                        RepositoryRow(repository: repository)
-                    }
+                ForEach(viewModel.pullRequests, id: \.id) {
+                    PullRequestRow(pullRequest: $0)
                 }
             }
             if viewModel.isLoading {
                 ProgressView()
             }
         }
+        .navigationTitle("Pull Requests")
         .alert(item: $viewModel.error) { error in
             Alert(title: Text("An error occured"),
                   message: Text(error.localizedDescription),
                   dismissButton: .cancel())
         }
-        .navigationTitle(Text("Repositories"))
         .task {
             await viewModel.load()
         }
@@ -39,14 +37,8 @@ struct RepositoriesView: View {
     }
 }
 
-extension NSError: Identifiable {
-    public var id: String {
-        String(code)
-    }
-}
-
-struct RepositoriesView_Previews: PreviewProvider {
-    static var previews: some View {
-        RepositoriesView()
-    }
-}
+//struct PullRequestsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PullRequestsView(viewModel: PullRequestsViewModel()
+//    }
+//}

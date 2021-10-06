@@ -19,6 +19,16 @@
 		238A7230270E2B7A00851D0A /* RepositoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A722F270E2B7A00851D0A /* RepositoryRow.swift */; };
 		238A7231270E2B7A00851D0A /* RepositoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A722F270E2B7A00851D0A /* RepositoryRow.swift */; };
 		238A7233270E2BA000851D0A /* OctoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 238A7232270E2BA000851D0A /* OctoKit */; };
+		238A723B270E2CD100851D0A /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A723A270E2CD100851D0A /* RepositoryView.swift */; };
+		238A723C270E2CD100851D0A /* RepositoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A723A270E2CD100851D0A /* RepositoryView.swift */; };
+		238A723F270E2E7500851D0A /* PullRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A723E270E2E7500851D0A /* PullRequestsView.swift */; };
+		238A7240270E2E7500851D0A /* PullRequestsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A723E270E2E7500851D0A /* PullRequestsView.swift */; };
+		238A7242270E2FB100851D0A /* OctoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7241270E2FB100851D0A /* OctoClient.swift */; };
+		238A7243270E2FB100851D0A /* OctoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7241270E2FB100851D0A /* OctoClient.swift */; };
+		238A7245270E326500851D0A /* PullRequestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7244270E326500851D0A /* PullRequestRow.swift */; };
+		238A7246270E326500851D0A /* PullRequestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7244270E326500851D0A /* PullRequestRow.swift */; };
+		238A7248270E329200851D0A /* PullRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7247270E329200851D0A /* PullRequestViewModel.swift */; };
+		238A7249270E329200851D0A /* PullRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7247270E329200851D0A /* PullRequestViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +41,11 @@
 		238A7227270E2B3700851D0A /* RepositoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesViewModel.swift; sourceTree = "<group>"; };
 		238A722B270E2B5500851D0A /* octokit.swift */ = {isa = PBXFileReference; lastKnownFileType = folder; name = octokit.swift; path = ..; sourceTree = "<group>"; };
 		238A722F270E2B7A00851D0A /* RepositoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRow.swift; sourceTree = "<group>"; };
+		238A723A270E2CD100851D0A /* RepositoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryView.swift; sourceTree = "<group>"; };
+		238A723E270E2E7500851D0A /* PullRequestsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestsView.swift; sourceTree = "<group>"; };
+		238A7241270E2FB100851D0A /* OctoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctoClient.swift; sourceTree = "<group>"; };
+		238A7244270E326500851D0A /* PullRequestRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestRow.swift; sourceTree = "<group>"; };
+		238A7247270E329200851D0A /* PullRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,7 +83,9 @@
 			isa = PBXGroup;
 			children = (
 				238A7205270E2AF300851D0A /* ExampleApp.swift */,
+				238A7241270E2FB100851D0A /* OctoClient.swift */,
 				238A7226270E2B1D00851D0A /* Repositories */,
+				238A723D270E2E5B00851D0A /* PullRequests */,
 				238A7207270E2AF400851D0A /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -97,6 +114,7 @@
 				238A7223270E2B0800851D0A /* RepositoriesView.swift */,
 				238A7227270E2B3700851D0A /* RepositoriesViewModel.swift */,
 				238A722F270E2B7A00851D0A /* RepositoryRow.swift */,
+				238A723A270E2CD100851D0A /* RepositoryView.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -114,6 +132,16 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		238A723D270E2E5B00851D0A /* PullRequests */ = {
+			isa = PBXGroup;
+			children = (
+				238A723E270E2E7500851D0A /* PullRequestsView.swift */,
+				238A7247270E329200851D0A /* PullRequestViewModel.swift */,
+				238A7244270E326500851D0A /* PullRequestRow.swift */,
+			);
+			path = PullRequests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,9 +249,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				238A7224270E2B0800851D0A /* RepositoriesView.swift in Sources */,
+				238A7248270E329200851D0A /* PullRequestViewModel.swift in Sources */,
 				238A7228270E2B3700851D0A /* RepositoriesViewModel.swift in Sources */,
+				238A7242270E2FB100851D0A /* OctoClient.swift in Sources */,
 				238A7230270E2B7A00851D0A /* RepositoryRow.swift in Sources */,
+				238A723B270E2CD100851D0A /* RepositoryView.swift in Sources */,
+				238A7245270E326500851D0A /* PullRequestRow.swift in Sources */,
 				238A7215270E2AF400851D0A /* ExampleApp.swift in Sources */,
+				238A723F270E2E7500851D0A /* PullRequestsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,9 +265,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				238A7225270E2B0800851D0A /* RepositoriesView.swift in Sources */,
+				238A7249270E329200851D0A /* PullRequestViewModel.swift in Sources */,
 				238A7229270E2B3700851D0A /* RepositoriesViewModel.swift in Sources */,
+				238A7243270E2FB100851D0A /* OctoClient.swift in Sources */,
 				238A7231270E2B7A00851D0A /* RepositoryRow.swift in Sources */,
+				238A723C270E2CD100851D0A /* RepositoryView.swift in Sources */,
+				238A7246270E326500851D0A /* PullRequestRow.swift in Sources */,
 				238A7216270E2AF400851D0A /* ExampleApp.swift in Sources */,
+				238A7240270E2E7500851D0A /* PullRequestsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
