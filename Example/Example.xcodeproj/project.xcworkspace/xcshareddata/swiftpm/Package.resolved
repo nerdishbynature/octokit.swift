@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "RequestKit",
+        "repositoryURL": "https://github.com/nerdishbynature/RequestKit.git",
+        "state": {
+          "branch": "async-await",
+          "revision": "db78c1bfde4e26dce25bf995fbb45fbe73e436b3",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
