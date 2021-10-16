@@ -9,12 +9,40 @@ import SwiftUI
 import OctoKit
 
 struct RepositoryView: View {
-    @State var repository: Repository
+    @StateObject var viewModel = RepositoryViewModel()
 
     var body: some View {
+        VStack {
+            if let repository = viewModel.currentRepository {
+                tabBar(repository: repository)
+            } else {
+                Text("Please select a Repository")
+                    .font(.headline)
+            }
+        }
+        .sheet(isPresented: $viewModel.showRepositoryChooser) {
+            NavigationView {
+                RepositoriesView()
+                    .onRepositorySelection { repository in
+                        viewModel.currentRepository = repository
+                    }
+            }
+        }
+    }
+
+    private func tabBar(repository: Repository) -> some View {
         TabView {
             NavigationView {
                 PullRequestsView(viewModel: PullRequestsViewModel(repository: repository))
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button {
+                                viewModel.currentRepository = nil
+                            } label: {
+                                Image(systemName: "square.3.stack.3d.middle.filled")
+                            }
+                        }
+                    }
             }
             .tabItem {
                 Image(systemName: "shuffle")
