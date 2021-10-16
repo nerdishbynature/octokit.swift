@@ -12,10 +12,7 @@ struct RepositoriesView: View {
     @StateObject var viewModel = RepositoriesViewModel()
 
     var body: some View {
-        NetworkList(viewModel.repositories,
-                    error: $viewModel.error,
-                    isLoading: viewModel.isLoading,
-                    load: viewModel.load) {
+        NetworkList(viewModel, error: $viewModel.error, searchText: $viewModel.searchText) {
             RepositoryRow(repository: $0)
         }
         .navigationTitle(Text("Repositories"))

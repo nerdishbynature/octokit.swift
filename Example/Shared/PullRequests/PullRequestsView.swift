@@ -12,28 +12,10 @@ struct PullRequestsView: View {
     @StateObject var viewModel: PullRequestsViewModel
 
     var body: some View {
-        ZStack {
-            List {
-                ForEach(viewModel.pullRequests, id: \.id) {
-                    PullRequestRow(pullRequest: $0)
-                }
-            }
-            if viewModel.isLoading {
-                ProgressView()
-            }
+        NetworkList(viewModel, error: $viewModel.error, searchText: $viewModel.searchText) { 
+            PullRequestRow(pullRequest: $0)
         }
         .navigationTitle("Pull Requests")
-        .alert(item: $viewModel.error) { error in
-            Alert(title: Text("An error occured"),
-                  message: Text(error.localizedDescription),
-                  dismissButton: .cancel())
-        }
-        .task {
-            await viewModel.load()
-        }
-        .refreshable {
-            await viewModel.load()
-        }
     }
 }
 

@@ -7,19 +7,21 @@
 
 import SwiftUI
 
-struct NetworkList<Data, ID, Content>: View where Data : RandomAccessCollection, Data.Element : Identifiable, ID == Data.Element.ID, Content: View {
+struct NetworkList<Data, ID, Content>: View where Data: RandomAccessCollection, Data.Element: Identifiable, ID == Data.Element.ID, Content: View {
     @Binding var error: NSError?
     var isLoading: Bool = false
     var items: Data
     var load: (() async -> Void)
     var rowContent: (Data.Element) -> Content
+    @Binding var searchText: String
 
-    init(_ items: Data, error: Binding<NSError?>,isLoading: Bool, load: @escaping (() async -> Void), @ViewBuilder content: @escaping ((Data.Element) -> Content)) {
+    init(_ items: Data, error: Binding<NSError?>, isLoading: Bool, searchText: Binding<String>, load: @escaping (() async -> Void), @ViewBuilder content: @escaping ((Data.Element) -> Content)) {
         self.items = items
         self.isLoading = isLoading
         self.load = load
         self.rowContent = content
         self._error = error
+        self._searchText = searchText
     }
 
     var body: some View {
@@ -42,5 +44,19 @@ struct NetworkList<Data, ID, Content>: View where Data : RandomAccessCollection,
         .refreshable {
             await load()
         }
+        .searchable(text: $searchText)
+        .disableAutocorrection(true)
+    }
+}
+
+@MainActor
+extension NetworkList {
+    init<VM: NetworkListViewModel>(_ viewModel: VM, error: Binding<NSError?>, searchText: Binding<String>, @ViewBuilder content: @escaping ((Data.Element) -> Content)) where VM.Items == Data {
+        self.items = viewModel.items
+        self.isLoading = viewModel.isLoading
+        self.load = viewModel.load
+        self.rowContent = content
+        self._error = error
+        self._searchText = searchText
     }
 }

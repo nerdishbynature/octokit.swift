@@ -7,23 +7,44 @@
 
 import Foundation
 import OctoKit
+import SwiftUI
 
 @MainActor
-final class RepositoriesViewModel: ObservableObject {
-    @Published var repositories: [Repository] = []
+final class RepositoriesViewModel: ObservableObject, NetworkListViewModel {
+    typealias Items = [Repository]
+
+    private var allItems: [Repository] = [] {
+        didSet {
+            items = allItems
+        }
+    }
+    @Published var items: [Repository] = []
     @Published var error: NSError?
     @Published var isLoading: Bool = false
+    @Published var searchText: String {
+        didSet {
+            if searchText.isEmpty {
+                items = allItems
+            } else {
+                items = allItems.filter {
+                    $0.fullName?.lowercased().contains(searchText.lowercased()) ?? false ||
+                    $0.repositoryDescription?.lowercased().contains(searchText.lowercased()) ?? false
+                }
+            }
+        }
+    }
 
-    init(repositories: [Repository] = [], error: NSError? = nil, isLoading: Bool = false) {
-        self.repositories = repositories
-        self.error = error
+    init(items: [Repository] = [], isLoading: Bool = false) {
+        self.allItems = items
         self.isLoading = isLoading
+        self.searchText = ""
+        self.error = nil
     }
 
     func load() async {
         isLoading = true
         do {
-            repositories = try await OctoClient.shared.repositories(owner: "nerdishbynature")
+            allItems = try await OctoClient.shared.repositories(owner: "nerdishbynature")
         } catch {
             self.error = error as NSError
         }
