@@ -9,22 +9,33 @@ import SwiftUI
 import OctoKit
 
 final class ExampleAppViewModel: ObservableObject {
+    @Published var token: String? {
+        didSet {
+            if let token = token {
+                OctoClient.shared = Octokit(TokenConfiguration(token))
+            }
+            showRepositoryChooser = token != nil && currentRepository == nil
+        }
+    }
     @Published var currentRepository: Repository? {
         didSet {
             showRepositoryChooser = currentRepository == nil
         }
     }
-    @Published var showRepositoryChooser: Bool = true
+    @Published var showRepositoryChooser: Bool = false
+    @Published var showLogin: Bool = false
 
     init(currentRepository: Repository?) {
         self.currentRepository = currentRepository
-        self.showRepositoryChooser = currentRepository == nil
+        self.showRepositoryChooser = false
+        self.showLogin = token == nil
     }
 }
 
 @main
 struct ExampleApp: App {
     @StateObject var viewModel = ExampleAppViewModel(currentRepository: nil)
+    @StateObject var signinViewModel = SinginViewModel()
 
     var body: some Scene {
         WindowGroup {
@@ -42,6 +53,11 @@ struct ExampleApp: App {
                         .onRepositorySelection { repository in
                             viewModel.currentRepository = repository
                         }
+                }
+            }
+            .task {
+                if viewModel.token == nil {
+                    viewModel.token = await signinViewModel.signin()
                 }
             }
         }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		233083E7271B4624005AB000 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233083E6271B4624005AB000 /* SigninViewModel.swift */; };
+		233083EC271B52AB005AB000 /* OAuthConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 233083EB271B52AB005AB000 /* OAuthConfig.plist */; };
 		238A7215270E2AF400851D0A /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7205270E2AF300851D0A /* ExampleApp.swift */; };
 		238A7216270E2AF400851D0A /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7205270E2AF300851D0A /* ExampleApp.swift */; };
 		238A7219270E2AF400851D0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 238A7207270E2AF400851D0A /* Assets.xcassets */; };
@@ -50,6 +52,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		233083E6271B4624005AB000 /* SigninViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninViewModel.swift; sourceTree = "<group>"; };
+		233083EA271B4A1D005AB000 /* Example--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Example--iOS--Info.plist"; sourceTree = "<group>"; };
+		233083EB271B52AB005AB000 /* OAuthConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OAuthConfig.plist; sourceTree = "<group>"; };
 		238A7205270E2AF300851D0A /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		238A7207270E2AF400851D0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		238A720C270E2AF400851D0A /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,6 +103,7 @@
 		238A71FF270E2AF300851D0A = {
 			isa = PBXGroup;
 			children = (
+				233083EA271B4A1D005AB000 /* Example--iOS--Info.plist */,
 				238A722A270E2B5500851D0A /* Packages */,
 				238A7204270E2AF300851D0A /* Shared */,
 				238A7213270E2AF400851D0A /* macOS */,
@@ -114,11 +120,13 @@
 				238A724A270E339000851D0A /* NSError+Identifiable.swift */,
 				238A724D271AD00C00851D0A /* NetworkList.swift */,
 				23EF1F48271B1CB100755171 /* NetworkListViewModel.swift */,
+				233083E6271B4624005AB000 /* SigninViewModel.swift */,
 				238A7226270E2B1D00851D0A /* Repositories */,
 				238A723D270E2E5B00851D0A /* PullRequests */,
 				23EF1F4B271B1F6200755171 /* Issues */,
 				23EF1F55271B21B400755171 /* Releases */,
 				238A7207270E2AF400851D0A /* Assets.xcassets */,
+				233083EB271B52AB005AB000 /* OAuthConfig.plist */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -281,6 +289,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				233083EC271B52AB005AB000 /* OAuthConfig.plist in Resources */,
 				238A7219270E2AF400851D0A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,6 +310,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				238A7224270E2B0800851D0A /* RepositoriesView.swift in Sources */,
+				233083E7271B4624005AB000 /* SigninViewModel.swift in Sources */,
 				238A7248270E329200851D0A /* PullRequestViewModel.swift in Sources */,
 				238A7228270E2B3700851D0A /* RepositoriesViewModel.swift in Sources */,
 				238A724B270E339000851D0A /* NSError+Identifiable.swift in Sources */,
@@ -469,6 +479,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Example--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -498,6 +509,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Example--iOS--Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

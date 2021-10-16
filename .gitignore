@@ -31,3 +31,5 @@ Checkouts/
 
 # Swift PM
 .build
+
+Example/Shared/OAuthConfig.plist

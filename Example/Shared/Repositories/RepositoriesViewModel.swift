@@ -45,7 +45,7 @@ final class RepositoriesViewModel: ObservableObject, NetworkListViewModel {
     func load() async {
         isLoading = true
         do {
-            allItems = try await OctoClient.shared.repositories(owner: "nerdishbynature")
+            allItems = try await OctoClient.shared.repositories()
         } catch {
             self.error = error as NSError
         }
