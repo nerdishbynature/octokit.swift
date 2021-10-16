@@ -7,12 +7,20 @@
 
 import SwiftUI
 
-struct NetworkList<T: Identifiable, V: View>: View  {
+struct NetworkList<Data, ID, Content>: View where Data : RandomAccessCollection, Data.Element : Identifiable, ID == Data.Element.ID, Content: View {
     @Binding var error: NSError?
     var isLoading: Bool = false
-    var items: [T] = []
+    var items: Data
     var load: (() async -> Void)
-    var rowContent: (_ item: T) -> V
+    var rowContent: (Data.Element) -> Content
+
+    init(_ items: Data, error: Binding<NSError?>,isLoading: Bool, load: @escaping (() async -> Void), @ViewBuilder content: @escaping ((Data.Element) -> Content)) {
+        self.items = items
+        self.isLoading = isLoading
+        self.load = load
+        self.rowContent = content
+        self._error = error
+    }
 
     var body: some View {
         ZStack {
