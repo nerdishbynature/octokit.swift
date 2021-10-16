@@ -14,3 +14,4 @@ final class OctoClient {
 
 extension Repository: Identifiable {}
 extension PullRequest: Identifiable {}
+extension Issue: Identifiable {}

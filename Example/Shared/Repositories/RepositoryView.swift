@@ -18,7 +18,7 @@ struct RepositoryView: View {
                     Image(systemName: "shuffle")
                     Text("PullRequests")
                 }
-            Text("Hello Issues")
+            IssuesView(viewModel: IssuesViewModel(repository: repository))
                 .tabItem {
                     Image(systemName: "exclamationmark.triangle")
                     Text("Issues")

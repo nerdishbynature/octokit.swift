@@ -20,9 +20,3 @@ struct PullRequestRow: View {
         }
     }
 }
-
-//struct PullRequestRow_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PullRequestRow(pullRequest: PullRequest(from: <#T##Decoder#>))
-//    }
-//}

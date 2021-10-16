@@ -18,9 +18,3 @@ struct PullRequestsView: View {
         .navigationTitle("Pull Requests")
     }
 }
-
-//struct PullRequestsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PullRequestsView(viewModel: PullRequestsViewModel()
-//    }
-//}
