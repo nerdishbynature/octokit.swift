@@ -29,6 +29,10 @@
 		238A7246270E326500851D0A /* PullRequestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7244270E326500851D0A /* PullRequestRow.swift */; };
 		238A7248270E329200851D0A /* PullRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7247270E329200851D0A /* PullRequestViewModel.swift */; };
 		238A7249270E329200851D0A /* PullRequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7247270E329200851D0A /* PullRequestViewModel.swift */; };
+		238A724B270E339000851D0A /* NSError+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A724A270E339000851D0A /* NSError+Identifiable.swift */; };
+		238A724C270E339000851D0A /* NSError+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A724A270E339000851D0A /* NSError+Identifiable.swift */; };
+		238A724E271AD00C00851D0A /* NetworkList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A724D271AD00C00851D0A /* NetworkList.swift */; };
+		238A724F271AD00C00851D0A /* NetworkList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A724D271AD00C00851D0A /* NetworkList.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +50,8 @@
 		238A7241270E2FB100851D0A /* OctoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OctoClient.swift; sourceTree = "<group>"; };
 		238A7244270E326500851D0A /* PullRequestRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestRow.swift; sourceTree = "<group>"; };
 		238A7247270E329200851D0A /* PullRequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullRequestViewModel.swift; sourceTree = "<group>"; };
+		238A724A270E339000851D0A /* NSError+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSError+Identifiable.swift"; sourceTree = "<group>"; };
+		238A724D271AD00C00851D0A /* NetworkList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkList.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +90,8 @@
 			children = (
 				238A7205270E2AF300851D0A /* ExampleApp.swift */,
 				238A7241270E2FB100851D0A /* OctoClient.swift */,
+				238A724A270E339000851D0A /* NSError+Identifiable.swift */,
+				238A724D271AD00C00851D0A /* NetworkList.swift */,
 				238A7226270E2B1D00851D0A /* Repositories */,
 				238A723D270E2E5B00851D0A /* PullRequests */,
 				238A7207270E2AF400851D0A /* Assets.xcassets */,
@@ -251,8 +259,10 @@
 				238A7224270E2B0800851D0A /* RepositoriesView.swift in Sources */,
 				238A7248270E329200851D0A /* PullRequestViewModel.swift in Sources */,
 				238A7228270E2B3700851D0A /* RepositoriesViewModel.swift in Sources */,
+				238A724B270E339000851D0A /* NSError+Identifiable.swift in Sources */,
 				238A7242270E2FB100851D0A /* OctoClient.swift in Sources */,
 				238A7230270E2B7A00851D0A /* RepositoryRow.swift in Sources */,
+				238A724E271AD00C00851D0A /* NetworkList.swift in Sources */,
 				238A723B270E2CD100851D0A /* RepositoryView.swift in Sources */,
 				238A7245270E326500851D0A /* PullRequestRow.swift in Sources */,
 				238A7215270E2AF400851D0A /* ExampleApp.swift in Sources */,
@@ -267,8 +277,10 @@
 				238A7225270E2B0800851D0A /* RepositoriesView.swift in Sources */,
 				238A7249270E329200851D0A /* PullRequestViewModel.swift in Sources */,
 				238A7229270E2B3700851D0A /* RepositoriesViewModel.swift in Sources */,
+				238A724C270E339000851D0A /* NSError+Identifiable.swift in Sources */,
 				238A7243270E2FB100851D0A /* OctoClient.swift in Sources */,
 				238A7231270E2B7A00851D0A /* RepositoryRow.swift in Sources */,
+				238A724F271AD00C00851D0A /* NetworkList.swift in Sources */,
 				238A723C270E2CD100851D0A /* RepositoryView.swift in Sources */,
 				238A7246270E326500851D0A /* PullRequestRow.swift in Sources */,
 				238A7216270E2AF400851D0A /* ExampleApp.swift in Sources */,

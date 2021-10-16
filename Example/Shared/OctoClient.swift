@@ -11,3 +11,5 @@ import OctoKit
 final class OctoClient {
     static var shared = Octokit(TokenConfiguration())
 }
+
+extension Repository: Identifiable {}

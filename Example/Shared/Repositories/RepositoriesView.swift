@@ -12,36 +12,12 @@ struct RepositoriesView: View {
     @StateObject var viewModel = RepositoriesViewModel()
 
     var body: some View {
-        ZStack {
-            List {
-                ForEach(viewModel.repositories, id: \.id) { repository in
-                    NavigationLink(destination: RepositoryView(repository: repository)) {
-                        RepositoryRow(repository: repository)
-                    }
-                }
-            }
-            if viewModel.isLoading {
-                ProgressView()
-            }
-        }
-        .alert(item: $viewModel.error) { error in
-            Alert(title: Text("An error occured"),
-                  message: Text(error.localizedDescription),
-                  dismissButton: .cancel())
-        }
-        .navigationTitle(Text("Repositories"))
-        .task {
-            await viewModel.load()
-        }
-        .refreshable {
-            await viewModel.load()
-        }
-    }
-}
-
-extension NSError: Identifiable {
-    public var id: String {
-        String(code)
+        NetworkList<Repository, RepositoryRow>(error: $viewModel.error,
+                                               isLoading: viewModel.isLoading,
+                                               items: viewModel.repositories,
+                                               load: viewModel.load,
+                                               rowContent: { RepositoryRow(repository: $0) })
+            .navigationTitle(Text("Repositories"))
     }
 }
 
