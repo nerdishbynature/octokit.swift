@@ -58,6 +58,29 @@ open class Issue: Codable {
         case updatedAt = "updated_at"
         case closedBy = "closed_by"
     }
+
+    public init(id: Int = -1, url: URL? = nil, repositoryURL: URL? = nil, commentsURL: URL? = nil, eventsURL: URL? = nil, htmlURL: URL? = nil, number: Int, state: Openness? = nil, title: String? = nil, body: String? = nil, user: User? = nil, labels: [Label]? = nil, assignee: User? = nil, milestone: Milestone? = nil, locked: Bool? = nil, comments: Int? = nil, closedAt: Date? = nil, createdAt: Date? = nil, updatedAt: Date? = nil, closedBy: User? = nil) {
+        self.id = id
+        self.url = url
+        self.repositoryURL = repositoryURL
+        self.commentsURL = commentsURL
+        self.eventsURL = eventsURL
+        self.htmlURL = htmlURL
+        self.number = number
+        self.state = state
+        self.title = title
+        self.body = body
+        self.user = user
+        self.labels = labels
+        self.assignee = assignee
+        self.milestone = milestone
+        self.locked = locked
+        self.comments = comments
+        self.closedAt = closedAt
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.closedBy = closedBy
+    }
 }
 
 public struct Comment: Codable {

@@ -10,6 +10,10 @@
 		233083E7271B4624005AB000 /* SigninViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233083E6271B4624005AB000 /* SigninViewModel.swift */; };
 		233083EC271B52AB005AB000 /* OAuthConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = 233083EB271B52AB005AB000 /* OAuthConfig.plist */; };
 		233083EE271B5861005AB000 /* RepositoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233083ED271B5861005AB000 /* RepositoryViewModel.swift */; };
+		233083F0271B5B83005AB000 /* IssueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233083EF271B5B83005AB000 /* IssueView.swift */; };
+		233083F2271B6199005AB000 /* CommentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233083F1271B6199005AB000 /* CommentRow.swift */; };
+		233083F4271B64D4005AB000 /* ReactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233083F3271B64D4005AB000 /* ReactionView.swift */; };
+		233083F6271B6917005AB000 /* IssueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233083F5271B6917005AB000 /* IssueViewModel.swift */; };
 		238A7215270E2AF400851D0A /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7205270E2AF300851D0A /* ExampleApp.swift */; };
 		238A7216270E2AF400851D0A /* ExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A7205270E2AF300851D0A /* ExampleApp.swift */; };
 		238A7219270E2AF400851D0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 238A7207270E2AF400851D0A /* Assets.xcassets */; };
@@ -57,6 +61,10 @@
 		233083EA271B4A1D005AB000 /* Example--iOS--Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Example--iOS--Info.plist"; sourceTree = "<group>"; };
 		233083EB271B52AB005AB000 /* OAuthConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = OAuthConfig.plist; sourceTree = "<group>"; };
 		233083ED271B5861005AB000 /* RepositoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryViewModel.swift; sourceTree = "<group>"; };
+		233083EF271B5B83005AB000 /* IssueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueView.swift; sourceTree = "<group>"; };
+		233083F1271B6199005AB000 /* CommentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentRow.swift; sourceTree = "<group>"; };
+		233083F3271B64D4005AB000 /* ReactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionView.swift; sourceTree = "<group>"; };
+		233083F5271B6917005AB000 /* IssueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueViewModel.swift; sourceTree = "<group>"; };
 		238A7205270E2AF300851D0A /* ExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleApp.swift; sourceTree = "<group>"; };
 		238A7207270E2AF400851D0A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		238A720C270E2AF400851D0A /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +201,10 @@
 				23EF1F4C271B1F7200755171 /* IssuesView.swift */,
 				23EF1F4F271B1F9C00755171 /* IssuesViewModel.swift */,
 				23EF1F52271B1FE900755171 /* IssueRow.swift */,
+				233083EF271B5B83005AB000 /* IssueView.swift */,
+				233083F5271B6917005AB000 /* IssueViewModel.swift */,
+				233083F1271B6199005AB000 /* CommentRow.swift */,
+				233083F3271B64D4005AB000 /* ReactionView.swift */,
 			);
 			path = Issues;
 			sourceTree = "<group>";
@@ -313,14 +325,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				238A7224270E2B0800851D0A /* RepositoriesView.swift in Sources */,
+				233083F0271B5B83005AB000 /* IssueView.swift in Sources */,
 				233083E7271B4624005AB000 /* SigninViewModel.swift in Sources */,
 				238A7248270E329200851D0A /* PullRequestViewModel.swift in Sources */,
+				233083F6271B6917005AB000 /* IssueViewModel.swift in Sources */,
 				238A7228270E2B3700851D0A /* RepositoriesViewModel.swift in Sources */,
 				238A724B270E339000851D0A /* NSError+Identifiable.swift in Sources */,
 				238A7242270E2FB100851D0A /* OctoClient.swift in Sources */,
 				23EF1F4D271B1F7200755171 /* IssuesView.swift in Sources */,
+				233083F2271B6199005AB000 /* CommentRow.swift in Sources */,
 				238A7230270E2B7A00851D0A /* RepositoryRow.swift in Sources */,
 				238A724E271AD00C00851D0A /* NetworkList.swift in Sources */,
+				233083F4271B64D4005AB000 /* ReactionView.swift in Sources */,
 				23EF1F53271B1FE900755171 /* IssueRow.swift in Sources */,
 				23EF1F49271B1CB100755171 /* NetworkListViewModel.swift in Sources */,
 				238A723B270E2CD100851D0A /* RepositoryView.swift in Sources */,
