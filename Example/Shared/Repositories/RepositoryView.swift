@@ -16,8 +16,15 @@ struct RepositoryView: View {
             if let repository = viewModel.currentRepository {
                 tabBar(repository: repository)
             } else {
-                Text("Please select a Repository")
-                    .font(.headline)
+                NavigationView {
+                    Text("Please select a Repository")
+                        .font(.headline)
+                        .toolbar {
+                            ToolbarItem(placement: .navigationBarLeading) {
+                                repositorySwitcherButton
+                            }
+                        }
+                }
             }
         }
         .sheet(isPresented: $viewModel.showRepositoryChooser) {
@@ -30,17 +37,21 @@ struct RepositoryView: View {
         }
     }
 
+    private var repositorySwitcherButton: some View {
+        Button {
+            viewModel.currentRepository = nil
+        } label: {
+            Image(systemName: "square.3.stack.3d.middle.filled")
+        }
+    }
+
     private func tabBar(repository: Repository) -> some View {
         TabView {
             NavigationView {
                 PullRequestsView(viewModel: PullRequestsViewModel(repository: repository))
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
-                            Button {
-                                viewModel.currentRepository = nil
-                            } label: {
-                                Image(systemName: "square.3.stack.3d.middle.filled")
-                            }
+                            repositorySwitcherButton
                         }
                     }
             }
