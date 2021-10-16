@@ -45,7 +45,9 @@ struct NetworkList<Data, ID, Content>: View where Data: RandomAccessCollection, 
                   dismissButton: .cancel())
         }
         .task {
-            await load()
+            if items.isEmpty {
+                await load()
+            }
         }
         .refreshable {
             await load()

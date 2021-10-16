@@ -10,12 +10,20 @@ import OctoKit
 
 struct RepositoriesView: View {
     @StateObject var viewModel = RepositoriesViewModel()
+    private var onRepositorySelection: (_ repository: Repository) -> Void
+
+    init(_ onRepositorySelection: @escaping (_ repository: Repository) -> Void) {
+        self.onRepositorySelection = onRepositorySelection
+    }
 
     var body: some View {
         NetworkList(viewModel, error: $viewModel.error, searchText: $viewModel.searchText) { repository in
-            NavigationLink(destination: RepositoryView(repository: repository)) {
-                RepositoryRow(repository: repository)
-            }
+            RepositoryRow(repository: repository)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .clipShape(Rectangle())
+                .onTapGesture {
+                    onRepositorySelection(repository)
+                }
         }
         .navigationTitle(Text("Repositories"))
     }
@@ -23,6 +31,8 @@ struct RepositoriesView: View {
 
 struct RepositoriesView_Previews: PreviewProvider {
     static var previews: some View {
-        RepositoriesView()
+        RepositoriesView { repository in
+            print(repository.name ?? "")
+        }
     }
 }

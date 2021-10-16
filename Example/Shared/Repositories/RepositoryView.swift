@@ -13,21 +13,27 @@ struct RepositoryView: View {
 
     var body: some View {
         TabView {
-            PullRequestsView(viewModel: PullRequestsViewModel(repository: repository))
-                .tabItem {
-                    Image(systemName: "shuffle")
-                    Text("PullRequests")
-                }
-            IssuesView(viewModel: IssuesViewModel(repository: repository))
-                .tabItem {
-                    Image(systemName: "exclamationmark.triangle")
-                    Text("Issues")
-                }
-            ReleasesView(viewModel: ReleasesViewModel(repository: repository))
-                .tabItem {
-                    Image(systemName: "shippingbox")
-                    Text("Releases")
-                }
+            NavigationView {
+                PullRequestsView(viewModel: PullRequestsViewModel(repository: repository))
+            }
+            .tabItem {
+                Image(systemName: "shuffle")
+                Text("PullRequests")
+            }
+            NavigationView {
+                IssuesView(viewModel: IssuesViewModel(repository: repository))
+            }
+            .tabItem {
+                Image(systemName: "exclamationmark.triangle")
+                Text("Issues")
+            }
+            NavigationView {
+                ReleasesView(viewModel: ReleasesViewModel(repository: repository))
+            }
+            .tabItem {
+                Image(systemName: "shippingbox")
+                Text("Releases")
+            }
         }
     }
 }
