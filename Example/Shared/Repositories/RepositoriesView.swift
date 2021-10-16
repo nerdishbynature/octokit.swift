@@ -13,7 +13,7 @@ struct RepositoriesView: View {
 
     var body: some View {
         NetworkList(viewModel, error: $viewModel.error, searchText: $viewModel.searchText) { repository in
-            NavigationLink(destination: PullRequestsView(viewModel: PullRequestsViewModel(repository: repository))) {
+            NavigationLink(destination: RepositoryView(repository: repository)) {
                 RepositoryRow(repository: repository)
             }
         }
