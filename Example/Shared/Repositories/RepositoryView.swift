@@ -23,7 +23,7 @@ struct RepositoryView: View {
                     Image(systemName: "exclamationmark.triangle")
                     Text("Issues")
                 }
-            Text("Hello Releases")
+            ReleasesView(viewModel: ReleasesViewModel(repository: repository))
                 .tabItem {
                     Image(systemName: "shippingbox")
                     Text("Releases")

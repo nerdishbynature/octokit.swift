@@ -41,6 +41,12 @@
 		23EF1F51271B1F9C00755171 /* IssuesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F4F271B1F9C00755171 /* IssuesViewModel.swift */; };
 		23EF1F53271B1FE900755171 /* IssueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F52271B1FE900755171 /* IssueRow.swift */; };
 		23EF1F54271B1FE900755171 /* IssueRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F52271B1FE900755171 /* IssueRow.swift */; };
+		23EF1F57271B21C400755171 /* ReleasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F56271B21C400755171 /* ReleasesView.swift */; };
+		23EF1F58271B21C400755171 /* ReleasesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F56271B21C400755171 /* ReleasesView.swift */; };
+		23EF1F5A271B21E000755171 /* ReleasesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F59271B21E000755171 /* ReleasesRow.swift */; };
+		23EF1F5B271B21E000755171 /* ReleasesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F59271B21E000755171 /* ReleasesRow.swift */; };
+		23EF1F5D271B222500755171 /* ReleasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F5C271B222500755171 /* ReleasesViewModel.swift */; };
+		23EF1F5E271B222500755171 /* ReleasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EF1F5C271B222500755171 /* ReleasesViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +70,9 @@
 		23EF1F4C271B1F7200755171 /* IssuesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesView.swift; sourceTree = "<group>"; };
 		23EF1F4F271B1F9C00755171 /* IssuesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuesViewModel.swift; sourceTree = "<group>"; };
 		23EF1F52271B1FE900755171 /* IssueRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssueRow.swift; sourceTree = "<group>"; };
+		23EF1F56271B21C400755171 /* ReleasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleasesView.swift; sourceTree = "<group>"; };
+		23EF1F59271B21E000755171 /* ReleasesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleasesRow.swift; sourceTree = "<group>"; };
+		23EF1F5C271B222500755171 /* ReleasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleasesViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +117,7 @@
 				238A7226270E2B1D00851D0A /* Repositories */,
 				238A723D270E2E5B00851D0A /* PullRequests */,
 				23EF1F4B271B1F6200755171 /* Issues */,
+				23EF1F55271B21B400755171 /* Releases */,
 				238A7207270E2AF400851D0A /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -174,6 +184,16 @@
 				23EF1F52271B1FE900755171 /* IssueRow.swift */,
 			);
 			path = Issues;
+			sourceTree = "<group>";
+		};
+		23EF1F55271B21B400755171 /* Releases */ = {
+			isa = PBXGroup;
+			children = (
+				23EF1F56271B21C400755171 /* ReleasesView.swift */,
+				23EF1F5C271B222500755171 /* ReleasesViewModel.swift */,
+				23EF1F59271B21E000755171 /* ReleasesRow.swift */,
+			);
+			path = Releases;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,6 +312,9 @@
 				23EF1F49271B1CB100755171 /* NetworkListViewModel.swift in Sources */,
 				238A723B270E2CD100851D0A /* RepositoryView.swift in Sources */,
 				238A7245270E326500851D0A /* PullRequestRow.swift in Sources */,
+				23EF1F5D271B222500755171 /* ReleasesViewModel.swift in Sources */,
+				23EF1F57271B21C400755171 /* ReleasesView.swift in Sources */,
+				23EF1F5A271B21E000755171 /* ReleasesRow.swift in Sources */,
 				238A7215270E2AF400851D0A /* ExampleApp.swift in Sources */,
 				23EF1F50271B1F9C00755171 /* IssuesViewModel.swift in Sources */,
 				238A723F270E2E7500851D0A /* PullRequestsView.swift in Sources */,
@@ -314,6 +337,9 @@
 				23EF1F4A271B1CB100755171 /* NetworkListViewModel.swift in Sources */,
 				238A723C270E2CD100851D0A /* RepositoryView.swift in Sources */,
 				238A7246270E326500851D0A /* PullRequestRow.swift in Sources */,
+				23EF1F5E271B222500755171 /* ReleasesViewModel.swift in Sources */,
+				23EF1F58271B21C400755171 /* ReleasesView.swift in Sources */,
+				23EF1F5B271B21E000755171 /* ReleasesRow.swift in Sources */,
 				238A7216270E2AF400851D0A /* ExampleApp.swift in Sources */,
 				23EF1F51271B1F9C00755171 /* IssuesViewModel.swift in Sources */,
 				238A7240270E2E7500851D0A /* PullRequestsView.swift in Sources */,
