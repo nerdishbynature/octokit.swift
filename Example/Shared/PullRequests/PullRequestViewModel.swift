@@ -33,6 +33,7 @@ final class PullRequestsViewModel: ObservableObject, NetworkListViewModel {
             }
         }
     }
+    var emptyText = "No pull requests found"
 
     init(repository: Repository, isLoading: Bool = false, items: [PullRequest] = []) {
         self.repository = repository
@@ -45,7 +46,7 @@ final class PullRequestsViewModel: ObservableObject, NetworkListViewModel {
     func load() async {
         isLoading = true
         do {
-            items = try await OctoClient.shared.pullRequests(owner: repository.owner.login ?? "", repository: repository.name ?? "")
+            allItems = try await OctoClient.shared.pullRequests(owner: repository.owner.login ?? "", repository: repository.name ?? "")
         } catch {
             self.error = error as NSError
         }

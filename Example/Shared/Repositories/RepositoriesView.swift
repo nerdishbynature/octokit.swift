@@ -12,8 +12,10 @@ struct RepositoriesView: View {
     @StateObject var viewModel = RepositoriesViewModel()
 
     var body: some View {
-        NetworkList(viewModel, error: $viewModel.error, searchText: $viewModel.searchText) {
-            RepositoryRow(repository: $0)
+        NetworkList(viewModel, error: $viewModel.error, searchText: $viewModel.searchText) { repository in
+            NavigationLink(destination: PullRequestsView(viewModel: PullRequestsViewModel(repository: repository))) {
+                RepositoryRow(repository: repository)
+            }
         }
         .navigationTitle(Text("Repositories"))
     }

@@ -13,11 +13,13 @@ struct NetworkList<Data, ID, Content>: View where Data: RandomAccessCollection, 
     var items: Data
     var load: (() async -> Void)
     var rowContent: (Data.Element) -> Content
+    var emptyText: String
     @Binding var searchText: String
 
-    init(_ items: Data, error: Binding<NSError?>, isLoading: Bool, searchText: Binding<String>, load: @escaping (() async -> Void), @ViewBuilder content: @escaping ((Data.Element) -> Content)) {
+    init(_ items: Data, error: Binding<NSError?>, isLoading: Bool, searchText: Binding<String>, emptyText: String = "", load: @escaping (() async -> Void), @ViewBuilder content: @escaping ((Data.Element) -> Content)) {
         self.items = items
         self.isLoading = isLoading
+        self.emptyText = emptyText
         self.load = load
         self.rowContent = content
         self._error = error
@@ -28,6 +30,10 @@ struct NetworkList<Data, ID, Content>: View where Data: RandomAccessCollection, 
         ZStack {
             List {
                 ForEach(items, id: \.id, content: rowContent)
+            }
+            if items.isEmpty && !isLoading {
+                Text(emptyText)
+                    .font(.headline)
             }
             if isLoading {
                 ProgressView()
@@ -54,6 +60,7 @@ extension NetworkList {
     init<VM: NetworkListViewModel>(_ viewModel: VM, error: Binding<NSError?>, searchText: Binding<String>, @ViewBuilder content: @escaping ((Data.Element) -> Content)) where VM.Items == Data {
         self.items = viewModel.items
         self.isLoading = viewModel.isLoading
+        self.emptyText = viewModel.emptyText
         self.load = viewModel.load
         self.rowContent = content
         self._error = error

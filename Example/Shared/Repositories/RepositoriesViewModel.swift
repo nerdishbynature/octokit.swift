@@ -33,6 +33,7 @@ final class RepositoriesViewModel: ObservableObject, NetworkListViewModel {
             }
         }
     }
+    var emptyText = "No repositories found"
 
     init(items: [Repository] = [], isLoading: Bool = false) {
         self.allItems = items

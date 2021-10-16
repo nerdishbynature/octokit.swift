@@ -13,6 +13,7 @@ protocol NetworkListViewModel: ObservableObject {
 
     var items: Items { get set }
     var isLoading: Bool { get set }
+    var emptyText: String { get }
 
     func load() async
 }
