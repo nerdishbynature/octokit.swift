@@ -25,7 +25,9 @@ final class IssueViewModel: ObservableObject {
         do {
             comments = try await OctoClient.shared.issueComments(owner: repository.owner.login!, repository: repository.name!, number: issue.number)
         } catch {
-            self.error = error as NSError
+            if (error as NSError).code != -999 {
+                self.error = error as NSError
+            }
         }
     }
 }

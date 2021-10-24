@@ -48,7 +48,9 @@ final class PullRequestsViewModel: ObservableObject, NetworkListViewModel {
         do {
             allItems = try await OctoClient.shared.pullRequests(owner: repository.owner.login ?? "", repository: repository.name ?? "")
         } catch {
-            self.error = error as NSError
+            if (error as NSError).code != -999 {
+                self.error = error as NSError
+            }
         }
         isLoading = false
     }
