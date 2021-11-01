@@ -89,6 +89,20 @@ class IssueTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+    
+    func testPatchComment() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/comments/1", expectedHTTPMethod: "POST", jsonFile: "issue_comment", statusCode: 201)
+        let task = Octokit().patchIssueComment(session, owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
+            switch response {
+            case let .success(comment):
+                XCTAssertEqual(comment.body, "Testing a comment")
+            case .failure:
+                XCTAssert(false, "should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
 
     // MARK: Model Tests
 
