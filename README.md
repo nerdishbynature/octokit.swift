@@ -331,6 +331,19 @@ Octokit().commentIssue(owner: "octocat", repository: "Hello-World", number: 1, b
 }
 ```
 
+### Edit an existing comment
+
+```swift
+Octokit().patchIssueComment(owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
+    switch response {
+    case .success(let comment):
+        // do something with the comment
+    case .failure:
+        // handle any errors
+    }
+}
+```
+
 ## Pull requests
 
 ### Get a single pull request
