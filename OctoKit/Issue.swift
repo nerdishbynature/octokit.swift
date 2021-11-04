@@ -288,6 +288,32 @@ public extension Octokit {
             }
         }
     }
+
+    /// Edits a comment on an issue using the given body.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the comment.
+    ///   - body: The contents of the comment.
+    ///   - completion: Callback for the comment that is created.
+    @discardableResult
+    func patchIssueComment(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String,
+                           completion: @escaping (_ response: Response<Comment>) -> Void) -> URLSessionDataTaskProtocol?
+    {
+        let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: Comment.self) { issue, error in
+            if let error = error {
+                completion(Response.failure(error))
+            } else {
+                if let issue = issue {
+                    completion(Response.success(issue))
+                }
+            }
+        }
+    }
 }
 
 // MARK: Router
@@ -300,10 +326,11 @@ enum IssueRouter: JSONPostRouter {
     case patchIssue(Configuration, String, String, Int, String?, String?, String?, Openness?)
     case commentIssue(Configuration, String, String, Int, String)
     case readIssueComments(Configuration, String, String, Int, String, String)
+    case patchIssueComment(Configuration, String, String, Int, String)
 
     var method: HTTPMethod {
         switch self {
-        case .postIssue, .patchIssue, .commentIssue:
+        case .postIssue, .patchIssue, .commentIssue, .patchIssueComment:
             return .POST
         default:
             return .GET
@@ -312,7 +339,7 @@ enum IssueRouter: JSONPostRouter {
 
     var encoding: HTTPEncoding {
         switch self {
-        case .postIssue, .patchIssue, .commentIssue:
+        case .postIssue, .patchIssue, .commentIssue, .patchIssueComment:
             return .json
         default:
             return .url
@@ -328,6 +355,7 @@ enum IssueRouter: JSONPostRouter {
         case let .patchIssue(config, _, _, _, _, _, _, _): return config
         case let .commentIssue(config, _, _, _, _): return config
         case let .readIssueComments(config, _, _, _, _, _): return config
+        case let .patchIssueComment(config, _, _, _, _): return config
         }
     }
 
@@ -370,6 +398,8 @@ enum IssueRouter: JSONPostRouter {
             return ["body": body]
         case let .readIssueComments(_, _, _, _, page, perPage):
             return ["per_page": perPage, "page": page]
+        case let .patchIssueComment(_, _, _, _, body):
+            return ["body": body]
         }
     }
 
@@ -389,6 +419,8 @@ enum IssueRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/issues/\(number)/comments"
         case let .readIssueComments(_, owner, repository, number, _, _):
             return "repos/\(owner)/\(repository)/issues/\(number)/comments"
+        case let .patchIssueComment(_, owner, repository, number, _):
+            return "repos/\(owner)/\(repository)/issues/comments/\(number)"
         }
     }
 }
