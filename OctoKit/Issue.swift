@@ -288,7 +288,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     /// Edits a comment on an issue using the given body.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -299,7 +299,7 @@ public extension Octokit {
     ///   - completion: Callback for the comment that is created.
     @discardableResult
     func patchIssueComment(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String,
-                      completion: @escaping (_ response: Response<Comment>) -> Void) -> URLSessionDataTaskProtocol?
+                           completion: @escaping (_ response: Response<Comment>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
         let decoder = JSONDecoder()
