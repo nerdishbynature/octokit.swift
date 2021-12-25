@@ -16,7 +16,6 @@ struct RepositoriesView: View {
     var body: some View {
         NetworkList(viewModel, error: $viewModel.error, searchText: $viewModel.searchText) { repository in
             RepositoryRow(repository: repository)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                 .clipShape(Rectangle())
                 .onTapGesture {
                     onRepositorySelection?(repository)

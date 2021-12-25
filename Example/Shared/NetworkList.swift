@@ -29,7 +29,9 @@ struct NetworkList<Data, ID, Content>: View where Data: RandomAccessCollection, 
     var body: some View {
         ZStack {
             List {
-                ForEach(items, id: \.id, content: rowContent)
+                ForEach(items, id: \.id) {
+                    rowContent($0)
+                }
             }
             if items.isEmpty && !isLoading {
                 Text(emptyText)
