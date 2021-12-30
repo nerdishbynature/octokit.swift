@@ -7,7 +7,7 @@ import FoundationNetworking
 public extension Octokit {
     /**
          Fetches all the starred repositories for a user
-         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: The user who starred repositories.
          - parameter completion: Callback for the outcome of the fetch.
      */
@@ -27,7 +27,7 @@ public extension Octokit {
 
     /**
          Fetches all the starred repositories for the authenticated user
-         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult

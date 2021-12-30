@@ -85,7 +85,7 @@ open class PullRequest: Codable {
 public extension Octokit {
     /**
      Get a single pull request
-     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repository: The name of the repository.
      - parameter number: The number of the PR to fetch.
@@ -112,7 +112,7 @@ public extension Octokit {
 
     /**
      Get a list of pull requests
-     - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repository: The name of the repository.
      - parameter base: Filter pulls by base branch name.
