@@ -40,15 +40,15 @@ public extension Octokit {
                      owner: String,
                      repository: String,
                      pullRequestNumber: Int,
-                     completion: @escaping (_ response: Response<[Review]>) -> Void) -> URLSessionDataTaskProtocol?
+                     completion: @escaping (_ response: Result<[Review], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self) { pullRequests, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let pullRequests = pullRequests {
-                    completion(Response.success(pullRequests))
+                    completion(.success(pullRequests))
                 }
             }
         }

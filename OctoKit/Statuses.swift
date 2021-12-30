@@ -65,7 +65,7 @@ public extension Octokit {
                             targetURL: String? = nil,
                             description: String? = nil,
                             context: String? = nil,
-                            completion: @escaping (_ response: Response<Status>) -> Void) -> URLSessionDataTaskProtocol?
+                            completion: @escaping (_ response: Result<Status, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = StatusesRouter.createCommitStatus(configuration, owner: owner, repo: repository, sha: sha, state: state, targetURL: targetURL, description: description, context: context)
         let decoder = JSONDecoder()
@@ -94,7 +94,7 @@ public extension Octokit {
                             owner: String,
                             repository: String,
                             ref: String,
-                            completion: @escaping (_ response: Response<[Status]>) -> Void) -> URLSessionDataTaskProtocol?
+                            completion: @escaping (_ response: Result<[Status], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Status].self) { statuses, error in

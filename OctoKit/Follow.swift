@@ -11,14 +11,14 @@ public extension Octokit {
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myFollowers(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myFollowers(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let users = users {
-                    completion(Response.success(users))
+                    completion(.success(users))
                 }
             }
         }
@@ -31,14 +31,14 @@ public extension Octokit {
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func followers(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func followers(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowers(name, configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let users = users {
-                    completion(Response.success(users))
+                    completion(.success(users))
                 }
             }
         }
@@ -50,11 +50,11 @@ public extension Octokit {
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myFollowing(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myFollowing(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let users = users {
                     completion(.success(users))
@@ -70,14 +70,14 @@ public extension Octokit {
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func following(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Response<[User]>) -> Void) -> URLSessionDataTaskProtocol? {
+    func following(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowing(name, configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let users = users {
-                    completion(Response.success(users))
+                    completion(.success(users))
                 }
             }
         }

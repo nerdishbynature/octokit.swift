@@ -56,18 +56,18 @@ public extension Octokit {
                       owner: String? = nil,
                       page: String = "1",
                       perPage: String = "100",
-                      completion: @escaping (_ response: Response<[Repository]>) -> Void) -> URLSessionDataTaskProtocol?
+                      completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = (owner != nil)
             ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.readAuthenticatedRepositories(configuration, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self) { repos, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             }
 
             if let repos = repos {
-                completion(Response.success(repos))
+                completion(.success(repos))
             }
         }
     }
@@ -80,14 +80,16 @@ public extension Octokit {
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String, completion: @escaping (_ response: Response<Repository>) -> Void) -> URLSessionDataTaskProtocol? {
+    func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String,
+                    completion: @escaping (_ response: Result<Repository, Error>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Repository.self) { repo, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let repo = repo {
-                    completion(Response.success(repo))
+                    completion(.success(repo))
                 }
             }
         }

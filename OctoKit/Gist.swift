@@ -56,15 +56,15 @@ public extension Octokit {
      */
     @discardableResult
     func myGists(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100",
-                 completion: @escaping (_ response: Response<[Gist]>) -> Void) -> URLSessionDataTaskProtocol?
+                 completion: @escaping (_ response: Result<[Gist], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = GistRouter.readAuthenticatedGists(configuration, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self) { gists, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gists = gists {
-                    completion(Response.success(gists))
+                    completion(.success(gists))
                 }
             }
         }
@@ -80,15 +80,15 @@ public extension Octokit {
      */
     @discardableResult
     func gists(_ session: RequestKitURLSession = URLSession.shared, owner: String, page: String = "1", perPage: String = "100",
-               completion: @escaping (_ response: Response<[Gist]>) -> Void) -> URLSessionDataTaskProtocol?
+               completion: @escaping (_ response: Result<[Gist], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = GistRouter.readGists(configuration, owner, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self) { gists, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gists = gists {
-                    completion(Response.success(gists))
+                    completion(.success(gists))
                 }
             }
         }
@@ -101,14 +101,14 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func gist(_ session: RequestKitURLSession = URLSession.shared, id: String, completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol? {
+    func gist(_ session: RequestKitURLSession = URLSession.shared, id: String, completion: @escaping (_ response: Result<Gist, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.readGist(configuration, id)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Gist.self) { gist, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gist = gist {
-                    completion(Response.success(gist))
+                    completion(.success(gist))
                 }
             }
         }
@@ -129,17 +129,17 @@ public extension Octokit {
                       filename: String,
                       fileContent: String,
                       publicAccess: Bool,
-                      completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol?
+                      completion: @escaping (_ response: Result<Gist, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = GistRouter.postGistFile(configuration, description, filename, fileContent, publicAccess)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Gist.self) { gist, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gist = gist {
-                    completion(Response.success(gist))
+                    completion(.success(gist))
                 }
             }
         }
@@ -160,17 +160,17 @@ public extension Octokit {
                        description: String,
                        filename: String,
                        fileContent: String,
-                       completion: @escaping (_ response: Response<Gist>) -> Void) -> URLSessionDataTaskProtocol?
+                       completion: @escaping (_ response: Result<Gist, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = GistRouter.patchGistFile(configuration, id, description, filename, fileContent)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Gist.self) { gist, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let gist = gist {
-                    completion(Response.success(gist))
+                    completion(.success(gist))
                 }
             }
         }
