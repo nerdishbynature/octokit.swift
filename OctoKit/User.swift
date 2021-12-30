@@ -93,7 +93,7 @@ open class User: Codable {
 public extension Octokit {
     /**
          Fetches a user or organization
-         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: The name of the user or organization.
          - parameter completion: Callback for the outcome of the fetch.
      */
@@ -113,7 +113,7 @@ public extension Octokit {
 
     /**
          Fetches the authenticated user
-         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
