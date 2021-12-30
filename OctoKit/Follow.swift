@@ -7,7 +7,7 @@ import FoundationNetworking
 public extension Octokit {
     /**
          Fetches the followers of the authenticated user
-         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
@@ -26,7 +26,7 @@ public extension Octokit {
 
     /**
          Fetches the followers of a user
-         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: Name of the user
          - parameter completion: Callback for the outcome of the fetch.
      */
@@ -46,7 +46,7 @@ public extension Octokit {
 
     /**
          Fetches the users following the authenticated user
-         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
@@ -65,7 +65,7 @@ public extension Octokit {
 
     /**
          Fetches the users following a user
-         - parameter session: RequestKitURLSession, defaults to NSURLSession.sharedSession()
+         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: The name of the user
          - parameter completion: Callback for the outcome of the fetch.
      */
