@@ -58,15 +58,15 @@ public extension Octokit {
     ///   - completion: Callback for the outcome of the fetch.
     @discardableResult
     func listReleases(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String,
-                      completion: @escaping (_ response: Response<[Release]>) -> Void) -> URLSessionDataTaskProtocol?
+                      completion: @escaping (_ response: Result<[Release], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = ReleaseRouter.listReleases(configuration, owner, repository)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self) { releases, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let releases = releases {
-                    completion(Response.success(releases))
+                    completion(.success(releases))
                 }
             }
         }
@@ -94,7 +94,7 @@ public extension Octokit {
                      body: String? = nil,
                      prerelease: Bool = false,
                      draft: Bool = false,
-                     completion: @escaping (_ response: Response<Release>) -> Void) -> URLSessionDataTaskProtocol?
+                     completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft)
         let decoder = JSONDecoder()
@@ -102,10 +102,10 @@ public extension Octokit {
 
         return router.post(session, decoder: decoder, expectedResultType: Release.self) { issue, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let issue = issue {
-                    completion(Response.success(issue))
+                    completion(.success(issue))
                 }
             }
         }
