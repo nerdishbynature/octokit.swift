@@ -94,15 +94,15 @@ public extension Octokit {
                   state: Openness = .open,
                   page: String = "1",
                   perPage: String = "100",
-                  completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol?
+                  completion: @escaping (_ response: Result<[Issue], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self) { issues, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let issues = issues {
-                    completion(Response.success(issues))
+                    completion(.success(issues))
                 }
             }
         }
@@ -118,15 +118,15 @@ public extension Octokit {
      */
     @discardableResult
     func issue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int,
-               completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol?
+               completion: @escaping (_ response: Result<Issue, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.readIssue(configuration, owner, repository, number)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Issue.self) { issue, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let issue = issue {
-                    completion(Response.success(issue))
+                    completion(.success(issue))
                 }
             }
         }
@@ -149,15 +149,15 @@ public extension Octokit {
                 state: Openness = .open,
                 page: String = "1",
                 perPage: String = "100",
-                completion: @escaping (_ response: Response<[Issue]>) -> Void) -> URLSessionDataTaskProtocol?
+                completion: @escaping (_ response: Result<[Issue], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self) { issues, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let issues = issues {
-                    completion(Response.success(issues))
+                    completion(.success(issues))
                 }
             }
         }
@@ -182,17 +182,17 @@ public extension Octokit {
                    body: String? = nil,
                    assignee: String? = nil,
                    labels: [String] = [],
-                   completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol?
+                   completion: @escaping (_ response: Result<Issue, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee, labels)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Issue.self) { issue, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let issue = issue {
-                    completion(Response.success(issue))
+                    completion(.success(issue))
                 }
             }
         }
@@ -219,15 +219,15 @@ public extension Octokit {
                     body: String? = nil,
                     assignee: String? = nil,
                     state: Openness? = nil,
-                    completion: @escaping (_ response: Response<Issue>) -> Void) -> URLSessionDataTaskProtocol?
+                    completion: @escaping (_ response: Result<Issue, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
         return router.post(session, expectedResultType: Issue.self) { issue, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let issue = issue {
-                    completion(Response.success(issue))
+                    completion(.success(issue))
                 }
             }
         }
@@ -243,17 +243,17 @@ public extension Octokit {
     ///   - completion: Callback for the comment that is created.
     @discardableResult
     func commentIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String,
-                      completion: @escaping (_ response: Response<Comment>) -> Void) -> URLSessionDataTaskProtocol?
+                      completion: @escaping (_ response: Result<Comment, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Comment.self) { issue, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let issue = issue {
-                    completion(Response.success(issue))
+                    completion(.success(issue))
                 }
             }
         }
@@ -275,15 +275,15 @@ public extension Octokit {
                        number: Int,
                        page: String = "1",
                        perPage: String = "100",
-                       completion: @escaping (_ response: Response<[Comment]>) -> Void) -> URLSessionDataTaskProtocol?
+                       completion: @escaping (_ response: Result<[Comment], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.readIssueComments(configuration, owner, repository, number, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Comment].self) { comments, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let comments = comments {
-                    completion(Response.success(comments))
+                    completion(.success(comments))
                 }
             }
         }
@@ -299,17 +299,17 @@ public extension Octokit {
     ///   - completion: Callback for the comment that is created.
     @discardableResult
     func patchIssueComment(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String,
-                           completion: @escaping (_ response: Response<Comment>) -> Void) -> URLSessionDataTaskProtocol?
+                           completion: @escaping (_ response: Result<Comment, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
         let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return router.post(session, decoder: decoder, expectedResultType: Comment.self) { issue, error in
             if let error = error {
-                completion(Response.failure(error))
+                completion(.failure(error))
             } else {
                 if let issue = issue {
-                    completion(Response.success(issue))
+                    completion(.success(issue))
                 }
             }
         }
