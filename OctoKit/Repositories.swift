@@ -18,7 +18,7 @@ open class Repository: Codable {
     open var sshURL: String?
     open var cloneURL: String?
     open var htmlURL: String?
-    open private(set) var size: Int = -1
+    open private(set) var size: Int? = -1
     open var lastPush: Date?
     open var stargazersCount: Int?
 
