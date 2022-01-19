@@ -55,12 +55,16 @@ public extension Octokit {
     ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repository: The name of the repository.
+    ///   - perPage: Results per page (max 100). Default: `30`.
     ///   - completion: Callback for the outcome of the fetch.
     @discardableResult
-    func listReleases(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String,
+    func listReleases(_ session: RequestKitURLSession = URLSession.shared,
+                      owner: String,
+                      repository: String,
+                      perPage: Int = 30,
                       completion: @escaping (_ response: Result<[Release], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
-        let router = ReleaseRouter.listReleases(configuration, owner, repository)
+        let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self) { releases, error in
             if let error = error {
                 completion(.failure(error))
@@ -115,12 +119,12 @@ public extension Octokit {
 // MARK: Router
 
 enum ReleaseRouter: JSONPostRouter {
-    case listReleases(Configuration, String, String)
+    case listReleases(Configuration, String, String, Int)
     case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool)
 
     var configuration: Configuration {
         switch self {
-        case let .listReleases(config, _, _): return config
+        case let .listReleases(config, _, _, _): return config
         case let .postRelease(config, _, _, _, _, _, _, _, _): return config
         }
     }
@@ -145,8 +149,8 @@ enum ReleaseRouter: JSONPostRouter {
 
     var params: [String: Any] {
         switch self {
-        case .listReleases:
-            return [:]
+        case let .listReleases(_, _, _, perPage):
+            return ["per_page": "\(perPage)"]
         case let .postRelease(_, _, _, tagName, targetCommitish, name, body, prerelease, draft):
             var params: [String: Any] = [
                 "tag_name": tagName,
@@ -168,7 +172,7 @@ enum ReleaseRouter: JSONPostRouter {
 
     var path: String {
         switch self {
-        case let .listReleases(_, owner, repo):
+        case let .listReleases(_, owner, repo, _):
             return "repos/\(owner)/\(repo)/releases"
         case let .postRelease(_, owner, repo, _, _, _, _, _, _):
             return "repos/\(owner)/\(repo)/releases"
