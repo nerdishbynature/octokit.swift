@@ -114,6 +114,23 @@ public extension Octokit {
             }
         }
     }
+
+    /// Deletes a release.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
+    ///   - owner: The user or organization that owns the repositories.
+    ///   - repo: The repository on which the release needs to be created.
+    ///   - releaseId: The ID of the release to delete.
+    ///   - completion: Callback for the outcome of the deletion.
+    @discardableResult
+    func deleteRelease(_ session: RequestKitURLSession = URLSession.shared,
+                       owner: String,
+                       repository: String,
+                       releaseId: Int,
+                       completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = ReleaseRouter.deleteRelease(configuration, owner, repository, releaseId)
+        return router.load(session, completion: completion)
+    }
 }
 
 // MARK: Router
@@ -121,11 +138,13 @@ public extension Octokit {
 enum ReleaseRouter: JSONPostRouter {
     case listReleases(Configuration, String, String, Int)
     case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool)
+    case deleteRelease(Configuration, String, String, Int)
 
     var configuration: Configuration {
         switch self {
         case let .listReleases(config, _, _, _): return config
         case let .postRelease(config, _, _, _, _, _, _, _, _): return config
+        case let .deleteRelease(config, _, _, _): return config
         }
     }
 
@@ -135,6 +154,8 @@ enum ReleaseRouter: JSONPostRouter {
             return .GET
         case .postRelease:
             return .POST
+        case .deleteRelease:
+            return .DELETE
         }
     }
 
@@ -144,6 +165,8 @@ enum ReleaseRouter: JSONPostRouter {
             return .url
         case .postRelease:
             return .json
+        case .deleteRelease:
+            return .url
         }
     }
 
@@ -167,6 +190,8 @@ enum ReleaseRouter: JSONPostRouter {
                 params["body"] = body
             }
             return params
+        case .deleteRelease:
+            return [:]
         }
     }
 
@@ -176,6 +201,8 @@ enum ReleaseRouter: JSONPostRouter {
             return "repos/\(owner)/\(repo)/releases"
         case let .postRelease(_, owner, repo, _, _, _, _, _, _):
             return "repos/\(owner)/\(repo)/releases"
+        case let .deleteRelease(_, owner, repo, releaseId):
+            return "repos/\(owner)/\(repo)/releases/\(releaseId)"
         }
     }
 }
