@@ -119,7 +119,7 @@ public extension Octokit {
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
-    ///   - repo: The repository on which the release needs to be created.
+    ///   - repo: The repository on which the release needs to be deleted.
     ///   - releaseId: The ID of the release to delete.
     ///   - completion: Callback for the outcome of the deletion.
     @discardableResult
