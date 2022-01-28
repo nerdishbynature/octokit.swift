@@ -24,10 +24,11 @@ public extension Octokit {
     ///   - completion: Callback for the outcome of the deletion.
     @discardableResult
     func deleteReference(_ session: RequestKitURLSession = URLSession.shared,
-                       owner: String,
-                       repository: String,
-                       ref: String,
-                       completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+                         owner: String,
+                         repository: String,
+                         ref: String,
+                         completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = GITRouter.deleteReference(configuration, owner, repository, ref)
         return router.load(session, completion: completion)
     }

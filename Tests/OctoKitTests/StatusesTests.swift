@@ -11,8 +11,7 @@ class StatusesTests: XCTestCase {
                                             statusCode: 201)
 
         let task = Octokit().createCommitStatus(session, owner: "octocat", repository: "Hello-World", sha: "6dcb09b5b57875f334f61aebed695e2e4193db5e", state: .success,
-                                                targetURL: "https://example.com/build/status", description: "The build succeeded!", context: "continuous-integration/jenkins")
-        { response in
+                                                targetURL: "https://example.com/build/status", description: "The build succeeded!", context: "continuous-integration/jenkins") { response in
             switch response {
             case let .success(status):
                 XCTAssertEqual(status.id, 1)

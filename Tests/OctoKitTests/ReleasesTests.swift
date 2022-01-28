@@ -13,7 +13,12 @@ final class ReleasesTests: XCTestCase {
     // MARK: Actual Request tests
 
     func testListReleases() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=30", expectedHTTPMethod: "GET", jsonFile: "Fixtures/releases", statusCode: 200)
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=30",
+            expectedHTTPMethod: "GET",
+            jsonFile: "Fixtures/releases",
+            statusCode: 200
+        )
         let task = Octokit().listReleases(session, owner: "octocat", repository: "Hello-World") {
             switch $0 {
             case let .success(releases):
@@ -53,8 +58,13 @@ final class ReleasesTests: XCTestCase {
     }
 
     func testListReleasesCustomLimit() {
-        let perPage = (0...50).randomElement()!
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=\(perPage)", expectedHTTPMethod: "GET", jsonFile: "Fixtures/releases", statusCode: 200)
+        let perPage = (0 ... 50).randomElement()!
+        let session = OctoKitURLTestSession(
+            expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=\(perPage)",
+            expectedHTTPMethod: "GET",
+            jsonFile: "Fixtures/releases",
+            statusCode: 200
+        )
         let task = Octokit().listReleases(session, owner: "octocat", repository: "Hello-World", perPage: perPage) {
             switch $0 {
             case .success:

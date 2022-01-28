@@ -127,7 +127,8 @@ public extension Octokit {
                        owner: String,
                        repository: String,
                        releaseId: Int,
-                       completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+                       completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = ReleaseRouter.deleteRelease(configuration, owner, repository, releaseId)
         return router.load(session, completion: completion)
     }
