@@ -55,12 +55,16 @@ public extension Octokit {
     ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repository: The name of the repository.
+    ///   - perPage: Results per page (max 100). Default: `30`.
     ///   - completion: Callback for the outcome of the fetch.
     @discardableResult
-    func listReleases(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String,
+    func listReleases(_ session: RequestKitURLSession = URLSession.shared,
+                      owner: String,
+                      repository: String,
+                      perPage: Int = 30,
                       completion: @escaping (_ response: Result<[Release], Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
-        let router = ReleaseRouter.listReleases(configuration, owner, repository)
+        let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self) { releases, error in
             if let error = error {
                 completion(.failure(error))
@@ -110,18 +114,38 @@ public extension Octokit {
             }
         }
     }
+
+    /// Deletes a release.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
+    ///   - owner: The user or organization that owns the repositories.
+    ///   - repo: The repository on which the release needs to be deleted.
+    ///   - releaseId: The ID of the release to delete.
+    ///   - completion: Callback for the outcome of the deletion.
+    @discardableResult
+    func deleteRelease(_ session: RequestKitURLSession = URLSession.shared,
+                       owner: String,
+                       repository: String,
+                       releaseId: Int,
+                       completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
+        let router = ReleaseRouter.deleteRelease(configuration, owner, repository, releaseId)
+        return router.load(session, completion: completion)
+    }
 }
 
 // MARK: Router
 
 enum ReleaseRouter: JSONPostRouter {
-    case listReleases(Configuration, String, String)
+    case listReleases(Configuration, String, String, Int)
     case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool)
+    case deleteRelease(Configuration, String, String, Int)
 
     var configuration: Configuration {
         switch self {
-        case let .listReleases(config, _, _): return config
+        case let .listReleases(config, _, _, _): return config
         case let .postRelease(config, _, _, _, _, _, _, _, _): return config
+        case let .deleteRelease(config, _, _, _): return config
         }
     }
 
@@ -131,6 +155,8 @@ enum ReleaseRouter: JSONPostRouter {
             return .GET
         case .postRelease:
             return .POST
+        case .deleteRelease:
+            return .DELETE
         }
     }
 
@@ -140,13 +166,15 @@ enum ReleaseRouter: JSONPostRouter {
             return .url
         case .postRelease:
             return .json
+        case .deleteRelease:
+            return .url
         }
     }
 
     var params: [String: Any] {
         switch self {
-        case .listReleases:
-            return [:]
+        case let .listReleases(_, _, _, perPage):
+            return ["per_page": "\(perPage)"]
         case let .postRelease(_, _, _, tagName, targetCommitish, name, body, prerelease, draft):
             var params: [String: Any] = [
                 "tag_name": tagName,
@@ -163,15 +191,19 @@ enum ReleaseRouter: JSONPostRouter {
                 params["body"] = body
             }
             return params
+        case .deleteRelease:
+            return [:]
         }
     }
 
     var path: String {
         switch self {
-        case let .listReleases(_, owner, repo):
+        case let .listReleases(_, owner, repo, _):
             return "repos/\(owner)/\(repo)/releases"
         case let .postRelease(_, owner, repo, _, _, _, _, _, _):
             return "repos/\(owner)/\(repo)/releases"
+        case let .deleteRelease(_, owner, repo, releaseId):
+            return "repos/\(owner)/\(repo)/releases/\(releaseId)"
         }
     }
 }
