@@ -10,6 +10,7 @@ open class File: Codable {
     open var type: String?
     open var language: String?
     open var size: Int?
+    open var content: String?
 
     enum CodingKeys: String, CodingKey {
         case rawURL = "raw_url"
@@ -17,5 +18,6 @@ open class File: Codable {
         case type
         case language
         case size
+        case content
     }
 }
