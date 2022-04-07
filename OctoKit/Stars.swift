@@ -85,6 +85,22 @@ public extension Octokit {
         let router = StarsRouter.putStar(configuration, owner, repository)
         return router.load(session, completion: completion)
     }
+
+    /**
+     Unstars a repository for the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func deleteStar(_ session: RequestKitURLSession = URLSession.shared,
+                    owner: String,
+                    repository: String,
+                    completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = StarsRouter.deleteStar(configuration, owner, repository)
+        return router.load(session, completion: completion)
+    }
 }
 
 enum StarsRouter: Router {
@@ -92,12 +108,16 @@ enum StarsRouter: Router {
     case readStars(String, Configuration)
     case readStar(Configuration, String, String)
     case putStar(Configuration, String, String)
+    case deleteStar(Configuration, String, String)
+
     var method: HTTPMethod {
         switch self {
         case .readAuthenticatedStars, .readStars, .readStar:
-        return .GET
+            return .GET
         case .putStar:
             return .PUT
+        case .deleteStar:
+            return .DELETE
         }
     }
 
@@ -107,6 +127,7 @@ enum StarsRouter: Router {
         case let .readStars(_, config): return config
         case let .readStar(config, _, _): return config
         case let .putStar(config, _ , _): return config
+        case let .deleteStar(config, _ , _): return config
         }
     }
 
@@ -123,6 +144,8 @@ enum StarsRouter: Router {
         case let .readStar(_, owner, repository):
             return "/user/starred/\(owner)/\(repository)"
         case let .putStar(_, owner, repository):
+            return "/user/starred/\(owner)/\(repository)"
+        case let .deleteStar(_, owner, repository):
             return "/user/starred/\(owner)/\(repository)"
         }
     }
