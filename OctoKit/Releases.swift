@@ -89,7 +89,7 @@ public extension Octokit {
                  repository: String,
                  tag: String,
                  completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = ReleaseRouter.releaseByTag(configuration, owner, repository, tag)
+        let router = ReleaseRouter.getReleaseByTag(configuration, owner, repository, tag)
         return router.load(session,
                            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
                            expectedResultType: Release.self) { release, error in
@@ -163,14 +163,14 @@ public extension Octokit {
 
 enum ReleaseRouter: JSONPostRouter {
     case listReleases(Configuration, String, String, Int)
-    case releaseByTag(Configuration, String, String, String)
+    case getReleaseByTag(Configuration, String, String, String)
     case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool)
     case deleteRelease(Configuration, String, String, Int)
 
     var configuration: Configuration {
         switch self {
         case let .listReleases(config, _, _, _): return config
-        case let .releaseByTag(config, _, _, _): return config
+        case let .getReleaseByTag(config, _, _, _): return config
         case let .postRelease(config, _, _, _, _, _, _, _, _): return config
         case let .deleteRelease(config, _, _, _): return config
         }
@@ -178,7 +178,7 @@ enum ReleaseRouter: JSONPostRouter {
 
     var method: HTTPMethod {
         switch self {
-        case .listReleases, .releaseByTag:
+        case .listReleases, .getReleaseByTag:
             return .GET
         case .postRelease:
             return .POST
@@ -189,7 +189,7 @@ enum ReleaseRouter: JSONPostRouter {
 
     var encoding: HTTPEncoding {
         switch self {
-        case .listReleases, .releaseByTag:
+        case .listReleases, .getReleaseByTag:
             return .url
         case .postRelease:
             return .json
@@ -202,7 +202,7 @@ enum ReleaseRouter: JSONPostRouter {
         switch self {
         case let .listReleases(_, _, _, perPage):
             return ["per_page": "\(perPage)"]
-        case .releaseByTag:
+        case .getReleaseByTag:
             return [:]
         case let .postRelease(_, _, _, tagName, targetCommitish, name, body, prerelease, draft):
             var params: [String: Any] = [
@@ -229,7 +229,7 @@ enum ReleaseRouter: JSONPostRouter {
         switch self {
         case let .listReleases(_, owner, repo, _):
             return "repos/\(owner)/\(repo)/releases"
-        case let .releaseByTag(_, owner, repo, tag):
+        case let .getReleaseByTag(_, owner, repo, tag):
             return "repos/\(owner)/\(repo)/releases/tags/\(tag)"
         case let .postRelease(_, owner, repo, _, _, _, _, _, _):
             return "repos/\(owner)/\(repo)/releases"
