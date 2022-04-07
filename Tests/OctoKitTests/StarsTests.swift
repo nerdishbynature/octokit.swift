@@ -67,4 +67,66 @@ class StarsTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+
+    func testGetStarFromNotStarredRepository() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        let task = Octokit().star(
+            session,
+            owner: "octocat",
+            repository: "Hello-World"
+        ) { response in
+            switch response {
+            case let .success(flag):
+                XCTAssertFalse(flag)
+            case .failure:
+                XCTFail("should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testGetStarFromStarredRepository() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 204)
+        let task = Octokit().star(
+            session,
+            owner: "octocat",
+            repository: "Hello-World"
+        ) { response in
+            switch response {
+            case let .success(flag):
+                XCTAssertTrue(flag)
+            case .failure:
+                XCTFail("should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testPutStar() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "PUT", jsonFile: nil, statusCode: 204)
+        let task = Octokit().putStar(
+            session,
+            owner: "octocat",
+            repository: "Hello-World"
+        ) { response in
+            XCTAssertNil(response)
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testDeleteStar() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "DELETE", jsonFile: nil, statusCode: 204)
+        let task = Octokit().deleteStar(
+            session,
+            owner: "octocat",
+            repository: "Hello-World"
+        ) { response in
+            XCTAssertNil(response)
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
 }
