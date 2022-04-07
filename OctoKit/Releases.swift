@@ -88,11 +88,13 @@ public extension Octokit {
                  owner: String,
                  repository: String,
                  tag: String,
-                 completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+                 completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = ReleaseRouter.getReleaseByTag(configuration, owner, repository, tag)
         return router.load(session,
                            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
-                           expectedResultType: Release.self) { release, error in
+                           expectedResultType: Release.self)
+        { release, error in
             if let error = error {
                 completion(.failure(error))
             } else if let release = release {
