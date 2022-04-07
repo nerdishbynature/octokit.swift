@@ -55,7 +55,8 @@ public extension Octokit {
     func star(_ session: RequestKitURLSession = URLSession.shared,
               owner: String,
               repository: String,
-              completion: @escaping (_ response: Result<Bool, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+              completion: @escaping (_ response: Result<Bool, Error>) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = StarsRouter.readStar(configuration, owner, repository)
         return router.load(session) { error in
             guard let error = error else {
@@ -81,7 +82,8 @@ public extension Octokit {
     func putStar(_ session: RequestKitURLSession = URLSession.shared,
                  owner: String,
                  repository: String,
-                 completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+                 completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = StarsRouter.putStar(configuration, owner, repository)
         return router.load(session, completion: completion)
     }
@@ -97,7 +99,8 @@ public extension Octokit {
     func deleteStar(_ session: RequestKitURLSession = URLSession.shared,
                     owner: String,
                     repository: String,
-                    completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+                    completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
         let router = StarsRouter.deleteStar(configuration, owner, repository)
         return router.load(session, completion: completion)
     }
@@ -126,8 +129,8 @@ enum StarsRouter: Router {
         case let .readAuthenticatedStars(config): return config
         case let .readStars(_, config): return config
         case let .readStar(config, _, _): return config
-        case let .putStar(config, _ , _): return config
-        case let .deleteStar(config, _ , _): return config
+        case let .putStar(config, _, _): return config
+        case let .deleteStar(config, _, _): return config
         }
     }
 
