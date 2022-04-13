@@ -43,19 +43,94 @@ public extension Octokit {
             }
         }
     }
+
+    /**
+     Checks if a repository is starred by the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func star(_ session: RequestKitURLSession = URLSession.shared,
+              owner: String,
+              repository: String,
+              completion: @escaping (_ response: Result<Bool, Error>) -> Void) -> URLSessionDataTaskProtocol?
+    {
+        let router = StarsRouter.readStar(configuration, owner, repository)
+        return router.load(session) { error in
+            guard let error = error else {
+                completion(.success(true))
+                return
+            }
+            if (error as NSError).code == 404 {
+                completion(.success(false))
+                return
+            }
+            completion(.failure(error))
+        }
+    }
+
+    /**
+     Stars a repository for the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func putStar(_ session: RequestKitURLSession = URLSession.shared,
+                 owner: String,
+                 repository: String,
+                 completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
+        let router = StarsRouter.putStar(configuration, owner, repository)
+        return router.load(session, completion: completion)
+    }
+
+    /**
+     Unstars a repository for the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func deleteStar(_ session: RequestKitURLSession = URLSession.shared,
+                    owner: String,
+                    repository: String,
+                    completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
+    {
+        let router = StarsRouter.deleteStar(configuration, owner, repository)
+        return router.load(session, completion: completion)
+    }
 }
 
 enum StarsRouter: Router {
     case readAuthenticatedStars(Configuration)
     case readStars(String, Configuration)
+    case readStar(Configuration, String, String)
+    case putStar(Configuration, String, String)
+    case deleteStar(Configuration, String, String)
+
     var method: HTTPMethod {
-        return .GET
+        switch self {
+        case .readAuthenticatedStars, .readStars, .readStar:
+            return .GET
+        case .putStar:
+            return .PUT
+        case .deleteStar:
+            return .DELETE
+        }
     }
 
     var configuration: Configuration {
         switch self {
         case let .readAuthenticatedStars(config): return config
         case let .readStars(_, config): return config
+        case let .readStar(config, _, _): return config
+        case let .putStar(config, _, _): return config
+        case let .deleteStar(config, _, _): return config
         }
     }
 
@@ -69,6 +144,12 @@ enum StarsRouter: Router {
             return "user/starred"
         case let .readStars(username, _):
             return "users/\(username)/starred"
+        case let .readStar(_, owner, repository):
+            return "/user/starred/\(owner)/\(repository)"
+        case let .putStar(_, owner, repository):
+            return "/user/starred/\(owner)/\(repository)"
+        case let .deleteStar(_, owner, repository):
+            return "/user/starred/\(owner)/\(repository)"
         }
     }
 
