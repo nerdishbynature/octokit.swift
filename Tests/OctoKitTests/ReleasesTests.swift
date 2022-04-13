@@ -105,4 +105,29 @@ final class ReleasesTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
+
+    func testReleaseTagName() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases/tags/v1.0.0",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "Fixtures/release",
+                                            statusCode: 201)
+        let task = Octokit().release(session, owner: "octocat", repository: "Hello-World", tag: "v1.0.0") {
+            switch $0 {
+            case let .success(release):
+                XCTAssertEqual(release.tagName, "v1.0.0")
+                XCTAssertEqual(release.commitish, "master")
+                XCTAssertEqual(release.name, "v1.0.0 Release")
+                XCTAssertEqual(release.body, "The changelog of this release")
+                XCTAssertFalse(release.prerelease)
+                XCTAssertFalse(release.draft)
+                XCTAssertEqual(release.tarballURL?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/tarball/v1.0.0")
+                XCTAssertEqual(release.zipballURL?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/zipball/v1.0.0")
+                XCTAssertEqual(release.publishedAt, Date(timeIntervalSince1970: 1361993732.0))
+            case let .failure(error):
+                XCTAssert(false, "Endpoint failed with error \(error)")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
 }
