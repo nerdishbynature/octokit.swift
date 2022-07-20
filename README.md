@@ -358,7 +358,7 @@ Octokit().pullRequest(owner: "octocat", repository: "Hello-World", number: 1) { 
 }
 ```
 
-### List a pull requests
+### List pull requests
 ```swift
 Octokit().pullRequests(owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.Open) { response in
     switch response {
