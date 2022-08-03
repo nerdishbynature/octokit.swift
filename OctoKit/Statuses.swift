@@ -82,6 +82,35 @@ public extension Octokit {
     }
 
     /**
+     Creates a commit status
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter sha: The commit SHA.
+     - parameter state: The state of the status. Can be one of `.error`, `.failure`, `.pending`, or `.success`.
+     - parameter targetURL: The target URL to associate with this status. This URL will be linked from the GitHub UI to allow users to easily see the source of the status.
+     - parameter description: A short description of the status.
+     - parameter context: A string label to differentiate this status from the status of other systems.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func createCommitStatus(_ session: RequestKitURLSession = URLSession.shared,
+                            owner: String,
+                            repository: String,
+                            sha: String,
+                            state: Status.State,
+                            targetURL: String? = nil,
+                            description: String? = nil,
+                            context: String? = nil) async throws -> Status
+    {
+        let router = StatusesRouter.createCommitStatus(configuration, owner: owner, repo: repository, sha: sha, state: state, targetURL: targetURL, description: description, context: context)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Status.self)
+    }
+    #endif
+
+    /**
      Fetches commit statuses for a reference
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
@@ -107,6 +136,25 @@ public extension Octokit {
             }
         }
     }
+
+    /**
+     Fetches commit statuses for a reference
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter ref: SHA, a branch name, or a tag name.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func listCommitStatuses(_ session: RequestKitURLSession = URLSession.shared,
+                            owner: String,
+                            repository: String,
+                            ref: String) async throws -> [Status]
+    {
+        let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Status].self)
+    }
+    #endif
 }
 
 // MARK: - Router

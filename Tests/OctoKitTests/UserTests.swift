@@ -13,7 +13,7 @@ class UserTests: XCTestCase {
                 XCTAssertEqual(user.login, username)
                 XCTAssertNotNil(user.createdAt)
             case .failure:
-                XCTAssert(false, "should get a user")
+                XCTFail("should get a user")
             }
         }
         XCTAssertNotNil(task)
@@ -36,6 +36,18 @@ class UserTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetUserAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/mietzmithut", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
+        let username = "mietzmithut"
+        let user = try await Octokit().user(session, name: username)
+        XCTAssertEqual(user.login, username)
+        XCTAssertNotNil(user.createdAt)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
     func testGettingAuthenticatedUser() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
@@ -46,7 +58,7 @@ class UserTests: XCTestCase {
             case let .success(user):
                 XCTAssertEqual(user.login, "pietbrauer")
             case let .failure(error):
-                XCTAssert(false, "should not retrieve an error \(error)")
+                XCTFail("should not retrieve an error \(error)")
             }
         }
         XCTAssertNotNil(task)
@@ -69,12 +81,25 @@ class UserTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGettingAuthenticatedUserAsync() async throws {
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_me", statusCode: 200)
+        let user = try await Octokit(config).me(session)
+        XCTAssertEqual(user.login, "pietbrauer")
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
     // MARK: Model Tests
 
     func testUserParsingFullUser() {
         let subject = Helper.codableFromFile("user_me", type: User.self)
         XCTAssertEqual(subject.login, "pietbrauer")
-        XCTAssertEqual(subject.id, 759730)
+        XCTAssertEqual(subject.id, 759_730)
         XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/759730?v=3")
         XCTAssertEqual(subject.gravatarID, "")
         XCTAssertEqual(subject.type, "User")
@@ -102,8 +127,8 @@ class UserTests: XCTestCase {
         XCTAssertEqual(subject.twitterUsername, "pietbrauer")
         XCTAssertEqual(subject.numberOfFollowers, 41)
         XCTAssertEqual(subject.numberOfFollowing, 19)
-        XCTAssertEqual(subject.createdAt?.timeIntervalSince1970, 1304110716.0)
-        XCTAssertEqual(subject.updatedAt?.timeIntervalSince1970, 1421091743.0)
+        XCTAssertEqual(subject.createdAt?.timeIntervalSince1970, 1_304_110_716.0)
+        XCTAssertEqual(subject.updatedAt?.timeIntervalSince1970, 1_421_091_743.0)
         XCTAssertEqual(subject.numberOfPrivateGists, 7)
         XCTAssertEqual(subject.numberOfOwnPrivateRepos, 4)
         XCTAssertEqual(subject.amountDiskUsage, 49064)
@@ -115,7 +140,7 @@ class UserTests: XCTestCase {
     func testUserParsingMinimalUser() {
         let subject = Helper.codableFromFile("user_mietzmithut", type: User.self)
         XCTAssertEqual(subject.login, "mietzmithut")
-        XCTAssertEqual(subject.id, 4672699)
+        XCTAssertEqual(subject.id, 4_672_699)
         XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/4672699?v=3")
         XCTAssertEqual(subject.gravatarID, "")
         XCTAssertEqual(subject.type, "User")
