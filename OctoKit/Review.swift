@@ -53,6 +53,18 @@ public extension Octokit {
             }
         }
     }
+
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func reviews(_ session: RequestKitURLSession = URLSession.shared,
+                 owner: String,
+                 repository: String,
+                 pullRequestNumber: Int) async throws -> [Review]
+    {
+        let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self)
+    }
+    #endif
 }
 
 enum ReviewsRouter: JSONPostRouter {

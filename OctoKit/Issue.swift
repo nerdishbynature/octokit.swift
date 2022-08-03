@@ -109,6 +109,27 @@ public extension Octokit {
     }
 
     /**
+     Fetches the issues of the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter state: Issue state. Defaults to open if not specified.
+     - parameter page: Current page for issue pagination. `1` by default.
+     - parameter perPage: Number of issues per page. `100` by default.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func myIssues(_ session: RequestKitURLSession = URLSession.shared,
+                  state: Openness = .open,
+                  page: String = "1",
+                  perPage: String = "100") async throws -> [Issue]
+    {
+        let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self)
+    }
+    #endif
+
+    /**
      Fetches an issue in a repository
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
@@ -131,6 +152,22 @@ public extension Octokit {
             }
         }
     }
+
+    /**
+     Fetches an issue in a repository
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter number: The number of the issue.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func issue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int) async throws -> Issue {
+        let router = IssueRouter.readIssue(configuration, owner, repository, number)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Issue.self)
+    }
+    #endif
 
     /**
      Fetches all issues in a repository
@@ -162,6 +199,30 @@ public extension Octokit {
             }
         }
     }
+
+    /**
+     Fetches all issues in a repository
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter state: Issue state. Defaults to open if not specified.
+     - parameter page: Current page for issue pagination. `1` by default.
+     - parameter perPage: Number of issues per page. `100` by default.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func issues(_ session: RequestKitURLSession = URLSession.shared,
+                owner: String,
+                repository: String,
+                state: Openness = .open,
+                page: String = "1",
+                perPage: String = "100") async throws -> [Issue]
+    {
+        let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self)
+    }
+    #endif
 
     /**
      Creates an issue in a repository.
@@ -199,6 +260,33 @@ public extension Octokit {
     }
 
     /**
+     Creates an issue in a repository.
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter title: The title of the issue.
+     - parameter body: The body text of the issue in GitHub-flavored Markdown format.
+     - parameter assignee: The name of the user to assign the issue to. This parameter is ignored if the user lacks push access to the repository.
+     - parameter labels: An array of label names to add to the issue. If the labels do not exist, GitHub will create them automatically. This parameter is ignored if the user lacks push access to the repository.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func postIssue(_ session: RequestKitURLSession = URLSession.shared,
+                   owner: String,
+                   repository: String,
+                   title: String,
+                   body: String? = nil,
+                   assignee: String? = nil,
+                   labels: [String] = []) async throws -> Issue
+    {
+        let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee, labels)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Issue.self)
+    }
+    #endif
+
+    /**
      Edits an issue in a repository.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
@@ -233,6 +321,33 @@ public extension Octokit {
         }
     }
 
+    /**
+     Edits an issue in a repository.
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter number: The number of the issue.
+     - parameter title: The title of the issue.
+     - parameter body: The body text of the issue in GitHub-flavored Markdown format.
+     - parameter assignee: The name of the user to assign the issue to. This parameter is ignored if the user lacks push access to the repository.
+     - parameter state: Whether the issue is open or closed.
+     */
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func patchIssue(_ session: RequestKitURLSession = URLSession.shared,
+                    owner: String,
+                    repository: String,
+                    number: Int,
+                    title: String? = nil,
+                    body: String? = nil,
+                    assignee: String? = nil,
+                    state: Openness? = nil) async throws -> Issue
+    {
+        let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
+        return try await router.post(session, expectedResultType: Issue.self)
+    }
+    #endif
+
     /// Posts a comment on an issue using the given body.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -258,6 +373,24 @@ public extension Octokit {
             }
         }
     }
+
+    /// Posts a comment on an issue using the given body.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the issue.
+    ///   - body: The contents of the comment.
+    ///   - completion: Callback for the comment that is created.
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func commentIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String) async throws -> Comment {
+        let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Comment.self)
+    }
+    #endif
 
     /// Fetches all comments for an issue
     /// - Parameters:
@@ -289,6 +422,29 @@ public extension Octokit {
         }
     }
 
+    /// Fetches all comments for an issue
+    /// - Parameters:
+    /// - session: RequestKitURLSession, defaults to URLSession.sharedSession()
+    /// - owner: The user or organization that owns the repository.
+    /// - repository: The name of the repository.
+    /// - number: The number of the issue.
+    /// - page: Current page for comments pagination. `1` by default.
+    /// - perPage: Number of comments per page. `100` by default.
+    /// - completion: Callback for the outcome of the fetch.
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func issueComments(_ session: RequestKitURLSession = URLSession.shared,
+                       owner: String,
+                       repository: String,
+                       number: Int,
+                       page: String = "1",
+                       perPage: String = "100") async throws -> [Comment]
+    {
+        let router = IssueRouter.readIssueComments(configuration, owner, repository, number, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Comment].self)
+    }
+    #endif
+
     /// Edits a comment on an issue using the given body.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -314,6 +470,24 @@ public extension Octokit {
             }
         }
     }
+
+    /// Edits a comment on an issue using the given body.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the comment.
+    ///   - body: The contents of the comment.
+    ///   - completion: Callback for the comment that is created.
+    #if !canImport(FoundationNetworking)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func patchIssueComment(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String) async throws -> Comment {
+        let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Comment.self)
+    }
+    #endif
 }
 
 // MARK: Router

@@ -9,19 +9,21 @@ let package = Package(
     products: [
         .library(
             name: "OctoKit",
-            targets: ["OctoKit"]),
+            targets: ["OctoKit"]
+        ),
     ],
     dependencies: [
-        .package(url: "https://github.com/nerdishbynature/RequestKit.git", from: "3.0.0"),
+        .package(url: "https://github.com/nerdishbynature/RequestKit.git", from: "3.1.0"),
     ],
     targets: [
         .target(
             name: "OctoKit",
             dependencies: ["RequestKit"],
             path: "OctoKit"
-         ),
+        ),
         .testTarget(
             name: "OctoKitTests",
-            dependencies: ["OctoKit"]),
+            dependencies: ["OctoKit"]
+        ),
     ]
 )
