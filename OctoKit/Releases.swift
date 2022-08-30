@@ -134,9 +134,10 @@ public extension Octokit {
                      body: String? = nil,
                      prerelease: Bool = false,
                      draft: Bool = false,
+                     generateNotes: Bool = false,
                      completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol?
     {
-        let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft)
+        let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft, generateNotes)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
 
@@ -183,9 +184,9 @@ public extension Octokit {
     #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func postRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, tagName: String, targetCommitish: String? = nil, name: String? = nil,
-                     body: String? = nil, prerelease: Bool = false, draft: Bool = false) async throws -> Release
+                     body: String? = nil, prerelease: Bool = false, draft: Bool = false, generateNotes: Bool = false) async throws -> Release
     {
-        let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft)
+        let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft, generateNotes)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return try await router.post(session, decoder: decoder, expectedResultType: Release.self)
@@ -198,14 +199,14 @@ public extension Octokit {
 enum ReleaseRouter: JSONPostRouter {
     case listReleases(Configuration, String, String, Int)
     case getReleaseByTag(Configuration, String, String, String)
-    case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool)
+    case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool, Bool)
     case deleteRelease(Configuration, String, String, Int)
 
     var configuration: Configuration {
         switch self {
         case let .listReleases(config, _, _, _): return config
         case let .getReleaseByTag(config, _, _, _): return config
-        case let .postRelease(config, _, _, _, _, _, _, _, _): return config
+        case let .postRelease(config, _, _, _, _, _, _, _, _, _): return config
         case let .deleteRelease(config, _, _, _): return config
         }
     }
@@ -238,12 +239,14 @@ enum ReleaseRouter: JSONPostRouter {
             return ["per_page": "\(perPage)"]
         case .getReleaseByTag:
             return [:]
-        case let .postRelease(_, _, _, tagName, targetCommitish, name, body, prerelease, draft):
+        case let .postRelease(_, _, _, tagName, targetCommitish, name, body, prerelease, draft, generateNotes):
             var params: [String: Any] = [
                 "tag_name": tagName,
                 "prerelease": prerelease,
-                "draft": draft
+                "draft": draft,
+                "generate_release_notes": generateNotes
             ]
+
             if let targetCommitish = targetCommitish {
                 params["target_commitish"] = targetCommitish
             }
@@ -265,7 +268,7 @@ enum ReleaseRouter: JSONPostRouter {
             return "repos/\(owner)/\(repo)/releases"
         case let .getReleaseByTag(_, owner, repo, tag):
             return "repos/\(owner)/\(repo)/releases/tags/\(tag)"
-        case let .postRelease(_, owner, repo, _, _, _, _, _, _):
+        case let .postRelease(_, owner, repo, _, _, _, _, _, _, _):
             return "repos/\(owner)/\(repo)/releases"
         case let .deleteRelease(_, owner, repo, releaseId):
             return "repos/\(owner)/\(repo)/releases/\(releaseId)"

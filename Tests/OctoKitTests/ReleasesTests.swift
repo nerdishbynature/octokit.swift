@@ -129,7 +129,8 @@ final class ReleasesTests: XCTestCase {
             name: "v1.0.0 Release",
             body: "The changelog of this release",
             prerelease: false,
-            draft: false
+            draft: false,
+            generateNotes: false
         ) { response in
             switch response {
             case let .success(release):
@@ -185,7 +186,8 @@ final class ReleasesTests: XCTestCase {
             name: "v1.0.0 Release",
             body: "The changelog of this release",
             prerelease: false,
-            draft: false
+            draft: false,
+            generateNotes: false
         )
         XCTAssertEqual(release.tagName, "v1.0.0")
         XCTAssertEqual(release.commitish, "master")
