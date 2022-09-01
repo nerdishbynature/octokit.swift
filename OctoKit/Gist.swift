@@ -70,13 +70,13 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches the gists of the authenticated user
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter page: Current page for gist pagination. `1` by default.
      - parameter perPage: Number of gists per page. `100` by default.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myGists(_ session: RequestKitURLSession = URLSession.shared, page: String = "1", perPage: String = "100") async throws -> [Gist] {
         let router = GistRouter.readAuthenticatedGists(configuration, page, perPage)
@@ -108,6 +108,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches the gists of the specified user
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -115,7 +116,6 @@ public extension Octokit {
      - parameter page: Current page for gist pagination. `1` by default.
      - parameter perPage: Number of gists per page. `100` by default.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func gists(_ session: RequestKitURLSession = URLSession.shared, owner: String, page: String = "1", perPage: String = "100") async throws -> [Gist] {
         let router = GistRouter.readGists(configuration, owner, page, perPage)
@@ -143,12 +143,12 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches an gist
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter id: The id of the gist.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func gist(_ session: RequestKitURLSession = URLSession.shared, id: String) async throws -> Gist {
         let router = GistRouter.readGist(configuration, id)
@@ -187,6 +187,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Creates an gist with a single file.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -195,7 +196,6 @@ public extension Octokit {
      - parameter fileContent: The content of the file in the gist.
      - parameter publicAccess: The public/private visability of the gist.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func postGistFile(_ session: RequestKitURLSession = URLSession.shared, description: String, filename: String, fileContent: String, publicAccess: Bool) async throws -> Gist {
         let router = GistRouter.postGistFile(configuration, description, filename, fileContent, publicAccess)
@@ -236,6 +236,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Edits an gist with a single file.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -244,7 +245,6 @@ public extension Octokit {
      - parameter filename: The name of the file in the gist.
      - parameter fileContent: The content of the file in the gist.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func patchGistFile(_ session: RequestKitURLSession = URLSession.shared, id: String, description: String, filename: String, fileContent: String) async throws -> Gist {
         let router = GistRouter.patchGistFile(configuration, id, description, filename, fileContent)

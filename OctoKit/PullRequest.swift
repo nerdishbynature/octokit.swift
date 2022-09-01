@@ -110,6 +110,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Get a single pull request
      - parameter session: RequestKitURLSession, defaults to URLSession.shared
@@ -117,7 +118,6 @@ public extension Octokit {
      - parameter repository: The name of the repository.
      - parameter number: The number of the PR to fetch.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
                      owner: String,
@@ -163,6 +163,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Get a list of pull requests
      - parameter session: RequestKitURLSession, defaults to URLSession.shared
@@ -173,7 +174,6 @@ public extension Octokit {
      - parameter state: Filter pulls by their state.
      - parameter direction: The direction of the sort.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
                       owner: String,

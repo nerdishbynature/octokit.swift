@@ -38,7 +38,7 @@ class PullRequestTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetPullRequestAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1",
@@ -108,7 +108,7 @@ class PullRequestTests: XCTestCase {
         XCTAssertTrue(baseSession.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetPullRequestsAsync() async throws {
         // Test filtering with on the base branch
@@ -178,7 +178,7 @@ class PullRequestTests: XCTestCase {
         XCTAssertTrue(headSession.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetPullRequestsWithHeadAsync() async throws {
         // Test filtering with on the head branch

@@ -98,13 +98,13 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Fetches the list of releases.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repository: The name of the repository.
     ///   - perPage: Results per page (max 100). Default: `30`.2
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func listReleases(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, perPage: Int = 30) async throws -> [Release] {
         let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
@@ -170,6 +170,7 @@ public extension Octokit {
         return router.load(session, completion: completion)
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Creates a new release.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.shared()
@@ -181,7 +182,6 @@ public extension Octokit {
     ///   - body: Text describing the contents of the tag.
     ///   - prerelease: `true` to create a draft (unpublished) release, `false` to create a published one. Default: `false`.
     ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func postRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, tagName: String, targetCommitish: String? = nil, name: String? = nil,
                      body: String? = nil, prerelease: Bool = false, draft: Bool = false, generateNotes: Bool = false) async throws -> Release

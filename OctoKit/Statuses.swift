@@ -81,6 +81,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Creates a commit status
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -92,7 +93,6 @@ public extension Octokit {
      - parameter description: A short description of the status.
      - parameter context: A string label to differentiate this status from the status of other systems.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func createCommitStatus(_ session: RequestKitURLSession = URLSession.shared,
                             owner: String,
@@ -137,6 +137,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches commit statuses for a reference
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -144,7 +145,6 @@ public extension Octokit {
      - parameter repository: The name of the repository.
      - parameter ref: SHA, a branch name, or a tag name.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func listCommitStatuses(_ session: RequestKitURLSession = URLSession.shared,
                             owner: String,

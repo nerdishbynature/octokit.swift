@@ -24,11 +24,11 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the followers of the authenticated user
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myFollowers(_ session: RequestKitURLSession = URLSession.shared) async throws -> [User] {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
@@ -56,12 +56,12 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the followers of a user
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: Name of the user
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func followers(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> [User] {
         let router = FollowRouter.readFollowers(name, configuration)
@@ -88,11 +88,11 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the users following the authenticated user
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myFollowing(_ session: RequestKitURLSession = URLSession.shared) async throws -> [User] {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
@@ -120,12 +120,12 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the users following a user
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: The name of the user
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func following(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> [User] {
         let router = FollowRouter.readFollowing(name, configuration)
