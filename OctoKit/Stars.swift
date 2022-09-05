@@ -119,7 +119,7 @@ public extension Octokit {
     /**
      Fetches all the starred repositories for the authenticated user
      - parameter session: RequestKitURLSession, defaults to URLSession.shared
-     - parameter completion: Callback for the outcome of the fetch.
+     - Returns: The repos which the authenticated user stars.
      */
     func myStars(_ session: RequestKitURLSession = URLSession.shared) async throws -> [Repository] {
         let router = StarsRouter.readAuthenticatedStars(configuration)
