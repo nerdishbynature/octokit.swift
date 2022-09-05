@@ -108,6 +108,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches the issues of the authenticated user
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -116,7 +117,6 @@ public extension Octokit {
      - parameter perPage: Number of issues per page. `100` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myIssues(_ session: RequestKitURLSession = URLSession.shared,
@@ -153,6 +153,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches an issue in a repository
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -161,7 +162,6 @@ public extension Octokit {
      - parameter number: The number of the issue.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func issue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int) async throws -> Issue {
         let router = IssueRouter.readIssue(configuration, owner, repository, number)
@@ -200,6 +200,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches all issues in a repository
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -210,7 +211,6 @@ public extension Octokit {
      - parameter perPage: Number of issues per page. `100` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func issues(_ session: RequestKitURLSession = URLSession.shared,
                 owner: String,
@@ -259,6 +259,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Creates an issue in a repository.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -269,7 +270,6 @@ public extension Octokit {
      - parameter assignee: The name of the user to assign the issue to. This parameter is ignored if the user lacks push access to the repository.
      - parameter labels: An array of label names to add to the issue. If the labels do not exist, GitHub will create them automatically. This parameter is ignored if the user lacks push access to the repository.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func postIssue(_ session: RequestKitURLSession = URLSession.shared,
                    owner: String,
@@ -321,6 +321,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Edits an issue in a repository.
      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -332,7 +333,6 @@ public extension Octokit {
      - parameter assignee: The name of the user to assign the issue to. This parameter is ignored if the user lacks push access to the repository.
      - parameter state: Whether the issue is open or closed.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func patchIssue(_ session: RequestKitURLSession = URLSession.shared,
                     owner: String,
@@ -374,6 +374,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Posts a comment on an issue using the given body.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -382,7 +383,6 @@ public extension Octokit {
     ///   - number: The number of the issue.
     ///   - body: The contents of the comment.
     ///   - completion: Callback for the comment that is created.
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func commentIssue(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String) async throws -> Comment {
         let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
@@ -422,6 +422,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Fetches all comments for an issue
     /// - Parameters:
     /// - session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -431,7 +432,6 @@ public extension Octokit {
     /// - page: Current page for comments pagination. `1` by default.
     /// - perPage: Number of comments per page. `100` by default.
     /// - completion: Callback for the outcome of the fetch.
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func issueComments(_ session: RequestKitURLSession = URLSession.shared,
                        owner: String,
@@ -471,6 +471,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Edits a comment on an issue using the given body.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -479,7 +480,6 @@ public extension Octokit {
     ///   - number: The number of the comment.
     ///   - body: The contents of the comment.
     ///   - completion: Callback for the comment that is created.
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func patchIssueComment(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, number: Int, body: String) async throws -> Comment {
         let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)

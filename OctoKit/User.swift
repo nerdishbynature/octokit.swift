@@ -111,12 +111,12 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches a user or organization
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: The name of the user or organization.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func user(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> User {
         let router = UserRouter.readUser(name, configuration)
@@ -143,11 +143,11 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the authenticated user
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func me(_ session: RequestKitURLSession = URLSession.shared) async throws -> User {
         let router = UserRouter.readAuthenticatedUser(configuration)

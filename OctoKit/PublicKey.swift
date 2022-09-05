@@ -22,7 +22,7 @@ public extension Octokit {
         }
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func postPublicKey(_ session: RequestKitURLSession = URLSession.shared, publicKey: String, title: String) async throws -> String {
         let router = PublicKeyRouter.postPublicKey(publicKey, title, configuration)

@@ -19,7 +19,7 @@ class FollowTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetMyFollowersAsync() async throws {
         let config = TokenConfiguration("user:12345")
@@ -46,7 +46,7 @@ class FollowTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetUsersFollowersAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/followers", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
@@ -73,7 +73,7 @@ class FollowTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetMyFollowingAsync() async throws {
         let config = TokenConfiguration("user:12345")
@@ -100,7 +100,7 @@ class FollowTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetUsersFollowingAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)

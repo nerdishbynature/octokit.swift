@@ -72,6 +72,7 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the Repositories for a user or organization
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
@@ -79,7 +80,6 @@ public extension Octokit {
          - parameter page: Current page for repository pagination. `1` by default.
          - parameter perPage: Number of repositories per page. `100` by default.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func repositories(_ session: RequestKitURLSession = URLSession.shared, owner: String? = nil, page: String = "1", perPage: String = "100") async throws -> [Repository] {
         let router = (owner != nil)
@@ -112,13 +112,13 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches a repository for a user or organization
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter owner: The user or organization that owns the repositories.
          - parameter name: The name of the repository to fetch.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func repository(_ session: RequestKitURLSession = URLSession.shared, owner: String, name: String) async throws -> Repository {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
