@@ -25,19 +25,6 @@ public extension Octokit {
         }
     }
 
-    #if compiler(>=5.5.2) && canImport(_Concurrency)
-    /**
-         Fetches all the starred repositories for a user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
-         - parameter name: The user who starred repositories.
-     */
-    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func stars(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> [Repository] {
-        let router = StarsRouter.readStars(name, configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
-    }
-    #endif
-
     /**
          Fetches all the starred repositories for the authenticated user
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
@@ -114,20 +101,32 @@ public extension Octokit {
         let router = StarsRouter.deleteStar(configuration, owner, repository)
         return router.load(session, completion: completion)
     }
+}
 
-    #if compiler(>=5.5.2) && canImport(_Concurrency)
+#if compiler(>=5.5.2) && canImport(_Concurrency)
+@available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+public extension Octokit {
+    /**
+     Fetches all the starred repositories for a user
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter name: The user who starred repositories.
+     */
+    func stars(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> [Repository] {
+        let router = StarsRouter.readStars(name, configuration)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
+    }
+
     /**
      Fetches all the starred repositories for the authenticated user
      - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter completion: Callback for the outcome of the fetch.
-      */
-    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+     */
     func myStars(_ session: RequestKitURLSession = URLSession.shared) async throws -> [Repository] {
         let router = StarsRouter.readAuthenticatedStars(configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
     }
-    #endif
 }
+#endif
 
 enum StarsRouter: Router {
     case readAuthenticatedStars(Configuration)
