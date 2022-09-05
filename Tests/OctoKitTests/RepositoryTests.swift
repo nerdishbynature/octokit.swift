@@ -109,7 +109,7 @@ class RepositoryTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetRepositoriesAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/repos?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
@@ -168,7 +168,7 @@ class RepositoryTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetRepositoryAsync() async throws {
         let (owner, name) = ("mietzmithut", "Test")

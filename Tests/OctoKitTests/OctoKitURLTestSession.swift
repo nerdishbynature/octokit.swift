@@ -70,7 +70,7 @@ class OctoKitURLTestSession: RequestKitURLSession {
         return MockURLSessionDataTask()
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func data(for request: URLRequest, delegate _: URLSessionTaskDelegate?) async throws -> (Data, URLResponse) {
         XCTAssertEqual(request.url?.absoluteString, expectedURL)

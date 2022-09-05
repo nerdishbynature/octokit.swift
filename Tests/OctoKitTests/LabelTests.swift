@@ -18,7 +18,7 @@ class LabelTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetLabelAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels/bug", expectedHTTPMethod: "GET", jsonFile: "label", statusCode: 200)
@@ -56,7 +56,7 @@ class LabelTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetLabelsAsync() async throws {
         let session = OctoKitURLTestSession(
@@ -99,7 +99,7 @@ class LabelTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    #if !canImport(FoundationNetworking)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testCreateLabelAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels", expectedHTTPMethod: "POST", jsonFile: "label", statusCode: 200)

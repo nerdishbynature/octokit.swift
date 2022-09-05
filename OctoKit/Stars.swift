@@ -25,12 +25,12 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches all the starred repositories for a user
          - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: The user who starred repositories.
      */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func stars(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> [Repository] {
         let router = StarsRouter.readStars(name, configuration)
@@ -118,12 +118,12 @@ public extension Octokit {
         return router.load(session, completion: completion)
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches all the starred repositories for the authenticated user
      - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter completion: Callback for the outcome of the fetch.
       */
-    #if !canImport(FoundationNetworking)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myStars(_ session: RequestKitURLSession = URLSession.shared) async throws -> [Repository] {
         let router = StarsRouter.readAuthenticatedStars(configuration)
