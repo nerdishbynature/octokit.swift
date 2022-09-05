@@ -142,5 +142,47 @@ extension StarsTests {
         XCTAssertEqual(repositories.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
+
+    func testGetStarFromNotStarredRepositoryAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        let flag = try await Octokit().star(
+            session,
+            owner: "octocat",
+            repository: "Hello-World"
+        )
+        XCTAssertFalse(flag)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testGetStarFromStarredRepositoryAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 204)
+        let flag = try await Octokit().star(
+            session,
+            owner: "octocat",
+            repository: "Hello-World"
+        )
+        XCTAssertTrue(flag)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testPutStarAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "PUT", jsonFile: nil, statusCode: 204)
+        try await Octokit().putStar(
+            session,
+            owner: "octocat",
+            repository: "Hello-World"
+        )
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testDeleteStarAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "DELETE", jsonFile: nil, statusCode: 204)
+        try await Octokit().deleteStar(
+            session,
+            owner: "octocat",
+            repository: "Hello-World"
+        )
+        XCTAssertTrue(session.wasCalled)
+    }
 }
 #endif
