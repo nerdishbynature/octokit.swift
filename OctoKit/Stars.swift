@@ -125,6 +125,53 @@ public extension Octokit {
         let router = StarsRouter.readAuthenticatedStars(configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
     }
+
+    /**
+     Checks if a repository is starred by the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     - Returns: If the repository is starred by the authenticated user
+     */
+    func star(_ session: RequestKitURLSession = URLSession.shared,
+              owner: String,
+              repository: String) async throws -> Bool {
+        let router = StarsRouter.readStar(configuration, owner, repository)
+        do {
+            try await router.load(session)
+            return true
+        } catch let error as NSError where error.code == 404 {
+            return false
+        } catch {
+            throw error
+        }
+    }
+
+    /**
+     Stars a repository for the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     */
+    func putStar(_ session: RequestKitURLSession = URLSession.shared,
+                 owner: String,
+                 repository: String) async throws {
+        let router = StarsRouter.putStar(configuration, owner, repository)
+        return try await router.load(session)
+    }
+
+    /**
+     Unstars a repository for the authenticated user
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     */
+    func deleteStar(_ session: RequestKitURLSession = URLSession.shared,
+                    owner: String,
+                    repository: String) async throws {
+        let router = StarsRouter.deleteStar(configuration, owner, repository)
+        return try await router.load(session)
+    }
 }
 #endif
 
