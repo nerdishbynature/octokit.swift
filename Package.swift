@@ -13,7 +13,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/nerdishbynature/RequestKit.git", from: "3.2.0"),
+        .package(url: "https://github.com/nerdishbynature/RequestKit.git", from: "3.2.1"),
     ],
     targets: [
         .target(
