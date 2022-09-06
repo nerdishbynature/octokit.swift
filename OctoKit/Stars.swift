@@ -157,7 +157,7 @@ public extension Octokit {
                  owner: String,
                  repository: String) async throws {
         let router = StarsRouter.putStar(configuration, owner, repository)
-        return try await router.load(session)
+        try await router.load(session)
     }
 
     /**
@@ -170,7 +170,7 @@ public extension Octokit {
                     owner: String,
                     repository: String) async throws {
         let router = StarsRouter.deleteStar(configuration, owner, repository)
-        return try await router.load(session)
+        try await router.load(session)
     }
 }
 #endif
