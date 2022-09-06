@@ -14,3 +14,4 @@
 # disabled format
 --disable wrapEnumCases 
 --disable numberFormatting
+--disable wrapMultilineStatementBraces
