@@ -27,8 +27,7 @@ public extension Octokit {
                          owner: String,
                          repository: String,
                          ref: String,
-                         completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                         completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GITRouter.deleteReference(configuration, owner, repository, ref)
         return router.load(session, completion: completion)
     }

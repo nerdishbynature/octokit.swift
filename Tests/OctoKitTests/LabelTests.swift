@@ -59,12 +59,10 @@ class LabelTests: XCTestCase {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetLabelsAsync() async throws {
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/repos/octocat/hello-world/labels?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            jsonFile: "labels",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "labels",
+                                            statusCode: 200)
         let labels = try await Octokit().labels(session, owner: "octocat", repository: "hello-world")
         XCTAssertEqual(labels.count, 7)
         XCTAssertTrue(session.wasCalled)

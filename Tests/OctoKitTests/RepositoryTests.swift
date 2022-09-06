@@ -20,12 +20,10 @@ class RepositoryTests: XCTestCase {
 
     func testGetRepositoriesEnterprise() {
         let config = TokenConfiguration(url: "https://enterprise.nerdishbynature.com/api/v3/")
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://enterprise.nerdishbynature.com/api/v3/users/octocat/repos?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            jsonFile: "user_repos",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/users/octocat/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "user_repos",
+                                            statusCode: 200)
         let task = Octokit(config).repositories(session, owner: "octocat") { response in
             switch response {
             case let .success(repositories):
@@ -42,13 +40,11 @@ class RepositoryTests: XCTestCase {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/user/repos?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            expectedHTTPHeaders: headers,
-            jsonFile: "user_repos",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            jsonFile: "user_repos",
+                                            statusCode: 200)
         let task = Octokit(config).repositories(session) { response in
             switch response {
             case let .success(repositories):
@@ -65,13 +61,11 @@ class RepositoryTests: XCTestCase {
         let config = TokenConfiguration("user:12345", url: "https://enterprise.nerdishbynature.com/api/v3/")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://enterprise.nerdishbynature.com/api/v3/user/repos?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            expectedHTTPHeaders: headers,
-            jsonFile: "user_repos",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/user/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            jsonFile: "user_repos",
+                                            statusCode: 200)
         let task = Octokit(config).repositories(session) { response in
             switch response {
             case let .success(repositories):
@@ -89,13 +83,11 @@ class RepositoryTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/user/repos?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            expectedHTTPHeaders: headers,
-            response: json,
-            statusCode: 401
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            response: json,
+                                            statusCode: 401)
         let task = Octokit(config).repositories(session) { response in
             switch response {
             case .success:

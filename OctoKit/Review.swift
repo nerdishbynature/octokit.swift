@@ -40,8 +40,7 @@ public extension Octokit {
                      owner: String,
                      repository: String,
                      pullRequestNumber: Int,
-                     completion: @escaping (_ response: Result<[Review], Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                     completion: @escaping (_ response: Result<[Review], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self) { pullRequests, error in
             if let error = error {
@@ -59,8 +58,7 @@ public extension Octokit {
     func reviews(_ session: RequestKitURLSession = URLSession.shared,
                  owner: String,
                  repository: String,
-                 pullRequestNumber: Int) async throws -> [Review]
-    {
+                 pullRequestNumber: Int) async throws -> [Review] {
         let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self)
     }
