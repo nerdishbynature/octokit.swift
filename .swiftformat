@@ -9,6 +9,7 @@
 --ifdef no-indent
 --importgrouping testable-bottom
 --maxwidth 200
+--wraparguments after-first
 --wrapparameters after-first
 
 # disabled format
