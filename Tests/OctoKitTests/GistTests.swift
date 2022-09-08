@@ -10,13 +10,11 @@ class GistTests: XCTestCase {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/gists?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            expectedHTTPHeaders: headers,
-            jsonFile: "gists",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            jsonFile: "gists",
+                                            statusCode: 200)
         let task = Octokit(config).myGists(session) { response in
             switch response {
             case let .success(gists):
@@ -35,13 +33,11 @@ class GistTests: XCTestCase {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/gists?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            expectedHTTPHeaders: headers,
-            jsonFile: "gists",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            jsonFile: "gists",
+                                            statusCode: 200)
         let gists = try await Octokit(config).myGists(session)
         XCTAssertEqual(gists.count, 1)
         XCTAssertTrue(session.wasCalled)
@@ -52,13 +48,11 @@ class GistTests: XCTestCase {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/users/vincode-io/gists?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            expectedHTTPHeaders: headers,
-            jsonFile: "gists",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/vincode-io/gists?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            jsonFile: "gists",
+                                            statusCode: 200)
         let task = Octokit(config).gists(session, owner: "vincode-io") { response in
             switch response {
             case let .success(gists):
@@ -77,13 +71,11 @@ class GistTests: XCTestCase {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/users/vincode-io/gists?page=1&per_page=100",
-            expectedHTTPMethod: "GET",
-            expectedHTTPHeaders: headers,
-            jsonFile: "gists",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/vincode-io/gists?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            jsonFile: "gists",
+                                            statusCode: 200)
         let gists = try await Octokit(config).gists(session, owner: "vincode-io")
         XCTAssertEqual(gists.count, 1)
         XCTAssertTrue(session.wasCalled)

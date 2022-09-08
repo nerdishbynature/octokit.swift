@@ -91,8 +91,7 @@ public extension Octokit {
                          participating: Bool = false,
                          page: String = "1",
                          perPage: String = "100",
-                         completion: @escaping (_ response: Result<[NotificationThread], Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                         completion: @escaping (_ response: Result<[NotificationThread], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.readNotifications(configuration, all, participating, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self) { notifications, error in
             if let error = error {
@@ -113,9 +112,10 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func markNotificationsRead(_ session: RequestKitURLSession = URLSession.shared, lastReadAt: String = "last_read_at", read: Bool = false,
-                               completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
-    {
+    func markNotificationsRead(_ session: RequestKitURLSession = URLSession.shared,
+                               lastReadAt: String = "last_read_at",
+                               read: Bool = false,
+                               completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.markNotificationsRead(configuration, lastReadAt, read)
         return router.load(session, completion: completion)
     }
@@ -127,9 +127,9 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func getNotificationThread(_ session: RequestKitURLSession = URLSession.shared, threadId: String,
-                               completion: @escaping (_ response: Result<NotificationThread, Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+    func getNotificationThread(_ session: RequestKitURLSession = URLSession.shared,
+                               threadId: String,
+                               completion: @escaping (_ response: Result<NotificationThread, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.getNotificationThread(configuration, threadId)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: NotificationThread.self) { notification, error in
             if let error = error {
@@ -149,9 +149,9 @@ public extension Octokit {
       - parameter completion: Callback for the outcome of the fetch.
       */
     @discardableResult
-    func getThreadSubscription(_ session: RequestKitURLSession = URLSession.shared, threadId: String,
-                               completion: @escaping (_ response: Result<ThreadSubscription, Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+    func getThreadSubscription(_ session: RequestKitURLSession = URLSession.shared,
+                               threadId: String,
+                               completion: @escaping (_ response: Result<ThreadSubscription, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.getThreadSubscription(configuration, threadId)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self) { thread, error in
             if let error = error {
@@ -172,9 +172,10 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func setThreadSubscription(_ session: RequestKitURLSession = URLSession.shared, threadId: String, ignored: Bool = false,
-                               completion: @escaping (_ response: Result<ThreadSubscription, Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+    func setThreadSubscription(_ session: RequestKitURLSession = URLSession.shared,
+                               threadId: String,
+                               ignored: Bool = false,
+                               completion: @escaping (_ response: Result<ThreadSubscription, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.setThreadSubscription(configuration, threadId, ignored)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self) { thread, error in
             if let error = error {
@@ -222,8 +223,7 @@ public extension Octokit {
                                      before: String? = nil,
                                      page: String = "1",
                                      perPage: String = "100",
-                                     completion: @escaping (_ response: Result<[NotificationThread], Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                                     completion: @escaping (_ response: Result<[NotificationThread], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.listRepositoryNotifications(configuration, owner, repository, all, participating, since, before, perPage, page)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self) { notifications, error in
             if let error = error {
@@ -249,8 +249,7 @@ public extension Octokit {
                                          owner: String,
                                          repository: String,
                                          lastReadAt: String? = nil,
-                                         completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                                         completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.markRepositoryNotificationsRead(configuration, owner, repository, lastReadAt)
         return router.load(session, completion: completion)
     }

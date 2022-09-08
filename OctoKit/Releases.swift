@@ -62,8 +62,7 @@ public extension Octokit {
                       owner: String,
                       repository: String,
                       perPage: Int = 30,
-                      completion: @escaping (_ response: Result<[Release], Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                      completion: @escaping (_ response: Result<[Release], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self) { releases, error in
             if let error = error {
@@ -84,8 +83,7 @@ public extension Octokit {
                  owner: String,
                  repository: String,
                  tag: String,
-                 completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                 completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.getReleaseByTag(configuration, owner, repository, tag)
         return router.load(session,
                            dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
@@ -135,8 +133,7 @@ public extension Octokit {
                      prerelease: Bool = false,
                      draft: Bool = false,
                      generateNotes: Bool = false,
-                     completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                     completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft, generateNotes)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -164,8 +161,7 @@ public extension Octokit {
                        owner: String,
                        repository: String,
                        releaseId: Int,
-                       completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                       completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.deleteRelease(configuration, owner, repository, releaseId)
         return router.load(session, completion: completion)
     }
@@ -183,9 +179,16 @@ public extension Octokit {
     ///   - prerelease: `true` to create a draft (unpublished) release, `false` to create a published one. Default: `false`.
     ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func postRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, tagName: String, targetCommitish: String? = nil, name: String? = nil,
-                     body: String? = nil, prerelease: Bool = false, draft: Bool = false, generateNotes: Bool = false) async throws -> Release
-    {
+    func postRelease(_ session: RequestKitURLSession = URLSession.shared,
+                     owner: String,
+                     repository: String,
+                     tagName: String,
+                     targetCommitish: String? = nil,
+                     name: String? = nil,
+                     body: String? = nil,
+                     prerelease: Bool = false,
+                     draft: Bool = false,
+                     generateNotes: Bool = false) async throws -> Release {
         let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft, generateNotes)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
