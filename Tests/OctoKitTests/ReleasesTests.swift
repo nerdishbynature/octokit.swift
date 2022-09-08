@@ -13,12 +13,10 @@ final class ReleasesTests: XCTestCase {
     // MARK: Actual Request tests
 
     func testListReleases() {
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=30",
-            expectedHTTPMethod: "GET",
-            jsonFile: "Fixtures/releases",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=30",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "Fixtures/releases",
+                                            statusCode: 200)
         let task = Octokit().listReleases(session, owner: "octocat", repository: "Hello-World") {
             switch $0 {
             case let .success(releases):
@@ -59,12 +57,10 @@ final class ReleasesTests: XCTestCase {
 
     func testListReleasesCustomLimit() {
         let perPage = (0 ... 50).randomElement()!
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=\(perPage)",
-            expectedHTTPMethod: "GET",
-            jsonFile: "Fixtures/releases",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=\(perPage)",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "Fixtures/releases",
+                                            statusCode: 200)
         let task = Octokit().listReleases(session, owner: "octocat", repository: "Hello-World", perPage: perPage) {
             switch $0 {
             case .success:
@@ -80,12 +76,10 @@ final class ReleasesTests: XCTestCase {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testListReleasesAsync() async throws {
-        let session = OctoKitURLTestSession(
-            expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=30",
-            expectedHTTPMethod: "GET",
-            jsonFile: "Fixtures/releases",
-            statusCode: 200
-        )
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=30",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "Fixtures/releases",
+                                            statusCode: 200)
         let releases = try await Octokit().listReleases(session, owner: "octocat", repository: "Hello-World")
         XCTAssertEqual(releases.count, 2)
         if let release = releases.first {
@@ -120,18 +114,16 @@ final class ReleasesTests: XCTestCase {
 
     func testPostRelease() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases", expectedHTTPMethod: "POST", jsonFile: "post_release", statusCode: 201)
-        let task = Octokit().postRelease(
-            session,
-            owner: "octocat",
-            repository: "Hello-World",
-            tagName: "v1.0.0",
-            targetCommitish: "master",
-            name: "v1.0.0 Release",
-            body: "The changelog of this release",
-            prerelease: false,
-            draft: false,
-            generateNotes: false
-        ) { response in
+        let task = Octokit().postRelease(session,
+                                         owner: "octocat",
+                                         repository: "Hello-World",
+                                         tagName: "v1.0.0",
+                                         targetCommitish: "master",
+                                         name: "v1.0.0 Release",
+                                         body: "The changelog of this release",
+                                         prerelease: false,
+                                         draft: false,
+                                         generateNotes: false) { response in
             switch response {
             case let .success(release):
                 XCTAssertEqual(release.tagName, "v1.0.0")
@@ -177,18 +169,16 @@ final class ReleasesTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testPostReleaseAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases", expectedHTTPMethod: "POST", jsonFile: "post_release", statusCode: 201)
-        let release = try await Octokit().postRelease(
-            session,
-            owner: "octocat",
-            repository: "Hello-World",
-            tagName: "v1.0.0",
-            targetCommitish: "master",
-            name: "v1.0.0 Release",
-            body: "The changelog of this release",
-            prerelease: false,
-            draft: false,
-            generateNotes: false
-        )
+        let release = try await Octokit().postRelease(session,
+                                                      owner: "octocat",
+                                                      repository: "Hello-World",
+                                                      tagName: "v1.0.0",
+                                                      targetCommitish: "master",
+                                                      name: "v1.0.0 Release",
+                                                      body: "The changelog of this release",
+                                                      prerelease: false,
+                                                      draft: false,
+                                                      generateNotes: false)
         XCTAssertEqual(release.tagName, "v1.0.0")
         XCTAssertEqual(release.commitish, "master")
         XCTAssertEqual(release.name, "v1.0.0 Release")

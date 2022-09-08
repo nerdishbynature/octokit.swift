@@ -53,9 +53,12 @@ public struct OAuthConfiguration: Configuration {
         return previewCustomHeaders
     }
 
-    public init(_ url: String = githubBaseURL, webURL: String = githubWebURL,
-                token: String, secret: String, scopes: [String], previewHeaders: [PreviewHeader] = [])
-    {
+    public init(_ url: String = githubBaseURL,
+                webURL: String = githubWebURL,
+                token: String,
+                secret: String,
+                scopes: [String],
+                previewHeaders: [PreviewHeader] = []) {
         apiEndpoint = url
         webEndpoint = webURL
         self.token = token

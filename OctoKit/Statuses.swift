@@ -65,8 +65,7 @@ public extension Octokit {
                             targetURL: String? = nil,
                             description: String? = nil,
                             context: String? = nil,
-                            completion: @escaping (_ response: Result<Status, Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                            completion: @escaping (_ response: Result<Status, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StatusesRouter.createCommitStatus(configuration, owner: owner, repo: repository, sha: sha, state: state, targetURL: targetURL, description: description, context: context)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -101,8 +100,7 @@ public extension Octokit {
                             state: Status.State,
                             targetURL: String? = nil,
                             description: String? = nil,
-                            context: String? = nil) async throws -> Status
-    {
+                            context: String? = nil) async throws -> Status {
         let router = StatusesRouter.createCommitStatus(configuration, owner: owner, repo: repository, sha: sha, state: state, targetURL: targetURL, description: description, context: context)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -123,8 +121,7 @@ public extension Octokit {
                             owner: String,
                             repository: String,
                             ref: String,
-                            completion: @escaping (_ response: Result<[Status], Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                            completion: @escaping (_ response: Result<[Status], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Status].self) { statuses, error in
             if let error = error {
@@ -149,8 +146,7 @@ public extension Octokit {
     func listCommitStatuses(_ session: RequestKitURLSession = URLSession.shared,
                             owner: String,
                             repository: String,
-                            ref: String) async throws -> [Status]
-    {
+                            ref: String) async throws -> [Status] {
         let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Status].self)
     }

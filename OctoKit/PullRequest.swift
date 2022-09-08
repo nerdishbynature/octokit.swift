@@ -96,8 +96,7 @@ public extension Octokit {
                      owner: String,
                      repository: String,
                      number: Int,
-                     completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                     completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
@@ -122,8 +121,7 @@ public extension Octokit {
     func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
                      owner: String,
                      repository: String,
-                     number: Int) async throws -> PullRequest
-    {
+                     number: Int) async throws -> PullRequest {
         let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self)
     }
@@ -149,8 +147,7 @@ public extension Octokit {
                       state: Openness = .open,
                       sort: SortType = .created,
                       direction: SortDirection = .desc,
-                      completion: @escaping (_ response: Result<[PullRequest], Error>) -> Void) -> URLSessionDataTaskProtocol?
-    {
+                      completion: @escaping (_ response: Result<[PullRequest], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
@@ -182,8 +179,7 @@ public extension Octokit {
                       head: String? = nil,
                       state: Openness = .open,
                       sort: SortType = .created,
-                      direction: SortDirection = .desc) async throws -> [PullRequest]
-    {
+                      direction: SortDirection = .desc) async throws -> [PullRequest] {
         let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self)
     }
