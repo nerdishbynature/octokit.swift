@@ -16,3 +16,4 @@
 --disable wrapEnumCases 
 --disable numberFormatting
 --disable wrapMultilineStatementBraces
+--disable wrapSingleLineComments
