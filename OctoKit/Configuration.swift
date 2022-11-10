@@ -13,7 +13,7 @@ public struct TokenConfiguration: Configuration {
     public var apiEndpoint: String
     public var accessToken: String?
     public let errorDomain = OctoKitErrorDomain
-    public let authorizationHeader: String? = "Basic"
+    public var authorizationHeader: String? = "Basic"
 
     /// Custom `Accept` header for API previews.
     ///
