@@ -370,6 +370,18 @@ Octokit().pullRequests(owner: "octocat", repository: "Hello-World", base: "devel
 }
 ```
 
+### Update an exisiting Pull Request
+```swift
+Octokit().patchPullRequest(session, owner: "octocat", repository: "Hello-World", number: 1, title: "Updated title", body: "The updated body", state: .open, base: "base-branch", mantainerCanModify: true) { response in
+    switch response {
+        case .success(let pullrequest):
+        // do something with the pullrequest
+        case .failure:
+        // handle any errors
+    }
+}
+```
+
 ## Releases
 
 ### Create a new release
