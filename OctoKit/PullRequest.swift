@@ -184,6 +184,76 @@ public extension Octokit {
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self)
     }
     #endif
+
+    /**
+     Updates a pull request
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repository: The name of the repository.
+     - parameter number: The number of the PR to update.
+     - parameter title: The new tite of the PR
+     - parameter body: The new body of the PR
+     - parameter state: The new state of the PR
+     - parameter base: The new baseBranch of the PR
+     - parameter mantainerCanModify: The new baseBranch of the PR
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func patchPullRequest(_ session: RequestKitURLSession = URLSession.shared,
+                          owner: String,
+                          repository: String,
+                          number: Int,
+                          title: String,
+                          body: String,
+                          state: Openness,
+                          base: String?,
+                          mantainerCanModify _: Bool?,
+                          completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        guard state != .all else { fatalError("Openess.all is not supported as a setting") }
+        let router = PullRequestRouter.patchPullRequest(configuration, owner, repository, "\(number)", title, body, state, base, nil)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: PullRequest.self) { pullRequest, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                if let pullRequest = pullRequest {
+                    completion(.success(pullRequest))
+                }
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Updates a pull request
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repository: The name of the repository.
+     - parameter number: The number of the PR to update.
+     - parameter title: The new tite of the PR
+     - parameter body: The new body of the PR
+     - parameter state: The new state of the PR
+     - parameter base: The new baseBranch of the PR
+     - parameter mantainerCanModify: The new baseBranch of the PR
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func patchPullRequest(_ session: RequestKitURLSession = URLSession.shared,
+                          owner: String,
+                          repository: String,
+                          number: Int,
+                          title: String,
+                          body: String,
+                          state: Openness,
+                          base: String?,
+                          mantainerCanModify _: Bool?) async throws -> PullRequest {
+        guard state != .all else { fatalError("Openess.all is not supported as a setting") }
+        let router = PullRequestRouter.patchPullRequest(configuration, owner, repository, "\(number)", title, body, state, base, nil)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.self)
+    }
+    #endif
 }
 
 // MARK: Router
@@ -191,17 +261,22 @@ public extension Octokit {
 enum PullRequestRouter: JSONPostRouter {
     case readPullRequest(Configuration, String, String, String)
     case readPullRequests(Configuration, String, String, String?, String?, Openness, SortType, SortDirection)
+    case patchPullRequest(Configuration, String, String, String, String, String, Openness, String?, Bool?)
 
     var method: HTTPMethod {
         switch self {
         case .readPullRequest,
              .readPullRequests:
             return .GET
+        case .patchPullRequest:
+            return .PATCH
         }
     }
 
     var encoding: HTTPEncoding {
         switch self {
+        case .patchPullRequest:
+            return .json
         default:
             return .url
         }
@@ -211,6 +286,7 @@ enum PullRequestRouter: JSONPostRouter {
         switch self {
         case let .readPullRequest(config, _, _, _): return config
         case let .readPullRequests(config, _, _, _, _, _, _, _): return config
+        case let .patchPullRequest(config, _, _, _, _, _, _, _, _): return config
         }
     }
 
@@ -234,11 +310,26 @@ enum PullRequestRouter: JSONPostRouter {
             }
 
             return parameters
+        case let .patchPullRequest(_, _, _, _, title, body, state, base, mantainerCanModify):
+            var parameters = [
+                "title": title,
+                "state": state.rawValue,
+                "body": body
+            ]
+            if let base = base {
+                parameters["base"] = base
+            }
+            if let mantainerCanModify = mantainerCanModify {
+                parameters["maintainer_can_modify"] = (mantainerCanModify ? "true" : "false")
+            }
+            return parameters
         }
     }
 
     var path: String {
         switch self {
+        case let .patchPullRequest(_, owner, repository, number, _, _, _, _, _):
+            return "repos/\(owner)/\(repository)/pulls/\(number)"
         case let .readPullRequest(_, owner, repository, number):
             return "repos/\(owner)/\(repository)/pulls/\(number)"
         case let .readPullRequests(_, owner, repository, _, _, _, _, _):
