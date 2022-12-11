@@ -1,12 +1,12 @@
 {
-    "total_count": 13,
-    "+1": 3,
-    "-1": 1,
-    "laugh": 0,
-    "confused": 0,
-    "heart": 1,
-    "hooray": 0,
-    "rocket": 6,
-    "eyes": 2,
-    "url": "https://api.github.com/repos/octocat/Hello-World/issues/1347/reactions"
+  "-1" : 1,
+  "+1" : 3,
+  "confused" : 0,
+  "eyes" : 2,
+  "heart" : 1,
+  "hooray" : 0,
+  "laugh" : 0,
+  "rocket" : 6,
+  "total_count" : 13,
+  "url" : "https:\/\/api.github.com\/repos\/octocat\/Hello-World\/issues\/1347\/reactions"
 }
