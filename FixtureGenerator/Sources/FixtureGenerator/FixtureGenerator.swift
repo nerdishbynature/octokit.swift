@@ -16,6 +16,7 @@ public struct FixtureGenerator: AsyncParsableCommand {
             Review.self,
             Star.self,
             Status.self,
+            User.self,
             Gist.self,
             SortedJSONKeys.self,
             GenerateAllFixtures.self
