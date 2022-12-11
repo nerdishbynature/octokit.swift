@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
 //

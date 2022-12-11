@@ -1,26 +1,26 @@
-import RequestKit
 import Foundation
+import RequestKit
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
 
 final class FixtureURLSession: RequestKitURLSession {
     private let session: URLSession
-    private(set) var usedURL: URL? = nil
-    private(set) var usedHTTPMethod: String? = nil
-    private(set) var usedHTTPHeaders: [String: String]? = nil
-    private(set) var response: String? = nil
+    private(set) var usedURL: URL?
+    private(set) var usedHTTPMethod: String?
+    private(set) var usedHTTPHeaders: [String: String]?
+    private(set) var response: String?
 
     init(session: URLSession = .shared) {
         self.session = session
     }
 
-    func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
+    func dataTask(with request: URLRequest, completionHandler _: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
         usedURL = request.url
         usedHTTPMethod = request.httpMethod
         usedHTTPHeaders = request.allHTTPHeaderFields
 
-        let task = session.dataTask(with: request) { data, response, error in
+        let task = session.dataTask(with: request) { data, _, _ in
             if let data = data {
                 self.response = String(data: data, encoding: .utf8)
             }
@@ -29,12 +29,12 @@ final class FixtureURLSession: RequestKitURLSession {
         return task
     }
 
-    func uploadTask(with request: URLRequest, fromData data: Data?, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
+    func uploadTask(with request: URLRequest, fromData data: Data?, completionHandler _: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
         usedURL = request.url
         usedHTTPMethod = request.httpMethod
         usedHTTPHeaders = request.allHTTPHeaderFields
 
-        let task = session.uploadTask(with: request, fromData: data) { data, response, error in
+        let task = session.uploadTask(with: request, fromData: data) { data, _, _ in
             if let data = data {
                 self.response = String(data: data, encoding: .utf8)
             }
@@ -46,9 +46,9 @@ final class FixtureURLSession: RequestKitURLSession {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func data(for request: URLRequest, delegate _: URLSessionTaskDelegate?) async throws -> (Data, URLResponse) {
-        self.usedURL = request.url
-        self.usedHTTPMethod = request.httpMethod
-        self.usedHTTPHeaders = request.allHTTPHeaderFields
+        usedURL = request.url
+        usedHTTPMethod = request.httpMethod
+        usedHTTPHeaders = request.allHTTPHeaderFields
 
         let response = try await session.data(for: request)
         self.response = String(data: response.0, encoding: .utf8)

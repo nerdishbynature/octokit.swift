@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
 //
@@ -8,7 +8,6 @@
 import ArgumentParser
 import Foundation
 import Rainbow
-
 
 @available(macOS 12.0, *)
 struct GenerateAllFixtures: AsyncParsableCommand {

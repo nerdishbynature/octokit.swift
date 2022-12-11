@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
 //
@@ -11,9 +11,7 @@ import Rainbow
 
 @available(macOS 12.0, *)
 struct SortedJSONKeys: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(
-        abstract: "Sorting Keys in JSON"
-    )
+    public static let configuration = CommandConfiguration(abstract: "Sorting Keys in JSON")
 
     @Argument(help: "The file path to sort the JSON Content")
     var filePaths: [String]

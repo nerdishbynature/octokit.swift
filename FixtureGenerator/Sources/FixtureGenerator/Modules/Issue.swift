@@ -1,24 +1,22 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
 //
 
 import ArgumentParser
 import Foundation
-import Rainbow
 import OctoKit
+import Rainbow
 
 @available(macOS 12.0, *)
 struct Issue: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(
-        abstract: "Operate on Issues",
-        subcommands: [
-            Get.self,
-            GetList.self
-        ]
-    )
+    public static let configuration = CommandConfiguration(abstract: "Operate on Issues",
+                                                           subcommands: [
+                                                               Get.self,
+                                                               GetList.self
+                                                           ])
 
     init() {}
 }

@@ -1,23 +1,21 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
 //
 
 import ArgumentParser
 import Foundation
-import Rainbow
 import OctoKit
+import Rainbow
 
 @available(macOS 12.0, *)
 struct Review: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(
-        abstract: "Operate on Reviews",
-        subcommands: [
-            GetList.self
-        ]
-    )
+    public static let configuration = CommandConfiguration(abstract: "Operate on Reviews",
+                                                           subcommands: [
+                                                               GetList.self
+                                                           ])
 
     init() {}
 }
@@ -51,4 +49,3 @@ extension Review {
         }
     }
 }
-
