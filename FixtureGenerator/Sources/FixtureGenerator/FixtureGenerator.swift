@@ -11,6 +11,7 @@ public struct FixtureGenerator: AsyncParsableCommand {
             Repository.self,
             Follower.self,
             Label.self,
+            PullRequest.self,
             Gist.self,
             SortedJSONKeys.self,
             GenerateAllFixtures.self
