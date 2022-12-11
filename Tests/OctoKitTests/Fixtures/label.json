@@ -1,8 +1,8 @@
 {
-    "id": 107942188,
-    "node_id": "MDU6TGFiZWwxMDc5NDIxODg=",
-    "url": "https://api.github.com/repos/octocat/hello-worId/labels/bug",
-    "name": "bug",
-    "color": "fc2929",
-    "default": true
+  "color" : "fc2929",
+  "default" : true,
+  "id" : 107942188,
+  "name" : "bug",
+  "node_id" : "MDU6TGFiZWwxMDc5NDIxODg=",
+  "url" : "https:\/\/api.github.com\/repos\/octocat\/hello-worId\/labels\/bug"
 }
