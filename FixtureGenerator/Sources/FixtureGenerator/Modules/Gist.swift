@@ -27,10 +27,10 @@ struct Gist: AsyncParsableCommand {
 extension Gist {
     struct Get: AsyncParsableCommand {
         @Argument(help: "The id of the gist")
-        private var id: String
+        var id: String
 
         @Argument(help: "The path to put the file in")
-        private var filePath: String?
+        var filePath: String?
 
         init() {}
 
@@ -56,10 +56,10 @@ extension Gist {
 extension Gist {
     struct GetList: AsyncParsableCommand {
         @Argument(help: "The id of the gist")
-        private var owner: String
+        var owner: String
 
         @Argument(help: "The path to put the file in")
-        private var filePath: String?
+        var filePath: String?
 
         init() {}
 
