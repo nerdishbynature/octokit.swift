@@ -46,9 +46,9 @@ final class FixtureURLSession: RequestKitURLSession {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func data(for request: URLRequest, delegate _: URLSessionTaskDelegate?) async throws -> (Data, URLResponse) {
-        usedURL = request.url
-        usedHTTPMethod = request.httpMethod
-        usedHTTPHeaders = request.allHTTPHeaderFields
+        self.usedURL = request.url
+        self.usedHTTPMethod = request.httpMethod
+        self.usedHTTPHeaders = request.allHTTPHeaderFields
 
         let response = try await session.data(for: request)
         self.response = String(data: response.0, encoding: .utf8)
@@ -68,4 +68,33 @@ final class FixtureURLSession: RequestKitURLSession {
         return response
     }
     #endif
+}
+
+extension FixtureURLSession {
+    var verbose: String? {
+        guard let usedURL, let usedHTTPMethod else {
+            return "No URL or HTTPMethod".red
+        }
+
+        return "\(usedHTTPMethod) \(usedURL)".yellow
+    }
+
+    func printResponseToFileOrConsole(filePath: String?) throws {
+        if let response, let prettyPrinted = response.prettyPrintedJSONString {
+            if let filePath {
+                try prettyPrinted.write(toFile: filePath, atomically: true, encoding: .utf8)
+                print("Put file to \(filePath)".green)
+            } else {
+                print(prettyPrinted.blue)
+            }
+        } else {
+            print("Received no response.".red)
+        }
+    }
+
+    func verbosePrint(verbose: Bool) {
+        if verbose, let verboseString = self.verbose {
+            print(verboseString)
+        }
+    }
 }

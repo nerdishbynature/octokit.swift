@@ -11,7 +11,7 @@ import Rainbow
 import OctoKit
 
 @available(macOS 12.0, *)
-struct Gist: AsyncParsableCommand {
+struct Issue: AsyncParsableCommand {
     public static let configuration = CommandConfiguration(
         abstract: "Operate on Gists",
         subcommands: [
@@ -24,10 +24,16 @@ struct Gist: AsyncParsableCommand {
 }
 
 @available(macOS 12.0, *)
-extension Gist {
+extension Issue {
     struct Get: AsyncParsableCommand {
-        @Argument(help: "The id of the gist")
-        var id: String
+        @Argument(help: "The owner of the repository")
+        var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
+
+        @Argument(help: "The number of the issue")
+        var number: Int
 
         @Argument(help: "The path to put the file in")
         var filePath: String?
@@ -40,18 +46,18 @@ extension Gist {
         mutating func run() async throws {
             let octokit = Octokit()
             let session = FixtureURLSession()
-            _ = try await octokit.gist(session, id: id)
+            _ = try await octokit.issue(session, owner: owner, repository: repository, number: number)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
     }
-}
 
-@available(macOS 12.0, *)
-extension Gist {
     struct GetList: AsyncParsableCommand {
-        @Argument(help: "The owner of the gists")
+        @Argument(help: "The owner of the repository")
         var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
 
         @Argument(help: "The path to put the file in")
         var filePath: String?
@@ -64,7 +70,7 @@ extension Gist {
         mutating func run() async throws {
             let octokit = Octokit()
             let session = FixtureURLSession()
-            _ = try await octokit.gists(session, owner: owner)
+            _ = try await octokit.issues(session, owner: owner, repository: repository)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
