@@ -8,6 +8,7 @@ public struct FixtureGenerator: AsyncParsableCommand {
         abstract: "A command-line tool to generate stubs",
         subcommands: [
             Issue.self,
+            Repository.self,
             Gist.self,
             SortedJSONKeys.self,
             GenerateAllFixtures.self
