@@ -9,6 +9,7 @@ public struct FixtureGenerator: AsyncParsableCommand {
         subcommands: [
             Issue.self,
             Repository.self,
+            Follower.self,
             Gist.self,
             SortedJSONKeys.self,
             GenerateAllFixtures.self
