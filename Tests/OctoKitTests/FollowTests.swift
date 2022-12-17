@@ -7,7 +7,7 @@ class FollowTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "users", statusCode: 200)
-        let task = Octokit(config).myFollowers(session) { response in
+        let task = Octokit(config, session: session).myFollowers { response in
             switch response {
             case let .success(users):
                 XCTAssertEqual(users.count, 1)
@@ -26,7 +26,7 @@ class FollowTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/followers", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "users", statusCode: 200)
-        let users = try await Octokit(config).myFollowers(session)
+        let users = try await Octokit(config, session: session).myFollowers()
         XCTAssertEqual(users.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
@@ -34,7 +34,7 @@ class FollowTests: XCTestCase {
 
     func testGetUsersFollowers() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/followers", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
-        let task = Octokit().followers(session, name: "octocat") { response in
+        let task = Octokit(session: session).followers(name: "octocat") { response in
             switch response {
             case let .success(users):
                 XCTAssertEqual(users.count, 1)
@@ -50,7 +50,7 @@ class FollowTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetUsersFollowersAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/followers", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
-        let users = try await Octokit().followers(session, name: "octocat")
+        let users = try await Octokit(session: session).followers(name: "octocat")
         XCTAssertEqual(users.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
@@ -61,7 +61,7 @@ class FollowTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "users", statusCode: 200)
-        let task = Octokit(config).myFollowing(session) { response in
+        let task = Octokit(config, session: session).myFollowing { response in
             switch response {
             case let .success(users):
                 XCTAssertEqual(users.count, 1)
@@ -80,7 +80,7 @@ class FollowTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/following", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "users", statusCode: 200)
-        let users = try await Octokit(config).myFollowing(session)
+        let users = try await Octokit(config, session: session).myFollowing()
         XCTAssertEqual(users.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
@@ -88,7 +88,7 @@ class FollowTests: XCTestCase {
 
     func testGetUsersFollowing() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
-        let task = Octokit().following(session, name: "octocat") { response in
+        let task = Octokit(session: session).following(name: "octocat") { response in
             switch response {
             case let .success(users):
                 XCTAssertEqual(users.count, 1)
@@ -104,7 +104,7 @@ class FollowTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetUsersFollowingAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/following", expectedHTTPMethod: "GET", jsonFile: "users", statusCode: 200)
-        let users = try await Octokit().following(session, name: "octocat")
+        let users = try await Octokit(session: session).following(name: "octocat")
         XCTAssertEqual(users.count, 1)
         XCTAssertTrue(session.wasCalled)
     }

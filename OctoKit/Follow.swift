@@ -7,11 +7,10 @@ import FoundationNetworking
 public extension Octokit {
     /**
          Fetches the followers of the authenticated user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myFollowers(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myFollowers(completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
@@ -27,10 +26,9 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the followers of the authenticated user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func myFollowers(_ session: RequestKitURLSession = URLSession.shared) async throws -> [User] {
+    func myFollowers() async throws -> [User] {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self)
     }
@@ -38,12 +36,11 @@ public extension Octokit {
 
     /**
          Fetches the followers of a user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: Name of the user
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func followers(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+    func followers(name: String, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowers(name, configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
@@ -59,11 +56,10 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the followers of a user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: Name of the user
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func followers(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> [User] {
+    func followers(name: String) async throws -> [User] {
         let router = FollowRouter.readFollowers(name, configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self)
     }
@@ -71,11 +67,10 @@ public extension Octokit {
 
     /**
          Fetches the users following the authenticated user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myFollowing(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myFollowing(completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
@@ -91,10 +86,9 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the users following the authenticated user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func myFollowing(_ session: RequestKitURLSession = URLSession.shared) async throws -> [User] {
+    func myFollowing() async throws -> [User] {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self)
     }
@@ -102,12 +96,11 @@ public extension Octokit {
 
     /**
          Fetches the users following a user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: The name of the user
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func following(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+    func following(name: String, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowing(name, configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
             if let error = error {
@@ -123,11 +116,10 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Fetches the users following a user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter name: The name of the user
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func following(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> [User] {
+    func following(name: String) async throws -> [User] {
         let router = FollowRouter.readFollowing(name, configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self)
     }

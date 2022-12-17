@@ -92,13 +92,12 @@ open class User: Codable {
 
 public extension Octokit {
     /**
-         Fetches a user or organization
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
-         - parameter name: The name of the user or organization.
-         - parameter completion: Callback for the outcome of the fetch.
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func user(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+    func user(name: String, completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readUser(name, configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self) { user, error in
             if let error = error {
@@ -113,24 +112,22 @@ public extension Octokit {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-         Fetches a user or organization
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
-         - parameter name: The name of the user or organization.
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func user(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> User {
+    func user(name: String) async throws -> User {
         let router = UserRouter.readUser(name, configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self)
     }
     #endif
 
     /**
-         Fetches the authenticated user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
-         - parameter completion: Callback for the outcome of the fetch.
+     Fetches the authenticated user
+     - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func me(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+    func me(completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readAuthenticatedUser(configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self) { user, error in
             if let error = error {
@@ -145,11 +142,10 @@ public extension Octokit {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-         Fetches the authenticated user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     Fetches the authenticated user
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func me(_ session: RequestKitURLSession = URLSession.shared) async throws -> User {
+    func me() async throws -> User {
         let router = UserRouter.readAuthenticatedUser(configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self)
     }

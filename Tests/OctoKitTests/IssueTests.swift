@@ -13,7 +13,7 @@ class IssueTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "issues",
                                             statusCode: 200)
-        let task = Octokit(config).myIssues(session) { response in
+        let task = Octokit(config, session: session).myIssues { response in
             switch response {
             case let .success(issues):
                 XCTAssertEqual(issues.count, 1)
@@ -36,7 +36,7 @@ class IssueTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "issues",
                                             statusCode: 200)
-        let issues = try await Octokit(config).myIssues(session)
+        let issues = try await Octokit(config, session: session).myIssues()
         XCTAssertEqual(issues.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
@@ -44,7 +44,7 @@ class IssueTests: XCTestCase {
 
     func testGetIssue() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1347", expectedHTTPMethod: "GET", jsonFile: "issue", statusCode: 200)
-        let task = Octokit().issue(session, owner: "octocat", repository: "Hello-World", number: 1347) { response in
+        let task = Octokit(session: session).issue(owner: "octocat", repository: "Hello-World", number: 1347) { response in
             switch response {
             case let .success(issue):
                 XCTAssertEqual(issue.number, 1347)
@@ -60,7 +60,7 @@ class IssueTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetIssueAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1347", expectedHTTPMethod: "GET", jsonFile: "issue", statusCode: 200)
-        let issue = try await Octokit().issue(session, owner: "octocat", repository: "Hello-World", number: 1347)
+        let issue = try await Octokit(session: session).issue(owner: "octocat", repository: "Hello-World", number: 1347)
         XCTAssertEqual(issue.number, 1347)
         XCTAssertTrue(session.wasCalled)
     }
@@ -68,7 +68,7 @@ class IssueTests: XCTestCase {
 
     func testPostIssue() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues", expectedHTTPMethod: "POST", jsonFile: "issue2", statusCode: 200)
-        let task = Octokit().postIssue(session, owner: "octocat", repository: "Hello-World", title: "Title", body: "Body") { response in
+        let task = Octokit(session: session).postIssue(owner: "octocat", repository: "Hello-World", title: "Title", body: "Body") { response in
             switch response {
             case let .success(issue):
                 XCTAssertEqual(issue.number, 36)
@@ -84,7 +84,7 @@ class IssueTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testPostIssueAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues", expectedHTTPMethod: "POST", jsonFile: "issue2", statusCode: 200)
-        let issue = try await Octokit().postIssue(session, owner: "octocat", repository: "Hello-World", title: "Title", body: "Body")
+        let issue = try await Octokit(session: session).postIssue(owner: "octocat", repository: "Hello-World", title: "Title", body: "Body")
         XCTAssertEqual(issue.number, 36)
         XCTAssertTrue(session.wasCalled)
     }
@@ -92,7 +92,7 @@ class IssueTests: XCTestCase {
 
     func testPostComment() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1/comments", expectedHTTPMethod: "POST", jsonFile: "issue_comment", statusCode: 201)
-        let task = Octokit().commentIssue(session, owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
+        let task = Octokit(session: session).commentIssue(owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
             switch response {
             case let .success(comment):
                 XCTAssertEqual(comment.body, "Testing a comment")
@@ -111,7 +111,7 @@ class IssueTests: XCTestCase {
                                             expectedHTTPMethod: "POST",
                                             jsonFile: "issue_comment",
                                             statusCode: 201)
-        let comment = try await Octokit().commentIssue(session, owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment")
+        let comment = try await Octokit(session: session).commentIssue(owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment")
         XCTAssertEqual(comment.body, "Testing a comment")
         XCTAssertTrue(session.wasCalled)
     }
@@ -122,7 +122,7 @@ class IssueTests: XCTestCase {
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "issue_comments",
                                             statusCode: 200)
-        let task = Octokit().issueComments(session, owner: "octocat", repository: "Hello-World", number: 1) { response in
+        let task = Octokit(session: session).issueComments(owner: "octocat", repository: "Hello-World", number: 1) { response in
             switch response {
             case let .success(comments):
                 XCTAssertEqual(comments.count, 1)
@@ -143,7 +143,7 @@ class IssueTests: XCTestCase {
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "issue_comments",
                                             statusCode: 200)
-        let comments = try await Octokit().issueComments(session, owner: "octocat", repository: "Hello-World", number: 1)
+        let comments = try await Octokit(session: session).issueComments(owner: "octocat", repository: "Hello-World", number: 1)
         XCTAssertEqual(comments.count, 1)
         XCTAssertEqual(comments[0].body, "Testing fetching comments for an issue")
         XCTAssertEqual(comments[0].reactions!.totalCount, 5)
@@ -153,7 +153,7 @@ class IssueTests: XCTestCase {
 
     func testPatchComment() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/comments/1", expectedHTTPMethod: "POST", jsonFile: "issue_comment", statusCode: 201)
-        let task = Octokit().patchIssueComment(session, owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
+        let task = Octokit(session: session).patchIssueComment(owner: "octocat", repository: "Hello-World", number: 1, body: "Testing a comment") { response in
             switch response {
             case let .success(comment):
                 XCTAssertEqual(comment.body, "Testing a comment")

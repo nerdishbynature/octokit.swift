@@ -8,7 +8,7 @@ class PullRequestTests: XCTestCase {
                                             jsonFile: "pull_request",
                                             statusCode: 200)
 
-        let task = Octokit().pullRequest(session, owner: "octocat", repository: "Hello-World", number: 1) { response in
+        let task = Octokit(session: session).pullRequest(owner: "octocat", repository: "Hello-World", number: 1) { response in
             switch response {
             case let .success(pullRequests):
                 XCTAssertEqual(pullRequests.id, 1)
@@ -46,7 +46,7 @@ class PullRequestTests: XCTestCase {
                                             jsonFile: "pull_request",
                                             statusCode: 200)
 
-        let pullRequest = try await Octokit().pullRequest(session, owner: "octocat", repository: "Hello-World", number: 1)
+        let pullRequest = try await Octokit(session: session).pullRequest(owner: "octocat", repository: "Hello-World", number: 1)
         XCTAssertEqual(pullRequest.id, 1)
         XCTAssertEqual(pullRequest.title, "new-feature")
         XCTAssertEqual(pullRequest.body, "Please pull these awesome changes")
@@ -73,12 +73,12 @@ class PullRequestTests: XCTestCase {
     func testGetPullRequests() {
         // Test filtering with on the base branch
 
-        let baseSession = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?base=develop&direction=desc&sort=created&state=open",
-                                                expectedHTTPMethod: "GET",
-                                                jsonFile: "pull_requests",
-                                                statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?base=develop&direction=desc&sort=created&state=open",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_requests",
+                                            statusCode: 200)
 
-        let baseTask = Octokit().pullRequests(baseSession, owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.open) { response in
+        let task = Octokit(session: session).pullRequests(owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.open) { response in
             switch response {
             case let .success(pullRequests):
                 XCTAssertEqual(pullRequests.count, 1)
@@ -104,20 +104,20 @@ class PullRequestTests: XCTestCase {
                 XCTAssertNil(error)
             }
         }
-        XCTAssertNotNil(baseTask)
-        XCTAssertTrue(baseSession.wasCalled)
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
     }
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetPullRequestsAsync() async throws {
         // Test filtering with on the base branch
-        let baseSession = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?base=develop&direction=desc&sort=created&state=open",
-                                                expectedHTTPMethod: "GET",
-                                                jsonFile: "pull_requests",
-                                                statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?base=develop&direction=desc&sort=created&state=open",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_requests",
+                                            statusCode: 200)
 
-        let pullRequests = try await Octokit().pullRequests(baseSession, owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.open)
+        let pullRequests = try await Octokit(session: session).pullRequests(owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.open)
         XCTAssertEqual(pullRequests.count, 1)
         XCTAssertEqual(pullRequests.first?.title, "new-feature")
         XCTAssertEqual(pullRequests.first?.body, "Please pull these awesome changes")
@@ -137,18 +137,18 @@ class PullRequestTests: XCTestCase {
         XCTAssertEqual(pullRequests.first?.head?.repo?.name, "Hello-World")
         XCTAssertEqual(pullRequests.first?.requestedReviewers?[0].login, "octocat")
         XCTAssertEqual(pullRequests.first?.draft, false)
-        XCTAssertTrue(baseSession.wasCalled)
+        XCTAssertTrue(session.wasCalled)
     }
     #endif
 
     func testGetPullRequestWithHead() {
         // Test filtering with on the head branch
-        let headSession = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?direction=desc&head=octocat%3Anew-topic&sort=created&state=open",
-                                                expectedHTTPMethod: "GET",
-                                                jsonFile: "pull_requests",
-                                                statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?direction=desc&head=octocat%3Anew-topic&sort=created&state=open",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_requests",
+                                            statusCode: 200)
 
-        let headTask = Octokit().pullRequests(headSession, owner: "octocat", repository: "Hello-World", head: "octocat:new-topic", state: Openness.open) { response in
+        let task = Octokit(session: session).pullRequests(owner: "octocat", repository: "Hello-World", head: "octocat:new-topic", state: Openness.open) { response in
             switch response {
             case let .success(pullRequests):
                 XCTAssertEqual(pullRequests.count, 1)
@@ -174,20 +174,20 @@ class PullRequestTests: XCTestCase {
                 XCTAssertNil(error)
             }
         }
-        XCTAssertNotNil(headTask)
-        XCTAssertTrue(headSession.wasCalled)
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
     }
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetPullRequestsWithHeadAsync() async throws {
         // Test filtering with on the head branch
-        let headSession = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?direction=desc&head=octocat%3Anew-topic&sort=created&state=open",
-                                                expectedHTTPMethod: "GET",
-                                                jsonFile: "pull_requests",
-                                                statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?direction=desc&head=octocat%3Anew-topic&sort=created&state=open",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_requests",
+                                            statusCode: 200)
 
-        let pullRequests = try await Octokit().pullRequests(headSession, owner: "octocat", repository: "Hello-World", head: "octocat:new-topic", state: Openness.open)
+        let pullRequests = try await Octokit(session: session).pullRequests(owner: "octocat", repository: "Hello-World", head: "octocat:new-topic", state: Openness.open)
         XCTAssertEqual(pullRequests.count, 1)
         XCTAssertEqual(pullRequests.first?.title, "new-feature")
         XCTAssertEqual(pullRequests.first?.body, "Please pull these awesome changes")
@@ -207,7 +207,7 @@ class PullRequestTests: XCTestCase {
         XCTAssertEqual(pullRequests.first?.head?.repo?.name, "Hello-World")
         XCTAssertEqual(pullRequests.first?.requestedReviewers?[0].login, "octocat")
         XCTAssertEqual(pullRequests.first?.draft, false)
-        XCTAssertTrue(headSession.wasCalled)
+        XCTAssertTrue(session.wasCalled)
     }
     #endif
 
@@ -217,8 +217,8 @@ class PullRequestTests: XCTestCase {
                                             jsonFile: "pull_request",
                                             statusCode: 200)
 
-        let task = Octokit()
-            .patchPullRequest(session, owner: "octocat", repository: "Hello-World", number: 1, title: "new-title", body: "new-body", state: .open, base: "base-branch",
+        let task = Octokit(session: session)
+            .patchPullRequest(owner: "octocat", repository: "Hello-World", number: 1, title: "new-title", body: "new-body", state: .open, base: "base-branch",
                               mantainerCanModify: true) { response in
                 switch response {
                 case let .success(pullrequest):
@@ -257,8 +257,8 @@ class PullRequestTests: XCTestCase {
                                             jsonFile: "pull_request",
                                             statusCode: 200)
 
-        let pullrequest = try await Octokit()
-            .patchPullRequest(session, owner: "octocat", repository: "Hello-World", number: 1, title: "new-title", body: "new-body", state: .open, base: "base-branch", mantainerCanModify: true)
+        let pullrequest = try await Octokit(session: session)
+            .patchPullRequest(owner: "octocat", repository: "Hello-World", number: 1, title: "new-title", body: "new-body", state: .open, base: "base-branch", mantainerCanModify: true)
 
         XCTAssertEqual(pullrequest.id, 1)
         XCTAssertEqual(pullrequest.title, "new-feature")
@@ -289,15 +289,14 @@ class PullRequestTests: XCTestCase {
                                             jsonFile: "created_pull_request",
                                             statusCode: 200)
 
-        let task = Octokit().createPullRequest(session,
-                                               owner: "octocat",
-                                               repo: "Hello-World",
-                                               title: "Amazing new feature",
-                                               head: "octocat:new-feature",
-                                               base: "master",
-                                               body: "Please pull these awesome changes in!",
-                                               maintainerCanModify: true,
-                                               draft: false) { response in
+        let task = Octokit(session: session).createPullRequest(owner: "octocat",
+                                                               repo: "Hello-World",
+                                                               title: "Amazing new feature",
+                                                               head: "octocat:new-feature",
+                                                               base: "master",
+                                                               body: "Please pull these awesome changes in!",
+                                                               maintainerCanModify: true,
+                                                               draft: false) { response in
             switch response {
             case let .success(pullRequest):
                 XCTAssertEqual(pullRequest.id, 1)
@@ -335,9 +334,8 @@ class PullRequestTests: XCTestCase {
                                             jsonFile: "created_pull_request",
                                             statusCode: 200)
 
-        let pullRequest = try await Octokit()
-            .createPullRequest(session,
-                               owner: "octocat",
+        let pullRequest = try await Octokit(session: session)
+            .createPullRequest(owner: "octocat",
                                repo: "Hello-World",
                                title: "Amazing new feature",
                                head: "octocat:new-feature",

@@ -85,7 +85,6 @@ open class PullRequest: Codable {
 public extension Octokit {
     /**
      Create a pull request
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repo: The name of the repository.
      - parameter title: The title of the new pull request.
@@ -98,8 +97,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func createPullRequest(_ session: RequestKitURLSession = URLSession.shared,
-                           owner: String,
+    func createPullRequest(owner: String,
                            repo: String,
                            title: String,
                            head: String,
@@ -126,7 +124,6 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Create a pull request
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repo: The name of the repository.
      - parameter title: The title of the new pull request.
@@ -139,8 +136,7 @@ public extension Octokit {
      - Returns: A PullRequest
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func createPullRequest(_ session: RequestKitURLSession = URLSession.shared,
-                           owner: String,
+    func createPullRequest(owner: String,
                            repo: String,
                            title: String,
                            head: String,
@@ -158,15 +154,13 @@ public extension Octokit {
 
     /**
      Get a single pull request
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repository: The name of the repository.
      - parameter number: The number of the PR to fetch.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
-                     owner: String,
+    func pullRequest(owner: String,
                      repository: String,
                      number: Int,
                      completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
@@ -185,14 +179,12 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Get a single pull request
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repository: The name of the repository.
      - parameter number: The number of the PR to fetch.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
-                     owner: String,
+    func pullRequest(owner: String,
                      repository: String,
                      number: Int) async throws -> PullRequest {
         let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
@@ -202,7 +194,6 @@ public extension Octokit {
 
     /**
      Get a list of pull requests
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repository: The name of the repository.
      - parameter base: Filter pulls by base branch name.
@@ -212,8 +203,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
-                      owner: String,
+    func pullRequests(owner: String,
                       repository: String,
                       base: String? = nil,
                       head: String? = nil,
@@ -236,7 +226,6 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Get a list of pull requests
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repository: The name of the repository.
      - parameter base: Filter pulls by base branch name.
@@ -245,8 +234,7 @@ public extension Octokit {
      - parameter direction: The direction of the sort.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
-                      owner: String,
+    func pullRequests(owner: String,
                       repository: String,
                       base: String? = nil,
                       head: String? = nil,
@@ -260,7 +248,6 @@ public extension Octokit {
 
     /**
      Updates a pull request
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repository: The name of the repository.
      - parameter number: The number of the PR to update.
@@ -272,8 +259,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func patchPullRequest(_ session: RequestKitURLSession = URLSession.shared,
-                          owner: String,
+    func patchPullRequest(owner: String,
                           repository: String,
                           number: Int,
                           title: String,
@@ -300,7 +286,6 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Updates a pull request
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
      - parameter repository: The name of the repository.
      - parameter number: The number of the PR to update.
@@ -311,8 +296,7 @@ public extension Octokit {
      - parameter mantainerCanModify: The new baseBranch of the PR
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func patchPullRequest(_ session: RequestKitURLSession = URLSession.shared,
-                          owner: String,
+    func patchPullRequest(owner: String,
                           repository: String,
                           number: Int,
                           title: String,

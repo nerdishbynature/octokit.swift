@@ -39,9 +39,9 @@ extension Repository {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.repository(session, owner: owner, name: name)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.repository(owner: owner, name: name)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
@@ -60,9 +60,9 @@ extension Repository {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.repositories(session, owner: owner)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.repositories(owner: owner)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

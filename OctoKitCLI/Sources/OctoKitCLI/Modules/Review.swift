@@ -41,9 +41,9 @@ extension Review {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.reviews(session, owner: owner, repository: repository, pullRequestNumber: number)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.reviews(owner: owner, repository: repository, pullRequestNumber: number)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

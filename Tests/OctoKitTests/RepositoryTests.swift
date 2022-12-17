@@ -6,7 +6,7 @@ class RepositoryTests: XCTestCase {
 
     func testGetRepositories() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/repos?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
-        let task = Octokit().repositories(session, owner: "octocat") { response in
+        let task = Octokit(session: session).repositories(owner: "octocat") { response in
             switch response {
             case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
@@ -24,7 +24,7 @@ class RepositoryTests: XCTestCase {
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "user_repos",
                                             statusCode: 200)
-        let task = Octokit(config).repositories(session, owner: "octocat") { response in
+        let task = Octokit(config, session: session).repositories(owner: "octocat") { response in
             switch response {
             case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
@@ -45,7 +45,7 @@ class RepositoryTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "user_repos",
                                             statusCode: 200)
-        let task = Octokit(config).repositories(session) { response in
+        let task = Octokit(config, session: session).repositories { response in
             switch response {
             case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
@@ -66,7 +66,7 @@ class RepositoryTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "user_repos",
                                             statusCode: 200)
-        let task = Octokit(config).repositories(session) { response in
+        let task = Octokit(config, session: session).repositories { response in
             switch response {
             case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
@@ -88,7 +88,7 @@ class RepositoryTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             response: json,
                                             statusCode: 401)
-        let task = Octokit(config).repositories(session) { response in
+        let task = Octokit(config, session: session).repositories { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve repositories")
@@ -105,7 +105,7 @@ class RepositoryTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetRepositoriesAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/repos?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
-        let repositories = try await Octokit().repositories(session, owner: "octocat")
+        let repositories = try await Octokit(session: session).repositories(owner: "octocat")
         XCTAssertEqual(repositories.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
@@ -114,7 +114,7 @@ class RepositoryTests: XCTestCase {
     func testGetRepository() {
         let (owner, name) = ("mietzmithut", "Test")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
-        let task = Octokit().repository(session, owner: owner, name: name) { response in
+        let task = Octokit(session: session).repository(owner: owner, name: name) { response in
             switch response {
             case let .success(repo):
                 XCTAssertEqual(repo.name, name)
@@ -131,7 +131,7 @@ class RepositoryTests: XCTestCase {
         let config = TokenConfiguration(url: "https://enterprise.nerdishbynature.com/api/v3/")
         let (owner, name) = ("mietzmithut", "Test")
         let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
-        let task = Octokit(config).repository(session, owner: owner, name: name) { response in
+        let task = Octokit(config, session: session).repository(owner: owner, name: name) { response in
             switch response {
             case let .success(repo):
                 XCTAssertEqual(repo.name, name)
@@ -147,7 +147,7 @@ class RepositoryTests: XCTestCase {
     func testFailToGetRepository() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
         let (owner, name) = ("mietzmithut", "Test")
-        let task = Octokit().repository(session, owner: owner, name: name) { response in
+        let task = Octokit(session: session).repository(owner: owner, name: name) { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve repositories")
@@ -165,7 +165,7 @@ class RepositoryTests: XCTestCase {
     func testGetRepositoryAsync() async throws {
         let (owner, name) = ("mietzmithut", "Test")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
-        let repo = try await Octokit().repository(session, owner: owner, name: name)
+        let repo = try await Octokit(session: session).repository(owner: owner, name: name)
         XCTAssertEqual(repo.name, name)
         XCTAssertEqual(repo.owner.login, owner)
         XCTAssertTrue(session.wasCalled)

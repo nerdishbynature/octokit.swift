@@ -35,9 +35,9 @@ extension Star {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.stars(session, name: name)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.stars(name: name)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

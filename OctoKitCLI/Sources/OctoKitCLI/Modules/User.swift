@@ -35,9 +35,9 @@ extension User {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.user(session, name: name)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.user(name: name)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
