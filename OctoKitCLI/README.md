@@ -1,8 +1,8 @@
 # OctoKit CLI
 
-OVERVIEW: A command-line tool to generate stubs
+OVERVIEW: A command-line tool for GitHub using octokit.swift
 
-USAGE: fixture-generator <subcommand>
+USAGE: octokit-cli <subcommand>
 
 OPTIONS:
   -h, --help              Show help information.
@@ -20,6 +20,5 @@ SUBCOMMANDS:
   user                    Operate on Users
   gist                    Operate on Gists
   sorted-json-keys        Sorting Keys in JSON
-  generate-all-fixtures   Generates all fixtures
 
-  See 'fixture-generator help <subcommand>' for detailed help.
+  See 'octokit-cli help <subcommand>' for detailed help.
