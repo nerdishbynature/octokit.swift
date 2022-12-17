@@ -78,7 +78,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: SPM Test
-        run: |
-          cd OctoKitCLI
-          swift run OctoKitCLI --help
+        working-directory: OctoKitCLI
+        run: swift run OctoKitCLI --help
 
