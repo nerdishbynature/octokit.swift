@@ -17,8 +17,7 @@ public struct OctokitCLI: AsyncParsableCommand {
                                                                Status.self,
                                                                User.self,
                                                                Gist.self,
-                                                               SortedJSONKeys.self,
-                                                               GenerateAllFixtures.self
+                                                               SortedJSONKeys.self
                                                            ])
 
     public init() {}
