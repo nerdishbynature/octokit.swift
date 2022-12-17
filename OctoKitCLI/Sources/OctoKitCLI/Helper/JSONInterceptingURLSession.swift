@@ -4,7 +4,7 @@ import RequestKit
 import FoundationNetworking
 #endif
 
-final class FixtureURLSession: RequestKitURLSession {
+final class JSONInterceptingURLSession: RequestKitURLSession {
     private let session: URLSession
     private(set) var usedURL: URL?
     private(set) var usedHTTPMethod: String?
@@ -70,7 +70,7 @@ final class FixtureURLSession: RequestKitURLSession {
     #endif
 }
 
-extension FixtureURLSession {
+extension JSONInterceptingURLSession {
     var verbose: String? {
         guard let usedURL, let usedHTTPMethod else {
             return "No URL or HTTPMethod".red

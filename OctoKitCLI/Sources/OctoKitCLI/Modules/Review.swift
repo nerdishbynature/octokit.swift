@@ -11,8 +11,8 @@ import OctoKit
 import Rainbow
 
 @available(macOS 12.0, *)
-struct Star: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Stars",
+struct Review: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(abstract: "Operate on Reviews",
                                                            subcommands: [
                                                                GetList.self
                                                            ])
@@ -21,10 +21,16 @@ struct Star: AsyncParsableCommand {
 }
 
 @available(macOS 12.0, *)
-extension Star {
+extension Review {
     struct GetList: AsyncParsableCommand {
-        @Argument(help: "The user to fetch stars for")
-        var name: String
+        @Argument(help: "The owner of the repository")
+        var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
+
+        @Argument(help: "The number of the pull request")
+        var number: Int
 
         @Argument(help: "The path to put the file in")
         var filePath: String?
@@ -36,8 +42,8 @@ extension Star {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
-            _ = try await octokit.stars(session, name: name)
+            let session = JSONInterceptingURLSession()
+            _ = try await octokit.reviews(session, owner: owner, repository: repository, pullRequestNumber: number)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

@@ -67,7 +67,7 @@ extension Release {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
+            let session = JSONInterceptingURLSession()
             _ = try await octokit.listReleases(session, owner: owner, repository: repository)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)

@@ -3,7 +3,7 @@ import Foundation
 
 @main
 @available(macOS 12.0, *)
-public struct FixtureGenerator: AsyncParsableCommand {
+public struct OctokitCLI: AsyncParsableCommand {
     public static let configuration = CommandConfiguration(abstract: "A command-line tool to generate stubs",
                                                            subcommands: [
                                                                Issue.self,

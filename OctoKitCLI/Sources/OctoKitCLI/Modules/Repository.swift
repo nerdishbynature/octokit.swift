@@ -11,8 +11,8 @@ import OctoKit
 import Rainbow
 
 @available(macOS 12.0, *)
-struct Label: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Labels",
+struct Repository: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(abstract: "Operate on Repositories",
                                                            subcommands: [
                                                                Get.self,
                                                                GetList.self
@@ -22,15 +22,12 @@ struct Label: AsyncParsableCommand {
 }
 
 @available(macOS 12.0, *)
-extension Label {
+extension Repository {
     struct Get: AsyncParsableCommand {
         @Argument(help: "The owner of the repository")
         var owner: String
 
         @Argument(help: "The name of the repository")
-        var repository: String
-
-        @Argument(help: "The name of the label")
         var name: String
 
         @Argument(help: "The path to put the file in")
@@ -43,8 +40,8 @@ extension Label {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
-            _ = try await octokit.label(session, owner: owner, repository: repository, name: name)
+            let session = JSONInterceptingURLSession()
+            _ = try await octokit.repository(session, owner: owner, name: name)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
@@ -53,9 +50,6 @@ extension Label {
     struct GetList: AsyncParsableCommand {
         @Argument(help: "The owner of the repository")
         var owner: String
-
-        @Argument(help: "The name of the repository")
-        var repository: String
 
         @Argument(help: "The path to put the file in")
         var filePath: String?
@@ -67,8 +61,8 @@ extension Label {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
-            _ = try await octokit.labels(session, owner: owner, repository: repository)
+            let session = JSONInterceptingURLSession()
+            _ = try await octokit.repositories(session, owner: owner)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

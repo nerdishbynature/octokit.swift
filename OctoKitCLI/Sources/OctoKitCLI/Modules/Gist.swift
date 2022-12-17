@@ -11,8 +11,8 @@ import OctoKit
 import Rainbow
 
 @available(macOS 12.0, *)
-struct Repository: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Repositories",
+struct Gist: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(abstract: "Operate on Gists",
                                                            subcommands: [
                                                                Get.self,
                                                                GetList.self
@@ -22,13 +22,10 @@ struct Repository: AsyncParsableCommand {
 }
 
 @available(macOS 12.0, *)
-extension Repository {
+extension Gist {
     struct Get: AsyncParsableCommand {
-        @Argument(help: "The owner of the repository")
-        var owner: String
-
-        @Argument(help: "The name of the repository")
-        var name: String
+        @Argument(help: "The id of the gist")
+        var id: String
 
         @Argument(help: "The path to put the file in")
         var filePath: String?
@@ -40,15 +37,18 @@ extension Repository {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
-            _ = try await octokit.repository(session, owner: owner, name: name)
+            let session = JSONInterceptingURLSession()
+            _ = try await octokit.gist(session, id: id)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
     }
+}
 
+@available(macOS 12.0, *)
+extension Gist {
     struct GetList: AsyncParsableCommand {
-        @Argument(help: "The owner of the repository")
+        @Argument(help: "The owner of the gists")
         var owner: String
 
         @Argument(help: "The path to put the file in")
@@ -61,8 +61,8 @@ extension Repository {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
-            _ = try await octokit.repositories(session, owner: owner)
+            let session = JSONInterceptingURLSession()
+            _ = try await octokit.gists(session, owner: owner)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

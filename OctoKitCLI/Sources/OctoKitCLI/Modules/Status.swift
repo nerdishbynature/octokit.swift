@@ -42,7 +42,7 @@ extension Status {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
+            let session = JSONInterceptingURLSession()
             _ = try await octokit.listCommitStatuses(session, owner: owner, repository: repository, ref: reference)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)

@@ -11,8 +11,8 @@ import OctoKit
 import Rainbow
 
 @available(macOS 12.0, *)
-struct Issue: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Issues",
+struct Label: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(abstract: "Operate on Labels",
                                                            subcommands: [
                                                                Get.self,
                                                                GetList.self
@@ -22,7 +22,7 @@ struct Issue: AsyncParsableCommand {
 }
 
 @available(macOS 12.0, *)
-extension Issue {
+extension Label {
     struct Get: AsyncParsableCommand {
         @Argument(help: "The owner of the repository")
         var owner: String
@@ -30,8 +30,8 @@ extension Issue {
         @Argument(help: "The name of the repository")
         var repository: String
 
-        @Argument(help: "The number of the issue")
-        var number: Int
+        @Argument(help: "The name of the label")
+        var name: String
 
         @Argument(help: "The path to put the file in")
         var filePath: String?
@@ -43,8 +43,8 @@ extension Issue {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
-            _ = try await octokit.issue(session, owner: owner, repository: repository, number: number)
+            let session = JSONInterceptingURLSession()
+            _ = try await octokit.label(session, owner: owner, repository: repository, name: name)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
@@ -67,8 +67,8 @@ extension Issue {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
-            _ = try await octokit.issues(session, owner: owner, repository: repository)
+            let session = JSONInterceptingURLSession()
+            _ = try await octokit.labels(session, owner: owner, repository: repository)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

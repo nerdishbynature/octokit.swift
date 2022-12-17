@@ -11,18 +11,18 @@ import OctoKit
 import Rainbow
 
 @available(macOS 12.0, *)
-struct Follower: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Followes",
+struct User: AsyncParsableCommand {
+    public static let configuration = CommandConfiguration(abstract: "Operate on Users",
                                                            subcommands: [
-                                                               GetList.self
+                                                               Get.self
                                                            ])
 
     init() {}
 }
 
 @available(macOS 12.0, *)
-extension Follower {
-    struct GetList: AsyncParsableCommand {
+extension User {
+    struct Get: AsyncParsableCommand {
         @Argument(help: "The name of the user")
         var name: String
 
@@ -36,8 +36,8 @@ extension Follower {
 
         mutating func run() async throws {
             let octokit = Octokit()
-            let session = FixtureURLSession()
-            _ = try await octokit.followers(session, name: name)
+            let session = JSONInterceptingURLSession()
+            _ = try await octokit.user(session, name: name)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

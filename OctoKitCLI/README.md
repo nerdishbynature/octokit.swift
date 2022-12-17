@@ -1,4 +1,4 @@
-# FixtureGenerator
+# OctoKit CLI
 
 OVERVIEW: A command-line tool to generate stubs
 
