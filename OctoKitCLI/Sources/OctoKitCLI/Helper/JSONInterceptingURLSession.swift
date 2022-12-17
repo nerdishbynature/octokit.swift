@@ -5,13 +5,13 @@ import FoundationNetworking
 #endif
 
 final class JSONInterceptingURLSession: RequestKitURLSession {
-    private let session: URLSession
+    private let session: RequestKitURLSession
     private(set) var usedURL: URL?
     private(set) var usedHTTPMethod: String?
     private(set) var usedHTTPHeaders: [String: String]?
     private(set) var response: String?
 
-    init(session: URLSession = .shared) {
+    init(session: RequestKitURLSession = URLSession.shared) {
         self.session = session
     }
 
@@ -50,7 +50,7 @@ final class JSONInterceptingURLSession: RequestKitURLSession {
         usedHTTPMethod = request.httpMethod
         usedHTTPHeaders = request.allHTTPHeaderFields
 
-        let response = try await session.data(for: request)
+        let response = try await session.data(for: request, delegate: nil)
         self.response = String(data: response.0, encoding: .utf8)
 
         return response
@@ -62,7 +62,7 @@ final class JSONInterceptingURLSession: RequestKitURLSession {
         usedHTTPMethod = request.httpMethod
         usedHTTPHeaders = request.allHTTPHeaderFields
 
-        let response = try await session.upload(for: request, from: data)
+        let response = try await session.upload(for: request, from: data, delegate: nil)
         self.response = String(data: response.0, encoding: .utf8)
 
         return response

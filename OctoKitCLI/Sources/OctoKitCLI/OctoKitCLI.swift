@@ -4,6 +4,7 @@ import Foundation
 @main
 @available(macOS 12.0, *)
 public struct OctokitCLI: AsyncParsableCommand {
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     public static let configuration = CommandConfiguration(abstract: "A command-line tool to generate stubs",
                                                            subcommands: [
                                                                Issue.self,
@@ -19,6 +20,7 @@ public struct OctokitCLI: AsyncParsableCommand {
                                                                Gist.self,
                                                                SortedJSONKeys.self
                                                            ])
+    #endif
 
     public init() {}
 }

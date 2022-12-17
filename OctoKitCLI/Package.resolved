@@ -1,15 +1,6 @@
 {
   "pins" : [
     {
-      "identity" : "octokit.swift",
-      "kind" : "localSourceControl",
-      "location" : "/Users/pietbrauer/Projects/octokit.swift",
-      "state" : {
-        "revision" : "f762f1566f7cd0e683b9329f169c28ab6ef993cc",
-        "version" : "0.12.0"
-      }
-    },
-    {
       "identity" : "rainbow",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/onevcat/Rainbow",
