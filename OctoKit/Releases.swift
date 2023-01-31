@@ -108,6 +108,17 @@ public extension Octokit {
         let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self)
     }
+
+    /// Fetches the latest release.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
+    ///   - owner: The user or organization that owns the repositories.
+    ///   - repository: The name of the repository.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func getLatestRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String) async throws -> Release {
+        let router = ReleaseRouter.getLatestRelease(configuration, owner, repository)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Release.self)
+    }
     #endif
 
     /// Creates a new release.
@@ -201,6 +212,7 @@ public extension Octokit {
 
 enum ReleaseRouter: JSONPostRouter {
     case listReleases(Configuration, String, String, Int)
+    case getLatestRelease(Configuration, String, String)
     case getReleaseByTag(Configuration, String, String, String)
     case postRelease(Configuration, String, String, String, String?, String?, String?, Bool, Bool, Bool)
     case deleteRelease(Configuration, String, String, Int)
@@ -208,6 +220,7 @@ enum ReleaseRouter: JSONPostRouter {
     var configuration: Configuration {
         switch self {
         case let .listReleases(config, _, _, _): return config
+        case let .getLatestRelease(config, _, _): return config
         case let .getReleaseByTag(config, _, _, _): return config
         case let .postRelease(config, _, _, _, _, _, _, _, _, _): return config
         case let .deleteRelease(config, _, _, _): return config
@@ -216,7 +229,7 @@ enum ReleaseRouter: JSONPostRouter {
 
     var method: HTTPMethod {
         switch self {
-        case .listReleases, .getReleaseByTag:
+        case .listReleases, .getLatestRelease, .getReleaseByTag:
             return .GET
         case .postRelease:
             return .POST
@@ -227,7 +240,7 @@ enum ReleaseRouter: JSONPostRouter {
 
     var encoding: HTTPEncoding {
         switch self {
-        case .listReleases, .getReleaseByTag:
+        case .listReleases, .getLatestRelease, .getReleaseByTag:
             return .url
         case .postRelease:
             return .json
@@ -240,6 +253,8 @@ enum ReleaseRouter: JSONPostRouter {
         switch self {
         case let .listReleases(_, _, _, perPage):
             return ["per_page": "\(perPage)"]
+        case .getLatestRelease:
+            return [:]
         case .getReleaseByTag:
             return [:]
         case let .postRelease(_, _, _, tagName, targetCommitish, name, body, prerelease, draft, generateNotes):
@@ -269,6 +284,8 @@ enum ReleaseRouter: JSONPostRouter {
         switch self {
         case let .listReleases(_, owner, repo, _):
             return "repos/\(owner)/\(repo)/releases"
+        case let .getLatestRelease(_, owner, repo):
+            return "/repos/\(owner)/\(repo)/releases/latest"
         case let .getReleaseByTag(_, owner, repo, tag):
             return "repos/\(owner)/\(repo)/releases/tags/\(tag)"
         case let .postRelease(_, owner, repo, _, _, _, _, _, _, _):

@@ -173,6 +173,9 @@
 		665D5D6524A639E00045E3B4 /* statuses.json in Resources */ = {isa = PBXBuildFile; fileRef = 665D5D5E24A639D70045E3B4 /* statuses.json */; };
 		665D5D6624A639E00045E3B4 /* status.json in Resources */ = {isa = PBXBuildFile; fileRef = 665D5D5F24A639D70045E3B4 /* status.json */; };
 		665D5D6724A639E00045E3B4 /* statuses.json in Resources */ = {isa = PBXBuildFile; fileRef = 665D5D5E24A639D70045E3B4 /* statuses.json */; };
+		721F73E929889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
+		721F73EA29889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
+		721F73EB29889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
 		9D9ADDDF23EEFD4A000AC34D /* ReviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */; };
 		9D9ADDE123EEFDE0000AC34D /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDE023EEFDE0000AC34D /* Review.swift */; };
 		BF8C719220F02AC04EF3D137 /* PullRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C76EB002802C14A08F63E /* PullRequestTests.swift */; };
@@ -326,6 +329,7 @@
 		665D5D5924A639960045E3B4 /* Statuses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Statuses.swift; sourceTree = "<group>"; };
 		665D5D5E24A639D70045E3B4 /* statuses.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = statuses.json; path = Fixtures/statuses.json; sourceTree = "<group>"; };
 		665D5D5F24A639D70045E3B4 /* status.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = status.json; path = Fixtures/status.json; sourceTree = "<group>"; };
+		721F73E829889A040064B11A /* latest_release.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = latest_release.json; path = Fixtures/latest_release.json; sourceTree = "<group>"; };
 		9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTests.swift; sourceTree = "<group>"; };
 		9D9ADDE023EEFDE0000AC34D /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		BF8C72B985869B84F46B4E9D /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
@@ -444,6 +448,7 @@
 		234F4BD71BDDE40400A58EF7 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				721F73E829889A040064B11A /* latest_release.json */,
 				03CCD2512453A9AA007D5CB3 /* users.json */,
 				515337F92252A0410024544D /* gist.json */,
 				515337F522529E7B0024544D /* gists.json */,
@@ -817,6 +822,7 @@
 				23EA61AB25EAE31A001B0964 /* reviews.json in Resources */,
 				23EA61AE25EAE31A001B0964 /* releases.json in Resources */,
 				515337F622529E7B0024544D /* gists.json in Resources */,
+				721F73E929889A040064B11A /* latest_release.json in Resources */,
 				23EA61B125EAE31A001B0964 /* pull_request.json in Resources */,
 				515337FA2252A0410024544D /* gist.json in Resources */,
 				665D5D6324A639DF0045E3B4 /* statuses.json in Resources */,
@@ -863,6 +869,7 @@
 				23EA61AC25EAE31A001B0964 /* reviews.json in Resources */,
 				23EA61AF25EAE31A001B0964 /* releases.json in Resources */,
 				515337F722529E7B0024544D /* gists.json in Resources */,
+				721F73EA29889A040064B11A /* latest_release.json in Resources */,
 				23EA61B225EAE31A001B0964 /* pull_request.json in Resources */,
 				515337FB2252A0410024544D /* gist.json in Resources */,
 				665D5D6524A639E00045E3B4 /* statuses.json in Resources */,
@@ -901,6 +908,7 @@
 				23EA61AD25EAE31A001B0964 /* reviews.json in Resources */,
 				23EA61B025EAE31A001B0964 /* releases.json in Resources */,
 				515337F822529E7B0024544D /* gists.json in Resources */,
+				721F73EB29889A040064B11A /* latest_release.json in Resources */,
 				23EA61B325EAE31A001B0964 /* pull_request.json in Resources */,
 				515337FC2252A0410024544D /* gist.json in Resources */,
 				665D5D6724A639E00045E3B4 /* statuses.json in Resources */,
