@@ -112,6 +112,28 @@ final class ReleasesTests: XCTestCase {
     }
     #endif
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetLatestReleaseAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases/latest",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "Fixtures/latest_release",
+                                            statusCode: 200)
+        let release = try await Octokit().getLatestRelease(session, owner: "octocat", repository: "Hello-World")
+        XCTAssertNotNil(release)
+
+        XCTAssertEqual(release.tagName, "v1.0.0")
+        XCTAssertEqual(release.commitish, "master")
+        XCTAssertEqual(release.name, "v1.0.0")
+        XCTAssertEqual(release.body, "Description of the release")
+        XCTAssertFalse(release.prerelease)
+        XCTAssertFalse(release.draft)
+        XCTAssertNotNil(release.tarballURL)
+        XCTAssertNotNil(release.zipballURL)
+        XCTAssertNotNil(release.publishedAt)
+    }
+    #endif
+
     func testPostRelease() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases", expectedHTTPMethod: "POST", jsonFile: "post_release", statusCode: 201)
         let task = Octokit().postRelease(session,
