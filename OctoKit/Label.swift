@@ -188,11 +188,11 @@ enum LabelRouter: JSONPostRouter {
         switch self {
         case let .readLabel(_, owner, repository, name):
             let name = name.stringByAddingPercentEncodingForRFC3986() ?? name
-            return "/repos/\(owner)/\(repository)/labels/\(name)"
+            return "repos/\(owner)/\(repository)/labels/\(name)"
         case let .readLabels(_, owner, repository, _, _):
-            return "/repos/\(owner)/\(repository)/labels"
+            return "repos/\(owner)/\(repository)/labels"
         case let .createLabel(_, owner, repository, _, _):
-            return "/repos/\(owner)/\(repository)/labels"
+            return "repos/\(owner)/\(repository)/labels"
         }
     }
 }
