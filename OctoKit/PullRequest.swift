@@ -40,6 +40,19 @@ open class PullRequest: Codable {
 
     open var requestedReviewers: [User]?
     open var draft: Bool?
+    open var autoMerge: AutoMerge?
+
+    public struct AutoMerge: Codable {
+        let enabledBy: User
+
+        public enum MergeMethod: String, Codable { case squash, rebase, merge }
+        let mergeMethod: MergeMethod
+
+        enum CodingKeys: String, CodingKey {
+            case enabledBy = "enabled_by"
+            case mergeMethod = "merge_method"
+        }
+    }
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -69,6 +82,7 @@ open class PullRequest: Codable {
         case base
         case requestedReviewers = "requested_reviewers"
         case draft
+        case autoMerge = "auto_merge"
     }
 
     open class Branch: Codable {

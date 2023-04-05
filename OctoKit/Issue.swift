@@ -470,6 +470,27 @@ public extension Octokit {
     }
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /// Adds the given labels to a specific issue (or if the provided labels array is empty, removes all existing labels).
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the comment.
+    ///   - labels: The labels to add to the issues’s existing labels, or removes all if an empty array is sent.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func patchIssueLabels(_ session: RequestKitURLSession = URLSession.shared,
+                           owner: String,
+                           repository: String,
+                           number: Int,
+                           labels: [String]) async throws -> [Label] {
+        let router = IssueRouter.patchIssueLabels(configuration, owner, repository, number, labels)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: [Label].self)
+    }
+    #endif
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Edits a comment on an issue using the given body.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
@@ -499,10 +520,11 @@ enum IssueRouter: JSONPostRouter {
     case commentIssue(Configuration, String, String, Int, String)
     case readIssueComments(Configuration, String, String, Int, String, String)
     case patchIssueComment(Configuration, String, String, Int, String)
+    case patchIssueLabels(Configuration, String, String, Int, [String])
 
     var method: HTTPMethod {
         switch self {
-        case .postIssue, .patchIssue, .commentIssue, .patchIssueComment:
+        case .postIssue, .patchIssue, .commentIssue, .patchIssueComment, .patchIssueLabels:
             return .POST
         default:
             return .GET
@@ -511,7 +533,7 @@ enum IssueRouter: JSONPostRouter {
 
     var encoding: HTTPEncoding {
         switch self {
-        case .postIssue, .patchIssue, .commentIssue, .patchIssueComment:
+        case .postIssue, .patchIssue, .commentIssue, .patchIssueComment, .patchIssueLabels:
             return .json
         default:
             return .url
@@ -528,6 +550,7 @@ enum IssueRouter: JSONPostRouter {
         case let .commentIssue(config, _, _, _, _): return config
         case let .readIssueComments(config, _, _, _, _, _): return config
         case let .patchIssueComment(config, _, _, _, _): return config
+        case let .patchIssueLabels(config, _, _, _, _): return config
         }
     }
 
@@ -572,6 +595,8 @@ enum IssueRouter: JSONPostRouter {
             return ["per_page": perPage, "page": page]
         case let .patchIssueComment(_, _, _, _, body):
             return ["body": body]
+        case let .patchIssueLabels(_, _, _, _, labels):
+            return ["labels": labels]
         }
     }
 
@@ -593,6 +618,8 @@ enum IssueRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/issues/\(number)/comments"
         case let .patchIssueComment(_, owner, repository, number, _):
             return "repos/\(owner)/\(repository)/issues/comments/\(number)"
+        case let .patchIssueLabels(_, owner, repository, number, _):
+            return "repos/\(owner)/\(repository)/issues/\(number)/labels"
         }
     }
 }
