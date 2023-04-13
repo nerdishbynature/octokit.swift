@@ -470,13 +470,13 @@ public extension Octokit {
     }
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
-    /// Adds the given labels to a specific issue (or if the provided labels array is empty, removes all existing labels).
+    /// Adds the given labels to a specific issue.
     /// - Parameters:
     ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
     ///   - owner: The user or organization that owns the repository.
     ///   - repository: The name of the repository.
-    ///   - number: The number of the comment.
-    ///   - labels: The labels to add to the issues’s existing labels, or removes all if an empty array is sent.
+    ///   - number: The number of the issue.
+    ///   - labels: The labels to add to the issues’s existing labels.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func patchIssueLabels(_ session: RequestKitURLSession = URLSession.shared,
                            owner: String,
@@ -484,6 +484,25 @@ public extension Octokit {
                            number: Int,
                            labels: [String]) async throws -> [Label] {
         let router = IssueRouter.patchIssueLabels(configuration, owner, repository, number, labels)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: [Label].self)
+    }
+
+    /// Removes the target label from a specific issue.
+    /// - Parameters:
+    ///   - session: RequestKitURLSession, defaults to URLSession.sharedSession()
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the issue.
+    ///   - label: The label to remove.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func deleteIssueLabel(_ session: RequestKitURLSession = URLSession.shared,
+                           owner: String,
+                           repository: String,
+                           number: Int,
+                           label: String) async throws -> [Label] {
+        let router = IssueRouter.deleteIssueLabel(configuration, owner, repository, number, label)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return try await router.post(session, decoder: decoder, expectedResultType: [Label].self)
@@ -521,11 +540,14 @@ enum IssueRouter: JSONPostRouter {
     case readIssueComments(Configuration, String, String, Int, String, String)
     case patchIssueComment(Configuration, String, String, Int, String)
     case patchIssueLabels(Configuration, String, String, Int, [String])
+    case deleteIssueLabel(Configuration, String, String, Int, String)
 
     var method: HTTPMethod {
         switch self {
         case .postIssue, .patchIssue, .commentIssue, .patchIssueComment, .patchIssueLabels:
             return .POST
+        case .deleteIssueLabel:
+            return .DELETE
         default:
             return .GET
         }
@@ -551,6 +573,7 @@ enum IssueRouter: JSONPostRouter {
         case let .readIssueComments(config, _, _, _, _, _): return config
         case let .patchIssueComment(config, _, _, _, _): return config
         case let .patchIssueLabels(config, _, _, _, _): return config
+        case let .deleteIssueLabel(config, _, _, _, _): return config
         }
     }
 
@@ -597,6 +620,8 @@ enum IssueRouter: JSONPostRouter {
             return ["body": body]
         case let .patchIssueLabels(_, _, _, _, labels):
             return ["labels": labels]
+        case .deleteIssueLabel:
+            return [:]
         }
     }
 
@@ -620,6 +645,8 @@ enum IssueRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/issues/comments/\(number)"
         case let .patchIssueLabels(_, owner, repository, number, _):
             return "repos/\(owner)/\(repository)/issues/\(number)/labels"
+        case let .deleteIssueLabel(_, owner, repository, number, labelToRemove):
+            return "repos/\(owner)/\(repository)/issues/\(number)/labels/\(labelToRemove)"
         }
     }
 }
