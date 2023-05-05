@@ -84,6 +84,45 @@ open class PullRequest: Codable {
 
 public extension Octokit {
     /**
+     Create a pull request
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repository: The name of the repository.
+     - parameter title: The title of the new pull request.
+     - parameter head: The name of the branch where your changes are implemented.
+     - parameter head_repo: The name of the repository where the changes in the pull request were made.
+     - parameter base: The name of the branch you want the changes pulled into.
+     - parameter body: The contents of the pull request.
+     - parameter maintainerCanModify: Indicates whether maintainers can modify the pull request.
+     - parameter draft: Indicates whether the pull request is a draft.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
+                     owner: String,
+                     repository: String,
+                     title: String,
+                     head: String,
+                     head_repo: String? = nil,
+                     base: String,
+                     body: String? = nil,
+                     maintainerCanModify: Bool? = nil,
+                     draft: Bool? = nil,
+                     completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = PullRequestRouter.createPullRequest(configuration, owner, repository, title, head, head_repo, base, body, maintainerCanModify, draft)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                if let pullRequest = pullRequest {
+                    completion(.success(pullRequest))
+                }
+            }
+        }
+    }
+
+
+    /**
      Get a single pull request
      - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
@@ -261,10 +300,13 @@ public extension Octokit {
 enum PullRequestRouter: JSONPostRouter {
     case readPullRequest(Configuration, String, String, String)
     case readPullRequests(Configuration, String, String, String?, String?, Openness, SortType, SortDirection)
+    case createPullRequest(Configuration, String, String, String, String, String?, String, String?, Bool?, Bool?)
     case patchPullRequest(Configuration, String, String, String, String, String, Openness, String?, Bool?)
 
     var method: HTTPMethod {
         switch self {
+        case .createPullRequest:
+            return .POST
         case .readPullRequest,
              .readPullRequests:
             return .GET
@@ -275,7 +317,7 @@ enum PullRequestRouter: JSONPostRouter {
 
     var encoding: HTTPEncoding {
         switch self {
-        case .patchPullRequest:
+        case .patchPullRequest, .createPullRequest:
             return .json
         default:
             return .url
@@ -287,6 +329,7 @@ enum PullRequestRouter: JSONPostRouter {
         case let .readPullRequest(config, _, _, _): return config
         case let .readPullRequests(config, _, _, _, _, _, _, _): return config
         case let .patchPullRequest(config, _, _, _, _, _, _, _, _): return config
+        case let .createPullRequest(config, _, _, _, _, _, _, _, _, _): return config
         }
     }
 
@@ -323,6 +366,37 @@ enum PullRequestRouter: JSONPostRouter {
                 parameters["maintainer_can_modify"] = (mantainerCanModify ? "true" : "false")
             }
             return parameters
+
+//            func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
+//                             owner: String,
+//                             repository: String,
+//                             title: String,
+//                             head: String,
+//                             head_repo: String?,
+//                             base: String,
+//                             body: String?,
+//                             maintainerCanModify: Bool?,
+//                             draft: Bool?,
+
+        case let .createPullRequest(_, _, _, title, head, headRepo, base, body, mantainerCanModify, draft):
+            var parameters = [
+                "title": title,
+                "head": head,
+                "base": base
+            ]
+            if let headRepo {
+                parameters["head_repo"] = headRepo
+            }
+            if let body {
+                parameters["body"] = body
+            }
+            if let mantainerCanModify {
+                parameters["maintainer_can_modify"] = (mantainerCanModify ? "true" : "false")
+            }
+            if let draft {
+                parameters["draft"] = (draft ? "true" : "false")
+            }
+            return parameters
         }
     }
 
@@ -333,6 +407,8 @@ enum PullRequestRouter: JSONPostRouter {
         case let .readPullRequest(_, owner, repository, number):
             return "repos/\(owner)/\(repository)/pulls/\(number)"
         case let .readPullRequests(_, owner, repository, _, _, _, _, _):
+            return "repos/\(owner)/\(repository)/pulls"
+        case let .createPullRequest(_, owner, repository, _, _, _, _, _, _, _):
             return "repos/\(owner)/\(repository)/pulls"
         }
     }
