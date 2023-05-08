@@ -87,10 +87,10 @@ public extension Octokit {
      Create a pull request
      - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The user or organization that owns the repositories.
-     - parameter repository: The name of the repository.
+     - parameter repo: The name of the repository.
      - parameter title: The title of the new pull request.
      - parameter head: The name of the branch where your changes are implemented.
-     - parameter head_repo: The name of the repository where the changes in the pull request were made.
+     - parameter headRepo: The name of the repository where the changes in the pull request were made.
      - parameter base: The name of the branch you want the changes pulled into.
      - parameter body: The contents of the pull request.
      - parameter maintainerCanModify: Indicates whether maintainers can modify the pull request.
@@ -100,17 +100,19 @@ public extension Octokit {
     @discardableResult
     func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
                      owner: String,
-                     repository: String,
+                     repo: String,
                      title: String,
                      head: String,
-                     head_repo: String? = nil,
+                     headRepo: String? = nil,
                      base: String,
                      body: String? = nil,
                      maintainerCanModify: Bool? = nil,
                      draft: Bool? = nil,
                      completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = PullRequestRouter.createPullRequest(configuration, owner, repository, title, head, head_repo, base, body, maintainerCanModify, draft)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
+        let router = PullRequestRouter.createPullRequest(configuration, owner, repo, title, head, headRepo, base, body, maintainerCanModify, draft)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -366,17 +368,6 @@ enum PullRequestRouter: JSONPostRouter {
                 parameters["maintainer_can_modify"] = (mantainerCanModify ? "true" : "false")
             }
             return parameters
-
-//            func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
-//                             owner: String,
-//                             repository: String,
-//                             title: String,
-//                             head: String,
-//                             head_repo: String?,
-//                             base: String,
-//                             body: String?,
-//                             maintainerCanModify: Bool?,
-//                             draft: Bool?,
 
         case let .createPullRequest(_, _, _, title, head, headRepo, base, body, mantainerCanModify, draft):
             var parameters = [
