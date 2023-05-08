@@ -123,6 +123,38 @@ public extension Octokit {
         }
     }
 
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Create a pull request
+     - parameter session: RequestKitURLSession, defaults to URLSession.shared
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repo: The name of the repository.
+     - parameter title: The title of the new pull request.
+     - parameter head: The name of the branch where your changes are implemented.
+     - parameter headRepo: The name of the repository where the changes in the pull request were made.
+     - parameter base: The name of the branch you want the changes pulled into.
+     - parameter body: The contents of the pull request.
+     - parameter maintainerCanModify: Indicates whether maintainers can modify the pull request.
+     - parameter draft: Indicates whether the pull request is a draft.
+     - Returns: A PullRequest
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
+                     owner: String,
+                     repo: String,
+                     title: String,
+                     head: String,
+                     headRepo: String? = nil,
+                     base: String,
+                     body: String? = nil,
+                     maintainerCanModify: Bool? = nil,
+                     draft: Bool? = nil) async throws -> PullRequest {
+        let router = PullRequestRouter.createPullRequest(configuration, owner, repo, title, head, headRepo, base, body, maintainerCanModify, draft)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.self)
+    }
+    #endif
 
     /**
      Get a single pull request
@@ -356,7 +388,7 @@ enum PullRequestRouter: JSONPostRouter {
 
             return parameters
         case let .patchPullRequest(_, _, _, _, title, body, state, base, mantainerCanModify):
-            var parameters = [
+            var parameters: [String: Any] = [
                 "title": title,
                 "state": state.rawValue,
                 "body": body
@@ -365,12 +397,12 @@ enum PullRequestRouter: JSONPostRouter {
                 parameters["base"] = base
             }
             if let mantainerCanModify = mantainerCanModify {
-                parameters["maintainer_can_modify"] = (mantainerCanModify ? "true" : "false")
+                parameters["maintainer_can_modify"] = mantainerCanModify
             }
             return parameters
 
         case let .createPullRequest(_, _, _, title, head, headRepo, base, body, mantainerCanModify, draft):
-            var parameters = [
+            var parameters: [String: Any] = [
                 "title": title,
                 "head": head,
                 "base": base
@@ -382,10 +414,10 @@ enum PullRequestRouter: JSONPostRouter {
                 parameters["body"] = body
             }
             if let mantainerCanModify {
-                parameters["maintainer_can_modify"] = (mantainerCanModify ? "true" : "false")
+                parameters["maintainer_can_modify"] = mantainerCanModify
             }
             if let draft {
-                parameters["draft"] = (draft ? "true" : "false")
+                parameters["draft"] = draft
             }
             return parameters
         }
