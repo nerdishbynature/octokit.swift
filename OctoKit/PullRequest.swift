@@ -98,7 +98,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
+    func createPullRequest(_ session: RequestKitURLSession = URLSession.shared,
                      owner: String,
                      repo: String,
                      title: String,
@@ -139,7 +139,7 @@ public extension Octokit {
      - Returns: A PullRequest
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func pullRequest(_ session: RequestKitURLSession = URLSession.shared,
+    func createPullRequest(_ session: RequestKitURLSession = URLSession.shared,
                      owner: String,
                      repo: String,
                      title: String,

@@ -282,4 +282,75 @@ class PullRequestTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
     #endif
+
+    func testCreatePullRequest() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls",
+                                            expectedHTTPMethod: "POST",
+                                            jsonFile: "created_pull_request",
+                                            statusCode: 200)
+
+        let task = Octokit().createPullRequest(session, owner: "octocat", repo: "Hello-World", title: "Amazing new feature", head: "octocat:new-feature", base: "master", body: "Please pull these awesome changes in!", maintainerCanModify: true, draft: false)
+        { response in
+            switch response {
+            case let .success(pullRequest):
+                XCTAssertEqual(pullRequest.id, 1)
+                XCTAssertEqual(pullRequest.title, "Amazing new feature")
+                XCTAssertEqual(pullRequest.body, "Please pull these awesome changes in!")
+                XCTAssertEqual(pullRequest.labels?.count, 1)
+                XCTAssertEqual(pullRequest.user?.login, "octocat")
+
+                XCTAssertEqual(pullRequest.base?.label, "octocat:master")
+                XCTAssertEqual(pullRequest.base?.ref, "master")
+                XCTAssertEqual(pullRequest.base?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                XCTAssertEqual(pullRequest.base?.user?.login, "octocat")
+                XCTAssertEqual(pullRequest.base?.repo?.name, "Hello-World")
+
+                XCTAssertEqual(pullRequest.head?.label, "octocat:new-topic")
+                XCTAssertEqual(pullRequest.head?.ref, "new-topic")
+                XCTAssertEqual(pullRequest.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                XCTAssertEqual(pullRequest.head?.user?.login, "octocat")
+                XCTAssertEqual(pullRequest.head?.repo?.name, "Hello-World")
+                XCTAssertEqual(pullRequest.requestedReviewers?[0].login, "other_user")
+                XCTAssertEqual(pullRequest.draft, false)
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testCreatePullRequestAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls",
+                                            expectedHTTPMethod: "POST",
+                                            jsonFile: "created_pull_request",
+                                            statusCode: 200)
+
+        let pullRequest = try await Octokit()
+            .createPullRequest(session, owner: "octocat", repo: "Hello-World", title: "Amazing new feature", head: "octocat:new-feature", base: "master", body: "Please pull these awesome changes in!", maintainerCanModify: true, draft: false)
+
+        XCTAssertEqual(pullRequest.id, 1)
+        XCTAssertEqual(pullRequest.title, "Amazing new feature")
+        XCTAssertEqual(pullRequest.body, "Please pull these awesome changes in!")
+        XCTAssertEqual(pullRequest.labels?.count, 1)
+        XCTAssertEqual(pullRequest.user?.login, "octocat")
+
+        XCTAssertEqual(pullRequest.base?.label, "octocat:master")
+        XCTAssertEqual(pullRequest.base?.ref, "master")
+        XCTAssertEqual(pullRequest.base?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+        XCTAssertEqual(pullRequest.base?.user?.login, "octocat")
+        XCTAssertEqual(pullRequest.base?.repo?.name, "Hello-World")
+
+        XCTAssertEqual(pullRequest.head?.label, "octocat:new-topic")
+        XCTAssertEqual(pullRequest.head?.ref, "new-topic")
+        XCTAssertEqual(pullRequest.head?.sha, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+        XCTAssertEqual(pullRequest.head?.user?.login, "octocat")
+        XCTAssertEqual(pullRequest.head?.repo?.name, "Hello-World")
+        XCTAssertEqual(pullRequest.requestedReviewers?[0].login, "other_user")
+        XCTAssertEqual(pullRequest.draft, false)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 }
