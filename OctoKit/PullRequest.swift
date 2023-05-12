@@ -150,6 +150,7 @@ public extension Octokit {
      - parameter head: Filter pulls by user or organization and branch name.
      - parameter state: Filter pulls by their state.
      - parameter direction: The direction of the sort.
+     - parameter perPage: The number of results per page (default 30, max 100).
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
@@ -185,6 +186,7 @@ public extension Octokit {
      - parameter head: Filter pulls by user or organization and branch name.
      - parameter state: Filter pulls by their state.
      - parameter direction: The direction of the sort.
+     - parameter perPage: The number of results per page (default 30, max 100).
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func pullRequests(_ session: RequestKitURLSession = URLSession.shared,
@@ -194,8 +196,8 @@ public extension Octokit {
                       head: String? = nil,
                       state: Openness = .open,
                       sort: SortType = .created,
-                      perPage: Int = 30,
-                      direction: SortDirection = .desc) async throws -> [PullRequest] {
+                      direction: SortDirection = .desc,
+                      perPage: Int = 30) async throws -> [PullRequest] {
         let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction, perPage)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self)
     }
