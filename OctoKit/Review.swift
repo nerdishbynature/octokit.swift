@@ -177,24 +177,24 @@ enum ReviewsRouter: JSONPostRouter {
                 parameters["body"] = body
             }
             if let comments = comments {
-                parameters["comments"] = comments.map {
+                parameters["comments"] = comments.map { comment -> [String: Any] in
                     var parameters: [String: Any] = [
-                        "path": $0.path,
-                        "body": $0.body
+                        "path": comment.path,
+                        "body": comment.body
                     ]
-                    if let position = $0.position {
+                    if let position = comment.position {
                         parameters["position"] = position
                     }
-                    if let line = $0.line {
+                    if let line = comment.line {
                         parameters["line"] = line
                     }
-                    if let side = $0.side {
+                    if let side = comment.side {
                         parameters["side"] = side
                     }
-                    if let startLine = $0.startLine {
+                    if let startLine = comment.startLine {
                         parameters["start_line"] = startLine
                     }
-                    if let startSide = $0.startSide {
+                    if let startSide = comment.startSide {
                         parameters["start_side"] = startSide
                     }
                     return parameters
