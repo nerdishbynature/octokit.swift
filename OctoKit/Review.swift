@@ -167,7 +167,7 @@ enum ReviewsRouter: JSONPostRouter {
             return [:]
         case let .postReview(_, _, _, _, commitId, event, body, comments):
             var parameters = [String: Any]()
-            if let commitId = commitId  {
+            if let commitId = commitId {
                 parameters["commit_id"] = commitId
             }
             if let event = event {
