@@ -407,16 +407,16 @@ enum PullRequestRouter: JSONPostRouter {
                 "head": head,
                 "base": base
             ]
-            if let headRepo {
+            if let headRepo = headRepo {
                 parameters["head_repo"] = headRepo
             }
-            if let body {
+            if let body = body {
                 parameters["body"] = body
             }
-            if let mantainerCanModify {
+            if let mantainerCanModify = mantainerCanModify {
                 parameters["maintainer_can_modify"] = mantainerCanModify
             }
-            if let draft {
+            if let draft = draft {
                 parameters["draft"] = draft
             }
             return parameters
