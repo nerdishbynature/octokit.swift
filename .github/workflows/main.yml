@@ -71,3 +71,13 @@ jobs:
         run: |
           cd SwiftFormat
           swift run -c release swiftformat ../ --lint --exclude .
+  cli_build:
+    name: Build CLI
+    runs-on: ubuntu-latest
+    container: swift:5.7-focal
+    steps:
+      - uses: actions/checkout@v2
+      - name: SPM Test
+        working-directory: OctoKitCLI
+        run: swift run OctoKitCLI --help
+
