@@ -1,0 +1,38 @@
+{
+  "_links" : {
+    "html" : {
+      "href" : "https:\/\/github.com\/octocat\/Hello-World\/pull\/12#pullrequestreview-80"
+    },
+    "pull_request" : {
+      "href" : "https:\/\/api.github.com\/repos\/octocat\/Hello-World\/pulls\/12"
+    }
+  },
+  "body" : "Here is the body for the review.",
+  "commit_id" : "ecdd80bb57125d7ba9641ffaa4d7d2c19d3f3091",
+  "html_url" : "https:\/\/github.com\/octocat\/Hello-World\/pull\/12#pullrequestreview-80",
+  "id" : 80,
+  "node_id" : "MDE3OlB1bGxSZXF1ZXN0UmV2aWV3ODA=",
+  "pull_request_url" : "https:\/\/api.github.com\/repos\/octocat\/Hello-World\/pulls\/12",
+  "state" : "APPROVED",
+  "submitted_at" : "2019-11-17T17:43:43Z",
+  "user" : {
+    "avatar_url" : "https:\/\/github.com\/images\/error\/octocat_happy.gif",
+    "events_url" : "https:\/\/api.github.com\/users\/octocat\/events{\/privacy}",
+    "followers_url" : "https:\/\/api.github.com\/users\/octocat\/followers",
+    "following_url" : "https:\/\/api.github.com\/users\/octocat\/following{\/other_user}",
+    "gists_url" : "https:\/\/api.github.com\/users\/octocat\/gists{\/gist_id}",
+    "gravatar_id" : "",
+    "html_url" : "https:\/\/github.com\/octocat",
+    "id" : 1,
+    "login" : "octocat",
+    "node_id" : "MDQ6VXNlcjE=",
+    "organizations_url" : "https:\/\/api.github.com\/users\/octocat\/orgs",
+    "received_events_url" : "https:\/\/api.github.com\/users\/octocat\/received_events",
+    "repos_url" : "https:\/\/api.github.com\/users\/octocat\/repos",
+    "site_admin" : false,
+    "starred_url" : "https:\/\/api.github.com\/users\/octocat\/starred{\/owner}{\/repo}",
+    "subscriptions_url" : "https:\/\/api.github.com\/users\/octocat\/subscriptions",
+    "type" : "User",
+    "url" : "https:\/\/api.github.com\/users\/octocat"
+  }
+}
