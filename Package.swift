@@ -14,6 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/nerdishbynature/RequestKit.git", from: "3.2.1"),
+        .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.51.9")
     ],
     targets: [
         .target(
