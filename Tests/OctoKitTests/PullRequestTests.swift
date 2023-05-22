@@ -289,8 +289,15 @@ class PullRequestTests: XCTestCase {
                                             jsonFile: "created_pull_request",
                                             statusCode: 200)
 
-        let task = Octokit().createPullRequest(session, owner: "octocat", repo: "Hello-World", title: "Amazing new feature", head: "octocat:new-feature", base: "master", body: "Please pull these awesome changes in!", maintainerCanModify: true, draft: false)
-        { response in
+        let task = Octokit().createPullRequest(session,
+                                               owner: "octocat",
+                                               repo: "Hello-World",
+                                               title: "Amazing new feature",
+                                               head: "octocat:new-feature",
+                                               base: "master",
+                                               body: "Please pull these awesome changes in!",
+                                               maintainerCanModify: true,
+                                               draft: false) { response in
             switch response {
             case let .success(pullRequest):
                 XCTAssertEqual(pullRequest.id, 1)
@@ -329,7 +336,15 @@ class PullRequestTests: XCTestCase {
                                             statusCode: 200)
 
         let pullRequest = try await Octokit()
-            .createPullRequest(session, owner: "octocat", repo: "Hello-World", title: "Amazing new feature", head: "octocat:new-feature", base: "master", body: "Please pull these awesome changes in!", maintainerCanModify: true, draft: false)
+            .createPullRequest(session,
+                               owner: "octocat",
+                               repo: "Hello-World",
+                               title: "Amazing new feature",
+                               head: "octocat:new-feature",
+                               base: "master",
+                               body: "Please pull these awesome changes in!",
+                               maintainerCanModify: true,
+                               draft: false)
 
         XCTAssertEqual(pullRequest.id, 1)
         XCTAssertEqual(pullRequest.title, "Amazing new feature")
