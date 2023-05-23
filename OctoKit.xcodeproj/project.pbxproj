@@ -189,6 +189,9 @@
 		BF8C7BE0F4071324EBDCA204 /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
 		BF8C7DEE90DD25CBCA4AEE71 /* Parameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C72B985869B84F46B4E9D /* Parameters.swift */; };
 		BF8C7FFFDDAFA560EBEC35EE /* PullRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */; };
+		C1B2EE922A0C0090001CF2FA /* created_pull_request.json in Resources */ = {isa = PBXBuildFile; fileRef = C1B2EE912A0C0090001CF2FA /* created_pull_request.json */; };
+		C1B2EE932A0C0090001CF2FA /* created_pull_request.json in Resources */ = {isa = PBXBuildFile; fileRef = C1B2EE912A0C0090001CF2FA /* created_pull_request.json */; };
+		C1B2EE942A0C0090001CF2FA /* created_pull_request.json in Resources */ = {isa = PBXBuildFile; fileRef = C1B2EE912A0C0090001CF2FA /* created_pull_request.json */; };
 		D1EAE8482503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
 		D1EAE8492503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
 		D1EAE84A2503886C0023806C /* Plan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EAE8472503886C0023806C /* Plan.swift */; };
@@ -335,6 +338,7 @@
 		BF8C72B985869B84F46B4E9D /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
 		BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequest.swift; sourceTree = "<group>"; };
 		BF8C76EB002802C14A08F63E /* PullRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullRequestTests.swift; sourceTree = "<group>"; };
+		C1B2EE912A0C0090001CF2FA /* created_pull_request.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = created_pull_request.json; path = Fixtures/created_pull_request.json; sourceTree = "<group>"; };
 		D1EAE8472503886C0023806C /* Plan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plan.swift; sourceTree = "<group>"; };
 		D1EAE84C25038A910023806C /* PlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTests.swift; sourceTree = "<group>"; };
 		D1EAE8612503D33B0023806C /* PreviewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewHeader.swift; sourceTree = "<group>"; };
@@ -470,6 +474,7 @@
 				23EA619D25EAE31A001B0964 /* plan.json */,
 				23EA61A025EAE31A001B0964 /* pull_request.json */,
 				23EA61A125EAE31A001B0964 /* pull_requests.json */,
+				C1B2EE912A0C0090001CF2FA /* created_pull_request.json */,
 				23EA619C25EAE31A001B0964 /* reactions.json */,
 				23EA619F25EAE31A001B0964 /* releases.json */,
 				23EA619E25EAE31A001B0964 /* reviews.json */,
@@ -831,6 +836,7 @@
 				E7EDEA6E1C871D0E006BAAF2 /* issues.json in Resources */,
 				23EA61A525EAE31A001B0964 /* reactions.json in Resources */,
 				5090ED7823E48FBC0062C763 /* post_release.json in Resources */,
+				C1B2EE922A0C0090001CF2FA /* created_pull_request.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,6 +884,7 @@
 				D4D28F712299DBE600F8E92A /* labels.json in Resources */,
 				23EA61A625EAE31A001B0964 /* reactions.json in Resources */,
 				E7EDEA741C871FA8006BAAF2 /* issues.json in Resources */,
+				C1B2EE932A0C0090001CF2FA /* created_pull_request.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,6 +924,7 @@
 				D4D28F722299DBE600F8E92A /* labels.json in Resources */,
 				23EA61A725EAE31A001B0964 /* reactions.json in Resources */,
 				E7EDEA751C871FA9006BAAF2 /* issues.json in Resources */,
+				C1B2EE942A0C0090001CF2FA /* created_pull_request.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
