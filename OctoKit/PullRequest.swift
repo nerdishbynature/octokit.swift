@@ -29,6 +29,7 @@ open class PullRequest: Codable {
     open var updatedAt: Date?
     open var closedAt: Date?
     open var mergedAt: Date?
+    open var mergeCommitSha: String?
 
     open var user: User?
     open var number: Int
@@ -78,6 +79,7 @@ open class PullRequest: Codable {
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case mergedAt = "merged_at"
+        case mergeCommitSha = "merge_commit_sha"
         case head
         case base
         case requestedReviewers = "requested_reviewers"
