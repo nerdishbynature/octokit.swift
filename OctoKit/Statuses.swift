@@ -151,6 +151,31 @@ public extension Octokit {
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Status].self)
     }
     #endif
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches pull requests associated with a commit.
+
+     https://docs.github.com/en/rest/commits/commits?apiVersion=2022-11-28#list-pull-requests-associated-with-a-commit
+     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
+     - parameter owner: The user or organization that owns the repository.
+     - parameter repository: The name of the repository.
+     - parameter sha: SHA of the commit.
+     - parameter page: Current page for repository pagination. `1` by default.
+     - parameter perPage: Number of pull requests per page. `100` by default.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func listCommitPullRequests(_ session: RequestKitURLSession = URLSession.shared,
+                            owner: String,
+                            repository: String,
+                            sha: String,
+                            page: Int = 1,
+                            perPage: Int = 100
+    ) async throws -> [PullRequest] {
+        let router = StatusesRouter.listCommitPullRequests(configuration, owner: owner, repo: repository, sha: sha, page: page, perPage: perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self)
+    }
+    #endif
 }
 
 // MARK: - Router
@@ -158,12 +183,13 @@ public extension Octokit {
 enum StatusesRouter: JSONPostRouter {
     case createCommitStatus(Configuration, owner: String, repo: String, sha: String, state: Status.State, targetURL: String?, description: String?, context: String?)
     case listCommitStatuses(Configuration, owner: String, repo: String, ref: String)
+    case listCommitPullRequests(Configuration, owner: String, repo: String, sha: String, page: Int, perPage: Int)
 
     var method: HTTPMethod {
         switch self {
         case .createCommitStatus:
             return .POST
-        case .listCommitStatuses:
+        case .listCommitStatuses, .listCommitPullRequests:
             return .GET
         }
     }
@@ -172,7 +198,7 @@ enum StatusesRouter: JSONPostRouter {
         switch self {
         case .createCommitStatus:
             return .json
-        case .listCommitStatuses:
+        case .listCommitStatuses, .listCommitPullRequests:
             return .url
         }
     }
@@ -181,7 +207,7 @@ enum StatusesRouter: JSONPostRouter {
         switch self {
         case let .createCommitStatus(config, _, _, _, _, _, _, _):
             return config
-        case let .listCommitStatuses(config, _, _, _):
+        case let .listCommitStatuses(config, _, _, _), let .listCommitPullRequests(config, _, _, _, _, _):
             return config
         }
     }
@@ -202,6 +228,8 @@ enum StatusesRouter: JSONPostRouter {
             return params
         case .listCommitStatuses:
             return [:]
+        case let .listCommitPullRequests(_, _, _, _, page, perPage):
+            return ["page": "\(page)", "per_page": "\(perPage)"]
         }
     }
 
@@ -211,6 +239,8 @@ enum StatusesRouter: JSONPostRouter {
             return "repos/\(owner)/\(repo)/statuses/\(sha)"
         case let .listCommitStatuses(_, owner, repo, ref):
             return "repos/\(owner)/\(repo)/commits/\(ref)/statuses"
+        case let .listCommitPullRequests(_, owner, repo, sha, _, _):
+            return "repos/\(owner)/\(repo)/commits/\(sha)/pulls"
         }
     }
 }
