@@ -9,7 +9,7 @@ class StarsTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
-        let task = Octokit(config).myStars(session) { response in
+        let task = Octokit(config, session: session).myStars { response in
             switch response {
             case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
@@ -26,7 +26,7 @@ class StarsTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: nil, statusCode: 404)
-        let task = Octokit(config).myStars(session) { response in
+        let task = Octokit(config, session: session).myStars { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve repositories")
@@ -41,7 +41,7 @@ class StarsTests: XCTestCase {
 
     func testGetUsersStarredRepositories() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
-        let task = Octokit().stars(session, name: "octocat") { response in
+        let task = Octokit(session: session).stars(name: "octocat") { response in
             switch response {
             case let .success(repositories):
                 XCTAssertEqual(repositories.count, 1)
@@ -55,7 +55,7 @@ class StarsTests: XCTestCase {
 
     func testFailToGetUsersStarredRepositories() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        let task = Octokit().stars(session, name: "octocat") { response in
+        let task = Octokit(session: session).stars(name: "octocat") { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve repositories")
@@ -70,9 +70,7 @@ class StarsTests: XCTestCase {
 
     func testGetStarFromNotStarredRepository() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        let task = Octokit().star(session,
-                                  owner: "octocat",
-                                  repository: "Hello-World") { response in
+        let task = Octokit(session: session).star(owner: "octocat", repository: "Hello-World") { response in
             switch response {
             case let .success(flag):
                 XCTAssertFalse(flag)
@@ -86,9 +84,7 @@ class StarsTests: XCTestCase {
 
     func testGetStarFromStarredRepository() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 204)
-        let task = Octokit().star(session,
-                                  owner: "octocat",
-                                  repository: "Hello-World") { response in
+        let task = Octokit(session: session).star(owner: "octocat", repository: "Hello-World") { response in
             switch response {
             case let .success(flag):
                 XCTAssertTrue(flag)
@@ -102,9 +98,7 @@ class StarsTests: XCTestCase {
 
     func testPutStar() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "PUT", jsonFile: nil, statusCode: 204)
-        let task = Octokit().putStar(session,
-                                     owner: "octocat",
-                                     repository: "Hello-World") { response in
+        let task = Octokit(session: session).putStar(owner: "octocat", repository: "Hello-World") { response in
             XCTAssertNil(response)
         }
         XCTAssertNotNil(task)
@@ -113,9 +107,7 @@ class StarsTests: XCTestCase {
 
     func testDeleteStar() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "DELETE", jsonFile: nil, statusCode: 204)
-        let task = Octokit().deleteStar(session,
-                                        owner: "octocat",
-                                        repository: "Hello-World") { response in
+        let task = Octokit(session: session).deleteStar(owner: "octocat", repository: "Hello-World") { response in
             XCTAssertNil(response)
         }
         XCTAssertNotNil(task)
@@ -131,49 +123,41 @@ extension StarsTests {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
-        let repositories = try await Octokit(config).myStars(session)
+        let repositories = try await Octokit(config, session: session).myStars()
         XCTAssertEqual(repositories.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testGetUsersStarredRepositoriesAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
-        let repositories = try await Octokit().stars(session, name: "octocat")
+        let repositories = try await Octokit(session: session).stars(name: "octocat")
         XCTAssertEqual(repositories.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testGetStarFromNotStarredRepositoryAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        let flag = try await Octokit().star(session,
-                                            owner: "octocat",
-                                            repository: "Hello-World")
+        let flag = try await Octokit(session: session).star(owner: "octocat", repository: "Hello-World")
         XCTAssertFalse(flag)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testGetStarFromStarredRepositoryAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 204)
-        let flag = try await Octokit().star(session,
-                                            owner: "octocat",
-                                            repository: "Hello-World")
+        let flag = try await Octokit(session: session).star(owner: "octocat", repository: "Hello-World")
         XCTAssertTrue(flag)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testPutStarAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "PUT", jsonFile: nil, statusCode: 204)
-        try await Octokit().putStar(session,
-                                    owner: "octocat",
-                                    repository: "Hello-World")
+        try await Octokit(session: session).putStar(owner: "octocat", repository: "Hello-World")
         XCTAssertTrue(session.wasCalled)
     }
 
     func testDeleteStarAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred/octocat/Hello-World", expectedHTTPMethod: "DELETE", jsonFile: nil, statusCode: 204)
-        try await Octokit().deleteStar(session,
-                                       owner: "octocat",
-                                       repository: "Hello-World")
+        try await Octokit(session: session).deleteStar(owner: "octocat", repository: "Hello-World")
         XCTAssertTrue(session.wasCalled)
     }
 }

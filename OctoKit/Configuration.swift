@@ -54,6 +54,7 @@ public struct OAuthConfiguration: Configuration {
     /// Used for preview support of new APIs, for instance Reaction API.
     /// see: https://developer.github.com/changes/2016-05-12-reactions-api-preview/
     private var previewCustomHeaders: [HTTPHeader]?
+    private let session: RequestKitURLSession
 
     public var customHeaders: [HTTPHeader]? {
         // More (non-preview) headers can be appended if needed in the future
@@ -65,12 +66,14 @@ public struct OAuthConfiguration: Configuration {
                 token: String,
                 secret: String,
                 scopes: [String],
-                previewHeaders: [PreviewHeader] = []) {
+                previewHeaders: [PreviewHeader] = [],
+                session: RequestKitURLSession = URLSession.shared) {
         apiEndpoint = url
         webEndpoint = webURL
         self.token = token
         self.secret = secret
         self.scopes = scopes
+        self.session = session
         previewCustomHeaders = previewHeaders.map { $0.header }
     }
 
@@ -78,7 +81,7 @@ public struct OAuthConfiguration: Configuration {
         return OAuthRouter.authorize(self).URLRequest?.url
     }
 
-    public func authorize(_ session: RequestKitURLSession = URLSession.shared, code: String, completion: @escaping (_ config: TokenConfiguration) -> Void) {
+    public func authorize(code: String, completion: @escaping (_ config: TokenConfiguration) -> Void) {
         let request = OAuthRouter.accessToken(self, code).URLRequest
         if let request = request {
             let task = session.dataTask(with: request) { data, response, _ in
@@ -100,9 +103,9 @@ public struct OAuthConfiguration: Configuration {
         }
     }
 
-    public func handleOpenURL(_ session: RequestKitURLSession = URLSession.shared, url: URL, completion: @escaping (_ config: TokenConfiguration) -> Void) {
+    public func handleOpenURL(url: URL, completion: @escaping (_ config: TokenConfiguration) -> Void) {
         if let code = url.URLParameters["code"] {
-            authorize(session, code: code) { config in
+            authorize(code: code) { config in
                 completion(config)
             }
         }

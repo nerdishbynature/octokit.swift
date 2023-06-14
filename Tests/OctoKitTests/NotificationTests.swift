@@ -13,7 +13,7 @@ class NotificationTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "notification_threads",
                                             statusCode: 200)
-        let task = Octokit(config).myNotifications(session, all: false, participating: false, page: "1", perPage: "100") { response in
+        let task = Octokit(config, session: session).myNotifications(all: false, participating: false, page: "1", perPage: "100") { response in
             switch response {
             case let .success(notifications):
                 XCTAssertEqual(notifications.count, 1)
@@ -34,7 +34,7 @@ class NotificationTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             response: "",
                                             statusCode: 200)
-        let task = Octokit(config).markNotificationsRead(session) { response in
+        let task = Octokit(config, session: session).markNotificationsRead { response in
             XCTAssertNil(response)
         }
         XCTAssertNotNil(task)
@@ -49,7 +49,7 @@ class NotificationTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "notification_thread",
                                             statusCode: 200)
-        let task = Octokit(config).getNotificationThread(session, threadId: "1") { response in
+        let task = Octokit(config, session: session).getNotificationThread(threadId: "1") { response in
             switch response {
             case let .success(notification):
                 XCTAssertEqual(notification.id, "1")
@@ -69,7 +69,7 @@ class NotificationTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "notification_thread_subscription",
                                             statusCode: 200)
-        let task = Octokit(config).getThreadSubscription(session, threadId: "1") { response in
+        let task = Octokit(config, session: session).getThreadSubscription(threadId: "1") { response in
             switch response {
             case let .success(notification):
                 XCTAssertEqual(notification.id, 1)
@@ -89,7 +89,7 @@ class NotificationTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "notification_thread_subscription",
                                             statusCode: 200)
-        let task = Octokit(config).setThreadSubscription(session, threadId: "1") { response in
+        let task = Octokit(config, session: session).setThreadSubscription(threadId: "1") { response in
             switch response {
             case let .success(notification):
                 XCTAssertEqual(notification.id, 1)
@@ -109,7 +109,7 @@ class NotificationTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             response: "",
                                             statusCode: 200)
-        let task = Octokit(config).deleteThreadSubscription(session, threadId: "1") { response in
+        let task = Octokit(config, session: session).deleteThreadSubscription(threadId: "1") { response in
             XCTAssertNil(response)
         }
         XCTAssertNotNil(task)
@@ -124,7 +124,7 @@ class NotificationTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "notification_threads",
                                             statusCode: 200)
-        let task = Octokit(config).listRepositoryNotifications(session, owner: "octocat", repository: "hello-world") { response in
+        let task = Octokit(config, session: session).listRepositoryNotifications(owner: "octocat", repository: "hello-world") { response in
             switch response {
             case let .success(notifications):
                 XCTAssertEqual(notifications.count, 1)
@@ -145,7 +145,7 @@ class NotificationTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             response: "",
                                             statusCode: 200)
-        let task = Octokit(config).markRepositoryNotificationsRead(session, owner: "octocat", repository: "hello-world") { response in
+        let task = Octokit(config, session: session).markRepositoryNotificationsRead(owner: "octocat", repository: "hello-world") { response in
             XCTAssertNil(response)
         }
         XCTAssertNotNil(task)

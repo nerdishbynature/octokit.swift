@@ -67,8 +67,7 @@ extension Review.Comment {
 
 public extension Octokit {
     @discardableResult
-    func listReviews(_ session: RequestKitURLSession = URLSession.shared,
-                     owner: String,
+    func listReviews(owner: String,
                      repository: String,
                      pullRequestNumber: Int,
                      completion: @escaping (_ response: Result<[Review], Error>) -> Void) -> URLSessionDataTaskProtocol? {
@@ -85,8 +84,7 @@ public extension Octokit {
     }
 
     @discardableResult
-    func postReview(_ session: RequestKitURLSession = URLSession.shared,
-                    owner: String,
+    func postReview(owner: String,
                     repository: String,
                     pullRequestNumber: Int,
                     commitId: String? = nil,
@@ -106,8 +104,7 @@ public extension Octokit {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func reviews(_ session: RequestKitURLSession = URLSession.shared,
-                 owner: String,
+    func reviews(owner: String,
                  repository: String,
                  pullRequestNumber: Int) async throws -> [Review] {
         let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
@@ -116,8 +113,7 @@ public extension Octokit {
 
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     @discardableResult
-    func postReview(_ session: RequestKitURLSession = URLSession.shared,
-                    owner: String,
+    func postReview(owner: String,
                     repository: String,
                     pullRequestNumber: Int,
                     commitId: String? = nil,

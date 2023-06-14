@@ -78,7 +78,6 @@ open class ThreadSubscription: Codable {
 public extension Octokit {
     /**
      List all notifications for the current user, sorted by most recently updated.
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter all: show notifications marked as read `false` by default.
      - parameter participating: only shows notifications in which the user is directly participating or mentioned. `false` by default.
      - parameter page: Current page for notification pagination. `1` by default.
@@ -86,8 +85,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myNotifications(_ session: RequestKitURLSession = URLSession.shared,
-                         all: Bool = false,
+    func myNotifications(all: Bool = false,
                          participating: Bool = false,
                          page: String = "1",
                          perPage: String = "100",
@@ -106,14 +104,12 @@ public extension Octokit {
 
     /**
      Marks All Notifications As read
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter lastReadAt: Describes the last point that notifications were checked `last_read_at` by default.
      - parameter read: Whether the notification has been read `false` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func markNotificationsRead(_ session: RequestKitURLSession = URLSession.shared,
-                               lastReadAt: String = "last_read_at",
+    func markNotificationsRead(lastReadAt: String = "last_read_at",
                                read: Bool = false,
                                completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.markNotificationsRead(configuration, lastReadAt, read)
@@ -122,13 +118,11 @@ public extension Octokit {
 
     /**
      Marks All Notifications As read
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter threadId: The ID of the Thread.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func getNotificationThread(_ session: RequestKitURLSession = URLSession.shared,
-                               threadId: String,
+    func getNotificationThread(threadId: String,
                                completion: @escaping (_ response: Result<NotificationThread, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.getNotificationThread(configuration, threadId)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: NotificationThread.self) { notification, error in
@@ -144,13 +138,11 @@ public extension Octokit {
 
     /**
      Get a thread subscription for the authenticated user
-      - parameter session: RequestKitURLSession, defaults to URLSession.shared
       - parameter threadId: The ID of the Thread.
       - parameter completion: Callback for the outcome of the fetch.
       */
     @discardableResult
-    func getThreadSubscription(_ session: RequestKitURLSession = URLSession.shared,
-                               threadId: String,
+    func getThreadSubscription(threadId: String,
                                completion: @escaping (_ response: Result<ThreadSubscription, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.getThreadSubscription(configuration, threadId)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self) { thread, error in
@@ -166,14 +158,12 @@ public extension Octokit {
 
     /**
      Sets a thread subscription for the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter threadId: The ID of the Thread.
      - parameter ignored: Whether to block all notifications from a thread `false` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func setThreadSubscription(_ session: RequestKitURLSession = URLSession.shared,
-                               threadId: String,
+    func setThreadSubscription(threadId: String,
                                ignored: Bool = false,
                                completion: @escaping (_ response: Result<ThreadSubscription, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.setThreadSubscription(configuration, threadId, ignored)
@@ -190,19 +180,17 @@ public extension Octokit {
 
     /**
      Delete a thread subscription
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter threadId: The ID of the Thread.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func deleteThreadSubscription(_ session: RequestKitURLSession = URLSession.shared, threadId: String, completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+    func deleteThreadSubscription(threadId: String, completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.deleteThreadSubscription(configuration, threadId)
         return router.load(session, completion: completion)
     }
 
     /**
      List all repository notifications for the current user, sorted by most recently updated.
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter owner: The name of the owner of the repository.
      - parameter repository: The name of the repository.
      - parameter all: show notifications marked as read `false` by default.
@@ -214,8 +202,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func listRepositoryNotifications(_ session: RequestKitURLSession = URLSession.shared,
-                                     owner: String,
+    func listRepositoryNotifications(owner: String,
                                      repository: String,
                                      all: Bool = false,
                                      participating: Bool = false,
@@ -238,15 +225,13 @@ public extension Octokit {
 
     /**
      Marks All Repository Notifications As read
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The name of the owner of the repository.
      - parameter repository: The name of the repository.
      - parameter lastReadAt: Describes the last point that notifications were checked `last_read_at` by default.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func markRepositoryNotificationsRead(_ session: RequestKitURLSession = URLSession.shared,
-                                         owner: String,
+    func markRepositoryNotificationsRead(owner: String,
                                          repository: String,
                                          lastReadAt: String? = nil,
                                          completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {

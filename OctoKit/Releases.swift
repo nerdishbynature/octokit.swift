@@ -52,14 +52,12 @@ public struct Release: Codable {
 public extension Octokit {
     /// Fetches the list of releases.
     /// - Parameters:
-    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repository: The name of the repository.
     ///   - perPage: Results per page (max 100). Default: `30`.
     ///   - completion: Callback for the outcome of the fetch.
     @discardableResult
-    func listReleases(_ session: RequestKitURLSession = URLSession.shared,
-                      owner: String,
+    func listReleases(owner: String,
                       repository: String,
                       perPage: Int = 30,
                       completion: @escaping (_ response: Result<[Release], Error>) -> Void) -> URLSessionDataTaskProtocol? {
@@ -76,11 +74,11 @@ public extension Octokit {
     }
 
     /// Fetches a published release with the specified tag.
+    /// - Parameters:
     ///   - tag: The specified tag
     ///   - completion: Callback for the outcome of the fetch.
     @discardableResult
-    func release(_ session: RequestKitURLSession = URLSession.shared,
-                 owner: String,
+    func release(owner: String,
                  repository: String,
                  tag: String,
                  completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol? {
@@ -99,23 +97,21 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Fetches the list of releases.
     /// - Parameters:
-    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repository: The name of the repository.
     ///   - perPage: Results per page (max 100). Default: `30`.2
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func listReleases(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, perPage: Int = 30) async throws -> [Release] {
+    func listReleases(owner: String, repository: String, perPage: Int = 30) async throws -> [Release] {
         let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self)
     }
 
     /// Fetches the latest release.
     /// - Parameters:
-    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repository: The name of the repository.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func getLatestRelease(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String) async throws -> Release {
+    func getLatestRelease(owner: String, repository: String) async throws -> Release {
         let router = ReleaseRouter.getLatestRelease(configuration, owner, repository)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Release.self)
     }
@@ -123,7 +119,6 @@ public extension Octokit {
 
     /// Creates a new release.
     /// - Parameters:
-    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repo: The repository on which the release needs to be created.
     ///   - tagName: The name of the tag.
@@ -134,8 +129,7 @@ public extension Octokit {
     ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
     ///   - completion: Callback for the outcome of the created release.
     @discardableResult
-    func postRelease(_ session: RequestKitURLSession = URLSession.shared,
-                     owner: String,
+    func postRelease(owner: String,
                      repository: String,
                      tagName: String,
                      targetCommitish: String? = nil,
@@ -162,14 +156,12 @@ public extension Octokit {
 
     /// Deletes a release.
     /// - Parameters:
-    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repo: The repository on which the release needs to be deleted.
     ///   - releaseId: The ID of the release to delete.
     ///   - completion: Callback for the outcome of the deletion.
     @discardableResult
-    func deleteRelease(_ session: RequestKitURLSession = URLSession.shared,
-                       owner: String,
+    func deleteRelease(owner: String,
                        repository: String,
                        releaseId: Int,
                        completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
@@ -180,7 +172,6 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Creates a new release.
     /// - Parameters:
-    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repo: The repository on which the release needs to be created.
     ///   - tagName: The name of the tag.
@@ -190,8 +181,7 @@ public extension Octokit {
     ///   - prerelease: `true` to create a draft (unpublished) release, `false` to create a published one. Default: `false`.
     ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func postRelease(_ session: RequestKitURLSession = URLSession.shared,
-                     owner: String,
+    func postRelease(owner: String,
                      repository: String,
                      tagName: String,
                      targetCommitish: String? = nil,

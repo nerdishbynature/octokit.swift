@@ -46,7 +46,6 @@ open class Status: Codable {
 public extension Octokit {
     /**
      Creates a commit status
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter sha: The commit SHA.
@@ -57,8 +56,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the request.
      */
     @discardableResult
-    func createCommitStatus(_ session: RequestKitURLSession = URLSession.shared,
-                            owner: String,
+    func createCommitStatus(owner: String,
                             repository: String,
                             sha: String,
                             state: Status.State,
@@ -83,7 +81,6 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Creates a commit status
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter sha: The commit SHA.
@@ -93,8 +90,7 @@ public extension Octokit {
      - parameter context: A string label to differentiate this status from the status of other systems.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func createCommitStatus(_ session: RequestKitURLSession = URLSession.shared,
-                            owner: String,
+    func createCommitStatus(owner: String,
                             repository: String,
                             sha: String,
                             state: Status.State,
@@ -110,15 +106,13 @@ public extension Octokit {
 
     /**
      Fetches commit statuses for a reference
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter ref: SHA, a branch name, or a tag name.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func listCommitStatuses(_ session: RequestKitURLSession = URLSession.shared,
-                            owner: String,
+    func listCommitStatuses(owner: String,
                             repository: String,
                             ref: String,
                             completion: @escaping (_ response: Result<[Status], Error>) -> Void) -> URLSessionDataTaskProtocol? {
@@ -137,14 +131,12 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches commit statuses for a reference
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter ref: SHA, a branch name, or a tag name.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func listCommitStatuses(_ session: RequestKitURLSession = URLSession.shared,
-                            owner: String,
+    func listCommitStatuses(owner: String,
                             repository: String,
                             ref: String) async throws -> [Status] {
         let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref)

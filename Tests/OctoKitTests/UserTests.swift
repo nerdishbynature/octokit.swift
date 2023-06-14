@@ -7,7 +7,7 @@ class UserTests: XCTestCase {
     func testGetUser() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/mietzmithut", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
         let username = "mietzmithut"
-        let task = Octokit().user(session, name: username) { response in
+        let task = Octokit(session: session).user(name: username) { response in
             switch response {
             case let .success(user):
                 XCTAssertEqual(user.login, username)
@@ -23,7 +23,7 @@ class UserTests: XCTestCase {
     func testFailingToGetUser() {
         let username = "notexisting"
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/notexisting", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
-        let task = Octokit().user(session, name: username) { response in
+        let task = Octokit(session: session).user(name: username) { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve user")
@@ -41,7 +41,7 @@ class UserTests: XCTestCase {
     func testGetUserAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/mietzmithut", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
         let username = "mietzmithut"
-        let user = try await Octokit().user(session, name: username)
+        let user = try await Octokit(session: session).user(name: username)
         XCTAssertEqual(user.login, username)
         XCTAssertNotNil(user.createdAt)
         XCTAssertTrue(session.wasCalled)
@@ -53,7 +53,7 @@ class UserTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_me", statusCode: 200)
-        let task = Octokit(config).me(session) { response in
+        let task = Octokit(config, session: session).me { response in
             switch response {
             case let .success(user):
                 XCTAssertEqual(user.login, "pietbrauer")
@@ -68,7 +68,7 @@ class UserTests: XCTestCase {
     func testFailToGetAuthenticatedUser() {
         let json = "{\"message\":\"Bad credentials\",\"documentation_url\":\"https://developer.github.com/v3\"}"
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", response: json, statusCode: 401)
-        let task = Octokit().me(session) { response in
+        let task = Octokit(session: session).me { response in
             switch response {
             case .success:
                 XCTAssert(false, "should not retrieve user")
@@ -88,7 +88,7 @@ class UserTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_me", statusCode: 200)
-        let user = try await Octokit(config).me(session)
+        let user = try await Octokit(config, session: session).me()
         XCTAssertEqual(user.login, "pietbrauer")
         XCTAssertTrue(session.wasCalled)
     }

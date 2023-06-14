@@ -42,9 +42,9 @@ extension Label {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.label(session, owner: owner, repository: repository, name: name)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.label(owner: owner, repository: repository, name: name)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
@@ -66,9 +66,9 @@ extension Label {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.labels(session, owner: owner, repository: repository)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.labels(owner: owner, repository: repository)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

@@ -17,7 +17,7 @@ final class ReleasesTests: XCTestCase {
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "Fixtures/releases",
                                             statusCode: 200)
-        let task = Octokit().listReleases(session, owner: "octocat", repository: "Hello-World") {
+        let task = Octokit(session: session).listReleases(owner: "octocat", repository: "Hello-World") {
             switch $0 {
             case let .success(releases):
                 XCTAssertEqual(releases.count, 2)
@@ -61,7 +61,7 @@ final class ReleasesTests: XCTestCase {
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "Fixtures/releases",
                                             statusCode: 200)
-        let task = Octokit().listReleases(session, owner: "octocat", repository: "Hello-World", perPage: perPage) {
+        let task = Octokit(session: session).listReleases(owner: "octocat", repository: "Hello-World", perPage: perPage) {
             switch $0 {
             case .success:
                 break
@@ -80,7 +80,7 @@ final class ReleasesTests: XCTestCase {
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "Fixtures/releases",
                                             statusCode: 200)
-        let releases = try await Octokit().listReleases(session, owner: "octocat", repository: "Hello-World")
+        let releases = try await Octokit(session: session).listReleases(owner: "octocat", repository: "Hello-World")
         XCTAssertEqual(releases.count, 2)
         if let release = releases.first {
             XCTAssertEqual(release.tagName, "v1.0.0")
@@ -119,7 +119,7 @@ final class ReleasesTests: XCTestCase {
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "Fixtures/latest_release",
                                             statusCode: 200)
-        let release = try await Octokit().getLatestRelease(session, owner: "octocat", repository: "Hello-World")
+        let release = try await Octokit(session: session).getLatestRelease(owner: "octocat", repository: "Hello-World")
         XCTAssertNotNil(release)
 
         XCTAssertEqual(release.tagName, "v1.0.0")
@@ -136,16 +136,15 @@ final class ReleasesTests: XCTestCase {
 
     func testPostRelease() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases", expectedHTTPMethod: "POST", jsonFile: "post_release", statusCode: 201)
-        let task = Octokit().postRelease(session,
-                                         owner: "octocat",
-                                         repository: "Hello-World",
-                                         tagName: "v1.0.0",
-                                         targetCommitish: "master",
-                                         name: "v1.0.0 Release",
-                                         body: "The changelog of this release",
-                                         prerelease: false,
-                                         draft: false,
-                                         generateNotes: false) { response in
+        let task = Octokit(session: session).postRelease(owner: "octocat",
+                                                         repository: "Hello-World",
+                                                         tagName: "v1.0.0",
+                                                         targetCommitish: "master",
+                                                         name: "v1.0.0 Release",
+                                                         body: "The changelog of this release",
+                                                         prerelease: false,
+                                                         draft: false,
+                                                         generateNotes: false) { response in
             switch response {
             case let .success(release):
                 XCTAssertEqual(release.tagName, "v1.0.0")
@@ -167,7 +166,7 @@ final class ReleasesTests: XCTestCase {
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "Fixtures/release",
                                             statusCode: 201)
-        let task = Octokit().release(session, owner: "octocat", repository: "Hello-World", tag: "v1.0.0") {
+        let task = Octokit(session: session).release(owner: "octocat", repository: "Hello-World", tag: "v1.0.0") {
             switch $0 {
             case let .success(release):
                 XCTAssertEqual(release.tagName, "v1.0.0")
@@ -191,16 +190,15 @@ final class ReleasesTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testPostReleaseAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases", expectedHTTPMethod: "POST", jsonFile: "post_release", statusCode: 201)
-        let release = try await Octokit().postRelease(session,
-                                                      owner: "octocat",
-                                                      repository: "Hello-World",
-                                                      tagName: "v1.0.0",
-                                                      targetCommitish: "master",
-                                                      name: "v1.0.0 Release",
-                                                      body: "The changelog of this release",
-                                                      prerelease: false,
-                                                      draft: false,
-                                                      generateNotes: false)
+        let release = try await Octokit(session: session).postRelease(owner: "octocat",
+                                                                      repository: "Hello-World",
+                                                                      tagName: "v1.0.0",
+                                                                      targetCommitish: "master",
+                                                                      name: "v1.0.0 Release",
+                                                                      body: "The changelog of this release",
+                                                                      prerelease: false,
+                                                                      draft: false,
+                                                                      generateNotes: false)
         XCTAssertEqual(release.tagName, "v1.0.0")
         XCTAssertEqual(release.commitish, "master")
         XCTAssertEqual(release.name, "v1.0.0 Release")
