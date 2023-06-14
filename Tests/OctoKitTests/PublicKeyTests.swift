@@ -10,7 +10,7 @@ class PublicKeyTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/keys", expectedHTTPMethod: "POST", expectedHTTPHeaders: headers, jsonFile: "public_key", statusCode: 201)
-        let task = Octokit(config).postPublicKey(session, publicKey: "test-key", title: "test title") { response in
+        let task = Octokit(config, session: session).postPublicKey(publicKey: "test-key", title: "test title") { response in
             switch response {
             case let .success(publicKey):
                 XCTAssertEqual(publicKey, "test-key")
@@ -29,7 +29,7 @@ class PublicKeyTests: XCTestCase {
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/keys", expectedHTTPMethod: "POST", expectedHTTPHeaders: headers, jsonFile: "public_key", statusCode: 201)
-        let publicKey = try await Octokit(config).postPublicKey(session, publicKey: "test-key", title: "test title")
+        let publicKey = try await Octokit(config, session: session).postPublicKey(publicKey: "test-key", title: "test title")
         XCTAssertEqual(publicKey, "test-key")
         XCTAssertTrue(session.wasCalled)
     }

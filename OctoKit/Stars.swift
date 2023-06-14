@@ -6,13 +6,12 @@ import FoundationNetworking
 
 public extension Octokit {
     /**
-         Fetches all the starred repositories for a user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
-         - parameter name: The user who starred repositories.
-         - parameter completion: Callback for the outcome of the fetch.
+     Fetches all the starred repositories for a user
+     - parameter name: The user who starred repositories.
+     - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func stars(_ session: RequestKitURLSession = URLSession.shared, name: String, completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+    func stars(name: String, completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.readStars(name, configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self) { repos, error in
             if let error = error {
@@ -27,11 +26,10 @@ public extension Octokit {
 
     /**
          Fetches all the starred repositories for the authenticated user
-         - parameter session: RequestKitURLSession, defaults to URLSession.shared
          - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func myStars(_ session: RequestKitURLSession = URLSession.shared, completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+    func myStars(completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.readAuthenticatedStars(configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self) { repos, error in
             if let error = error {
@@ -46,14 +44,12 @@ public extension Octokit {
 
     /**
      Checks if a repository is starred by the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The name of the owner of the repository.
      - parameter repository: The name of the repository.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func star(_ session: RequestKitURLSession = URLSession.shared,
-              owner: String,
+    func star(owner: String,
               repository: String,
               completion: @escaping (_ response: Result<Bool, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.readStar(configuration, owner, repository)
@@ -72,14 +68,12 @@ public extension Octokit {
 
     /**
      Stars a repository for the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The name of the owner of the repository.
      - parameter repository: The name of the repository.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func putStar(_ session: RequestKitURLSession = URLSession.shared,
-                 owner: String,
+    func putStar(owner: String,
                  repository: String,
                  completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.putStar(configuration, owner, repository)
@@ -88,14 +82,12 @@ public extension Octokit {
 
     /**
      Unstars a repository for the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The name of the owner of the repository.
      - parameter repository: The name of the repository.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func deleteStar(_ session: RequestKitURLSession = URLSession.shared,
-                    owner: String,
+    func deleteStar(owner: String,
                     repository: String,
                     completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.deleteStar(configuration, owner, repository)
@@ -108,33 +100,29 @@ public extension Octokit {
 public extension Octokit {
     /**
      Fetches all the starred repositories for a user
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - parameter name: The user who starred repositories.
      */
-    func stars(_ session: RequestKitURLSession = URLSession.shared, name: String) async throws -> [Repository] {
+    func stars(name: String) async throws -> [Repository] {
         let router = StarsRouter.readStars(name, configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
     }
 
     /**
      Fetches all the starred repositories for the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.shared
      - Returns: The repos which the authenticated user stars.
      */
-    func myStars(_ session: RequestKitURLSession = URLSession.shared) async throws -> [Repository] {
+    func myStars() async throws -> [Repository] {
         let router = StarsRouter.readAuthenticatedStars(configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
     }
 
     /**
      Checks if a repository is starred by the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The name of the owner of the repository.
      - parameter repository: The name of the repository.
      - Returns: If the repository is starred by the authenticated user
      */
-    func star(_ session: RequestKitURLSession = URLSession.shared,
-              owner: String,
+    func star(owner: String,
               repository: String) async throws -> Bool {
         let router = StarsRouter.readStar(configuration, owner, repository)
         do {
@@ -149,12 +137,10 @@ public extension Octokit {
 
     /**
      Stars a repository for the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The name of the owner of the repository.
      - parameter repository: The name of the repository.
      */
-    func putStar(_ session: RequestKitURLSession = URLSession.shared,
-                 owner: String,
+    func putStar(owner: String,
                  repository: String) async throws {
         let router = StarsRouter.putStar(configuration, owner, repository)
         try await router.load(session)
@@ -162,12 +148,10 @@ public extension Octokit {
 
     /**
      Unstars a repository for the authenticated user
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The name of the owner of the repository.
      - parameter repository: The name of the repository.
      */
-    func deleteStar(_ session: RequestKitURLSession = URLSession.shared,
-                    owner: String,
+    func deleteStar(owner: String,
                     repository: String) async throws {
         let router = StarsRouter.deleteStar(configuration, owner, repository)
         try await router.load(session)

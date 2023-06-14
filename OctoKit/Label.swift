@@ -15,15 +15,13 @@ open class Label: Codable {
 public extension Octokit {
     /**
       Fetches a single label in a repository
-      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
       - parameter owner: The user or organization that owns the repository.
       - parameter repository: The name of the repository.
       - parameter name: The name of the label.
       - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func label(_ session: RequestKitURLSession = URLSession.shared,
-               owner: String,
+    func label(owner: String,
                repository: String,
                name: String,
                completion: @escaping (_ response: Result<Label, Error>) -> Void) -> URLSessionDataTaskProtocol? {
@@ -42,13 +40,12 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
       Fetches a single label in a repository
-      - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
       - parameter owner: The user or organization that owns the repository.
       - parameter repository: The name of the repository.
       - parameter name: The name of the label.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func label(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, name: String) async throws -> Label {
+    func label(owner: String, repository: String, name: String) async throws -> Label {
         let router = LabelRouter.readLabel(configuration, owner, repository, name)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Label.self)
     }
@@ -56,7 +53,6 @@ public extension Octokit {
 
     /**
      Fetches all labels in a repository
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter page: Current page for label pagination. `1` by default.
@@ -64,8 +60,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
-    func labels(_ session: RequestKitURLSession = URLSession.shared,
-                owner: String,
+    func labels(owner: String,
                 repository: String,
                 page: String = "1",
                 perPage: String = "100",
@@ -85,14 +80,13 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Fetches all labels in a repository
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter page: Current page for label pagination. `1` by default.
      - parameter perPage: Number of labels per page. `100` by default.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func labels(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, page: String = "1", perPage: String = "100") async throws -> [Label] {
+    func labels(owner: String, repository: String, page: String = "1", perPage: String = "100") async throws -> [Label] {
         let router = LabelRouter.readLabels(configuration, owner, repository, page, perPage)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Label].self)
     }
@@ -100,7 +94,6 @@ public extension Octokit {
 
     /**
      Create a label in a repository
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter name: The name of the label.
@@ -108,8 +101,7 @@ public extension Octokit {
      - parameter completion: Callback for the outcome of the request.
      */
     @discardableResult
-    func postLabel(_ session: RequestKitURLSession = URLSession.shared,
-                   owner: String,
+    func postLabel(owner: String,
                    repository: String,
                    name: String,
                    color: String,
@@ -129,14 +121,13 @@ public extension Octokit {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      Create a label in a repository
-     - parameter session: RequestKitURLSession, defaults to URLSession.sharedSession()
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter name: The name of the label.
      - parameter color: The color of the label, in hexadecimal without the leading `#`.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func postLabel(_ session: RequestKitURLSession = URLSession.shared, owner: String, repository: String, name: String, color: String) async throws -> Label {
+    func postLabel(owner: String, repository: String, name: String, color: String) async throws -> Label {
         let router = LabelRouter.createLabel(configuration, owner, repository, name, color)
         return try await router.post(session, expectedResultType: Label.self)
     }

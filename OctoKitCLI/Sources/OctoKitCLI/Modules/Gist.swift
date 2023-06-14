@@ -36,9 +36,9 @@ extension Gist {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.gist(session, id: id)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.gist(id: id)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
@@ -60,9 +60,9 @@ extension Gist {
         init() {}
 
         mutating func run() async throws {
-            let octokit = Octokit()
             let session = JSONInterceptingURLSession()
-            _ = try await octokit.gists(session, owner: owner)
+            let octokit = Octokit(session: session)
+            _ = try await octokit.gists(owner: owner)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

@@ -17,14 +17,12 @@ import FoundationNetworking
 public extension Octokit {
     /// Deletes a reference.
     /// - Parameters:
-    ///   - session: RequestKitURLSession, defaults to URLSession.shared()
     ///   - owner: The user or organization that owns the repositories.
     ///   - repo: The repository on which the reference needs to be deleted.
     ///   - ref: The reference to delete.
     ///   - completion: Callback for the outcome of the deletion.
     @discardableResult
-    func deleteReference(_ session: RequestKitURLSession = URLSession.shared,
-                         owner: String,
+    func deleteReference(owner: String,
                          repository: String,
                          ref: String,
                          completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {

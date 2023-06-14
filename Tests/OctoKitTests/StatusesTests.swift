@@ -10,14 +10,13 @@ class StatusesTests: XCTestCase {
                                             jsonFile: "status",
                                             statusCode: 201)
 
-        let task = Octokit().createCommitStatus(session,
-                                                owner: "octocat",
-                                                repository: "Hello-World",
-                                                sha: "6dcb09b5b57875f334f61aebed695e2e4193db5e",
-                                                state: .success,
-                                                targetURL: "https://example.com/build/status",
-                                                description: "The build succeeded!",
-                                                context: "continuous-integration/jenkins") { response in
+        let task = Octokit(session: session).createCommitStatus(owner: "octocat",
+                                                                repository: "Hello-World",
+                                                                sha: "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                                                                state: .success,
+                                                                targetURL: "https://example.com/build/status",
+                                                                description: "The build succeeded!",
+                                                                context: "continuous-integration/jenkins") { response in
             switch response {
             case let .success(status):
                 XCTAssertEqual(status.id, 1)
@@ -45,14 +44,13 @@ class StatusesTests: XCTestCase {
                                             jsonFile: "status",
                                             statusCode: 201)
 
-        let status = try await Octokit().createCommitStatus(session,
-                                                            owner: "octocat",
-                                                            repository: "Hello-World",
-                                                            sha: "6dcb09b5b57875f334f61aebed695e2e4193db5e",
-                                                            state: .success,
-                                                            targetURL: "https://example.com/build/status",
-                                                            description: "The build succeeded!",
-                                                            context: "continuous-integration/jenkins")
+        let status = try await Octokit(session: session).createCommitStatus(owner: "octocat",
+                                                                            repository: "Hello-World",
+                                                                            sha: "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                                                                            state: .success,
+                                                                            targetURL: "https://example.com/build/status",
+                                                                            description: "The build succeeded!",
+                                                                            context: "continuous-integration/jenkins")
         XCTAssertEqual(status.id, 1)
         XCTAssertEqual(status.url, "https://api.github.com/repos/octocat/Hello-World/statuses/6dcb09b5b57875f334f61aebed695e2e4193db5e")
         XCTAssertEqual(status.avatarURL, "https://github.com/images/error/hubot_happy.gif")
@@ -72,7 +70,7 @@ class StatusesTests: XCTestCase {
                                             jsonFile: "statuses",
                                             statusCode: 200)
 
-        let task = Octokit().listCommitStatuses(session, owner: "octocat", repository: "Hello-World", ref: "6dcb09b5b57875f334f61aebed695e2e4193db5e") { response in
+        let task = Octokit(session: session).listCommitStatuses(owner: "octocat", repository: "Hello-World", ref: "6dcb09b5b57875f334f61aebed695e2e4193db5e") { response in
             switch response {
             case let .success(statuses):
                 XCTAssertEqual(statuses.count, 1)
@@ -101,7 +99,7 @@ class StatusesTests: XCTestCase {
                                             jsonFile: "statuses",
                                             statusCode: 200)
 
-        let statuses = try await Octokit().listCommitStatuses(session, owner: "octocat", repository: "Hello-World", ref: "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+        let statuses = try await Octokit(session: session).listCommitStatuses(owner: "octocat", repository: "Hello-World", ref: "6dcb09b5b57875f334f61aebed695e2e4193db5e")
         XCTAssertEqual(statuses.count, 1)
         XCTAssertEqual(statuses.first?.id, 1)
         XCTAssertEqual(statuses.first?.url, "https://api.github.com/repos/octocat/Hello-World/statuses/6dcb09b5b57875f334f61aebed695e2e4193db5e")

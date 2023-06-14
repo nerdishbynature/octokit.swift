@@ -15,7 +15,7 @@ class GistTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "gists",
                                             statusCode: 200)
-        let task = Octokit(config).myGists(session) { response in
+        let task = Octokit(config, session: session).myGists { response in
             switch response {
             case let .success(gists):
                 XCTAssertEqual(gists.count, 1)
@@ -38,7 +38,7 @@ class GistTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "gists",
                                             statusCode: 200)
-        let gists = try await Octokit(config).myGists(session)
+        let gists = try await Octokit(config, session: session).myGists()
         XCTAssertEqual(gists.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
@@ -53,7 +53,7 @@ class GistTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "gists",
                                             statusCode: 200)
-        let task = Octokit(config).gists(session, owner: "vincode-io") { response in
+        let task = Octokit(config, session: session).gists(owner: "vincode-io") { response in
             switch response {
             case let .success(gists):
                 XCTAssertEqual(gists.count, 1)
@@ -76,7 +76,7 @@ class GistTests: XCTestCase {
                                             expectedHTTPHeaders: headers,
                                             jsonFile: "gists",
                                             statusCode: 200)
-        let gists = try await Octokit(config).gists(session, owner: "vincode-io")
+        let gists = try await Octokit(config, session: session).gists(owner: "vincode-io")
         XCTAssertEqual(gists.count, 1)
         XCTAssertTrue(session.wasCalled)
     }
@@ -84,7 +84,7 @@ class GistTests: XCTestCase {
 
     func testGetGist() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists/aa5a315d61ae9438b18d", expectedHTTPMethod: "GET", jsonFile: "gist", statusCode: 200)
-        let task = Octokit().gist(session, id: "aa5a315d61ae9438b18d") { response in
+        let task = Octokit(session: session).gist(id: "aa5a315d61ae9438b18d") { response in
             switch response {
             case let .success(gist):
                 XCTAssertEqual(gist.id, "aa5a315d61ae9438b18d")
@@ -100,7 +100,7 @@ class GistTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetGistAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists/aa5a315d61ae9438b18d", expectedHTTPMethod: "GET", jsonFile: "gist", statusCode: 200)
-        let gist = try await Octokit().gist(session, id: "aa5a315d61ae9438b18d")
+        let gist = try await Octokit(session: session).gist(id: "aa5a315d61ae9438b18d")
         XCTAssertEqual(gist.id, "aa5a315d61ae9438b18d")
         XCTAssertTrue(session.wasCalled)
     }
@@ -108,7 +108,7 @@ class GistTests: XCTestCase {
 
     func testPostGist() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists", expectedHTTPMethod: "POST", jsonFile: "gist", statusCode: 200)
-        let task = Octokit().postGistFile(session, description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program", publicAccess: true) { response in
+        let task = Octokit(session: session).postGistFile(description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program", publicAccess: true) { response in
             switch response {
             case let .success(gist):
                 XCTAssertEqual(gist.id, "aa5a315d61ae9438b18d")
@@ -125,7 +125,7 @@ class GistTests: XCTestCase {
     func testPostGistAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists", expectedHTTPMethod: "POST", jsonFile: "gist", statusCode: 200)
         do {
-            let gist = try await Octokit().postGistFile(session, description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program", publicAccess: true)
+            let gist = try await Octokit(session: session).postGistFile(description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program", publicAccess: true)
             XCTAssertEqual(gist.id, "aa5a315d61ae9438b18d")
             XCTAssertTrue(session.wasCalled)
         } catch {
@@ -136,7 +136,7 @@ class GistTests: XCTestCase {
 
     func testPatchGist() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists/aa5a315d61ae9438b18d", expectedHTTPMethod: "POST", jsonFile: "gist", statusCode: 200)
-        let task = Octokit().patchGistFile(session, id: "aa5a315d61ae9438b18d", description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program") { response in
+        let task = Octokit(session: session).patchGistFile(id: "aa5a315d61ae9438b18d", description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program") { response in
             switch response {
             case let .success(gist):
                 XCTAssertEqual(gist.id, "aa5a315d61ae9438b18d")
@@ -152,7 +152,7 @@ class GistTests: XCTestCase {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testPatchGistAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists/aa5a315d61ae9438b18d", expectedHTTPMethod: "POST", jsonFile: "gist", statusCode: 200)
-        let gist = try await Octokit().patchGistFile(session, id: "aa5a315d61ae9438b18d", description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program")
+        let gist = try await Octokit(session: session).patchGistFile(id: "aa5a315d61ae9438b18d", description: "Test Post", filename: "Hello-World.swift", fileContent: "Sample Program")
         XCTAssertEqual(gist.id, "aa5a315d61ae9438b18d")
         XCTAssertTrue(session.wasCalled)
     }
