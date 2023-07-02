@@ -9,7 +9,7 @@ public struct Review {
     public let commitID: String
     public let id: Int
     public let state: State
-    public let submittedAt: Date
+    public let submittedAt: Date?
     public let user: User
 
     public init(body: String,
