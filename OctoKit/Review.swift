@@ -169,7 +169,10 @@ public extension Octokit {
                     body: String? = nil,
                     comments: [Review.Comment] = []) async throws -> Review {
         let router = ReviewsRouter.postReview(configuration, owner, repository, pullRequestNumber, commitId, event, body, comments)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+        // FIXME: Replace when RequestKit updated with implementing `post(_:dateDecodingStrategy:expectedResultType:)`
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Review.self)
     }
 
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
@@ -179,7 +182,10 @@ public extension Octokit {
                              pullRequestNumber: Int,
                              reviewId: Int) async throws -> Review {
         let router = ReviewsRouter.deletePendingReview(configuration, owner, repository, pullRequestNumber, reviewId)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+        // FIXME: Replace when RequestKit updated with implementing `post(_:dateDecodingStrategy:expectedResultType:)`
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Review.self)
     }
 
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
@@ -191,7 +197,10 @@ public extension Octokit {
                       event: Review.Event,
                       body: String? = nil) async throws -> Review {
         let router = ReviewsRouter.submitReview(configuration, owner, repository, pullRequestNumber, reviewId, event, body)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+        // FIXME: Replace when RequestKit updated with implementing `post(_:dateDecodingStrategy:expectedResultType:)`
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Review.self)
     }
 #endif
 }
@@ -287,6 +296,8 @@ enum ReviewsRouter: JSONPostRouter {
             return parameters
         }
     }
+
+
 
     var path: String {
         switch self {
