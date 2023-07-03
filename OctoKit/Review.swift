@@ -150,7 +150,7 @@ public extension Octokit {
         }
     }
 
-#if compiler(>=5.5.2) && canImport(_Concurrency)
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func reviews(owner: String,
                  repository: String,
@@ -202,7 +202,7 @@ public extension Octokit {
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return try await router.post(session, decoder: decoder, expectedResultType: Review.self)
     }
-#endif
+    #endif
 }
 
 enum ReviewsRouter: JSONPostRouter {
@@ -296,8 +296,6 @@ enum ReviewsRouter: JSONPostRouter {
             return parameters
         }
     }
-
-
 
     var path: String {
         switch self {
