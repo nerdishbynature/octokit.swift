@@ -31,6 +31,42 @@ public struct Release: Codable {
     public let createdAt: Date
     public let publishedAt: Date?
     public let author: User
+  
+    public init(
+        id: Int,
+        url: URL,
+        htmlURL: URL,
+        assetsURL: URL,
+        tarballURL: URL?,
+        zipballURL: URL?,
+        nodeId: String,
+        tagName: String,
+        commitish: String,
+        name: String,
+        body: String,
+        draft: Bool,
+        prerelease: Bool,
+        createdAt: Date,
+        publishedAt: Date?,
+        author: User
+    ) {
+        self.id = id
+        self.url = url
+        self.htmlURL = htmlURL
+        self.assetsURL = assetsURL
+        self.tarballURL = tarballURL
+        self.zipballURL = zipballURL
+        self.nodeId = nodeId
+        self.tagName = tagName
+        self.commitish = commitish
+        self.name = name
+        self.body = body
+        self.draft = draft
+        self.prerelease = prerelease
+        self.createdAt = createdAt
+        self.publishedAt = publishedAt
+        self.author = author
+    }
 
     enum CodingKeys: String, CodingKey {
         case id, url, name, body, draft, prerelease, author
