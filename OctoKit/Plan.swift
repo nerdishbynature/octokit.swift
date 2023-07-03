@@ -9,6 +9,18 @@ open class Plan: Codable {
     open var space: Int?
     open var numberOfCollaborators: Int?
     open var numberOfPrivateRepos: Int?
+  
+  public init(
+      name: String? = nil,
+      space: Int? = nil,
+      numberOfCollaborators: Int? = nil,
+      numberOfPrivateRepos: Int? = nil
+  ) {
+      self.name = name
+      self.space = space
+      self.numberOfCollaborators = numberOfCollaborators
+      self.numberOfPrivateRepos = numberOfPrivateRepos
+  }
 
     enum CodingKeys: String, CodingKey {
         case name
