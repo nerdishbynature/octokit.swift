@@ -11,6 +11,22 @@ public struct Review {
     public let state: State
     public let submittedAt: Date
     public let user: User
+  
+    public init(
+        body: String,
+        commitID: String,
+        id: Int,
+        state: State,
+        submittedAt: Date,
+        user: User
+    ) {
+        self.body = body
+        self.commitID = commitID
+        self.id = id
+        self.state = state
+        self.submittedAt = submittedAt
+        self.user = user
+    }
 }
 
 extension Review: Codable {
