@@ -7,20 +7,52 @@ import FoundationNetworking
 // MARK: model
 
 open class Repository: Codable {
-    open private(set) var id: Int = -1
-    open private(set) var owner = User()
+    open private(set) var id: Int
+    open private(set) var owner: User
     open var name: String?
     open var fullName: String?
-    open private(set) var isPrivate: Bool = false
+    open private(set) var isPrivate: Bool
     open var repositoryDescription: String?
-    open private(set) var isFork: Bool = false
+    open private(set) var isFork: Bool
     open var gitURL: String?
     open var sshURL: String?
     open var cloneURL: String?
     open var htmlURL: String?
-    open private(set) var size: Int? = -1
+    open private(set) var size: Int?
     open var lastPush: Date?
     open var stargazersCount: Int?
+  
+    public init(
+        id: Int = -1,
+        owner: User = User(),
+        name: String? = nil,
+        fullName: String? = nil,
+        isPrivate: Bool = false,
+        repositoryDescription: String? = nil,
+        isFork: Bool = false,
+        gitURL: String? = nil,
+        sshURL: String? = nil,
+        cloneURL: String? = nil,
+        htmlURL: String? = nil,
+        size: Int? = -1,
+        lastPush: Date? = nil,
+        stargazersCount: Int? = nil
+    ) {
+        self.id = id
+        self.owner = owner
+        self.name = name
+        self.fullName = fullName
+        self.isPrivate = isPrivate
+        self.repositoryDescription = repositoryDescription
+        self.isFork = isFork
+        self.gitURL = gitURL
+        self.sshURL = sshURL
+        self.cloneURL = cloneURL
+        self.htmlURL = htmlURL
+        self.size = size
+        self.lastPush = lastPush
+        self.stargazersCount = stargazersCount
+    }
 
     enum CodingKeys: String, CodingKey {
         case id
