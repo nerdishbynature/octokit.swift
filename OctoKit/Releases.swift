@@ -31,25 +31,23 @@ public struct Release: Codable {
     public let createdAt: Date
     public let publishedAt: Date?
     public let author: User
-  
-    public init(
-        id: Int,
-        url: URL,
-        htmlURL: URL,
-        assetsURL: URL,
-        tarballURL: URL?,
-        zipballURL: URL?,
-        nodeId: String,
-        tagName: String,
-        commitish: String,
-        name: String,
-        body: String,
-        draft: Bool,
-        prerelease: Bool,
-        createdAt: Date,
-        publishedAt: Date?,
-        author: User
-    ) {
+
+    public init(id: Int,
+                url: URL,
+                htmlURL: URL,
+                assetsURL: URL,
+                tarballURL: URL?,
+                zipballURL: URL?,
+                nodeId: String,
+                tagName: String,
+                commitish: String,
+                name: String,
+                body: String,
+                draft: Bool,
+                prerelease: Bool,
+                createdAt: Date,
+                publishedAt: Date?,
+                author: User) {
         self.id = id
         self.url = url
         self.htmlURL = htmlURL

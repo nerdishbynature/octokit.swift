@@ -23,25 +23,23 @@ open class Gist: Codable {
     open var comments: Int?
     open var user: User?
     open var owner: User?
-  
-    public init(
-        id: String? = nil,
-        url: URL? = nil,
-        forksURL: URL? = nil,
-        commitsURL: URL? = nil,
-        gitPushURL: URL? = nil,
-        gitPullURL: URL? = nil,
-        commentsURL: URL? = nil,
-        htmlURL: URL? = nil,
-        files: Files,
-        publicGist: Bool? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        description: String? = nil,
-        comments: Int? = nil,
-        user: User? = nil,
-        owner: User? = nil
-    ) {
+
+    public init(id: String? = nil,
+                url: URL? = nil,
+                forksURL: URL? = nil,
+                commitsURL: URL? = nil,
+                gitPushURL: URL? = nil,
+                gitPullURL: URL? = nil,
+                commentsURL: URL? = nil,
+                htmlURL: URL? = nil,
+                files: Files,
+                publicGist: Bool? = nil,
+                createdAt: Date? = nil,
+                updatedAt: Date? = nil,
+                description: String? = nil,
+                comments: Int? = nil,
+                user: User? = nil,
+                owner: User? = nil) {
         self.id = id
         self.url = url
         self.forksURL = forksURL

@@ -40,37 +40,35 @@ open class PullRequest: Codable {
 
     open var requestedReviewers: [User]?
     open var draft: Bool?
-  
-    public init(
-        id: Int = -1,
-        url: URL? = nil,
-        htmlURL: URL? = nil,
-        diffURL: URL? = nil,
-        patchURL: URL? = nil,
-        issueURL: URL? = nil,
-        commitsURL: URL? = nil,
-        reviewCommentsURL: URL? = nil,
-        reviewCommentURL: URL? = nil,
-        commentsURL: URL? = nil,
-        statusesURL: URL? = nil,
-        title: String? = nil,
-        body: String? = nil,
-        assignee: User? = nil,
-        milestone: Milestone? = nil,
-        locked: Bool? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        closedAt: Date? = nil,
-        mergedAt: Date? = nil,
-        user: User? = nil,
-        number: Int,
-        state: Openness? = nil,
-        labels: [Label]? = nil,
-        head: PullRequest.Branch? = nil,
-        base: PullRequest.Branch? = nil,
-        requestedReviewers: [User]? = nil,
-        draft: Bool? = nil
-    ) {
+
+    public init(id: Int = -1,
+                url: URL? = nil,
+                htmlURL: URL? = nil,
+                diffURL: URL? = nil,
+                patchURL: URL? = nil,
+                issueURL: URL? = nil,
+                commitsURL: URL? = nil,
+                reviewCommentsURL: URL? = nil,
+                reviewCommentURL: URL? = nil,
+                commentsURL: URL? = nil,
+                statusesURL: URL? = nil,
+                title: String? = nil,
+                body: String? = nil,
+                assignee: User? = nil,
+                milestone: Milestone? = nil,
+                locked: Bool? = nil,
+                createdAt: Date? = nil,
+                updatedAt: Date? = nil,
+                closedAt: Date? = nil,
+                mergedAt: Date? = nil,
+                user: User? = nil,
+                number: Int,
+                state: Openness? = nil,
+                labels: [Label]? = nil,
+                head: PullRequest.Branch? = nil,
+                base: PullRequest.Branch? = nil,
+                requestedReviewers: [User]? = nil,
+                draft: Bool? = nil) {
         self.id = id
         self.url = url
         self.htmlURL = htmlURL

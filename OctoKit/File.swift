@@ -11,16 +11,14 @@ open class File: Codable {
     open var language: String?
     open var size: Int?
     open var content: String?
-  
-    public init(
-        id: Int,
-        rawURL: URL? = nil,
-        filename: String? = nil,
-        type: String? = nil,
-        language: String? = nil,
-        size: Int? = nil,
-        content: String? = nil
-    ) {
+
+    public init(id: Int,
+                rawURL: URL? = nil,
+                filename: String? = nil,
+                type: String? = nil,
+                language: String? = nil,
+                size: Int? = nil,
+                content: String? = nil) {
         self.id = id
         self.rawURL = rawURL
         self.filename = filename

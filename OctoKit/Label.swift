@@ -8,12 +8,10 @@ open class Label: Codable {
     open var url: URL?
     open var name: String?
     open var color: String?
-  
-    public init(
-        url: URL? = nil,
-        name: String? = nil,
-        color: String? = nil
-    ) {
+
+    public init(url: URL? = nil,
+                name: String? = nil,
+                color: String? = nil) {
         self.url = url
         self.name = name
         self.color = color

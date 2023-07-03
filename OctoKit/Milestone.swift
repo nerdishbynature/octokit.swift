@@ -16,24 +16,22 @@ open class Milestone: Codable {
     open var updatedAt: Date?
     open var closedAt: Date?
     open var dueOn: Date?
-  
-    public init(
-        url: URL? = nil,
-        htmlURL: URL? = nil,
-        labelsURL: URL? = nil,
-        id: Int = -1,
-        number: Int? = nil,
-        state: Openness? = nil,
-        title: String? = nil,
-        milestoneDescription: String? = nil,
-        creator: User? = nil,
-        openIssues: Int? = nil,
-        closedIssues: Int? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        closedAt: Date? = nil,
-        dueOn: Date? = nil
-    ) {
+
+    public init(url: URL? = nil,
+                htmlURL: URL? = nil,
+                labelsURL: URL? = nil,
+                id: Int = -1,
+                number: Int? = nil,
+                state: Openness? = nil,
+                title: String? = nil,
+                milestoneDescription: String? = nil,
+                creator: User? = nil,
+                openIssues: Int? = nil,
+                closedIssues: Int? = nil,
+                createdAt: Date? = nil,
+                updatedAt: Date? = nil,
+                closedAt: Date? = nil,
+                dueOn: Date? = nil) {
         self.url = url
         self.htmlURL = htmlURL
         self.labelsURL = labelsURL

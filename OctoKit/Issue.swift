@@ -35,30 +35,28 @@ open class Issue: Codable {
     open var createdAt: Date?
     open var updatedAt: Date?
     open var closedBy: User?
-    
-    public init(
-        id: Int = -1,
-        url: URL? = nil,
-        repositoryURL: URL? = nil,
-        labelsURL: URL? = nil,
-        commentsURL: URL? = nil,
-        eventsURL: URL? = nil,
-        htmlURL: URL? = nil,
-        number: Int,
-        state: Openness? = nil,
-        title: String? = nil,
-        body: String? = nil,
-        user: User? = nil,
-        labels: [Label]? = nil,
-        assignee: User? = nil,
-        milestone: Milestone? = nil,
-        locked: Bool? = nil,
-        comments: Int? = nil,
-        closedAt: Date? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        closedBy: User? = nil
-    ) {
+
+    public init(id: Int = -1,
+                url: URL? = nil,
+                repositoryURL: URL? = nil,
+                labelsURL: URL? = nil,
+                commentsURL: URL? = nil,
+                eventsURL: URL? = nil,
+                htmlURL: URL? = nil,
+                number: Int,
+                state: Openness? = nil,
+                title: String? = nil,
+                body: String? = nil,
+                user: User? = nil,
+                labels: [Label]? = nil,
+                assignee: User? = nil,
+                milestone: Milestone? = nil,
+                locked: Bool? = nil,
+                comments: Int? = nil,
+                closedAt: Date? = nil,
+                createdAt: Date? = nil,
+                updatedAt: Date? = nil,
+                closedBy: User? = nil) {
         self.id = id
         self.url = url
         self.repositoryURL = repositoryURL

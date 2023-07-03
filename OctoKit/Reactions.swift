@@ -13,19 +13,17 @@ public struct Reactions: Codable {
     public let rocket: Int?
     public let eyes: Int?
     public let url: String?
-  
-    public init(
-        totalCount: Int?,
-        thumbsUp: Int?,
-        thumbsDown: Int?,
-        laugh: Int?,
-        confused: Int?,
-        heart: Int?,
-        hooray: Int?,
-        rocket: Int?,
-        eyes: Int?,
-        url: String?
-    ) {
+
+    public init(totalCount: Int?,
+                thumbsUp: Int?,
+                thumbsDown: Int?,
+                laugh: Int?,
+                confused: Int?,
+                heart: Int?,
+                hooray: Int?,
+                rocket: Int?,
+                eyes: Int?,
+                url: String?) {
         self.totalCount = totalCount
         self.thumbsUp = thumbsUp
         self.thumbsDown = thumbsDown

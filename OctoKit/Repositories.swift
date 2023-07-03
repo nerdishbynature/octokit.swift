@@ -21,23 +21,21 @@ open class Repository: Codable {
     open private(set) var size: Int?
     open var lastPush: Date?
     open var stargazersCount: Int?
-  
-    public init(
-        id: Int = -1,
-        owner: User = User(),
-        name: String? = nil,
-        fullName: String? = nil,
-        isPrivate: Bool = false,
-        repositoryDescription: String? = nil,
-        isFork: Bool = false,
-        gitURL: String? = nil,
-        sshURL: String? = nil,
-        cloneURL: String? = nil,
-        htmlURL: String? = nil,
-        size: Int? = -1,
-        lastPush: Date? = nil,
-        stargazersCount: Int? = nil
-    ) {
+
+    public init(id: Int = -1,
+                owner: User = User(),
+                name: String? = nil,
+                fullName: String? = nil,
+                isPrivate: Bool = false,
+                repositoryDescription: String? = nil,
+                isFork: Bool = false,
+                gitURL: String? = nil,
+                sshURL: String? = nil,
+                cloneURL: String? = nil,
+                htmlURL: String? = nil,
+                size: Int? = -1,
+                lastPush: Date? = nil,
+                stargazersCount: Int? = nil) {
         self.id = id
         self.owner = owner
         self.name = name

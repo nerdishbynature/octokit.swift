@@ -18,20 +18,18 @@ open class Status: Codable {
     open var createdAt: Date?
     open var updatedAt: Date?
     open var creator: User?
-    
-    public init(
-        id: Int,
-        url: String? = nil,
-        avatarURL: String? = nil,
-        nodeId: String? = nil,
-        state: State? = nil,
-        description: String? = nil,
-        targetURL: String? = nil,
-        context: String? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        creator: User? = nil
-    ) {
+
+    public init(id: Int,
+                url: String? = nil,
+                avatarURL: String? = nil,
+                nodeId: String? = nil,
+                state: State? = nil,
+                description: String? = nil,
+                targetURL: String? = nil,
+                context: String? = nil,
+                createdAt: Date? = nil,
+                updatedAt: Date? = nil,
+                creator: User? = nil) {
         self.id = id
         self.url = url
         self.avatarURL = avatarURL
