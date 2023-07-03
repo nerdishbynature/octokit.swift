@@ -19,6 +19,30 @@ open class Status: Codable {
     open var updatedAt: Date?
     open var creator: User?
 
+    public init(id: Int,
+                url: String? = nil,
+                avatarURL: String? = nil,
+                nodeId: String? = nil,
+                state: State? = nil,
+                description: String? = nil,
+                targetURL: String? = nil,
+                context: String? = nil,
+                createdAt: Date? = nil,
+                updatedAt: Date? = nil,
+                creator: User? = nil) {
+        self.id = id
+        self.url = url
+        self.avatarURL = avatarURL
+        self.nodeId = nodeId
+        self.state = state
+        self.description = description
+        self.targetURL = targetURL
+        self.context = context
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.creator = creator
+    }
+
     enum CodingKeys: String, CodingKey {
         case id
         case url

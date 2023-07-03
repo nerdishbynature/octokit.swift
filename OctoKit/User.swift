@@ -7,7 +7,7 @@ import FoundationNetworking
 // MARK: model
 
 open class User: Codable {
-    open internal(set) var id: Int = -1
+    open internal(set) var id: Int
     open var login: String?
     open var avatarURL: String?
     open var gravatarID: String?
@@ -45,6 +45,84 @@ open class User: Codable {
     open var numberOfCollaborators: Int?
     open var twoFactorAuthenticationEnabled: Bool?
     open var subscriptionPlan: Plan?
+
+    public init(id: Int = -1,
+                login: String? = nil,
+                avatarURL: String? = nil,
+                gravatarID: String? = nil,
+                type: String? = nil,
+                name: String? = nil,
+                company: String? = nil,
+                blog: String? = nil,
+                location: String? = nil,
+                email: String? = nil,
+                numberOfPublicRepos: Int? = nil,
+                numberOfPublicGists: Int? = nil,
+                numberOfPrivateRepos: Int? = nil,
+                nodeID: String? = nil,
+                url: String? = nil,
+                htmlURL: String? = nil,
+                followersURL: String? = nil,
+                followingURL: String? = nil,
+                gistsURL: String? = nil,
+                starredURL: String? = nil,
+                subscriptionsURL: String? = nil,
+                reposURL: String? = nil,
+                eventsURL: String? = nil,
+                receivedEventsURL: String? = nil,
+                siteAdmin: Bool? = nil,
+                hireable: Bool? = nil,
+                bio: String? = nil,
+                twitterUsername: String? = nil,
+                numberOfFollowers: Int? = nil,
+                numberOfFollowing: Int? = nil,
+                createdAt: Date? = nil,
+                updatedAt: Date? = nil,
+                numberOfPrivateGists: Int? = nil,
+                numberOfOwnPrivateRepos: Int? = nil,
+                amountDiskUsage: Int? = nil,
+                numberOfCollaborators: Int? = nil,
+                twoFactorAuthenticationEnabled: Bool? = nil,
+                subscriptionPlan: Plan? = nil) {
+        self.id = id
+        self.login = login
+        self.avatarURL = avatarURL
+        self.gravatarID = gravatarID
+        self.type = type
+        self.name = name
+        self.company = company
+        self.blog = blog
+        self.location = location
+        self.email = email
+        self.numberOfPublicRepos = numberOfPublicRepos
+        self.numberOfPublicGists = numberOfPublicGists
+        self.numberOfPrivateRepos = numberOfPrivateRepos
+        self.nodeID = nodeID
+        self.url = url
+        self.htmlURL = htmlURL
+        self.followersURL = followersURL
+        self.followingURL = followingURL
+        self.gistsURL = gistsURL
+        self.starredURL = starredURL
+        self.subscriptionsURL = subscriptionsURL
+        self.reposURL = reposURL
+        self.eventsURL = eventsURL
+        self.receivedEventsURL = receivedEventsURL
+        self.siteAdmin = siteAdmin
+        self.hireable = hireable
+        self.bio = bio
+        self.twitterUsername = twitterUsername
+        self.numberOfFollowers = numberOfFollowers
+        self.numberOfFollowing = numberOfFollowing
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.numberOfPrivateGists = numberOfPrivateGists
+        self.numberOfOwnPrivateRepos = numberOfOwnPrivateRepos
+        self.amountDiskUsage = amountDiskUsage
+        self.numberOfCollaborators = numberOfCollaborators
+        self.twoFactorAuthenticationEnabled = twoFactorAuthenticationEnabled
+        self.subscriptionPlan = subscriptionPlan
+    }
 
     enum CodingKeys: String, CodingKey {
         case id

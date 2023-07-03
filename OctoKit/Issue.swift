@@ -13,7 +13,7 @@ public enum Openness: String, Codable {
 }
 
 open class Issue: Codable {
-    open private(set) var id: Int = -1
+    open private(set) var id: Int
     open var url: URL?
     open var repositoryURL: URL?
     @available(*, deprecated)
@@ -35,6 +35,50 @@ open class Issue: Codable {
     open var createdAt: Date?
     open var updatedAt: Date?
     open var closedBy: User?
+
+    public init(id: Int = -1,
+                url: URL? = nil,
+                repositoryURL: URL? = nil,
+                labelsURL: URL? = nil,
+                commentsURL: URL? = nil,
+                eventsURL: URL? = nil,
+                htmlURL: URL? = nil,
+                number: Int,
+                state: Openness? = nil,
+                title: String? = nil,
+                body: String? = nil,
+                user: User? = nil,
+                labels: [Label]? = nil,
+                assignee: User? = nil,
+                milestone: Milestone? = nil,
+                locked: Bool? = nil,
+                comments: Int? = nil,
+                closedAt: Date? = nil,
+                createdAt: Date? = nil,
+                updatedAt: Date? = nil,
+                closedBy: User? = nil) {
+        self.id = id
+        self.url = url
+        self.repositoryURL = repositoryURL
+        self.labelsURL = labelsURL
+        self.commentsURL = commentsURL
+        self.eventsURL = eventsURL
+        self.htmlURL = htmlURL
+        self.number = number
+        self.state = state
+        self.title = title
+        self.body = body
+        self.user = user
+        self.labels = labels
+        self.assignee = assignee
+        self.milestone = milestone
+        self.locked = locked
+        self.comments = comments
+        self.closedAt = closedAt
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.closedBy = closedBy
+    }
 
     enum CodingKeys: String, CodingKey {
         case id
