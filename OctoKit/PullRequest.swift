@@ -82,6 +82,7 @@ open class PullRequest: Codable {
 
 public extension PullRequest {
     struct File: Codable {
+        public var sha: String
         public var filename: String
         public var status: Status
         public var additions: Int
@@ -108,6 +109,7 @@ public extension PullRequest.File {
 
 extension PullRequest.File {
     enum CodingKeys: String, CodingKey {
+        case sha
         case filename
         case status
         case additions

@@ -366,4 +366,67 @@ class PullRequestTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
     #endif
+
+    func testListPullRequestsFiles() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1347/files",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_requests_files",
+                                            statusCode: 200)
+
+        let task = Octokit(session: session)
+            .listPullRequestsFiles(owner: "octocat",
+                                   repository: "Hello-World",
+                                   number: 1347) { response in
+                switch response {
+                case let .success(files):
+                    XCTAssertEqual(files.count, 1)
+                    let file = files.first
+                    XCTAssertNotNil(file)
+                    XCTAssertEqual(file?.sha, "bbcd538c8e72b8c175046e27cc8f907076331401")
+                    XCTAssertEqual(file?.filename, "file1.txt")
+                    XCTAssertEqual(file?.status, .added)
+                    XCTAssertEqual(file?.additions, 103)
+                    XCTAssertEqual(file?.deletions, 21)
+                    XCTAssertEqual(file?.changes, 124)
+                    XCTAssertEqual(file?.blobUrl, "https://github.com/octocat/Hello-World/blob/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.txt")
+                    XCTAssertEqual(file?.rawUrl, "https://github.com/octocat/Hello-World/raw/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.txt")
+                    XCTAssertEqual(file?.contentsUrl, "https://api.github.com/repos/octocat/Hello-World/contents/file1.txt?ref=6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                    XCTAssertEqual(file?.patch, "@@ -132,7 +132,7 @@ module Test @@ -1000,7 +1000,7 @@ module Test")
+                case let .failure(error):
+                    XCTAssertNil(error)
+                }
+            }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testListPullRequestsFilesAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1347/files",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_requests_files",
+                                            statusCode: 200)
+
+        let files = try await Octokit(session: session)
+            .listPullRequestsFiles(owner: "octocat",
+                                   repository: "Hello-World",
+                                   number: 1347)
+        XCTAssertEqual(files.count, 1)
+        let file = files.first
+        XCTAssertNotNil(file)
+        XCTAssertEqual(file?.sha, "bbcd538c8e72b8c175046e27cc8f907076331401")
+        XCTAssertEqual(file?.filename, "file1.txt")
+        XCTAssertEqual(file?.status, .added)
+        XCTAssertEqual(file?.additions, 103)
+        XCTAssertEqual(file?.deletions, 21)
+        XCTAssertEqual(file?.changes, 124)
+        XCTAssertEqual(file?.blobUrl, "https://github.com/octocat/Hello-World/blob/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.txt")
+        XCTAssertEqual(file?.rawUrl, "https://github.com/octocat/Hello-World/raw/6dcb09b5b57875f334f61aebed695e2e4193db5e/file1.txt")
+        XCTAssertEqual(file?.contentsUrl, "https://api.github.com/repos/octocat/Hello-World/contents/file1.txt?ref=6dcb09b5b57875f334f61aebed695e2e4193db5e")
+        XCTAssertEqual(file?.patch, "@@ -132,7 +132,7 @@ module Test @@ -1000,7 +1000,7 @@ module Test")
+
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 }
