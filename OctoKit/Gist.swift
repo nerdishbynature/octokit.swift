@@ -23,6 +23,42 @@ open class Gist: Codable {
     open var comments: Int?
     open var user: User?
     open var owner: User?
+  
+    public init(
+        id: String? = nil,
+        url: URL? = nil,
+        forksURL: URL? = nil,
+        commitsURL: URL? = nil,
+        gitPushURL: URL? = nil,
+        gitPullURL: URL? = nil,
+        commentsURL: URL? = nil,
+        htmlURL: URL? = nil,
+        files: Files,
+        publicGist: Bool? = nil,
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        description: String? = nil,
+        comments: Int? = nil,
+        user: User? = nil,
+        owner: User? = nil
+    ) {
+        self.id = id
+        self.url = url
+        self.forksURL = forksURL
+        self.commitsURL = commitsURL
+        self.gitPushURL = gitPushURL
+        self.gitPullURL = gitPullURL
+        self.commentsURL = commentsURL
+        self.htmlURL = htmlURL
+        self.files = files
+        self.publicGist = publicGist
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
+        self.description = description
+        self.comments = comments
+        self.user = user
+        self.owner = owner
+    }
 
     enum CodingKeys: String, CodingKey {
         case id
