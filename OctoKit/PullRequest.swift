@@ -82,19 +82,19 @@ open class PullRequest: Codable {
 
 public extension PullRequest {
     struct File: Codable {
-        var filename: String
-        var status: Status
-        var additions: Int
-        var deletions: Int
-        var changes: Int
-        var blobUrl: String
-        var rawUrl: String
-        var contentsUrl: String
-        var patch: String
+        public var filename: String
+        public var status: Status
+        public var additions: Int
+        public var deletions: Int
+        public var changes: Int
+        public var blobUrl: String
+        public var rawUrl: String
+        public var contentsUrl: String
+        public var patch: String
     }
 }
 
-extension PullRequest.File {
+public extension PullRequest.File {
     enum Status: String, Codable {
         case added
         case removed
@@ -104,7 +104,9 @@ extension PullRequest.File {
         case changed
         case unchanged
     }
+}
 
+extension PullRequest.File {
     enum CodingKeys: String, CodingKey {
         case filename
         case status
