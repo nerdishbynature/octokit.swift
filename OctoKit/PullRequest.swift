@@ -138,6 +138,48 @@ open class PullRequest: Codable {
     }
 }
 
+public extension PullRequest {
+    struct File: Codable {
+        public var sha: String
+        public var filename: String
+        public var status: Status
+        public var additions: Int
+        public var deletions: Int
+        public var changes: Int
+        public var blobUrl: String
+        public var rawUrl: String
+        public var contentsUrl: String
+        public var patch: String
+    }
+}
+
+public extension PullRequest.File {
+    enum Status: String, Codable {
+        case added
+        case removed
+        case modified
+        case renamed
+        case copied
+        case changed
+        case unchanged
+    }
+}
+
+extension PullRequest.File {
+    enum CodingKeys: String, CodingKey {
+        case sha
+        case filename
+        case status
+        case additions
+        case deletions
+        case changes
+        case blobUrl = "blob_url"
+        case rawUrl = "raw_url"
+        case contentsUrl = "contents_url"
+        case patch
+    }
+}
+
 // MARK: Request
 
 public extension Octokit {
@@ -368,6 +410,37 @@ public extension Octokit {
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.self)
     }
+
+    #endif
+
+    func listPullRequestsFiles(owner: String,
+                               repository: String,
+                               number: Int,
+                               perPage: Int? = nil,
+                               page: Int? = nil,
+                               completion: @escaping (_ response: Result<[PullRequest.File], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = PullRequestRouter.listPullRequestsFiles(configuration, owner, repository, number, perPage, page)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.File].self) { files, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                if let files = files {
+                    completion(.success(files))
+                }
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func listPullRequestsFiles(owner: String,
+                               repository: String,
+                               number: Int,
+                               perPage: Int? = nil,
+                               page: Int? = nil) async throws -> [PullRequest.File] {
+        let router = PullRequestRouter.listPullRequestsFiles(configuration, owner, repository, number, perPage, page)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.File].self)
+    }
     #endif
 }
 
@@ -378,13 +451,15 @@ enum PullRequestRouter: JSONPostRouter {
     case readPullRequests(Configuration, String, String, String?, String?, Openness, SortType, SortDirection)
     case createPullRequest(Configuration, String, String, String, String, String?, String, String?, Bool?, Bool?)
     case patchPullRequest(Configuration, String, String, String, String, String, Openness, String?, Bool?)
+    case listPullRequestsFiles(Configuration, String, String, Int, Int?, Int?)
 
     var method: HTTPMethod {
         switch self {
         case .createPullRequest:
             return .POST
         case .readPullRequest,
-             .readPullRequests:
+             .readPullRequests,
+             .listPullRequestsFiles:
             return .GET
         case .patchPullRequest:
             return .PATCH
@@ -406,6 +481,7 @@ enum PullRequestRouter: JSONPostRouter {
         case let .readPullRequests(config, _, _, _, _, _, _, _): return config
         case let .patchPullRequest(config, _, _, _, _, _, _, _, _): return config
         case let .createPullRequest(config, _, _, _, _, _, _, _, _, _): return config
+        case let .listPullRequestsFiles(config, _, _, _, _, _): return config
         }
     }
 
@@ -462,6 +538,15 @@ enum PullRequestRouter: JSONPostRouter {
                 parameters["draft"] = draft
             }
             return parameters
+        case let .listPullRequestsFiles(_, _, _, _, perPage, page):
+            var parameters: [String: Any] = [:]
+            if let perPage = perPage {
+                parameters["per_page"] = perPage
+            }
+            if let page = page {
+                parameters["page"] = page
+            }
+            return parameters
         }
     }
 
@@ -475,6 +560,8 @@ enum PullRequestRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/pulls"
         case let .createPullRequest(_, owner, repository, _, _, _, _, _, _, _):
             return "repos/\(owner)/\(repository)/pulls"
+        case let .listPullRequestsFiles(_, owner, repository, number, _, _):
+            return "/repos/\(owner)/\(repository)/pulls/\(number)/files"
         }
     }
 }
