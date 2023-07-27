@@ -161,6 +161,7 @@ public extension Octokit {
     ///   - body: Text describing the contents of the tag.
     ///   - prerelease: `true` to create a draft (unpublished) release, `false` to create a published one. Default: `false`.
     ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
+    ///   - generateNotes: `true` to automatically generate release name and body. Default: `false`.
     ///   - completion: Callback for the outcome of the created release.
     @discardableResult
     func postRelease(owner: String,
@@ -214,6 +215,7 @@ public extension Octokit {
     ///   - body: Text describing the contents of the tag.
     ///   - prerelease: `true` to create a draft (unpublished) release, `false` to create a published one. Default: `false`.
     ///   - draft: `true` to identify the release as a prerelease. `false` to identify the release as a full release. Default: `false`.
+    ///   - generateNotes: `true` to automatically generate release name and body. Default: `false`.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func postRelease(owner: String,
                      repository: String,
