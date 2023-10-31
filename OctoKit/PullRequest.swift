@@ -300,6 +300,8 @@ public extension Octokit {
      - parameter head: Filter pulls by user or organization and branch name.
      - parameter state: Filter pulls by their state.
      - parameter direction: The direction of the sort.
+     - parameter page: The page to request.
+     - parameter perPage: The number of pulls to return on each page, max is 100.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
@@ -310,8 +312,10 @@ public extension Octokit {
                       state: Openness = .open,
                       sort: SortType = .created,
                       direction: SortDirection = .desc,
+                      page: String? = nil,
+                      perPage: String? = nil,
                       completion: @escaping (_ response: Result<[PullRequest], Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction)
+        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
                 completion(.failure(error))
@@ -340,8 +344,10 @@ public extension Octokit {
                       head: String? = nil,
                       state: Openness = .open,
                       sort: SortType = .created,
+                      page: String? = nil,
+                      perPage: String? = nil,
                       direction: SortDirection = .desc) async throws -> [PullRequest] {
-        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction)
+        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction, page, perPage)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self)
     }
     #endif
@@ -448,7 +454,7 @@ public extension Octokit {
 
 enum PullRequestRouter: JSONPostRouter {
     case readPullRequest(Configuration, String, String, String)
-    case readPullRequests(Configuration, String, String, String?, String?, Openness, SortType, SortDirection)
+    case readPullRequests(Configuration, String, String, String?, String?, Openness, SortType, SortDirection, String?, String?)
     case createPullRequest(Configuration, String, String, String, String, String?, String, String?, Bool?, Bool?)
     case patchPullRequest(Configuration, String, String, String, String, String, Openness, String?, Bool?)
     case listPullRequestsFiles(Configuration, String, String, Int, Int?, Int?)
@@ -478,7 +484,7 @@ enum PullRequestRouter: JSONPostRouter {
     var configuration: Configuration {
         switch self {
         case let .readPullRequest(config, _, _, _): return config
-        case let .readPullRequests(config, _, _, _, _, _, _, _): return config
+        case let .readPullRequests(config, _, _, _, _, _, _, _, _, _): return config
         case let .patchPullRequest(config, _, _, _, _, _, _, _, _): return config
         case let .createPullRequest(config, _, _, _, _, _, _, _, _, _): return config
         case let .listPullRequestsFiles(config, _, _, _, _, _): return config
@@ -489,7 +495,7 @@ enum PullRequestRouter: JSONPostRouter {
         switch self {
         case .readPullRequest:
             return [:]
-        case let .readPullRequests(_, _, _, base, head, state, sort, direction):
+        case let .readPullRequests(_, _, _, base, head, state, sort, direction, page, perPage):
             var parameters = [
                 "state": state.rawValue,
                 "sort": sort.rawValue,
@@ -502,6 +508,14 @@ enum PullRequestRouter: JSONPostRouter {
 
             if let head = head {
                 parameters["head"] = head
+            }
+
+            if let page = page {
+                parameters["page"] = page
+            }
+
+            if let perPage = perPage {
+                parameters["per_page"] = perPage
             }
 
             return parameters
@@ -556,7 +570,7 @@ enum PullRequestRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/pulls/\(number)"
         case let .readPullRequest(_, owner, repository, number):
             return "repos/\(owner)/\(repository)/pulls/\(number)"
-        case let .readPullRequests(_, owner, repository, _, _, _, _, _):
+        case let .readPullRequests(_, owner, repository, _, _, _, _, _, _, _):
             return "repos/\(owner)/\(repository)/pulls"
         case let .createPullRequest(_, owner, repository, _, _, _, _, _, _, _):
             return "repos/\(owner)/\(repository)/pulls"
