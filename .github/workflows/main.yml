@@ -62,15 +62,8 @@ jobs:
     container: swift:5.6-focal
     steps:
       - uses: actions/checkout@v2
-      - name: Install SwiftFormat
-        run: |
-          git clone https://github.com/nicklockwood/SwiftFormat.git
-          cd SwiftFormat
-          swift build -c release
       - name: Lint
-        run: |
-          cd SwiftFormat
-          swift run -c release swiftformat ../ --lint --exclude .
+        run: swift package plugin --allow-writing-to-package-directory swiftformat --lint
   cli_build:
     name: Build CLI
     runs-on: ubuntu-latest

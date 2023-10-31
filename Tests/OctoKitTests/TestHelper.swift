@@ -1,13 +1,13 @@
 import Foundation
 import OctoKit
 
-internal class Helper {
-    internal class func stringFromFile(_ name: String) -> String? {
+class Helper {
+    class func stringFromFile(_ name: String) -> String? {
         let path = jsonFilePath(for: name)
         return try! String(contentsOfFile: path, encoding: String.Encoding.utf8)
     }
 
-    internal class func JSONFromFile(_ name: String) -> Any {
+    class func JSONFromFile(_ name: String) -> Any {
         let path = jsonFilePath(for: name)
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
         let dict: Any? = try? JSONSerialization.jsonObject(with: data,
@@ -15,7 +15,7 @@ internal class Helper {
         return dict!
     }
 
-    internal class func codableFromFile<T>(_ name: String, type _: T.Type) -> T where T: Codable {
+    class func codableFromFile<T>(_ name: String, type _: T.Type) -> T where T: Codable {
         let path = jsonFilePath(for: name)
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
         let decoder = JSONDecoder()
@@ -23,7 +23,7 @@ internal class Helper {
         return try! decoder.decode(T.self, from: data)
     }
 
-    internal class func makeAuthHeader(username: String, password: String) -> [String: String] {
+    class func makeAuthHeader(username: String, password: String) -> [String: String] {
         let token = "\(username):\(password)".data(using: .utf8)!.base64EncodedString()
         return [
             "Authorization": "Basic \(token)"
