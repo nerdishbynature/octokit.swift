@@ -156,7 +156,7 @@ public extension Octokit {
     ///   - owner: The user or organization that owns the repositories.
     ///   - repo: The repository on which the release needs to be created.
     ///   - tagName: The name of the tag.
-    ///   - targetCommitish: Specifies the commitish value that determines where the Git tag is created from. Can be any branch or commit SHA. Unused if the Git tag already exists. Default: the repository's default branch (usually master).
+    ///   - targetCommitish: Specifies the commitish value that determines where the Git tag is created from. Can be any branch or commit SHA. Unused if the Git tag already exists. Default: the repository's default branch (usually main).
     ///   - name: The name of the release.
     ///   - body: Text describing the contents of the tag.
     ///   - prerelease: `true` to create a draft (unpublished) release, `false` to create a published one. Default: `false`.
