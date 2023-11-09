@@ -133,14 +133,18 @@ public extension Octokit {
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter ref: SHA, a branch name, or a tag name.
+     - parameter page: The page to request.
+     - parameter perPage: The number of pulls to return on each page, max is 100.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
     func listCommitStatuses(owner: String,
                             repository: String,
                             ref: String,
+                            page: String? = nil,
+                            perPage: String? = nil,
                             completion: @escaping (_ response: Result<[Status], Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref)
+        let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref, page: page, perPage: perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Status].self) { statuses, error in
             if let error = error {
                 completion(.failure(error))
@@ -158,12 +162,16 @@ public extension Octokit {
      - parameter owner: The user or organization that owns the repository.
      - parameter repository: The name of the repository.
      - parameter ref: SHA, a branch name, or a tag name.
+     - parameter page: The page to request.
+     - parameter perPage: The number of pulls to return on each page, max is 100.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func listCommitStatuses(owner: String,
                             repository: String,
-                            ref: String) async throws -> [Status] {
-        let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref)
+                            ref: String,
+                            page: String? = nil,
+                            perPage: String? = nil) async throws -> [Status] {
+        let router = StatusesRouter.listCommitStatuses(configuration, owner: owner, repo: repository, ref: ref, page: page, perPage: perPage)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Status].self)
     }
     #endif
@@ -173,7 +181,7 @@ public extension Octokit {
 
 enum StatusesRouter: JSONPostRouter {
     case createCommitStatus(Configuration, owner: String, repo: String, sha: String, state: Status.State, targetURL: String?, description: String?, context: String?)
-    case listCommitStatuses(Configuration, owner: String, repo: String, ref: String)
+    case listCommitStatuses(Configuration, owner: String, repo: String, ref: String, page: String?, perPage: String?)
 
     var method: HTTPMethod {
         switch self {
@@ -197,7 +205,7 @@ enum StatusesRouter: JSONPostRouter {
         switch self {
         case let .createCommitStatus(config, _, _, _, _, _, _, _):
             return config
-        case let .listCommitStatuses(config, _, _, _):
+        case let .listCommitStatuses(config, _, _, _, _, _):
             return config
         }
     }
@@ -216,7 +224,14 @@ enum StatusesRouter: JSONPostRouter {
                 params["context"] = context
             }
             return params
-        case .listCommitStatuses:
+        case let .listCommitStatuses(_, _, _, _, page, perPage):
+            var params = [String: Any]()
+            if let page = page {
+                params["page"] = page
+            }
+            if let perPage = perPage {
+                params["per_page"] = perPage
+            }
             return [:]
         }
     }
@@ -225,7 +240,7 @@ enum StatusesRouter: JSONPostRouter {
         switch self {
         case let .createCommitStatus(_, owner, repo, sha, _, _, _, _):
             return "repos/\(owner)/\(repo)/statuses/\(sha)"
-        case let .listCommitStatuses(_, owner, repo, ref):
+        case let .listCommitStatuses(_, owner, repo, ref, _, _):
             return "repos/\(owner)/\(repo)/commits/\(ref)/statuses"
         }
     }
