@@ -43,6 +43,7 @@ open class NotificationThread: Codable {
     public enum Reason: String, Codable {
         case assign
         case author
+        case ciActivity = "ci_activity"
         case comment
         case invitation
         case manual
