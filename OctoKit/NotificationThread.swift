@@ -7,7 +7,7 @@ import FoundationNetworking
 // MARK: - Model
 
 open class NotificationThread: Codable {
-    open internal(set) var id: String? = "-1"
+    open internal(set) var id: String = "-1"
     open var unread: Bool?
     open var reason: Reason?
     open var updatedAt: Date?
@@ -102,6 +102,23 @@ public extension Octokit {
             }
         }
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func myNotifications(
+        all: Bool = false,
+        participating: Bool = false,
+        page: String = "1",
+        perPage: String = "100"
+    ) async throws -> [NotificationThread] {
+        let router = NotificationRouter.readNotifications(configuration, all, participating, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self)
+    }
+    #endif
 
     /**
      Marks All Notifications As read
@@ -116,6 +133,21 @@ public extension Octokit {
         let router = NotificationRouter.markNotificationsRead(configuration, lastReadAt, read)
         return router.load(session, completion: completion)
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func markNotificationsRead(
+        lastReadAt: String = "last_read_at",
+        read: Bool = false
+    ) async throws -> Void {
+        let router = NotificationRouter.markNotificationsRead(configuration, lastReadAt, read)
+        return try await router.load(session)
+    }
+    #endif
 
     /**
      Marks All Notifications As read
@@ -136,6 +168,20 @@ public extension Octokit {
             }
         }
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func getNotificationThread(
+        threadId: String
+    ) async throws -> NotificationThread {
+        let router = NotificationRouter.getNotificationThread(configuration, threadId)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: NotificationThread.self)
+    }
+    #endif
 
     /**
      Get a thread subscription for the authenticated user
@@ -156,6 +202,20 @@ public extension Octokit {
             }
         }
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func getThreadSubscription(
+        threadId: String
+    ) async throws -> ThreadSubscription {
+        let router = NotificationRouter.getThreadSubscription(configuration, threadId)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self)
+    }
+    #endif
 
     /**
      Sets a thread subscription for the authenticated user
@@ -178,6 +238,21 @@ public extension Octokit {
             }
         }
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func setThreadSubscription(
+        threadId: String,
+        ignored: Bool = false
+    ) async throws -> ThreadSubscription {
+        let router = NotificationRouter.setThreadSubscription(configuration, threadId, ignored)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self)
+    }
+    #endif
 
     /**
      Delete a thread subscription
@@ -189,6 +264,18 @@ public extension Octokit {
         let router = NotificationRouter.deleteThreadSubscription(configuration, threadId)
         return router.load(session, completion: completion)
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func deleteThreadSubscription(threadId: String) async throws -> Void {
+        let router = NotificationRouter.deleteThreadSubscription(configuration, threadId)
+        return try await router.load(session)
+    }
+    #endif
 
     /**
      List all repository notifications for the current user, sorted by most recently updated.
@@ -223,6 +310,27 @@ public extension Octokit {
             }
         }
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func listRepositoryNotifications(
+        owner: String,
+                                         repository: String,
+                                         all: Bool = false,
+                                         participating: Bool = false,
+                                         since: String? = nil,
+                                         before: String? = nil,
+                                         page: String = "1",
+        perPage: String = "100"
+    ) async throws -> [NotificationThread] {
+        let router = NotificationRouter.listRepositoryNotifications(configuration, owner, repository, all, participating, since, before, perPage, page)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self)
+    }
+    #endif
 
     /**
      Marks All Repository Notifications As read
@@ -239,6 +347,22 @@ public extension Octokit {
         let router = NotificationRouter.markRepositoryNotificationsRead(configuration, owner, repository, lastReadAt)
         return router.load(session, completion: completion)
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter name: The name of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func markRepositoryNotificationsRead(
+        owner: String,
+                                             repository: String,
+        lastReadAt: String? = nil
+    ) async throws -> Void {
+        let router = NotificationRouter.markRepositoryNotificationsRead(configuration, owner, repository, lastReadAt)
+        return try await router.load(session)
+    }
+    #endif
 }
 
 // MARK: - Router
