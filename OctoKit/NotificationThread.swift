@@ -12,6 +12,8 @@ open class NotificationThread: Codable {
     open var reason: Reason?
     open var updatedAt: Date?
     open var lastReadAt: Date?
+    open var url: String?
+    open var subscriptionUrl: String?
     open private(set) var subject = Subject()
     open private(set) var repository = Repository()
 
@@ -23,6 +25,8 @@ open class NotificationThread: Codable {
         case lastReadAt = "last_read_at"
         case subject
         case repository
+        case url
+        case subscriptionUrl = "subscription_url"
     }
 
     public class Subject: Codable {
@@ -105,8 +109,11 @@ public extension Octokit {
     
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
+     List all notifications for the current user, sorted by most recently updated.
+     - parameter all: show notifications marked as read `false` by default.
+     - parameter participating: only shows notifications in which the user is directly participating or mentioned. `false` by default.
+     - parameter page: Current page for notification pagination. `1` by default.
+     - parameter perPage: Number of notifications per page. `100` by default.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myNotifications(
@@ -136,8 +143,9 @@ public extension Octokit {
     
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
+     Marks All Notifications As read
+     - parameter lastReadAt: Describes the last point that notifications were checked `last_read_at` by default.
+     - parameter read: Whether the notification has been read `false` by default.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func markNotificationsRead(
@@ -148,9 +156,64 @@ public extension Octokit {
         return try await router.load(session)
     }
     #endif
+    
+    
+    /**
+     Marks a Notification Thread as read
+     - parameter threadId: The ID of the Thread.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func markNotificationThreadAsRead(threadId: String,
+                               completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = NotificationRouter.markNotificationThreadAsRead(configuration, threadId)
+        return router.load(session, completion: completion)
+    }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Marks a Notification Thread as read
+     - parameter threadId: The ID of the Thread.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func markNotificationThreadAsRead(
+        threadId: String
+    ) async throws -> Void {
+        let router = NotificationRouter.markNotificationThreadAsRead(configuration, threadId)
+        return try await router.load(session)
+    }
+    #endif
+    
+    
+    /**
+     Marks a Notification Thread as done
+     - parameter threadId: The ID of the Thread.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func markNotificationThreadAsDone(threadId: String,
+                               completion: @escaping (_ response: Error?) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = NotificationRouter.markNotificationThreadAsDone(configuration, threadId)
+        return router.load(session, completion: completion)
+    }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Marks a Notification Thread as done
+     - parameter threadId: The ID of the Thread.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func markNotificationThreadAsDone(
+        threadId: String
+    ) async throws -> Void {
+        let router = NotificationRouter.markNotificationThreadAsDone(configuration, threadId)
+        return try await router.load(session)
+    }
+    #endif
+    
 
     /**
-     Marks All Notifications As read
+     Retrives a Notification Thread
      - parameter threadId: The ID of the Thread.
      - parameter completion: Callback for the outcome of the fetch.
      */
@@ -171,8 +234,8 @@ public extension Octokit {
     
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
+     Retrives a Notification Thread
+     - parameter threadId: The ID of the Thread.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func getNotificationThread(
@@ -205,9 +268,9 @@ public extension Octokit {
     
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
-     */
+     Get a thread subscription for the authenticated user
+      - parameter threadId: The ID of the Thread.
+      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func getThreadSubscription(
         threadId: String
@@ -241,8 +304,9 @@ public extension Octokit {
     
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
+     Sets a thread subscription for the authenticated user
+     - parameter threadId: The ID of the Thread.
+     - parameter ignored: Whether to block all notifications from a thread `false` by default.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func setThreadSubscription(
@@ -267,8 +331,8 @@ public extension Octokit {
     
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
+     Delete a thread subscription
+     - parameter threadId: The ID of the Thread.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func deleteThreadSubscription(threadId: String) async throws -> Void {
@@ -313,8 +377,15 @@ public extension Octokit {
     
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
+     List all repository notifications for the current user, sorted by most recently updated.
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     - parameter all: show notifications marked as read `false` by default.
+     - parameter participating: only shows notifications in which the user is directly participating or mentioned. `false` by default.
+     - parameter since: Only show notifications updated after the given time.
+     - parameter before: Only show notifications updated before the given time.
+     - parameter page: Current page for notification pagination. `1` by default.
+     - parameter perPage: Number of notifications per page. `100` by default.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func listRepositoryNotifications(
@@ -350,8 +421,10 @@ public extension Octokit {
     
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches a user or organization
-     - parameter name: The name of the user or organization.
+     Marks All Repository Notifications As read
+     - parameter owner: The name of the owner of the repository.
+     - parameter repository: The name of the repository.
+     - parameter lastReadAt: Describes the last point that notifications were checked `last_read_at` by default.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func markRepositoryNotificationsRead(
@@ -372,6 +445,7 @@ enum NotificationRouter: Router {
     case markNotificationsRead(Configuration, String, Bool)
     case getNotificationThread(Configuration, String)
     case markNotificationThreadAsRead(Configuration, String)
+    case markNotificationThreadAsDone(Configuration, String)
     case getThreadSubscription(Configuration, String)
     case setThreadSubscription(Configuration, String, Bool)
     case deleteThreadSubscription(Configuration, String)
@@ -382,7 +456,9 @@ enum NotificationRouter: Router {
         switch self {
         case let .readNotifications(config, _, _, _, _): return config
         case let .markNotificationsRead(config, _, _): return config
-        case let .getNotificationThread(config, _), let .markNotificationThreadAsRead(config, _): return config
+        case let .getNotificationThread(config, _): return config
+        case let .markNotificationThreadAsRead(config, _): return config
+        case let .markNotificationThreadAsDone(config, _): return config
         case let .getThreadSubscription(config, _): return config
         case let .setThreadSubscription(config, _, _): return config
         case let .deleteThreadSubscription(config, _): return config
@@ -403,8 +479,9 @@ enum NotificationRouter: Router {
              .markRepositoryNotificationsRead:
             return .PUT
         case .markNotificationThreadAsRead:
-            return .POST
-        case .deleteThreadSubscription:
+            return .PATCH
+        case .deleteThreadSubscription,
+             .markNotificationThreadAsDone:
             return .DELETE
         }
     }
@@ -418,10 +495,11 @@ enum NotificationRouter: Router {
         case .readNotifications,
              .markNotificationsRead:
             return "notifications"
-        case let .getNotificationThread(_, threadID):
-            return "notifications/threads/\(threadID)"
-        case .markNotificationThreadAsRead:
-            return "notifications/threads/"
+        case let .getNotificationThread(_, threadId),
+             let .markNotificationThreadAsRead(_, threadId),
+             let .markNotificationThreadAsDone(_, threadId):
+            return "notifications/threads/\(threadId)"
+
         case let .getThreadSubscription(_, threadId),
              let .setThreadSubscription(_, threadId, _),
              let .deleteThreadSubscription(_, threadId):
@@ -441,7 +519,9 @@ enum NotificationRouter: Router {
         case .getNotificationThread:
             return [:]
         case let .markNotificationThreadAsRead(_, threadID):
-            return ["thread_id": threadID]
+            return [:]
+        case let .markNotificationThreadAsDone:
+            return [:]
         case .getThreadSubscription:
             return [:]
         case .setThreadSubscription:
