@@ -30,7 +30,6 @@ open class NotificationThread: Codable {
     }
 
     public class Subject: Codable {
-        open internal(set) var id: Int = -1
         open var title: String?
         open var url: String?
         open var latestCommentUrl: String?
