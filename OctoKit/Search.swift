@@ -149,7 +149,7 @@ enum SearchRouter: JSONPostRouter {
     var params: [String: Any] {
         switch self {
         case let .searchCode(_, query, page, perPage):
-            return ["query": query, "per_page": perPage, "page": page]
+            return ["q": query, "per_page": perPage, "page": page]
         }
     }
 
