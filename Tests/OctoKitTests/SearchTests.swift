@@ -12,7 +12,7 @@ final class SearchTests: XCTestCase {
     // MARK: Request Tests
     
     func testSearchCode() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/search/code?page=1&per_page=100&query=hello%2Brepo%3Aoctocat/hello-world", expectedHTTPMethod: "GET", jsonFile: "search_code", statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/search/code?page=1&per_page=100&q=hello%2Brepo%3Aoctocat/hello-world", expectedHTTPMethod: "GET", jsonFile: "search_code", statusCode: 200)
         let task = Octokit(session: session).searchCode(query: "hello+repo:octocat/hello-world") { response in
             switch response {
             case let .success(result):
@@ -30,7 +30,7 @@ final class SearchTests: XCTestCase {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testSearchCodeAsync() async throws {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/search/code?page=1&per_page=100&query=hello%2Brepo%3Aoctocat/hello-world",
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/search/code?page=1&per_page=100&q=hello%2Brepo%3Aoctocat/hello-world",
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "search_code",
                                             statusCode: 200)
@@ -42,7 +42,7 @@ final class SearchTests: XCTestCase {
     #endif
     
     func testSearchCodeSetsPagination() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/search/code?page=2&per_page=50&query=hello%2Brepo%3Aoctocat/hello-world", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/search/code?page=2&per_page=50&q=hello%2Brepo%3Aoctocat/hello-world", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 200)
         let task = Octokit(session: session).searchCode(query: "hello+repo:octocat/hello-world", page: "2", perPage: "50") { response in
             switch response {
             case .success:
