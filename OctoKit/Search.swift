@@ -15,13 +15,13 @@ open class SearchResponse<T: Codable>: Codable {
     open var totalCount: Int
     open var incompleteResults: Bool
     open var items: [T]
-    
+
     init(totalCount: Int, incompleteResults: Bool, items: [T]) {
         self.totalCount = totalCount
         self.incompleteResults = incompleteResults
         self.items = items
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case totalCount = "total_count"
         case incompleteResults = "incomplete_results"
@@ -42,7 +42,7 @@ open class CodeSearchResultItem: Codable {
     open var language: String?
     open var lastModifiedAt: Date?
     open var lineNumbers: [String]?
-    
+
     init(name: String,
          path: String,
          sha: String,
@@ -68,7 +68,7 @@ open class CodeSearchResultItem: Codable {
         self.lastModifiedAt = lastModifiedAt
         self.lineNumbers = lineNumbers
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case name, path, sha, url
         case gitUrl = "git_url"
