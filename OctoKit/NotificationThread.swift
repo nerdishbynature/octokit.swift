@@ -551,9 +551,9 @@ enum NotificationRouter: Router {
             return ["last_read_at": lastReadAt, "read": "\(read)"]
         case .getNotificationThread:
             return [:]
-        case let .markNotificationThreadAsRead(_, threadID):
+        case .markNotificationThreadAsRead(_, _):
             return [:]
-        case let .markNotificationThreadAsDone:
+        case .markNotificationThreadAsDone:
             return [:]
         case .getThreadSubscription:
             return [:]
