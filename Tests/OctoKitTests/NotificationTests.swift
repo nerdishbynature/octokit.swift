@@ -25,7 +25,7 @@ class NotificationTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetMyNotificationsAsync() async throws {
@@ -56,7 +56,7 @@ class NotificationTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testMarkNotifcationsReadAsync() async throws {
@@ -71,7 +71,6 @@ class NotificationTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
     #endif
-    
 
     func testGetNotificationThread() {
         let config = TokenConfiguration("user:12345")
@@ -92,7 +91,7 @@ class NotificationTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetNotificationThreadAsync() async throws {
@@ -128,7 +127,7 @@ class NotificationTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetThreadSubscriptionAsync() async throws {
@@ -164,7 +163,7 @@ class NotificationTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testSetThreadSubscriptionAsync() async throws {
@@ -195,7 +194,7 @@ class NotificationTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testDeleteThreadSubscriptionAsync() async throws {
@@ -231,7 +230,7 @@ class NotificationTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testListRepositoryNotificationsAsync() async throws {
@@ -263,7 +262,7 @@ class NotificationTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testMarkRepositoryNofificationsReadAsync() async throws {
