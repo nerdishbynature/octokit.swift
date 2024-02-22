@@ -362,7 +362,9 @@ public extension Octokit {
                     assignee: String? = nil,
                     state: Openness? = nil) async throws -> Issue {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
-        return try await router.post(session, expectedResultType: Issue.self)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Issue.self)
     }
     #endif
 
