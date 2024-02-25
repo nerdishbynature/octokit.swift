@@ -331,7 +331,9 @@ public extension Octokit {
                     state: Openness? = nil,
                     completion: @escaping (_ response: Result<Issue, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
-        return router.post(session, expectedResultType: Issue.self) { issue, error in
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -362,7 +364,9 @@ public extension Octokit {
                     assignee: String? = nil,
                     state: Openness? = nil) async throws -> Issue {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
-        return try await router.post(session, expectedResultType: Issue.self)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Issue.self)
     }
     #endif
 
