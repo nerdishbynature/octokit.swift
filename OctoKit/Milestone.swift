@@ -412,7 +412,7 @@ enum MilestoneRouter: Router, JSONPostRouter {
             }
             
             if let date {
-                parameters["due_on"] = date
+                parameters["due_on"] = Time.rfc3339DateFormatter.string(from: date)
             }
             
             return parameters
@@ -438,7 +438,7 @@ enum MilestoneRouter: Router, JSONPostRouter {
             }
             
             if let date {
-                parameters["due_on"] = date
+                parameters["due_on"] = Time.rfc3339DateFormatter.string(from: date)
             }
             
             return parameters

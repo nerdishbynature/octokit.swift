@@ -20,8 +20,8 @@ class MilestoneTests: XCTestCase {
                     XCTAssertEqual(milestone.number, 1)
                     XCTAssertEqual(milestone.title, "v1.0")
                     XCTAssertEqual(milestone.url?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/milestones/1")
-                   XCTAssertEqual(milestone.state, .open)
-                   XCTAssertEqual(milestone.milestoneDescription, "Tracking milestone for version 1.0")
+                    XCTAssertEqual(milestone.state, .open)
+                    XCTAssertEqual(milestone.milestoneDescription, "Tracking milestone for version 1.0")
                     XCTAssertEqual(milestone.openIssues, 4)
                     XCTAssertEqual(milestone.closedIssues, 8)
                     XCTAssertEqual(milestone.creator?.login, "octocat")
@@ -56,8 +56,8 @@ class MilestoneTests: XCTestCase {
                     XCTAssertEqual(milestone.number, 1)
                     XCTAssertEqual(milestone.title, "v1.0")
                     XCTAssertEqual(milestone.url?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/milestones/1")
-                   XCTAssertEqual(milestone.state, .open)
-                   XCTAssertEqual(milestone.milestoneDescription, "Tracking milestone for version 1.0")
+                    XCTAssertEqual(milestone.state, .open)
+                    XCTAssertEqual(milestone.milestoneDescription, "Tracking milestone for version 1.0")
                     XCTAssertEqual(milestone.openIssues, 4)
                     XCTAssertEqual(milestone.closedIssues, 8)
                     XCTAssertEqual(milestone.creator?.login, "octocat")
@@ -84,15 +84,18 @@ class MilestoneTests: XCTestCase {
         let task = Octokit(session: session).createMilestone(
             owner: "octocat",
             repo: "Hello-World",
-            title: "v1.0") { response in
+            title: "v1.0",
+            description: "Description",
+            dueDate: .now
+        ) { response in
                 switch response {
                 case let .success(milestone):
                     XCTAssertEqual(milestone.id, 1002604)
                     XCTAssertEqual(milestone.number, 1)
                     XCTAssertEqual(milestone.title, "v1.0")
                     XCTAssertEqual(milestone.url?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/milestones/1")
-                   XCTAssertEqual(milestone.state, .open)
-                   XCTAssertEqual(milestone.milestoneDescription, "Tracking milestone for version 1.0")
+                    XCTAssertEqual(milestone.state, .open)
+                    XCTAssertEqual(milestone.milestoneDescription, "Tracking milestone for version 1.0")
                     XCTAssertEqual(milestone.openIssues, 4)
                     XCTAssertEqual(milestone.closedIssues, 8)
                     XCTAssertEqual(milestone.creator?.login, "octocat")
@@ -126,8 +129,8 @@ class MilestoneTests: XCTestCase {
                     XCTAssertEqual(milestone.number, 1)
                     XCTAssertEqual(milestone.title, "v1.0")
                     XCTAssertEqual(milestone.url?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/milestones/1")
-                   XCTAssertEqual(milestone.state, .open)
-                   XCTAssertEqual(milestone.milestoneDescription, "Tracking milestone for version 1.0")
+                    XCTAssertEqual(milestone.state, .open)
+                    XCTAssertEqual(milestone.milestoneDescription, "Tracking milestone for version 1.0")
                     XCTAssertEqual(milestone.openIssues, 4)
                     XCTAssertEqual(milestone.closedIssues, 8)
                     XCTAssertEqual(milestone.creator?.login, "octocat")
