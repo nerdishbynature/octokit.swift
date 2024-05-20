@@ -377,7 +377,7 @@ enum MilestoneRouter: Router, JSONPostRouter {
     
     var params: [String: Any] {
         switch self {
-        case let .readMilestones(_, _, _, state, sort, direction, page, perPage):
+        case let .readMilestones(_, _, _, state, sort, direction, perPage, page):
             var parameters: [String: Any] = [
                 "state": state.rawValue,
                 "sort": sort.rawValue,
