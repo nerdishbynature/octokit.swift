@@ -104,6 +104,34 @@ public extension Octokit {
         }
     }
     
+#if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    /**
+     Create a milestone
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repo: The name of the repository.
+     - parameter title: The title of the new milestone.
+     - parameter state: Filter pulls by their state.
+     - parameter description: The description of the new milestone.
+     - parameter date: The milestone due date
+     */
+    @discardableResult
+    func createMilestone(owner: String,
+                         repo: String,
+                         title: String,
+                         state: Openness? = nil,
+                         description: String? = nil,
+                         dueDate: Date? = nil) async throws -> Milestone {
+        let router = MilestoneRouter.createMilestone(configuration, owner, repo, title, state, description, dueDate)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(
+            session,
+            decoder: decoder,
+            expectedResultType: Milestone.self)
+    }
+#endif
+    
     /**
      Get a single milestone
      - parameter owner: The user or organization that owns the repositories.
@@ -111,11 +139,10 @@ public extension Octokit {
      - parameter number: The number that identifies the milestone.
      - parameter completion: Callback for the outcome of the fetch.
      */
-    @discardableResult
     func milestone(owner: String,
-                         repo: String,
-                         number: Int,
-                         completion: @escaping (_ response: Result<Milestone, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+                   repo: String,
+                   number: Int,
+                   completion: @escaping (_ response: Result<Milestone, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = MilestoneRouter.readMilestone(configuration, owner, repo, number)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -129,6 +156,24 @@ public extension Octokit {
             }
         }
     }
+    
+#if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Get a single milestone
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repo: The name of the repository.
+     - parameter number: The number that identifies the milestone.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func milestone(owner: String,
+                   repo: String,
+                   number: Int) async throws -> Milestone {
+        let router = MilestoneRouter.readMilestone(configuration, owner, repo, number)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Milestone.self)
+    }
+#endif
     
     /**
      Get a list of milestones
@@ -148,7 +193,7 @@ public extension Octokit {
                     direction: SortDirection = .desc,
                     page: Int? = nil,
                     perPage: Int? = nil,
-completion: @escaping (_ response: Result<[Milestone], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+                    completion: @escaping (_ response: Result<[Milestone], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = MilestoneRouter.readMilestones(configuration, owner, repo, state, sort, direction, perPage, page)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
@@ -162,6 +207,32 @@ completion: @escaping (_ response: Result<[Milestone], Error>) -> Void) -> URLSe
             }
         }
     }
+    
+#if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Get a list of milestones
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repo: The name of the repository.
+     - parameter state: Filter pulls by their state.
+     - parameter direction: The direction of the sort.
+     - parameter page: The page to request.
+     - parameter perPage: The number of pulls to return on each page, max is 100.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func milestones(owner: String,
+                    repo: String,
+                    state: Openness = .open,
+                    sort: SortType = .created,
+                    direction: SortDirection = .desc,
+                    page: Int? = nil,
+                    perPage: Int? = nil) async throws -> [Milestone] {
+        let router = MilestoneRouter.readMilestones(configuration, owner, repo, state, sort, direction, perPage, page)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.load(session, decoder: decoder, expectedResultType: [Milestone].self)
+    }
+#endif
     
     /**
      Update a milestone
@@ -196,6 +267,33 @@ completion: @escaping (_ response: Result<[Milestone], Error>) -> Void) -> URLSe
             }
         }
     }
+    
+#if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Update a milestone
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repo: The name of the repository.
+     - parameter number: The number that identifies the milestone.
+     - parameter title: The title of the new milestone.
+     - parameter state: Filter pulls by their state.
+     - parameter description: The description of the new milestone.
+     - parameter date: The milestone due date
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func updateMilestone(owner: String,
+                         repo: String,
+                         number: Int,
+                         title: String? = nil,
+                         state: Openness? = nil,
+                         description: String? = nil,
+                         dueDate: Date? = nil) async throws -> Milestone {
+        let router = MilestoneRouter.updateMilestone(configuration, owner, repo, number, title, state, description, dueDate)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: Milestone.self)
+    }
+#endif
+    
     /**
      Delete a single milestone
      - parameter owner: The user or organization that owns the repositories.
@@ -211,6 +309,22 @@ completion: @escaping (_ response: Result<[Milestone], Error>) -> Void) -> URLSe
         let router = MilestoneRouter.deleteMilestone(configuration, owner, repo, number)
         return router.load(session, completion: completion)
     }
+    
+#if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Delete a single milestone
+     - parameter owner: The user or organization that owns the repositories.
+     - parameter repo: The name of the repository.
+     - parameter number: The number that identifies the milestone.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func deleteMilestone(owner: String,
+                         repo: String,
+                         number: Int) async throws {
+        let router = MilestoneRouter.deleteMilestone(configuration, owner, repo, number)
+        return try await router.load(session)
+    }
+#endif
 }
 
 // MARK: Router
@@ -269,15 +383,15 @@ enum MilestoneRouter: Router, JSONPostRouter {
                 "sort": sort.rawValue,
                 "direction": direction.rawValue
             ]
-
+            
             if let page {
                 parameters["page"] = page
             }
-
+            
             if let perPage {
                 parameters["per_page"] = perPage
             }
-
+            
             return parameters
             
         case let .createMilestone(_, _, _, title, state, description, date):
