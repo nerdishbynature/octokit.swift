@@ -385,11 +385,11 @@ enum MilestoneRouter: Router, JSONPostRouter {
             ]
             
             if let page {
-                parameters["page"] = page
+                parameters["page"] = String(page)
             }
             
             if let perPage {
-                parameters["per_page"] = perPage
+                parameters["per_page"] = String(perPage)
             }
             
             return parameters
