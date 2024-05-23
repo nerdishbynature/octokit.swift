@@ -178,7 +178,7 @@ public extension Octokit {
      Get a list of milestones
      - parameter owner: The user or organization that owns the repositories.
      - parameter repo: The name of the repository.
-     - parameter state: The state of the milestone. Either open or closed
+     - parameter state: The state of the milestone. Either open, closed, or all
      - parameter direction: The direction of the sort.
      - parameter page: The page to request.
      - parameter perPage: The number of pulls to return on each page, max is 100.
@@ -212,7 +212,7 @@ public extension Octokit {
      Get a list of milestones
      - parameter owner: The user or organization that owns the repositories.
      - parameter repo: The name of the repository.
-     - parameter state: The state of the milestone. Either open or closed
+     - parameter state: The state of the milestone. Either open, closed, or all
      - parameter direction: The direction of the sort.
      - parameter page: The page to request.
      - parameter perPage: The number of pulls to return on each page, max is 100.
