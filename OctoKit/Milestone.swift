@@ -384,11 +384,11 @@ enum MilestoneRouter: Router, JSONPostRouter {
                 "direction": direction.rawValue
             ]
 
-            if let page {
+            if let page = page {
                 parameters["page"] = String(page)
             }
 
-            if let perPage {
+            if let perPage = perPage {
                 parameters["per_page"] = String(perPage)
             }
 
@@ -399,7 +399,7 @@ enum MilestoneRouter: Router, JSONPostRouter {
                 "title": title
             ]
 
-            if let state {
+            if let state = state {
                 if state == .all {
                     parameters["state"] = Openness.open.rawValue
                 } else {
@@ -407,11 +407,11 @@ enum MilestoneRouter: Router, JSONPostRouter {
                 }
             }
 
-            if let description {
+            if let description = description {
                 parameters["description"] = description
             }
 
-            if let date {
+            if let date = date {
                 parameters["due_on"] = Time.rfc3339DateFormatter.string(from: date)
             }
 
@@ -422,10 +422,10 @@ enum MilestoneRouter: Router, JSONPostRouter {
         case let .updateMilestone(_, _, _, _, title, state, description, date):
             var parameters: [String: Any] = [:]
 
-            if let title {
+            if let title = title {
                 parameters["title"] = title
             }
-            if let state {
+            if let state = state {
                 if state == .all {
                     parameters["state"] = Openness.open.rawValue
                 } else {
@@ -433,11 +433,11 @@ enum MilestoneRouter: Router, JSONPostRouter {
                 }
             }
 
-            if let description {
+            if let description = description {
                 parameters["description"] = description
             }
 
-            if let date {
+            if let date = date {
                 parameters["due_on"] = Time.rfc3339DateFormatter.string(from: date)
             }
 
