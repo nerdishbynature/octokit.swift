@@ -97,7 +97,7 @@ public extension Octokit {
             if let error = error {
                 completion(.failure(error))
             } else {
-                if let milestone {
+                if let milestone = milestone {
                     completion(.success(milestone))
                 }
             }
@@ -149,7 +149,7 @@ public extension Octokit {
             if let error = error {
                 completion(.failure(error))
             } else {
-                if let milestone {
+                if let milestone = milestone {
                     completion(.success(milestone))
                 }
             }
@@ -200,7 +200,7 @@ public extension Octokit {
             if let error = error {
                 completion(.failure(error))
             } else {
-                if let milestones {
+                if let milestones = milestones {
                     completion(.success(milestones))
                 }
             }
@@ -260,7 +260,7 @@ public extension Octokit {
             if let error = error {
                 completion(.failure(error))
             } else {
-                if let milestone {
+                if let milestone = milestone {
                     completion(.success(milestone))
                 }
             }
