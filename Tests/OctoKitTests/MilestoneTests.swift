@@ -35,7 +35,7 @@ class MilestoneTests: XCTestCase {
     }
 
     func testGetMilestones() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/milestones?direction=desc&page=10&per_page=2&sort=created&state=open",
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/milestones?direction=desc&page=2&per_page=10&sort=created&state=open",
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "milestones",
                                             statusCode: 200)
