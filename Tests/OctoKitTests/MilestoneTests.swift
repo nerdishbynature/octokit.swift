@@ -81,7 +81,7 @@ class MilestoneTests: XCTestCase {
                                                              repo: "Hello-World",
                                                              title: "v1.0",
                                                              description: "Description",
-                                                             dueDate: .now) { response in
+                                                             dueDate: .init()) { response in
             switch response {
             case let .success(milestone):
                 XCTAssertEqual(milestone.id, 1002604)
