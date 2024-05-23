@@ -77,7 +77,7 @@ public extension Octokit {
      - parameter owner: The user or organization that owns the repositories.
      - parameter repo: The name of the repository.
      - parameter title: The title of the new milestone.
-     - parameter state: Filter pulls by their state.
+     - parameter state: The state of the milestone. Either open or closed
      - parameter description: The description of the new milestone.
      - parameter date: The milestone due date
      - parameter completion: Callback for the outcome of the create
@@ -111,7 +111,7 @@ public extension Octokit {
      - parameter owner: The user or organization that owns the repositories.
      - parameter repo: The name of the repository.
      - parameter title: The title of the new milestone.
-     - parameter state: Filter pulls by their state.
+     - parameter state: The state of the milestone. Either open or closed
      - parameter description: The description of the new milestone.
      - parameter date: The milestone due date
      */
@@ -178,7 +178,7 @@ public extension Octokit {
      Get a list of milestones
      - parameter owner: The user or organization that owns the repositories.
      - parameter repo: The name of the repository.
-     - parameter state: Filter pulls by their state.
+     - parameter state: The state of the milestone. Either open or closed
      - parameter direction: The direction of the sort.
      - parameter page: The page to request.
      - parameter perPage: The number of pulls to return on each page, max is 100.
@@ -212,7 +212,7 @@ public extension Octokit {
      Get a list of milestones
      - parameter owner: The user or organization that owns the repositories.
      - parameter repo: The name of the repository.
-     - parameter state: Filter pulls by their state.
+     - parameter state: The state of the milestone. Either open or closed
      - parameter direction: The direction of the sort.
      - parameter page: The page to request.
      - parameter perPage: The number of pulls to return on each page, max is 100.
@@ -239,7 +239,7 @@ public extension Octokit {
      - parameter repo: The name of the repository.
      - parameter number: The number that identifies the milestone.
      - parameter title: The title of the new milestone.
-     - parameter state: Filter pulls by their state.
+     - parameter state: The state of the milestone. Either open or closed
      - parameter description: The description of the new milestone.
      - parameter date: The milestone due date
      - parameter completion: Callback for the outcome of the update
@@ -274,7 +274,7 @@ public extension Octokit {
      - parameter repo: The name of the repository.
      - parameter number: The number that identifies the milestone.
      - parameter title: The title of the new milestone.
-     - parameter state: Filter pulls by their state.
+     - parameter state: The state of the milestone. Either open or closed
      - parameter description: The description of the new milestone.
      - parameter date: The milestone due date
      */
