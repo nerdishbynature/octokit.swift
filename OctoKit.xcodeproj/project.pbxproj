@@ -1720,7 +1720,7 @@
 			repositoryURL = "https://github.com/nerdishbynature/RequestKit.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 3.2.1;
+				minimumVersion = 3.3.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
