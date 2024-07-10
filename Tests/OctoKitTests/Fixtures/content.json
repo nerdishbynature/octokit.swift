@@ -1,0 +1,18 @@
+{
+  "_links": {
+    "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/7ff4c2ce2bce119effa766ba6845200f59e17414",
+    "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/Package.swift",
+    "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Package.swift?ref=main"
+  },
+  "content": "Ly8gc3dpZnQtdG9vbHMtdmVyc2lvbjo0LjAKLy8gVGhlIHN3aWZ0LXRvb2xz\nLXZlcnNpb24gZGVjbGFyZXMgdGhlIG1pbmltdW0gdmVyc2lvbiBvZiBTd2lm\ndCByZXF1aXJlZCB0byBidWlsZCB0aGlzIHBhY2thZ2UuCgppbXBvcnQgUGFj\na2FnZURlc2NyaXB0aW9uCgpsZXQgcGFja2FnZSA9IFBhY2thZ2UoCiAgICBu\nYW1lOiAiT2N0b0tpdCIsCgogICAgcHJvZHVjdHM6IFsKICAgICAgICAubGli\ncmFyeSgKICAgICAgICAgICAgbmFtZTogIk9jdG9LaXQiLAogICAgICAgICAg\nICB0YXJnZXRzOiBbIk9jdG9LaXQiXQogICAgICAgICksCiAgICBdLAogICAg\nZGVwZW5kZW5jaWVzOiBbCiAgICAgICAgLnBhY2thZ2UodXJsOiAiaHR0cHM6\nLy9naXRodWIuY29tL25lcmRpc2hieW5hdHVyZS9SZXF1ZXN0S2l0LmdpdCIs\nIGZyb206ICIzLjMuMCIpLAogICAgICAgIC5wYWNrYWdlKHVybDogImh0dHBz\nOi8vZ2l0aHViLmNvbS9uaWNrbG9ja3dvb2QvU3dpZnRGb3JtYXQiLCBmcm9t\nOiAiMC41Mi44IikKICAgIF0sCiAgICB0YXJnZXRzOiBbCiAgICAgICAgLnRh\ncmdldCgKICAgICAgICAgICAgbmFtZTogIk9jdG9LaXQiLAogICAgICAgICAg\nICBkZXBlbmRlbmNpZXM6IFsiUmVxdWVzdEtpdCJdLAogICAgICAgICAgICBw\nYXRoOiAiT2N0b0tpdCIKICAgICAgICApLAogICAgICAgIC50ZXN0VGFyZ2V0\nKAogICAgICAgICAgICBuYW1lOiAiT2N0b0tpdFRlc3RzIiwKICAgICAgICAg\nICAgZGVwZW5kZW5jaWVzOiBbIk9jdG9LaXQiXQogICAgICAgICksCiAgICBd\nCikK\n",
+  "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/Package.swift",
+  "encoding": "base64",
+  "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/7ff4c2ce2bce119effa766ba6845200f59e17414",
+  "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/Package.swift",
+  "name": "Package.swift",
+  "path": "Package.swift",
+  "sha": "7ff4c2ce2bce119effa766ba6845200f59e17414",
+  "size": 768,
+  "type": "file",
+  "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Package.swift?ref=main"
+}

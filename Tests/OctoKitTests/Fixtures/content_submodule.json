@@ -1,0 +1,17 @@
+{
+  "_links": {
+    "git": "https://api.github.com/repos/muter-mutation-testing/homebrew-formulae/git/trees/4e30ce4a9b6137502cf131664d412000bdd93007",
+    "html": "https://github.com/muter-mutation-testing/homebrew-formulae/tree/4e30ce4a9b6137502cf131664d412000bdd93007",
+    "self": "https://api.github.com/repos/muter-mutation-testing/muter/contents/homebrew-formulae?ref=master"
+  },
+  "download_url": null,
+  "git_url": "https://api.github.com/repos/muter-mutation-testing/homebrew-formulae/git/trees/4e30ce4a9b6137502cf131664d412000bdd93007",
+  "html_url": "https://github.com/muter-mutation-testing/homebrew-formulae/tree/4e30ce4a9b6137502cf131664d412000bdd93007",
+  "name": "homebrew-formulae",
+  "path": "homebrew-formulae",
+  "sha": "4e30ce4a9b6137502cf131664d412000bdd93007",
+  "size": 0,
+  "submodule_git_url": "https://github.com/muter-mutation-testing/homebrew-formulae.git",
+  "type": "submodule",
+  "url": "https://api.github.com/repos/muter-mutation-testing/muter/contents/homebrew-formulae?ref=master"
+}
