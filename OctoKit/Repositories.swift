@@ -161,6 +161,48 @@ public extension Octokit {
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Repository.self)
     }
     #endif
+    
+    /**
+         Fetches the Starred Repositories for a user
+         - parameter owner: The user whose starred repositories should be fetched.
+         - parameter page: Current page for repository pagination. `1` by default.
+         - parameter perPage: Number of repositories per page. `100` by default.
+         - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func starredRepositories(owner: String? = nil,
+                             page: String = "1",
+                             perPage: String = "100",
+                             completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = (owner != nil)
+            ? RepositoryRouter.readStarredRepositories(configuration, owner!, page, perPage)
+            : RepositoryRouter.readAuthenticatedStarredRepositories(configuration, page, perPage)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self) { repos, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+
+            if let repos = repos {
+                completion(.success(repos))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+         Fetches the Starred Repositories for a user
+         - parameter owner: The user whose starred repositories should be fetched.
+         - parameter page: Current page for repository pagination. `1` by default.
+         - parameter perPage: Number of repositories per page. `100` by default.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func starredRepositories(owner: String? = nil, page: String = "1", perPage: String = "100") async throws -> [Repository] {
+        let router = (owner != nil)
+            ? RepositoryRouter.readStarredRepositories(configuration, owner!, page, perPage)
+            : RepositoryRouter.readAuthenticatedStarredRepositories(configuration, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
+    }
+    #endif
 }
 
 // MARK: Router
@@ -169,12 +211,16 @@ enum RepositoryRouter: Router {
     case readRepositories(Configuration, String, String, String)
     case readAuthenticatedRepositories(Configuration, String, String)
     case readRepository(Configuration, String, String)
+    case readStarredRepositories(Configuration, String, String, String)
+    case readAuthenticatedStarredRepositories(Configuration, String, String)
 
     var configuration: Configuration {
         switch self {
         case let .readRepositories(config, _, _, _): return config
         case let .readAuthenticatedRepositories(config, _, _): return config
         case let .readRepository(config, _, _): return config
+        case let .readStarredRepositories(config, _, _, _): return config
+        case let .readAuthenticatedStarredRepositories(config, _, _): return config
         }
     }
 
@@ -192,6 +238,10 @@ enum RepositoryRouter: Router {
             return ["per_page": perPage, "page": page]
         case let .readAuthenticatedRepositories(_, page, perPage):
             return ["per_page": perPage, "page": page]
+        case let .readStarredRepositories(_, _, page, perPage):
+            return ["per_page": perPage, "page": page]
+        case let .readAuthenticatedStarredRepositories(_, page, perPage):
+            return ["per_page": perPage, "page": page]
         case .readRepository:
             return [:]
         }
@@ -205,6 +255,10 @@ enum RepositoryRouter: Router {
             return "user/repos"
         case let .readRepository(_, owner, name):
             return "repos/\(owner)/\(name)"
+        case let .readStarredRepositories(_, owner, _, _):
+            return "users/\(owner)/starred"
+        case .readAuthenticatedStarredRepositories:
+            return "user/starred"
         }
     }
 }
