@@ -102,6 +102,30 @@ public struct OAuthConfiguration: Configuration {
             task.resume()
         }
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    public func authorize(code: String) async throws ->  TokenConfiguration? {
+        let request = OAuthRouter.accessToken(self, code).URLRequest
+        if let request = request {
+            let (data, response) = try await session.data(for: request, delegate: nil)
+            if let response = response as? HTTPURLResponse {
+                if response.statusCode != 200 {
+                    return nil
+                } else {
+                    if let string = String(data: data, encoding: .utf8) {
+                        let accessToken = self.accessTokenFromResponse(string)
+                        if let accessToken = accessToken {
+                            return TokenConfiguration(accessToken, url: self.apiEndpoint)
+                        }
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    #endif
+    
 
     public func handleOpenURL(url: URL, completion: @escaping (_ config: TokenConfiguration) -> Void) {
         if let code = url.URLParameters["code"] {
@@ -110,6 +134,16 @@ public struct OAuthConfiguration: Configuration {
             }
         }
     }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    public func handleOpenURL(url: URL) async throws -> TokenConfiguration? {
+        if let code = url.URLParameters["code"] {
+            return try await authorize(code: code)
+        }
+        return nil
+    }
+    #endif
 
     public func accessTokenFromResponse(_ response: String) -> String? {
         let accessTokenParam = response.components(separatedBy: "&").first
