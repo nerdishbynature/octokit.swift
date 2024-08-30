@@ -1,0 +1,338 @@
+[
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/34da4e28f5ca7e3c2629cf8a213bba909b4715fe",
+      "html": "https://github.com/nerdishbynature/octokit.swift/tree/main/.devcontainer",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.devcontainer?ref=main"
+    },
+    "download_url": null,
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/34da4e28f5ca7e3c2629cf8a213bba909b4715fe",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/tree/main/.devcontainer",
+    "name": ".devcontainer",
+    "path": ".devcontainer",
+    "sha": "34da4e28f5ca7e3c2629cf8a213bba909b4715fe",
+    "size": 0,
+    "type": "dir",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.devcontainer?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/1ba8d8461399a736097ba490c96b10695fab1a4c",
+      "html": "https://github.com/nerdishbynature/octokit.swift/tree/main/.github",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.github?ref=main"
+    },
+    "download_url": null,
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/1ba8d8461399a736097ba490c96b10695fab1a4c",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/tree/main/.github",
+    "name": ".github",
+    "path": ".github",
+    "sha": "1ba8d8461399a736097ba490c96b10695fab1a4c",
+    "size": 0,
+    "type": "dir",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.github?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/a1b729f00aac01cbdf8a510ddfca6fd910970621",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/.gitignore",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.gitignore?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/.gitignore",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/a1b729f00aac01cbdf8a510ddfca6fd910970621",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/.gitignore",
+    "name": ".gitignore",
+    "path": ".gitignore",
+    "sha": "a1b729f00aac01cbdf8a510ddfca6fd910970621",
+    "size": 357,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.gitignore?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/819e07a22435f1e8efcbdd1d1c062deef0e501b1",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/.swift-version",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.swift-version?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/.swift-version",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/819e07a22435f1e8efcbdd1d1c062deef0e501b1",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/.swift-version",
+    "name": ".swift-version",
+    "path": ".swift-version",
+    "sha": "819e07a22435f1e8efcbdd1d1c062deef0e501b1",
+    "size": 4,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.swift-version?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/da2af0b468fc0f0bd92beeae3dc937d7c764dbfd",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/.swiftformat",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.swiftformat?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/.swiftformat",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/da2af0b468fc0f0bd92beeae3dc937d7c764dbfd",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/.swiftformat",
+    "name": ".swiftformat",
+    "path": ".swiftformat",
+    "sha": "da2af0b468fc0f0bd92beeae3dc937d7c764dbfd",
+    "size": 396,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/.swiftformat?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/7fa463fe61b8db3268603bfe0b6d4a3847ae50ca",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/Cartfile",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Cartfile?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/Cartfile",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/7fa463fe61b8db3268603bfe0b6d4a3847ae50ca",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/Cartfile",
+    "name": "Cartfile",
+    "path": "Cartfile",
+    "sha": "7fa463fe61b8db3268603bfe0b6d4a3847ae50ca",
+    "size": 45,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Cartfile?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/1593817d8f3f8d4aa4425a786d078461c059e928",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/Cartfile.resolved",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Cartfile.resolved?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/Cartfile.resolved",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/1593817d8f3f8d4aa4425a786d078461c059e928",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/Cartfile.resolved",
+    "name": "Cartfile.resolved",
+    "path": "Cartfile.resolved",
+    "sha": "1593817d8f3f8d4aa4425a786d078461c059e928",
+    "size": 44,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Cartfile.resolved?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/82d1e3049418f0ccaee2eaa282043c8598877625",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/Gemfile",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Gemfile?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/Gemfile",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/82d1e3049418f0ccaee2eaa282043c8598877625",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/Gemfile",
+    "name": "Gemfile",
+    "path": "Gemfile",
+    "sha": "82d1e3049418f0ccaee2eaa282043c8598877625",
+    "size": 62,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Gemfile?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/d5d355293b4112270cfc2943be468e7419ec781a",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/Gemfile.lock",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Gemfile.lock?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/Gemfile.lock",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/d5d355293b4112270cfc2943be468e7419ec781a",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/Gemfile.lock",
+    "name": "Gemfile.lock",
+    "path": "Gemfile.lock",
+    "sha": "d5d355293b4112270cfc2943be468e7419ec781a",
+    "size": 7730,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Gemfile.lock?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/83088aacb9ca3ab5e9f93dff90082a10cd888baf",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/LICENSE",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/LICENSE?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/LICENSE",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/83088aacb9ca3ab5e9f93dff90082a10cd888baf",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/LICENSE",
+    "name": "LICENSE",
+    "path": "LICENSE",
+    "sha": "83088aacb9ca3ab5e9f93dff90082a10cd888baf",
+    "size": 1055,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/LICENSE?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/d8c000a4eadf605a436cf6a4a9fee4005ef4c4cd",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/Makefile",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Makefile?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/Makefile",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/d8c000a4eadf605a436cf6a4a9fee4005ef4c4cd",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/Makefile",
+    "name": "Makefile",
+    "path": "Makefile",
+    "sha": "d8c000a4eadf605a436cf6a4a9fee4005ef4c4cd",
+    "size": 616,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Makefile?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/9c24720095993ed3eadbc35dc4f35a6f29044e10",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/OctoKit.swift.podspec",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/OctoKit.swift.podspec?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/OctoKit.swift.podspec",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/9c24720095993ed3eadbc35dc4f35a6f29044e10",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/OctoKit.swift.podspec",
+    "name": "OctoKit.swift.podspec",
+    "path": "OctoKit.swift.podspec",
+    "sha": "9c24720095993ed3eadbc35dc4f35a6f29044e10",
+    "size": 1065,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/OctoKit.swift.podspec?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/ad7755047be3c220294e9ac0777ed35c99378cb2",
+      "html": "https://github.com/nerdishbynature/octokit.swift/tree/main/OctoKit.xcodeproj",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/OctoKit.xcodeproj?ref=main"
+    },
+    "download_url": null,
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/ad7755047be3c220294e9ac0777ed35c99378cb2",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/tree/main/OctoKit.xcodeproj",
+    "name": "OctoKit.xcodeproj",
+    "path": "OctoKit.xcodeproj",
+    "sha": "ad7755047be3c220294e9ac0777ed35c99378cb2",
+    "size": 0,
+    "type": "dir",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/OctoKit.xcodeproj?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/bc6f8808288cba0c3975f26a61f3685f5f58de2e",
+      "html": "https://github.com/nerdishbynature/octokit.swift/tree/main/OctoKit",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/OctoKit?ref=main"
+    },
+    "download_url": null,
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/bc6f8808288cba0c3975f26a61f3685f5f58de2e",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/tree/main/OctoKit",
+    "name": "OctoKit",
+    "path": "OctoKit",
+    "sha": "bc6f8808288cba0c3975f26a61f3685f5f58de2e",
+    "size": 0,
+    "type": "dir",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/OctoKit?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/c634925d9cc3a4c441a4fce6272da8f759e1eaca",
+      "html": "https://github.com/nerdishbynature/octokit.swift/tree/main/OctoKitCLI",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/OctoKitCLI?ref=main"
+    },
+    "download_url": null,
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/c634925d9cc3a4c441a4fce6272da8f759e1eaca",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/tree/main/OctoKitCLI",
+    "name": "OctoKitCLI",
+    "path": "OctoKitCLI",
+    "sha": "c634925d9cc3a4c441a4fce6272da8f759e1eaca",
+    "size": 0,
+    "type": "dir",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/OctoKitCLI?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/95a48fe371df1a80193fec3b460eb596485ce516",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/Package.resolved",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Package.resolved?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/Package.resolved",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/95a48fe371df1a80193fec3b460eb596485ce516",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/Package.resolved",
+    "name": "Package.resolved",
+    "path": "Package.resolved",
+    "sha": "95a48fe371df1a80193fec3b460eb596485ce516",
+    "size": 609,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Package.resolved?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/7ff4c2ce2bce119effa766ba6845200f59e17414",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/Package.swift",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Package.swift?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/Package.swift",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/7ff4c2ce2bce119effa766ba6845200f59e17414",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/Package.swift",
+    "name": "Package.swift",
+    "path": "Package.swift",
+    "sha": "7ff4c2ce2bce119effa766ba6845200f59e17414",
+    "size": 768,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Package.swift?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/cde3a932e6311d1f24370c09e1e720e091236040",
+      "html": "https://github.com/nerdishbynature/octokit.swift/blob/main/README.md",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/README.md?ref=main"
+    },
+    "download_url": "https://raw.githubusercontent.com/nerdishbynature/octokit.swift/main/README.md",
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/blobs/cde3a932e6311d1f24370c09e1e720e091236040",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/blob/main/README.md",
+    "name": "README.md",
+    "path": "README.md",
+    "sha": "cde3a932e6311d1f24370c09e1e720e091236040",
+    "size": 9611,
+    "type": "file",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/README.md?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/602bcffb4f2c3a5154c439daf380d65bdc9918fc",
+      "html": "https://github.com/nerdishbynature/octokit.swift/tree/main/Script",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Script?ref=main"
+    },
+    "download_url": null,
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/602bcffb4f2c3a5154c439daf380d65bdc9918fc",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/tree/main/Script",
+    "name": "Script",
+    "path": "Script",
+    "sha": "602bcffb4f2c3a5154c439daf380d65bdc9918fc",
+    "size": 0,
+    "type": "dir",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Script?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/d3b78fe1411e62e9b694a0141cc5eb6af38e73c2",
+      "html": "https://github.com/nerdishbynature/octokit.swift/tree/main/Tests",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Tests?ref=main"
+    },
+    "download_url": null,
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/d3b78fe1411e62e9b694a0141cc5eb6af38e73c2",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/tree/main/Tests",
+    "name": "Tests",
+    "path": "Tests",
+    "sha": "d3b78fe1411e62e9b694a0141cc5eb6af38e73c2",
+    "size": 0,
+    "type": "dir",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Tests?ref=main"
+  },
+  {
+    "_links": {
+      "git": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/84f1731af7b7dbb0835238b722c1dcf2f62e6d1e",
+      "html": "https://github.com/nerdishbynature/octokit.swift/tree/main/fastlane",
+      "self": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/fastlane?ref=main"
+    },
+    "download_url": null,
+    "git_url": "https://api.github.com/repos/nerdishbynature/octokit.swift/git/trees/84f1731af7b7dbb0835238b722c1dcf2f62e6d1e",
+    "html_url": "https://github.com/nerdishbynature/octokit.swift/tree/main/fastlane",
+    "name": "fastlane",
+    "path": "fastlane",
+    "sha": "84f1731af7b7dbb0835238b722c1dcf2f62e6d1e",
+    "size": 0,
+    "type": "dir",
+    "url": "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/fastlane?ref=main"
+  }
+]

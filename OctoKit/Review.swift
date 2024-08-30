@@ -9,7 +9,7 @@ public struct Review {
     public let commitID: String
     public let id: Int
     public let state: State
-    public let submittedAt: Date
+    public let submittedAt: Date?
     public let user: User
 
     public init(body: String,
@@ -116,6 +116,40 @@ public extension Octokit {
         }
     }
 
+    @discardableResult
+    func deletePendingReview(owner: String,
+                             repository: String,
+                             pullRequestNumber: Int,
+                             reviewId: Int,
+                             completion: @escaping (_ response: Result<Review, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = ReviewsRouter.deletePendingReview(configuration, owner, repository, pullRequestNumber, reviewId)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self) { pullRequest, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let pullRequest = pullRequest {
+                completion(.success(pullRequest))
+            }
+        }
+    }
+
+    @discardableResult
+    func submitReview(owner: String,
+                      repository: String,
+                      pullRequestNumber: Int,
+                      reviewId: Int,
+                      event: Review.Event,
+                      body: String? = nil,
+                      completion: @escaping (_ response: Result<Review, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = ReviewsRouter.submitReview(configuration, owner, repository, pullRequestNumber, reviewId, event, body)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self) { pullRequest, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let pullRequest = pullRequest {
+                completion(.success(pullRequest))
+            }
+        }
+    }
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func reviews(owner: String,
@@ -135,7 +169,29 @@ public extension Octokit {
                     body: String? = nil,
                     comments: [Review.Comment] = []) async throws -> Review {
         let router = ReviewsRouter.postReview(configuration, owner, repository, pullRequestNumber, commitId, event, body, comments)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+        return try await router.post(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @discardableResult
+    func deletePendingReview(owner: String,
+                             repository: String,
+                             pullRequestNumber: Int,
+                             reviewId: Int) async throws -> Review {
+        let router = ReviewsRouter.deletePendingReview(configuration, owner, repository, pullRequestNumber, reviewId)
+        return try await router.post(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    @discardableResult
+    func submitReview(owner: String,
+                      repository: String,
+                      pullRequestNumber: Int,
+                      reviewId: Int,
+                      event: Review.Event,
+                      body: String? = nil) async throws -> Review {
+        let router = ReviewsRouter.submitReview(configuration, owner, repository, pullRequestNumber, reviewId, event, body)
+        return try await router.post(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
     }
     #endif
 }
@@ -143,6 +199,8 @@ public extension Octokit {
 enum ReviewsRouter: JSONPostRouter {
     case listReviews(Configuration, String, String, Int)
     case postReview(Configuration, String, String, Int, String?, Review.Event?, String?, [Review.Comment]?)
+    case deletePendingReview(Configuration, String, String, Int, Int)
+    case submitReview(Configuration, String, String, Int, Int, Review.Event, String?)
 
     var method: HTTPMethod {
         switch self {
@@ -150,12 +208,16 @@ enum ReviewsRouter: JSONPostRouter {
             return .GET
         case .postReview:
             return .POST
+        case .deletePendingReview:
+            return .DELETE
+        case .submitReview:
+            return .POST
         }
     }
 
     var encoding: HTTPEncoding {
         switch self {
-        case .postReview:
+        case .postReview, .deletePendingReview, .submitReview:
             return .json
         default:
             return .url
@@ -168,12 +230,16 @@ enum ReviewsRouter: JSONPostRouter {
             return config
         case let .postReview(config, _, _, _, _, _, _, _):
             return config
+        case let .deletePendingReview(config, _, _, _, _):
+            return config
+        case let .submitReview(config, _, _, _, _, _, _):
+            return config
         }
     }
 
     var params: [String: Any] {
         switch self {
-        case .listReviews:
+        case .listReviews, .deletePendingReview:
             return [:]
         case let .postReview(_, _, _, _, commitId, event, body, comments):
             var parameters = [String: Any]()
@@ -211,6 +277,14 @@ enum ReviewsRouter: JSONPostRouter {
                 }
             }
             return parameters
+        case let .submitReview(_, _, _, _, _, event, body):
+            var parameters: [String: Any] = [
+                "event": event.rawValue
+            ]
+            if let body = body {
+                parameters["body"] = body
+            }
+            return parameters
         }
     }
 
@@ -220,6 +294,10 @@ enum ReviewsRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/pulls/\(pullRequestNumber)/reviews"
         case let .postReview(_, owner, repository, pullRequestNumber, _, _, _, _):
             return "repos/\(owner)/\(repository)/pulls/\(pullRequestNumber)/reviews"
+        case let .deletePendingReview(_, owner, repository, pullRequestNumber, reviewId):
+            return "repos/\(owner)/\(repository)/pulls/\(pullRequestNumber)/reviews/\(reviewId)"
+        case let .submitReview(_, owner, repository, pullRequestNumber, reviewId, _, _):
+            return "repos/\(owner)/\(repository)/pulls/\(pullRequestNumber)/reviews/\(reviewId)/events"
         }
     }
 }
