@@ -180,6 +180,9 @@
 		84B89D032C814DE400273C68 /* forked_repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B89D022C814DE400273C68 /* forked_repo.json */; };
 		84B89D042C814DED00273C68 /* forked_repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B89D022C814DE400273C68 /* forked_repo.json */; };
 		84B89D052C814DEE00273C68 /* forked_repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B89D022C814DE400273C68 /* forked_repo.json */; };
+		84B89D0A2C81587100273C68 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89D002C814DBC00273C68 /* Organization.swift */; };
+		84B89D0B2C81587100273C68 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89D002C814DBC00273C68 /* Organization.swift */; };
+		84B89D0C2C81587200273C68 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89D002C814DBC00273C68 /* Organization.swift */; };
 		9D9ADDDF23EEFD4A000AC34D /* ReviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */; };
 		9D9ADDE123EEFDE0000AC34D /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDE023EEFDE0000AC34D /* Review.swift */; };
 		BF8C719220F02AC04EF3D137 /* PullRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C76EB002802C14A08F63E /* PullRequestTests.swift */; };
@@ -1020,6 +1023,7 @@
 				23B2F9C125B1DF6F000A8CE1 /* Review.swift in Sources */,
 				23CAF2A21C7AB6BE005011C4 /* Configuration.swift in Sources */,
 				50AFBB1E23EAC89E004D30A8 /* Releases.swift in Sources */,
+				84B89D0A2C81587100273C68 /* Organization.swift in Sources */,
 				23CAF2B71C7AB6EB005011C4 /* Time.swift in Sources */,
 				23CAF2B41C7AB6D4005011C4 /* Stars.swift in Sources */,
 				23CAF2AB1C7AB6C9005011C4 /* PublicKey.swift in Sources */,
@@ -1076,6 +1080,7 @@
 				23B2F9C925B1DF70000A8CE1 /* Review.swift in Sources */,
 				23CAF2A31C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				50AFBB1F23EAC89F004D30A8 /* Releases.swift in Sources */,
+				84B89D0B2C81587100273C68 /* Organization.swift in Sources */,
 				23CAF2B81C7AB6EB005011C4 /* Time.swift in Sources */,
 				23CAF2B51C7AB6D5005011C4 /* Stars.swift in Sources */,
 				23CAF2AC1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
@@ -1132,6 +1137,7 @@
 				23B2F9CA25B1DF70000A8CE1 /* Review.swift in Sources */,
 				23CAF2A41C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				50AFBB2023EAC8A0004D30A8 /* Releases.swift in Sources */,
+				84B89D0C2C81587200273C68 /* Organization.swift in Sources */,
 				23CAF2B91C7AB6EC005011C4 /* Time.swift in Sources */,
 				23CAF2B61C7AB6D5005011C4 /* Stars.swift in Sources */,
 				23CAF2AD1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
