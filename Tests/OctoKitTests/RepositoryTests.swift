@@ -174,7 +174,7 @@ class RepositoryTests: XCTestCase {
 
     // MARK: Model Tests
 
-    func testUserParsingFullRepository() {
+    func testUserParsingFullRepository() throws {
         let subject = Helper.codableFromFile("repo", type: Repository.self)
         XCTAssertEqual(subject.owner.login, "mietzmithut")
         XCTAssertEqual(subject.owner.id, 4_672_699)
@@ -191,6 +191,12 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.size, 132)
         XCTAssertTrue(subject.hasWiki)
         XCTAssertEqual(subject.language, "Ruby")
+        
+        let org = try XCTUnwrap(subject.organization)
+        XCTAssertEqual(org.login, "github")
+        XCTAssertEqual(org.id, 1)
+        XCTAssertEqual(org.url, "https://api.github.com/orgs/github")
+        XCTAssertEqual(org.type, "Organization")
     }
     
     func testUserParsingForkedRepository() {
