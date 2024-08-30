@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:5.10
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -13,7 +13,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/nerdishbynature/RequestKit.git", from: "3.2.1"),
+        .package(name: "RequestKit", path: "../RequestKit"),
         .package(url: "https://github.com/nicklockwood/SwiftFormat", from: "0.52.8")
     ],
     targets: [
