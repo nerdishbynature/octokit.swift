@@ -184,10 +184,31 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.fullName, "mietzmithut/Test")
         XCTAssertEqual(subject.isPrivate, false)
         XCTAssertEqual(subject.repositoryDescription, "")
-        XCTAssertEqual(subject.isFork, false)
+        XCTAssertFalse(subject.isFork)
         XCTAssertEqual(subject.gitURL, "git://github.com/mietzmithut/Test.git")
         XCTAssertEqual(subject.sshURL, "git@github.com:mietzmithut/Test.git")
         XCTAssertEqual(subject.cloneURL, "https://github.com/mietzmithut/Test.git")
         XCTAssertEqual(subject.size, 132)
+        XCTAssertTrue(subject.hasWiki)
+        XCTAssertEqual(subject.language, "Ruby")
+    }
+    
+    func testUserParsingForkedRepository() {
+        let subject = Helper.codableFromFile("forked_repo", type: Repository.self)
+        XCTAssertEqual(subject.owner.login, "mietzmithut")
+        XCTAssertEqual(subject.owner.id, 4_672_699)
+
+        XCTAssertEqual(subject.id, 10_824_974)
+        XCTAssertEqual(subject.name, "TestFork")
+        XCTAssertEqual(subject.fullName, "mietzmithut/TestFork")
+        XCTAssertEqual(subject.isPrivate, false)
+        XCTAssertEqual(subject.repositoryDescription, "")
+        XCTAssertTrue(subject.isFork)
+        XCTAssertEqual(subject.gitURL, "git://github.com/mietzmithut/TestFork.git")
+        XCTAssertEqual(subject.sshURL, "git@github.com:mietzmithut/TestFork.git")
+        XCTAssertEqual(subject.cloneURL, "https://github.com/mietzmithut/TestFork.git")
+        XCTAssertEqual(subject.size, 132)
+        XCTAssertFalse(subject.hasWiki)
+        XCTAssertEqual(subject.language, "Ruby")
     }
 }
