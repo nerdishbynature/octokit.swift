@@ -335,14 +335,14 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.size, 132)
         XCTAssertTrue(try XCTUnwrap(subject.hasWiki))
         XCTAssertEqual(subject.language, "Ruby")
-        
+
         let org = try XCTUnwrap(subject.organization)
         XCTAssertEqual(org.login, "github")
         XCTAssertEqual(org.id, 1)
         XCTAssertEqual(org.url, "https://api.github.com/orgs/github")
         XCTAssertEqual(org.type, "Organization")
     }
-    
+
     func testUserParsingForkedRepository() {
         let subject = Helper.codableFromFile("forked_repo", type: Repository.self)
         XCTAssertEqual(subject.owner.login, "mietzmithut")

@@ -76,7 +76,7 @@ open class Repository: Codable {
         case lastPush = "pushed_at"
         case stargazersCount = "stargazers_count"
         case hasWiki = "has_wiki"
-        case language = "language"
+        case language
         case organization
         case parent
     }
