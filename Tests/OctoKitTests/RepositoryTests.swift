@@ -333,7 +333,7 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.sshURL, "git@github.com:mietzmithut/Test.git")
         XCTAssertEqual(subject.cloneURL, "https://github.com/mietzmithut/Test.git")
         XCTAssertEqual(subject.size, 132)
-        XCTAssertTrue(subject.hasWiki)
+        XCTAssertTrue(try XCTUnwrap(subject.hasWiki))
         XCTAssertEqual(subject.language, "Ruby")
         
         let org = try XCTUnwrap(subject.organization)
@@ -358,7 +358,7 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(subject.sshURL, "git@github.com:mietzmithut/TestFork.git")
         XCTAssertEqual(subject.cloneURL, "https://github.com/mietzmithut/TestFork.git")
         XCTAssertEqual(subject.size, 132)
-        XCTAssertFalse(subject.hasWiki)
+        XCTAssertFalse(try XCTUnwrap(subject.hasWiki))
         XCTAssertEqual(subject.language, "Ruby")
     }
 

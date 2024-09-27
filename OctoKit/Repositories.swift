@@ -21,7 +21,7 @@ open class Repository: Codable {
     open private(set) var size: Int?
     open var lastPush: Date?
     open var stargazersCount: Int?
-    open var hasWiki: Bool
+    open var hasWiki: Bool?
     open var language: String?
     open var organization: Organization?
     open var parent: Repository?
