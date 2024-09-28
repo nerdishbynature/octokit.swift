@@ -21,6 +21,10 @@ open class Repository: Codable {
     open private(set) var size: Int?
     open var lastPush: Date?
     open var stargazersCount: Int?
+    open var hasWiki: Bool?
+    open var language: String?
+    open var organization: Organization?
+    open var parent: Repository?
 
     public init(id: Int = -1,
                 owner: User = User(),
@@ -35,7 +39,9 @@ open class Repository: Codable {
                 htmlURL: String? = nil,
                 size: Int? = -1,
                 lastPush: Date? = nil,
-                stargazersCount: Int? = nil) {
+                stargazersCount: Int? = nil,
+                hasWiki: Bool = false,
+                language: String? = nil) {
         self.id = id
         self.owner = owner
         self.name = name
@@ -50,6 +56,8 @@ open class Repository: Codable {
         self.size = size
         self.lastPush = lastPush
         self.stargazersCount = stargazersCount
+        self.hasWiki = hasWiki
+        self.language = language
     }
 
     enum CodingKeys: String, CodingKey {
@@ -67,6 +75,10 @@ open class Repository: Codable {
         case size
         case lastPush = "pushed_at"
         case stargazersCount = "stargazers_count"
+        case hasWiki = "has_wiki"
+        case language
+        case organization
+        case parent
     }
 }
 
