@@ -176,6 +176,13 @@
 		721F73E929889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
 		721F73EA29889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
 		721F73EB29889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
+		84B89D012C814DBC00273C68 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89D002C814DBC00273C68 /* Organization.swift */; };
+		84B89D032C814DE400273C68 /* forked_repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B89D022C814DE400273C68 /* forked_repo.json */; };
+		84B89D042C814DED00273C68 /* forked_repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B89D022C814DE400273C68 /* forked_repo.json */; };
+		84B89D052C814DEE00273C68 /* forked_repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B89D022C814DE400273C68 /* forked_repo.json */; };
+		84B89D0A2C81587100273C68 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89D002C814DBC00273C68 /* Organization.swift */; };
+		84B89D0B2C81587100273C68 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89D002C814DBC00273C68 /* Organization.swift */; };
+		84B89D0C2C81587200273C68 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89D002C814DBC00273C68 /* Organization.swift */; };
 		9D9ADDDF23EEFD4A000AC34D /* ReviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */; };
 		9D9ADDE123EEFDE0000AC34D /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D9ADDE023EEFDE0000AC34D /* Review.swift */; };
 		BF8C719220F02AC04EF3D137 /* PullRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8C76EB002802C14A08F63E /* PullRequestTests.swift */; };
@@ -333,6 +340,8 @@
 		665D5D5E24A639D70045E3B4 /* statuses.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = statuses.json; path = Fixtures/statuses.json; sourceTree = "<group>"; };
 		665D5D5F24A639D70045E3B4 /* status.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = status.json; path = Fixtures/status.json; sourceTree = "<group>"; };
 		721F73E829889A040064B11A /* latest_release.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = latest_release.json; path = Fixtures/latest_release.json; sourceTree = "<group>"; };
+		84B89D002C814DBC00273C68 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
+		84B89D022C814DE400273C68 /* forked_repo.json */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.json; name = forked_repo.json; path = Fixtures/forked_repo.json; sourceTree = "<group>"; };
 		9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTests.swift; sourceTree = "<group>"; };
 		9D9ADDE023EEFDE0000AC34D /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		BF8C72B985869B84F46B4E9D /* Parameters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parameters.swift; sourceTree = "<group>"; };
@@ -454,6 +463,7 @@
 			children = (
 				721F73E829889A040064B11A /* latest_release.json */,
 				03CCD2512453A9AA007D5CB3 /* users.json */,
+				84B89D022C814DE400273C68 /* forked_repo.json */,
 				515337F92252A0410024544D /* gist.json */,
 				515337F522529E7B0024544D /* gists.json */,
 				5090ED7123E483820062C763 /* issue_comment.json */,
@@ -486,6 +496,7 @@
 			isa = PBXGroup;
 			children = (
 				239BE7CD1B8C47A100D2CE22 /* OctoKit.h */,
+				84B89D002C814DBC00273C68 /* Organization.swift */,
 				23B267851BDDD756003887E3 /* Configuration.swift */,
 				515337C3225179FB0024544D /* File.swift */,
 				E7EE59DB1BE119110012E3D2 /* Follow.swift */,
@@ -826,6 +837,7 @@
 				234F4BE01BDDE44600A58EF7 /* user_mietzmithut.json in Resources */,
 				23EA61AB25EAE31A001B0964 /* reviews.json in Resources */,
 				23EA61AE25EAE31A001B0964 /* releases.json in Resources */,
+				84B89D032C814DE400273C68 /* forked_repo.json in Resources */,
 				515337F622529E7B0024544D /* gists.json in Resources */,
 				721F73E929889A040064B11A /* latest_release.json in Resources */,
 				23EA61B125EAE31A001B0964 /* pull_request.json in Resources */,
@@ -874,6 +886,7 @@
 				23F6434C1C7AEF6C000427B3 /* user_mietzmithut.json in Resources */,
 				23EA61AC25EAE31A001B0964 /* reviews.json in Resources */,
 				23EA61AF25EAE31A001B0964 /* releases.json in Resources */,
+				84B89D042C814DED00273C68 /* forked_repo.json in Resources */,
 				515337F722529E7B0024544D /* gists.json in Resources */,
 				721F73EA29889A040064B11A /* latest_release.json in Resources */,
 				23EA61B225EAE31A001B0964 /* pull_request.json in Resources */,
@@ -914,6 +927,7 @@
 				23F6434D1C7AEF6D000427B3 /* user_mietzmithut.json in Resources */,
 				23EA61AD25EAE31A001B0964 /* reviews.json in Resources */,
 				23EA61B025EAE31A001B0964 /* releases.json in Resources */,
+				84B89D052C814DEE00273C68 /* forked_repo.json in Resources */,
 				515337F822529E7B0024544D /* gists.json in Resources */,
 				721F73EB29889A040064B11A /* latest_release.json in Resources */,
 				23EA61B325EAE31A001B0964 /* pull_request.json in Resources */,
@@ -978,6 +992,7 @@
 				23B2678D1BDDD756003887E3 /* Repositories.swift in Sources */,
 				5090ED7423E48AA80062C763 /* Releases.swift in Sources */,
 				F8711EA21BFCAE9F005DDACA /* Time.swift in Sources */,
+				84B89D012C814DBC00273C68 /* Organization.swift in Sources */,
 				515337C4225179FB0024544D /* File.swift in Sources */,
 				515337C2225166600024544D /* Gist.swift in Sources */,
 				23B2678C1BDDD756003887E3 /* PublicKey.swift in Sources */,
@@ -1008,6 +1023,7 @@
 				23B2F9C125B1DF6F000A8CE1 /* Review.swift in Sources */,
 				23CAF2A21C7AB6BE005011C4 /* Configuration.swift in Sources */,
 				50AFBB1E23EAC89E004D30A8 /* Releases.swift in Sources */,
+				84B89D0A2C81587100273C68 /* Organization.swift in Sources */,
 				23CAF2B71C7AB6EB005011C4 /* Time.swift in Sources */,
 				23CAF2B41C7AB6D4005011C4 /* Stars.swift in Sources */,
 				23CAF2AB1C7AB6C9005011C4 /* PublicKey.swift in Sources */,
@@ -1064,6 +1080,7 @@
 				23B2F9C925B1DF70000A8CE1 /* Review.swift in Sources */,
 				23CAF2A31C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				50AFBB1F23EAC89F004D30A8 /* Releases.swift in Sources */,
+				84B89D0B2C81587100273C68 /* Organization.swift in Sources */,
 				23CAF2B81C7AB6EB005011C4 /* Time.swift in Sources */,
 				23CAF2B51C7AB6D5005011C4 /* Stars.swift in Sources */,
 				23CAF2AC1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
@@ -1120,6 +1137,7 @@
 				23B2F9CA25B1DF70000A8CE1 /* Review.swift in Sources */,
 				23CAF2A41C7AB6BF005011C4 /* Configuration.swift in Sources */,
 				50AFBB2023EAC8A0004D30A8 /* Releases.swift in Sources */,
+				84B89D0C2C81587200273C68 /* Organization.swift in Sources */,
 				23CAF2B91C7AB6EC005011C4 /* Time.swift in Sources */,
 				23CAF2B61C7AB6D5005011C4 /* Stars.swift in Sources */,
 				23CAF2AD1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
