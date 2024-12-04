@@ -190,7 +190,7 @@ public extension PullRequest {
         public let createdAt: Date
         public let updatedAt: Date
         public let reactions: Reactions?
-        
+
         /// The SHA of the commit this comment is associated with.
         public private(set) var commitId: String?
         /// The line of the blob in the pull request diff that the comment applies to. For a multi-line comment, the last line of the range that your comment applies to.
@@ -203,13 +203,13 @@ public extension PullRequest {
         public private(set) var subjectType: SubjectType?
         /// The ID of the review comment this comment replied to.
         public private(set) var inReplyToId: Int?
-        
+
         enum CodingKeys: String, CodingKey {
             case id, url, body, user, reactions
             case htmlURL = "html_url"
             case createdAt = "created_at"
             case updatedAt = "updated_at"
-            
+
             case line, side
             case commitId = "commit_id"
             case startLine = "start_line"
@@ -460,7 +460,6 @@ public extension Octokit {
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.self)
     }
-
     #endif
 
     func listPullRequestsFiles(owner: String,
@@ -490,7 +489,7 @@ public extension Octokit {
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.File].self)
     }
     #endif
-    
+
     /// Fetches all review comments for a pull request.
     /// - Parameters:
     ///   - owner: The user or organization that owns the repository.
@@ -515,7 +514,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Fetches all review comments for a pull request.
     /// - Parameters:
@@ -534,7 +533,7 @@ public extension Octokit {
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.Comment].self)
     }
     #endif
-    
+
     /// Posts a review comment on a pull request using the given body.
     /// - Parameters:
     ///   - owner: The user or organization that owns the repository.
@@ -565,7 +564,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Posts a review comment on a pull request using the given body.
     /// - Parameters:
@@ -590,7 +589,7 @@ public extension Octokit {
         return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.Comment.self)
     }
     #endif
-    
+
     /// Posts a review comment on a pull request using the given body.
     /// - Parameters:
     ///   - owner: The user or organization that owns the repository.
@@ -611,7 +610,7 @@ public extension Octokit {
                      number: number, body: body,
                      completion: completion)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Posts a review comment on a pull request using the given body.
     /// - Parameters:
@@ -629,7 +628,7 @@ public extension Octokit {
         try await commentIssue(owner: owner, repository: repository, number: number, body: body)
     }
     #endif
-    
+
     /// Fetches all reviewers for a pull request.
     /// - Parameters:
     ///   - owner: The user or organization that owns the repository.
@@ -654,7 +653,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Fetches all reviewers for a pull request.
     /// - Parameters:
@@ -697,7 +696,7 @@ enum PullRequestRouter: JSONPostRouter {
     var method: HTTPMethod {
         switch self {
         case .createPullRequest,
-            .createPullRequestReviewComment:
+             .createPullRequestReviewComment:
             return .POST
         case .readPullRequest,
              .readPullRequests,

@@ -14,7 +14,7 @@ import FoundationNetworking
 // MARK: model
 
 open class Team: Codable {
-    open internal(set)  var id: Int
+    open internal(set) var id: Int
     open var nodeID: String
     open var name: String
     open var slug: String
@@ -49,7 +49,7 @@ open class Team: Codable {
         self.membersURL = membersURL
         self.repositoriesURL = repositoriesURL
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case id, name, slug, description, privacy, url
         case nodeID = "node_id"
