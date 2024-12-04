@@ -567,4 +567,48 @@ class PullRequestTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
     #endif
+    
+    func testReadPullRequestRequestedReviewers() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/requested_reviewers?",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_request_requested_reviewers",
+                                            statusCode: 200)
+        
+        let task = Octokit(session: session).readPullRequestRequestedReviewers(owner: "octokat",
+                                                                               repository: "Hello-World",
+                                                                               number: 1347) { response in
+            switch response {
+            case let .success(requestedReviewers):
+                XCTAssertEqual(requestedReviewers.users.count, 1)
+                XCTAssertEqual(requestedReviewers.users.first?.login, "octocat")
+                XCTAssertEqual(requestedReviewers.teams.count, 1)
+                XCTAssertEqual(requestedReviewers.teams.first?.name, "Justice League")
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testReadPullRequestRequestedReviewersAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/requested_reviewers?",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_request_requested_reviewers",
+                                            statusCode: 200)
+        
+        let requestedReviewers = try await Octokit(session: session).readPullRequestRequestedReviewers(owner: "octokat",
+                                                                                                       repository: "Hello-World",
+                                                                                                       number: 1347)
+        XCTAssertEqual(requestedReviewers.users.count, 1)
+        let user = try XCTUnwrap(requestedReviewers.users.first)
+        XCTAssertEqual(user.login, "octocat")
+        XCTAssertEqual(requestedReviewers.teams.count, 1)
+        let team = try XCTUnwrap(requestedReviewers.teams.first)
+        XCTAssertEqual(team.name, "Justice League")
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 }

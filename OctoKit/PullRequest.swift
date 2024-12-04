@@ -265,10 +265,8 @@ public extension Octokit {
         return router.post(session, decoder: decoder, expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let pullRequest = pullRequest {
-                    completion(.success(pullRequest))
-                }
+            } else if let pullRequest {
+                completion(.success(pullRequest))
             }
         }
     }
@@ -320,10 +318,8 @@ public extension Octokit {
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let pullRequest = pullRequest {
-                    completion(.success(pullRequest))
-                }
+            } else if let pullRequest {
+                completion(.success(pullRequest))
             }
         }
     }
@@ -371,10 +367,8 @@ public extension Octokit {
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let pullRequests = pullRequests {
-                    completion(.success(pullRequests))
-                }
+            } else if let pullRequests {
+                completion(.success(pullRequests))
             }
         }
     }
@@ -433,10 +427,8 @@ public extension Octokit {
         return router.post(session, decoder: decoder, expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let pullRequest = pullRequest {
-                    completion(.success(pullRequest))
-                }
+            } else if let pullRequest {
+                completion(.success(pullRequest))
             }
         }
     }
@@ -481,10 +473,8 @@ public extension Octokit {
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.File].self) { files, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let files = files {
-                    completion(.success(files))
-                }
+            } else if let files {
+                completion(.success(files))
             }
         }
     }
@@ -520,10 +510,8 @@ public extension Octokit {
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.Comment].self) { comments, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let comments = comments {
-                    completion(.success(comments))
-                }
+            } else if let comments {
+                completion(.success(comments))
             }
         }
     }
@@ -572,10 +560,8 @@ public extension Octokit {
         return router.post(session, decoder: decoder, expectedResultType: PullRequest.Comment.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let issue = issue {
-                    completion(.success(issue))
-                }
+            } else if let issue {
+                completion(.success(issue))
             }
         }
     }
@@ -643,6 +629,57 @@ public extension Octokit {
         try await commentIssue(owner: owner, repository: repository, number: number, body: body)
     }
     #endif
+    
+    /// Fetches all reviewers for a pull request.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - page: Current page for comments pagination. `1` by default.
+    ///   - perPage: Number of comments per page. `100` by default.
+    ///   - completion: Callback for the outcome of the fetch.
+    @discardableResult
+    func readPullRequestRequestedReviewers(owner: String,
+                                           repository: String,
+                                           number: Int,
+                                           page: Int = 1,
+                                           perPage: Int = 100,
+                                           completion: @escaping (_ response: Result<PullRequest.RequestedReviewers, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = PullRequestRouter.readPullRequestRequestedReviewers(configuration, owner, repository, number, page, perPage)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.RequestedReviewers.self) { requestedReviewers, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let requestedReviewers {
+                completion(.success(requestedReviewers))
+            }
+        }
+    }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /// Fetches all reviewers for a pull request.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - page: Current page for comments pagination. `1` by default.
+    ///   - perPage: Number of comments per page. `100` by default.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func readPullRequestRequestedReviewers(owner: String,
+                                           repository: String,
+                                           number: Int,
+                                           page: Int = 1,
+                                           perPage: Int = 100) async throws -> PullRequest.RequestedReviewers {
+        let router = PullRequestRouter.readPullRequestRequestedReviewers(configuration, owner, repository, number, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.RequestedReviewers.self)
+    }
+    #endif
+}
+
+public extension PullRequest {
+    struct RequestedReviewers: Codable {
+        public private(set) var users = [User]()
+        public private(set) var teams = [Team]()
+    }
 }
 
 // MARK: Router
@@ -655,6 +692,7 @@ enum PullRequestRouter: JSONPostRouter {
     case listPullRequestsFiles(Configuration, String, String, Int, Int?, Int?)
     case readPullRequestReviewComments(Configuration, String, String, Int, Int?, Int?)
     case createPullRequestReviewComment(Configuration, String, String, Int, String, String, Int, String)
+    case readPullRequestRequestedReviewers(Configuration, String, String, Int, Int?, Int?)
 
     var method: HTTPMethod {
         switch self {
@@ -664,7 +702,8 @@ enum PullRequestRouter: JSONPostRouter {
         case .readPullRequest,
              .readPullRequests,
              .listPullRequestsFiles,
-             .readPullRequestReviewComments:
+             .readPullRequestReviewComments,
+             .readPullRequestRequestedReviewers:
             return .GET
         case .patchPullRequest:
             return .PATCH
@@ -691,6 +730,7 @@ enum PullRequestRouter: JSONPostRouter {
         case let .listPullRequestsFiles(config, _, _, _, _, _): return config
         case let .readPullRequestReviewComments(config, _, _, _, _, _): return config
         case let .createPullRequestReviewComment(config, _, _, _, _, _, _, _): return config
+        case let .readPullRequestRequestedReviewers(config, _, _, _, _, _): return config
         }
     }
 
@@ -756,7 +796,8 @@ enum PullRequestRouter: JSONPostRouter {
             }
             return parameters
         case let .listPullRequestsFiles(_, _, _, _, perPage, page),
-             let .readPullRequestReviewComments(_, _, _, _, page, perPage):
+             let .readPullRequestReviewComments(_, _, _, _, page, perPage),
+             let .readPullRequestRequestedReviewers(_, _, _, _, page, perPage):
             var parameters: [String: Any] = [:]
             if let perPage {
                 parameters["per_page"] = perPage
@@ -793,6 +834,9 @@ enum PullRequestRouter: JSONPostRouter {
         case let .createPullRequestReviewComment(_, owner, repository, number, _, _, _, _):
             /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
             return "repos/\(owner)/\(repository)/pulls/\(number)/comments"
+        case let .readPullRequestRequestedReviewers(_, owner, repository, number, _, _):
+            /// See: https://docs.github.com/en/rest/pulls/review-requests?apiVersion=2022-11-28#get-all-requested-reviewers-for-a-pull-request
+            return "repos/\(owner)/\(repository)/pulls/\(number)/requested_reviewers"
         }
     }
 }
