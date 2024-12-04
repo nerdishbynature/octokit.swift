@@ -370,7 +370,7 @@ class PullRequestTests: XCTestCase {
     func testListPullRequestsFiles() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1347/files",
                                             expectedHTTPMethod: "GET",
-                                            jsonFile: "pull_requests_files",
+                                            jsonFile: "pull_request_files",
                                             statusCode: 200)
 
         let task = Octokit(session: session)
@@ -405,7 +405,7 @@ class PullRequestTests: XCTestCase {
     func testListPullRequestsFilesAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls/1347/files",
                                             expectedHTTPMethod: "GET",
-                                            jsonFile: "pull_requests_files",
+                                            jsonFile: "pull_request_files",
                                             statusCode: 200)
 
         let files = try await Octokit(session: session)
@@ -426,6 +426,180 @@ class PullRequestTests: XCTestCase {
         XCTAssertEqual(file?.contentsUrl, "https://api.github.com/repos/octocat/Hello-World/contents/file1.txt?ref=6dcb09b5b57875f334f61aebed695e2e4193db5e")
         XCTAssertEqual(file?.patch, "@@ -132,7 +132,7 @@ module Test @@ -1000,7 +1000,7 @@ module Test")
 
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
+    func testReadPullRequestReviewComments() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/comments?",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_request_comments",
+                                            statusCode: 200)
+        let task = Octokit(session: session).readPullRequestReviewComments(owner: "octokat",
+                                                                           repository: "Hello-World",
+                                                                           number: 1347) { response in
+            switch response {
+            case let .success(comments):
+                XCTAssertEqual(comments.count, 1)
+                let comment = comments.first
+                XCTAssertNotNil(comment)
+                XCTAssertEqual(comment?.body, "Great stuff!")
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testReadPullRequestReviewCommentsAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/comments?",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_request_comments",
+                                            statusCode: 200)
+        let comments = try await Octokit(session: session).readPullRequestReviewComments(owner: "octokat",
+                                                                                         repository: "Hello-World",
+                                                                                         number: 1347)
+        XCTAssertEqual(comments.count, 1)
+        let comment = try XCTUnwrap(comments.first)
+        XCTAssertNotNil(comment)
+        XCTAssertEqual(comment.body, "Great stuff!")
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
+    func testCreatePullRequestReviewComment() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/comments",
+                                            expectedHTTPMethod: "POST",
+                                            jsonFile: "pull_request_comment",
+                                            statusCode: 200)
+        let task = Octokit(session: session).createPullRequestReviewComment(owner: "octokat",
+                                                                            repository: "Hello-World",
+                                                                            number: 1347,
+                                                                            commitId: "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                                                                            path: "file1.txt",
+                                                                            line: 2,
+                                                                            body: "Great stuff!") { response in
+            switch response {
+            case let .success(comment):
+                XCTAssertEqual(comment.body, "Great stuff!")
+                XCTAssertEqual(comment.commitId, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+                XCTAssertEqual(comment.line, 2)
+                XCTAssertEqual(comment.startLine, 1)
+                XCTAssertEqual(comment.side, .right)
+                XCTAssertNil(comment.subjectType)
+                XCTAssertEqual(comment.inReplyToId, 8)
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testCreatePullRequestReviewCommentAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/comments",
+                                            expectedHTTPMethod: "POST",
+                                            jsonFile: "pull_request_comment",
+                                            statusCode: 200)
+        let comment = try await Octokit(session: session).createPullRequestReviewComment(owner: "octokat",
+                                                                                         repository: "Hello-World",
+                                                                                         number: 1347,
+                                                                                         commitId: "6dcb09b5b57875f334f61aebed695e2e4193db5e",
+                                                                                         path: "file1.txt",
+                                                                                         line: 2,
+                                                                                         body: "Great stuff!")
+        XCTAssertEqual(comment.body, "Great stuff!")
+        XCTAssertEqual(comment.commitId, "6dcb09b5b57875f334f61aebed695e2e4193db5e")
+        XCTAssertEqual(comment.line, 2)
+        XCTAssertEqual(comment.startLine, 1)
+        XCTAssertEqual(comment.side, .right)
+        XCTAssertNil(comment.subjectType)
+        XCTAssertEqual(comment.inReplyToId, 8)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
+    func testCreatePullRequestRegularComment() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/issues/1347/comments",
+                                            expectedHTTPMethod: "POST",
+                                            jsonFile: "pull_request_comment",
+                                            statusCode: 200)
+        let task = Octokit(session: session).createPullRequestReviewComment(owner: "octokat",
+                                                                            repository: "Hello-World",
+                                                                            number: 1347,
+                                                                            body: "Great stuff!") { response in
+            switch response {
+            case let .success(comment):
+                XCTAssertEqual(comment.body, "Great stuff!")
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testCreatePullRequestRegularCommentAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/issues/1347/comments",
+                                            expectedHTTPMethod: "POST",
+                                            jsonFile: "pull_request_comment",
+                                            statusCode: 200)
+        let comment = try await Octokit(session: session).createPullRequestReviewComment(owner: "octokat",
+                                                                                         repository: "Hello-World",
+                                                                                         number: 1347,
+                                                                                         body: "Great stuff!")
+        XCTAssertEqual(comment.body, "Great stuff!")
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
+    func testReadPullRequestRequestedReviewers() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/requested_reviewers?",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_request_requested_reviewers",
+                                            statusCode: 200)
+        let task = Octokit(session: session).readPullRequestRequestedReviewers(owner: "octokat",
+                                                                               repository: "Hello-World",
+                                                                               number: 1347) { response in
+            switch response {
+            case let .success(requestedReviewers):
+                XCTAssertEqual(requestedReviewers.users.count, 1)
+                XCTAssertEqual(requestedReviewers.users.first?.login, "octocat")
+                XCTAssertEqual(requestedReviewers.teams.count, 1)
+                XCTAssertEqual(requestedReviewers.teams.first?.name, "Justice League")
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testReadPullRequestRequestedReviewersAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/requested_reviewers?",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_request_requested_reviewers",
+                                            statusCode: 200)
+        let requestedReviewers = try await Octokit(session: session).readPullRequestRequestedReviewers(owner: "octokat",
+                                                                                                       repository: "Hello-World",
+                                                                                                       number: 1347)
+        XCTAssertEqual(requestedReviewers.users.count, 1)
+        let user = try XCTUnwrap(requestedReviewers.users.first)
+        XCTAssertEqual(user.login, "octocat")
+        XCTAssertEqual(requestedReviewers.teams.count, 1)
+        let team = try XCTUnwrap(requestedReviewers.teams.first)
+        XCTAssertEqual(team.name, "Justice League")
         XCTAssertTrue(session.wasCalled)
     }
     #endif
