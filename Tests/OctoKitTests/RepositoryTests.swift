@@ -171,6 +171,32 @@ class RepositoryTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
     #endif
+    
+    func testGetRepositoryTopics() {
+        let (owner, name) = ("mietzmithut", "Test")
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test/topics", expectedHTTPMethod: "GET", jsonFile: "topics", statusCode: 200)
+        let task = Octokit(session: session).repositoryTopics(owner: owner, name: name) { response in
+            switch response {
+            case let .success(topics):
+                XCTAssertEqual(topics.names, ["swift", "library"])
+            case .failure:
+                XCTAssert(false, "should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+    
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetRepositoryTopicsAsync() async throws {
+        let (owner, name) = ("mietzmithut", "Test")
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test/topics", expectedHTTPMethod: "GET", jsonFile: "topics", statusCode: 200)
+        let topics = try await Octokit(session: session).repositoryTopics(owner: owner, name: name)
+        XCTAssertEqual(topics.names, ["swift", "library"])
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 
     func testfailureRepositoryContent() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/nerdishbynature/octokit.swift/contents/Package.swift",
