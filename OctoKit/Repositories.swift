@@ -417,7 +417,7 @@ enum RepositoryRouter: Router {
                 return ["ref": ref]
             }
             return [:]
-        case .getRepositoryTopics(_, _, _):
+        case .getRepositoryTopics:
             return [:]
         }
     }
