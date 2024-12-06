@@ -160,6 +160,14 @@ public struct SymlinkContent: Codable {
     }
 }
 
+public struct Topics: Codable {
+    public let names: [String]
+
+    private enum CodingKeys: String, CodingKey {
+        case names
+    }
+}
+
 public struct SubmoduleContent: Codable {
     public let type: String
     public let submoduleGitUrl: String
@@ -292,6 +300,40 @@ public extension Octokit {
     #endif
 
     /**
+     * Fetches the topics for the specified repository.
+     * - parameters:
+     *   - owner: the user or org that owns the repository
+     *   - name: the name of the repository
+     */
+    @discardableResult
+    func repositoryTopics(owner: String, name: String, completion: @escaping (_ response: Result<Topics, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = RepositoryRouter.getRepositoryTopics(configuration, owner: owner, name: name)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Topics.self) { contentResponse, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                if let contentResponse = contentResponse {
+                    completion(.success(contentResponse))
+                }
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     * Fetches the topics for the specified repository.
+     * - parameters:
+     *   - owner: the user or org that owns the repository
+     *   - name: the name of the repository
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func repositoryTopics(owner: String, name: String) async throws -> Topics {
+        let router = RepositoryRouter.getRepositoryTopics(configuration, owner: owner, name: name)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Topics.self)
+    }
+    #endif
+
+    /**
          Gets the contents of a file or directory in a repository.
          [Github documentation](https://docs.github.com/en/rest/repos/contents?apiVersion=2022-11-28)
          - parameter owner: The account owner of the repository. The name is not case sensitive.
@@ -342,6 +384,7 @@ enum RepositoryRouter: Router {
     case readAuthenticatedRepositories(Configuration, String, String)
     case readRepository(Configuration, String, String)
     case getRepositoryContent(Configuration, String, String, String?, String?)
+    case getRepositoryTopics(Configuration, owner: String, name: String)
 
     var configuration: Configuration {
         switch self {
@@ -349,6 +392,7 @@ enum RepositoryRouter: Router {
         case let .readAuthenticatedRepositories(config, _, _): return config
         case let .readRepository(config, _, _): return config
         case let .getRepositoryContent(config, _, _, _, _): return config
+        case let .getRepositoryTopics(config, _, _): return config
         }
     }
 
@@ -373,6 +417,8 @@ enum RepositoryRouter: Router {
                 return ["ref": ref]
             }
             return [:]
+        case .getRepositoryTopics:
+            return [:]
         }
     }
 
@@ -388,6 +434,8 @@ enum RepositoryRouter: Router {
             var path = "repos/\(owner)/\(repo)/contents"
             if let searchPath = searchPath { path.append("/\(searchPath)") }
             return path
+        case let .getRepositoryTopics(_, owner, name):
+            return "repos/\(owner)/\(name)/topics"
         }
     }
 }
