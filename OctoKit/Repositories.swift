@@ -162,7 +162,7 @@ public struct SymlinkContent: Codable {
 
 public struct Topics: Codable {
     public let names: [String]
-    
+
     private enum CodingKeys: String, CodingKey {
         case names
     }
@@ -298,7 +298,7 @@ public extension Octokit {
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Repository.self)
     }
     #endif
-    
+
     /**
      * Fetches the topics for the specified repository.
      * - parameters:
@@ -318,7 +318,7 @@ public extension Octokit {
             }
         }
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
      * Fetches the topics for the specified repository.
@@ -417,7 +417,7 @@ enum RepositoryRouter: Router {
                 return ["ref": ref]
             }
             return [:]
-        case let .getRepositoryTopics(_, _, _):
+        case .getRepositoryTopics(_, _, _):
             return [:]
         }
     }

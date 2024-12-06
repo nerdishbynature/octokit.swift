@@ -171,7 +171,7 @@ class RepositoryTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
     #endif
-    
+
     func testGetRepositoryTopics() {
         let (owner, name) = ("mietzmithut", "Test")
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test/topics", expectedHTTPMethod: "GET", jsonFile: "topics", statusCode: 200)
@@ -186,7 +186,7 @@ class RepositoryTests: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertTrue(session.wasCalled)
     }
-    
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetRepositoryTopicsAsync() async throws {

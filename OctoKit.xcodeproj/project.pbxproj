@@ -176,6 +176,9 @@
 		721F73E929889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
 		721F73EA29889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
 		721F73EB29889A040064B11A /* latest_release.json in Resources */ = {isa = PBXBuildFile; fileRef = 721F73E829889A040064B11A /* latest_release.json */; };
+		849DF07A2D029AF400A202DF /* topics.json in Resources */ = {isa = PBXBuildFile; fileRef = 849DF0792D029AF400A202DF /* topics.json */; };
+		849DF07B2D029AF400A202DF /* topics.json in Resources */ = {isa = PBXBuildFile; fileRef = 849DF0792D029AF400A202DF /* topics.json */; };
+		849DF07C2D029AF400A202DF /* topics.json in Resources */ = {isa = PBXBuildFile; fileRef = 849DF0792D029AF400A202DF /* topics.json */; };
 		84B89D012C814DBC00273C68 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B89D002C814DBC00273C68 /* Organization.swift */; };
 		84B89D032C814DE400273C68 /* forked_repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B89D022C814DE400273C68 /* forked_repo.json */; };
 		84B89D042C814DED00273C68 /* forked_repo.json in Resources */ = {isa = PBXBuildFile; fileRef = 84B89D022C814DE400273C68 /* forked_repo.json */; };
@@ -340,6 +343,7 @@
 		665D5D5E24A639D70045E3B4 /* statuses.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = statuses.json; path = Fixtures/statuses.json; sourceTree = "<group>"; };
 		665D5D5F24A639D70045E3B4 /* status.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = status.json; path = Fixtures/status.json; sourceTree = "<group>"; };
 		721F73E829889A040064B11A /* latest_release.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = latest_release.json; path = Fixtures/latest_release.json; sourceTree = "<group>"; };
+		849DF0792D029AF400A202DF /* topics.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = topics.json; path = Fixtures/topics.json; sourceTree = "<group>"; };
 		84B89D002C814DBC00273C68 /* Organization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		84B89D022C814DE400273C68 /* forked_repo.json */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = text.json; name = forked_repo.json; path = Fixtures/forked_repo.json; sourceTree = "<group>"; };
 		9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewTests.swift; sourceTree = "<group>"; };
@@ -488,6 +492,7 @@
 				23EA619C25EAE31A001B0964 /* reactions.json */,
 				23EA619F25EAE31A001B0964 /* releases.json */,
 				23EA619E25EAE31A001B0964 /* reviews.json */,
+				849DF0792D029AF400A202DF /* topics.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -831,6 +836,7 @@
 				234F4BDD1BDDE44600A58EF7 /* public_key.json in Resources */,
 				5090ED7223E483820062C763 /* issue_comment.json in Resources */,
 				DABBDE501C8C0C20008F57CD /* issue.json in Resources */,
+				849DF07B2D029AF400A202DF /* topics.json in Resources */,
 				234F4BDE1BDDE44600A58EF7 /* repo.json in Resources */,
 				23EA61B425EAE31A001B0964 /* pull_requests.json in Resources */,
 				234F4BE11BDDE44600A58EF7 /* user_repos.json in Resources */,
@@ -880,6 +886,7 @@
 				23F643461C7AEF63000427B3 /* public_key.json in Resources */,
 				502C70FC23E8535900384775 /* issue_comment.json in Resources */,
 				DABBDE511C8C0C20008F57CD /* issue.json in Resources */,
+				849DF07C2D029AF400A202DF /* topics.json in Resources */,
 				23F643481C7AEF66000427B3 /* repo.json in Resources */,
 				23EA61B525EAE31A001B0964 /* pull_requests.json in Resources */,
 				23F6434E1C7AEF6F000427B3 /* user_repos.json in Resources */,
@@ -921,6 +928,7 @@
 				23F643471C7AEF63000427B3 /* public_key.json in Resources */,
 				502C70FD23E8535A00384775 /* issue_comment.json in Resources */,
 				DABBDE521C8C0C20008F57CD /* issue.json in Resources */,
+				849DF07A2D029AF400A202DF /* topics.json in Resources */,
 				23F643491C7AEF67000427B3 /* repo.json in Resources */,
 				23EA61B625EAE31A001B0964 /* pull_requests.json in Resources */,
 				23F6434F1C7AEF70000427B3 /* user_repos.json in Resources */,
