@@ -17,20 +17,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: SPM Test
         run: swift test --enable-test-discovery
-  spm_concurrency:
-    name: Test with SPM (check Swift Concurrency support)
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        swift_version:
-          - "5.10"
-          - "6.0"
-      fail-fast: false
-    container: swift:${{ matrix.swift_version }}-focal
-    steps:
-      - uses: actions/checkout@v2
-      - name: SPM Test
-        run: swift test --enable-test-discovery
   swiftformat:
     name: Linting
     runs-on: ubuntu-latest
