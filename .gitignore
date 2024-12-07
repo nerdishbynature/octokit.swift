@@ -1,5 +1,4 @@
 # Xcode
-#
 build/
 *.pbxuser
 !default.pbxuser
@@ -20,14 +19,13 @@ DerivedData
 
 # AppCode
 .idea
+
+# Fastlane
 fastlane/README.md
 fastlane/test-output
 fastlane/report.xml
 
 .DS_Store
-Pods/
-Carthage/
-Checkouts/
 
 # Swift PM
 .build

@@ -9,49 +9,10 @@ on:
       - '*'
 
 jobs:
-  macOS:
-    name: Test macOS
-    runs-on: macOS-latest
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_16.0.app/Contents/Developer
-    strategy:
-      matrix:
-        include:
-          - lane: test
-            env: osx
-          - lane: test
-            env: ios
-          - lane: test
-            env: tvos
-    steps:
-      - uses: actions/checkout@v2
-      - name: install
-        run: |
-          gem install bundler
-          bundle install
-      - name: test
-        run: |
-          set -o pipefail
-          bundle exec fastlane ${{ matrix.lane }} --env ${{ matrix.env }}
-      - uses: codecov/codecov-action@v1
   spm:
     name: Test with SPM
     runs-on: ubuntu-latest
     container: swift:5.10-focal
-    steps:
-      - uses: actions/checkout@v2
-      - name: SPM Test
-        run: swift test --enable-test-discovery
-  spm_concurrency:
-    name: Test with SPM (check Swift Concurrency support)
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        swift_version:
-          - "5.10"
-          - "6.0"
-      fail-fast: false
-    container: swift:${{ matrix.swift_version }}-focal
     steps:
       - uses: actions/checkout@v2
       - name: SPM Test

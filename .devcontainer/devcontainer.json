@@ -1,11 +1,11 @@
 {
-	"image": "swift:5.7.1",
+	"image": "swift:5.10",
 	"customizations": {
 		"vscode": {
 			"settings": {
 				"lldb.adapterType": "bundled",
 				"lldb.executable": "/usr/bin/lldb",
-				"sourcekit-lsp.serverPath": "/usr/bin/sourcekit-lsp",
+				"swift.sourcekit-lsp.serverPath": "/usr/bin/sourcekit-lsp",
 				"sde.languageServerMode": "sourcekit-lsp"
 			},
 			"extensions": [
