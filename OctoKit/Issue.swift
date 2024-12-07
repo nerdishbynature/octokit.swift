@@ -104,21 +104,23 @@ open class Issue: Codable {
     }
 }
 
-public struct Comment: Codable {
-    public let id: Int
-    public let url: URL
-    public let htmlURL: URL
-    public let body: String
-    public let user: User
-    public let createdAt: Date
-    public let updatedAt: Date
-    public let reactions: Reactions?
+public extension Issue {
+    struct Comment: Codable {
+        public let id: Int
+        public let url: URL
+        public let htmlURL: URL
+        public let body: String
+        public let user: User
+        public let createdAt: Date
+        public let updatedAt: Date
+        public let reactions: Reactions?
 
-    enum CodingKeys: String, CodingKey {
-        case id, url, body, user, reactions
-        case htmlURL = "html_url"
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
+        enum CodingKeys: String, CodingKey {
+            case id, url, body, user, reactions
+            case htmlURL = "html_url"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+        }
     }
 }
 
@@ -382,11 +384,11 @@ public extension Octokit {
                       repository: String,
                       number: Int,
                       body: String,
-                      completion: @escaping (_ response: Result<Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+                      completion: @escaping (_ response: Result<Issue.Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Comment.self) { issue, error in
+        return router.post(session, decoder: decoder, expectedResultType: Issue.Comment.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -406,11 +408,11 @@ public extension Octokit {
     ///   - body: The contents of the comment.
     ///   - completion: Callback for the comment that is created.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func commentIssue(owner: String, repository: String, number: Int, body: String) async throws -> Comment {
+    func commentIssue(owner: String, repository: String, number: Int, body: String) async throws -> Issue.Comment {
         let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Comment.self)
+        return try await router.post(session, decoder: decoder, expectedResultType: Issue.Comment.self)
     }
     #endif
 
@@ -428,9 +430,9 @@ public extension Octokit {
                        number: Int,
                        page: String = "1",
                        perPage: String = "100",
-                       completion: @escaping (_ response: Result<[Comment], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+                       completion: @escaping (_ response: Result<[Issue.Comment], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssueComments(configuration, owner, repository, number, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Comment].self) { comments, error in
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue.Comment].self) { comments, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -455,9 +457,9 @@ public extension Octokit {
                        repository: String,
                        number: Int,
                        page: String = "1",
-                       perPage: String = "100") async throws -> [Comment] {
+                       perPage: String = "100") async throws -> [Issue.Comment] {
         let router = IssueRouter.readIssueComments(configuration, owner, repository, number, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Comment].self)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue.Comment].self)
     }
     #endif
 
@@ -473,11 +475,11 @@ public extension Octokit {
                            repository: String,
                            number: Int,
                            body: String,
-                           completion: @escaping (_ response: Result<Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+                           completion: @escaping (_ response: Result<Issue.Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Comment.self) { issue, error in
+        return router.post(session, decoder: decoder, expectedResultType: Issue.Comment.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -497,11 +499,11 @@ public extension Octokit {
     ///   - body: The contents of the comment.
     ///   - completion: Callback for the comment that is created.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func patchIssueComment(owner: String, repository: String, number: Int, body: String) async throws -> Comment {
+    func patchIssueComment(owner: String, repository: String, number: Int, body: String) async throws -> Issue.Comment {
         let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Comment.self)
+        return try await router.post(session, decoder: decoder, expectedResultType: Issue.Comment.self)
     }
     #endif
 }

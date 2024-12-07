@@ -255,6 +255,10 @@
 		E7EE59DA1BE10DA60012E3D2 /* StarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */; };
 		E7EE59DC1BE119110012E3D2 /* Follow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DB1BE119110012E3D2 /* Follow.swift */; };
 		E7EE59DE1BE11C2A0012E3D2 /* FollowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */; };
+		F330CBC72D0305CC001D2BA9 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330CBC62D0305CC001D2BA9 /* Team.swift */; };
+		F330CBC82D0305CC001D2BA9 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330CBC62D0305CC001D2BA9 /* Team.swift */; };
+		F330CBC92D0305CC001D2BA9 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330CBC62D0305CC001D2BA9 /* Team.swift */; };
+		F330CBCA2D0305CC001D2BA9 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = F330CBC62D0305CC001D2BA9 /* Team.swift */; };
 		F8711EA21BFCAE9F005DDACA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8711EA11BFCAE9F005DDACA /* Time.swift */; };
 /* End PBXBuildFile section */
 
@@ -370,6 +374,7 @@
 		E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarsTests.swift; sourceTree = "<group>"; };
 		E7EE59DB1BE119110012E3D2 /* Follow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Follow.swift; sourceTree = "<group>"; };
 		E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTests.swift; sourceTree = "<group>"; };
+		F330CBC62D0305CC001D2BA9 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		F8711EA11BFCAE9F005DDACA /* Time.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -436,27 +441,27 @@
 		234F4BAA1BDDE31A00A58EF7 /* OctoKitTests */ = {
 			isa = PBXGroup;
 			children = (
-				234F4BD71BDDE40400A58EF7 /* Fixtures */,
+				234F4BAD1BDDE31A00A58EF7 /* Info.plist */,
 				234F4BC91BDDE3F900A58EF7 /* ConfigurationTests.swift */,
 				E7EE59DD1BE11C2A0012E3D2 /* FollowTests.swift */,
 				515337F022529C380024544D /* GistTests.swift */,
 				E7EDEA6B1C871D01006BAAF2 /* IssueTests.swift */,
 				D4D28F6B2299D87300F8E92A /* LabelTests.swift */,
 				234F4BCB1BDDE3F900A58EF7 /* OctokitSwiftTests.swift */,
-				234F4BCC1BDDE3F900A58EF7 /* PublicKeyTests.swift */,
-				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
-				E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */,
-				234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */,
-				234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */,
 				23A0521E1CA924950068BFF7 /* OctoKitURLTestSession.swift */,
-				234F4BAD1BDDE31A00A58EF7 /* Info.plist */,
-				BF8C76EB002802C14A08F63E /* PullRequestTests.swift */,
-				5090ED7523E48EE60062C763 /* ReleasesTests.swift */,
-				9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */,
 				D1EAE84C25038A910023806C /* PlanTests.swift */,
 				23EA618125EAE2FA001B0964 /* PreviewHeaderTests.swift */,
+				234F4BCC1BDDE3F900A58EF7 /* PublicKeyTests.swift */,
+				BF8C76EB002802C14A08F63E /* PullRequestTests.swift */,
 				23EA618325EAE2FA001B0964 /* ReactionsTests.swift */,
+				5090ED7523E48EE60062C763 /* ReleasesTests.swift */,
+				234F4BCD1BDDE3F900A58EF7 /* RepositoryTests.swift */,
+				9D9ADDDE23EEFD4A000AC34D /* ReviewTests.swift */,
+				E7EE59D91BE10DA60012E3D2 /* StarsTests.swift */,
 				23EA618225EAE2FA001B0964 /* StatusesTests.swift */,
+				234F4BCE1BDDE3F900A58EF7 /* TestHelper.swift */,
+				234F4BCF1BDDE3F900A58EF7 /* UserTests.swift */,
+				234F4BD71BDDE40400A58EF7 /* Fixtures */,
 			);
 			name = OctoKitTests;
 			path = Tests/OctoKitTests;
@@ -465,34 +470,34 @@
 		234F4BD71BDDE40400A58EF7 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
-				721F73E829889A040064B11A /* latest_release.json */,
-				03CCD2512453A9AA007D5CB3 /* users.json */,
+				C1B2EE912A0C0090001CF2FA /* created_pull_request.json */,
 				84B89D022C814DE400273C68 /* forked_repo.json */,
 				515337F92252A0410024544D /* gist.json */,
 				515337F522529E7B0024544D /* gists.json */,
 				5090ED7123E483820062C763 /* issue_comment.json */,
+				23EA619B25EAE31A001B0964 /* issue_comments.json */,
 				DABBDE4F1C8C0C20008F57CD /* issue.json */,
 				515337A8224FC3760024544D /* issue2.json */,
 				E7EDEA6D1C871D0E006BAAF2 /* issues.json */,
 				D4D28F732299DCE700F8E92A /* label.json */,
 				D4D28F6F2299DBE600F8E92A /* labels.json */,
+				721F73E829889A040064B11A /* latest_release.json */,
+				23EA619D25EAE31A001B0964 /* plan.json */,
 				5090ED7723E48FBC0062C763 /* post_release.json */,
 				234F4BD81BDDE44600A58EF7 /* public_key.json */,
+				23EA61A025EAE31A001B0964 /* pull_request.json */,
+				23EA61A125EAE31A001B0964 /* pull_requests.json */,
+				23EA619C25EAE31A001B0964 /* reactions.json */,
+				23EA619F25EAE31A001B0964 /* releases.json */,
 				234F4BD91BDDE44600A58EF7 /* repo.json */,
+				23EA619E25EAE31A001B0964 /* reviews.json */,
 				665D5D5F24A639D70045E3B4 /* status.json */,
 				665D5D5E24A639D70045E3B4 /* statuses.json */,
+				849DF0792D029AF400A202DF /* topics.json */,
 				234F4BDA1BDDE44600A58EF7 /* user_me.json */,
 				234F4BDB1BDDE44600A58EF7 /* user_mietzmithut.json */,
 				234F4BDC1BDDE44600A58EF7 /* user_repos.json */,
-				23EA619B25EAE31A001B0964 /* issue_comments.json */,
-				23EA619D25EAE31A001B0964 /* plan.json */,
-				23EA61A025EAE31A001B0964 /* pull_request.json */,
-				23EA61A125EAE31A001B0964 /* pull_requests.json */,
-				C1B2EE912A0C0090001CF2FA /* created_pull_request.json */,
-				23EA619C25EAE31A001B0964 /* reactions.json */,
-				23EA619F25EAE31A001B0964 /* releases.json */,
-				23EA619E25EAE31A001B0964 /* reviews.json */,
-				849DF0792D029AF400A202DF /* topics.json */,
+				03CCD2512453A9AA007D5CB3 /* users.json */,
 			);
 			name = Fixtures;
 			sourceTree = "<group>";
@@ -501,7 +506,6 @@
 			isa = PBXGroup;
 			children = (
 				239BE7CD1B8C47A100D2CE22 /* OctoKit.h */,
-				84B89D002C814DBC00273C68 /* Organization.swift */,
 				23B267851BDDD756003887E3 /* Configuration.swift */,
 				515337C3225179FB0024544D /* File.swift */,
 				E7EE59DB1BE119110012E3D2 /* Follow.swift */,
@@ -510,22 +514,24 @@
 				DAEFC58F1C83D85100CF3785 /* Label.swift */,
 				DAEFC5941C83EF0D00CF3785 /* Milestone.swift */,
 				23B267861BDDD756003887E3 /* Octokit.swift */,
+				84B89D002C814DBC00273C68 /* Organization.swift */,
+				BF8C72B985869B84F46B4E9D /* Parameters.swift */,
+				D1EAE8472503886C0023806C /* Plan.swift */,
+				D1EAE8612503D33B0023806C /* PreviewHeader.swift */,
 				23B267871BDDD756003887E3 /* PublicKey.swift */,
+				BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */,
+				D1EAE86A2503D9280023806C /* Reactions.swift */,
 				5090ED7323E48AA80062C763 /* Releases.swift */,
 				23B267881BDDD756003887E3 /* Repositories.swift */,
-				23B267891BDDD756003887E3 /* User.swift */,
+				9D9ADDE023EEFDE0000AC34D /* Review.swift */,
 				E7EE59D71BDFEFB30012E3D2 /* Stars.swift */,
 				665D5D5924A639960045E3B4 /* Statuses.swift */,
+				D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */,
+				F330CBC62D0305CC001D2BA9 /* Team.swift */,
 				F8711EA11BFCAE9F005DDACA /* Time.swift */,
 				237F91E31E5AEC82005FAA6B /* URL+URLParameters.swift */,
+				23B267891BDDD756003887E3 /* User.swift */,
 				239BE7CB1B8C47A100D2CE22 /* Supporting Files */,
-				BF8C73E0EF3CEEBDEA68DD5E /* PullRequest.swift */,
-				BF8C72B985869B84F46B4E9D /* Parameters.swift */,
-				9D9ADDE023EEFDE0000AC34D /* Review.swift */,
-				D4D28F772299E9F200F8E92A /* String+PercentEncoding.swift */,
-				D1EAE8612503D33B0023806C /* PreviewHeader.swift */,
-				D1EAE86A2503D9280023806C /* Reactions.swift */,
-				D1EAE8472503886C0023806C /* Plan.swift */,
 			);
 			path = OctoKit;
 			sourceTree = "<group>";
@@ -1003,6 +1009,7 @@
 				84B89D012C814DBC00273C68 /* Organization.swift in Sources */,
 				515337C4225179FB0024544D /* File.swift in Sources */,
 				515337C2225166600024544D /* Gist.swift in Sources */,
+				F330CBC92D0305CC001D2BA9 /* Team.swift in Sources */,
 				23B2678C1BDDD756003887E3 /* PublicKey.swift in Sources */,
 				23B2678E1BDDD756003887E3 /* User.swift in Sources */,
 				237F91E41E5AEC82005FAA6B /* URL+URLParameters.swift in Sources */,
@@ -1034,6 +1041,7 @@
 				84B89D0A2C81587100273C68 /* Organization.swift in Sources */,
 				23CAF2B71C7AB6EB005011C4 /* Time.swift in Sources */,
 				23CAF2B41C7AB6D4005011C4 /* Stars.swift in Sources */,
+				F330CBCA2D0305CC001D2BA9 /* Team.swift in Sources */,
 				23CAF2AB1C7AB6C9005011C4 /* PublicKey.swift in Sources */,
 				D1EAE86C2503D9280023806C /* Reactions.swift in Sources */,
 				237F91E51E5AEC87005FAA6B /* URL+URLParameters.swift in Sources */,
@@ -1091,6 +1099,7 @@
 				84B89D0B2C81587100273C68 /* Organization.swift in Sources */,
 				23CAF2B81C7AB6EB005011C4 /* Time.swift in Sources */,
 				23CAF2B51C7AB6D5005011C4 /* Stars.swift in Sources */,
+				F330CBC72D0305CC001D2BA9 /* Team.swift in Sources */,
 				23CAF2AC1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
 				D1EAE86D2503D9280023806C /* Reactions.swift in Sources */,
 				237F91E61E5AEC88005FAA6B /* URL+URLParameters.swift in Sources */,
@@ -1148,6 +1157,7 @@
 				84B89D0C2C81587200273C68 /* Organization.swift in Sources */,
 				23CAF2B91C7AB6EC005011C4 /* Time.swift in Sources */,
 				23CAF2B61C7AB6D5005011C4 /* Stars.swift in Sources */,
+				F330CBC82D0305CC001D2BA9 /* Team.swift in Sources */,
 				23CAF2AD1C7AB6CA005011C4 /* PublicKey.swift in Sources */,
 				D1EAE86E2503D9280023806C /* Reactions.swift in Sources */,
 				237F91E71E5AEC89005FAA6B /* URL+URLParameters.swift in Sources */,

@@ -180,6 +180,58 @@ extension PullRequest.File {
     }
 }
 
+public extension PullRequest {
+    struct Comment: Codable {
+        public let id: Int
+        public let url: URL
+        public let htmlURL: URL
+        public let body: String
+        public let user: User
+        public let createdAt: Date
+        public let updatedAt: Date
+        public let reactions: Reactions?
+
+        /// The SHA of the commit this comment is associated with.
+        public private(set) var commitId: String?
+        /// The line of the blob in the pull request diff that the comment applies to. For a multi-line comment, the last line of the range that your comment applies to.
+        public private(set) var line: Int?
+        /// The first line in the pull request diff that the multi-line comment applies to.
+        public private(set) var startLine: Int?
+        /// The starting side of the diff that the comment applies to.
+        public private(set) var side: Side?
+        /// The level at which the comment is targeted.
+        public private(set) var subjectType: SubjectType?
+        /// The ID of the review comment this comment replied to.
+        public private(set) var inReplyToId: Int?
+
+        enum CodingKeys: String, CodingKey {
+            case id, url, body, user, reactions
+            case htmlURL = "html_url"
+            case createdAt = "created_at"
+            case updatedAt = "updated_at"
+
+            case line, side
+            case commitId = "commit_id"
+            case startLine = "start_line"
+            case inReplyToId = "in_reply_to_id"
+        }
+    }
+}
+
+public extension PullRequest.Comment {
+    enum Side: String, Codable {
+        case left = "LEFT"
+        case right = "RIGHT"
+        case side
+    }
+}
+
+public extension PullRequest.Comment {
+    enum SubjectType: String, Codable {
+        case line, file
+    }
+}
+
 // MARK: Request
 
 public extension Octokit {
@@ -213,10 +265,8 @@ public extension Octokit {
         return router.post(session, decoder: decoder, expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let pullRequest = pullRequest {
-                    completion(.success(pullRequest))
-                }
+            } else if let pullRequest {
+                completion(.success(pullRequest))
             }
         }
     }
@@ -268,10 +318,8 @@ public extension Octokit {
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let pullRequest = pullRequest {
-                    completion(.success(pullRequest))
-                }
+            } else if let pullRequest {
+                completion(.success(pullRequest))
             }
         }
     }
@@ -319,10 +367,8 @@ public extension Octokit {
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let pullRequests = pullRequests {
-                    completion(.success(pullRequests))
-                }
+            } else if let pullRequests {
+                completion(.success(pullRequests))
             }
         }
     }
@@ -381,10 +427,8 @@ public extension Octokit {
         return router.post(session, decoder: decoder, expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let pullRequest = pullRequest {
-                    completion(.success(pullRequest))
-                }
+            } else if let pullRequest {
+                completion(.success(pullRequest))
             }
         }
     }
@@ -416,7 +460,6 @@ public extension Octokit {
         decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
         return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.self)
     }
-
     #endif
 
     func listPullRequestsFiles(owner: String,
@@ -429,10 +472,8 @@ public extension Octokit {
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.File].self) { files, error in
             if let error = error {
                 completion(.failure(error))
-            } else {
-                if let files = files {
-                    completion(.success(files))
-                }
+            } else if let files {
+                completion(.success(files))
             }
         }
     }
@@ -448,6 +489,196 @@ public extension Octokit {
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.File].self)
     }
     #endif
+
+    /// Fetches all review comments for a pull request.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - page: Current page for comments pagination. `1` by default.
+    ///   - perPage: Number of comments per page. `100` by default.
+    ///   - completion: Callback for the outcome of the fetch.
+    @discardableResult
+    func readPullRequestReviewComments(owner: String,
+                                       repository: String,
+                                       number: Int,
+                                       page: Int = 1,
+                                       perPage: Int = 100,
+                                       completion: @escaping (_ response: Result<[PullRequest.Comment], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = PullRequestRouter.readPullRequestReviewComments(configuration, owner, repository, number, page, perPage)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.Comment].self) { comments, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let comments {
+                completion(.success(comments))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /// Fetches all review comments for a pull request.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - page: Current page for comments pagination. `1` by default.
+    ///   - perPage: Number of comments per page. `100` by default.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func readPullRequestReviewComments(owner: String,
+                                       repository: String,
+                                       number: Int,
+                                       page: Int = 1,
+                                       perPage: Int = 100) async throws -> [PullRequest.Comment] {
+        let router = PullRequestRouter.readPullRequestReviewComments(configuration, owner, repository, number, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.Comment].self)
+    }
+    #endif
+
+    /// Posts a review comment on a pull request using the given body.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - commitId: The SHA of the commit needing a comment.
+    ///   - path: The relative path to the file that necessitates a comment.
+    ///   - line: The line of the blob in the pull request diff that the comment applies to.
+    ///   - body: The text of the review comment.
+    ///   - completion: Callback for the comment that is created.
+    @discardableResult
+    func createPullRequestReviewComment(owner: String,
+                                        repository: String,
+                                        number: Int,
+                                        commitId: String,
+                                        path: String,
+                                        line: Int,
+                                        body: String,
+                                        completion: @escaping (_ response: Result<PullRequest.Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = PullRequestRouter.createPullRequestReviewComment(configuration, owner, repository, number, commitId, path, line, body)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return router.post(session, decoder: decoder, expectedResultType: PullRequest.Comment.self) { issue, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let issue {
+                completion(.success(issue))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /// Posts a review comment on a pull request using the given body.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - commitId: The SHA of the commit needing a comment.
+    ///   - path: The relative path to the file that necessitates a comment.
+    ///   - line: The line of the blob in the pull request diff that the comment applies to.
+    ///   - body: The contents of the comment.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func createPullRequestReviewComment(owner: String,
+                                        repository: String,
+                                        number: Int,
+                                        commitId: String,
+                                        path: String,
+                                        line: Int,
+                                        body: String) async throws -> PullRequest.Comment {
+        let router = PullRequestRouter.createPullRequestReviewComment(configuration, owner, repository, number, commitId, path, line, body)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
+        return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.Comment.self)
+    }
+    #endif
+
+    /// Posts a review comment on a pull request using the given body.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - body: The text of the review comment.
+    ///   - completion: Callback for the comment that is created.
+    @discardableResult
+    func createPullRequestReviewComment(owner: String,
+                                        repository: String,
+                                        number: Int,
+                                        body: String,
+                                        completion: @escaping (_ response: Result<Issue.Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        /// To add a regular comment to a pull request timeline, the Issue Comment API should be used.
+        /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
+        commentIssue(owner: owner,
+                     repository: repository,
+                     number: number, body: body,
+                     completion: completion)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /// Posts a review comment on a pull request using the given body.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - body: The contents of the comment.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func createPullRequestReviewComment(owner: String,
+                                        repository: String,
+                                        number: Int,
+                                        body: String) async throws -> Issue.Comment {
+        /// To add a regular comment to a pull request timeline, the Issue Comment API should be used.
+        /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
+        try await commentIssue(owner: owner, repository: repository, number: number, body: body)
+    }
+    #endif
+
+    /// Fetches all reviewers for a pull request.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - page: Current page for comments pagination. `1` by default.
+    ///   - perPage: Number of comments per page. `100` by default.
+    ///   - completion: Callback for the outcome of the fetch.
+    @discardableResult
+    func readPullRequestRequestedReviewers(owner: String,
+                                           repository: String,
+                                           number: Int,
+                                           page: Int = 1,
+                                           perPage: Int = 100,
+                                           completion: @escaping (_ response: Result<PullRequest.RequestedReviewers, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = PullRequestRouter.readPullRequestRequestedReviewers(configuration, owner, repository, number, page, perPage)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.RequestedReviewers.self) { requestedReviewers, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let requestedReviewers {
+                completion(.success(requestedReviewers))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /// Fetches all reviewers for a pull request.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repository.
+    ///   - repository: The name of the repository.
+    ///   - number: The number of the pull request.
+    ///   - page: Current page for comments pagination. `1` by default.
+    ///   - perPage: Number of comments per page. `100` by default.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func readPullRequestRequestedReviewers(owner: String,
+                                           repository: String,
+                                           number: Int,
+                                           page: Int = 1,
+                                           perPage: Int = 100) async throws -> PullRequest.RequestedReviewers {
+        let router = PullRequestRouter.readPullRequestRequestedReviewers(configuration, owner, repository, number, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.RequestedReviewers.self)
+    }
+    #endif
+}
+
+public extension PullRequest {
+    struct RequestedReviewers: Codable {
+        public private(set) var users = [User]()
+        public private(set) var teams = [Team]()
+    }
 }
 
 // MARK: Router
@@ -458,14 +689,20 @@ enum PullRequestRouter: JSONPostRouter {
     case createPullRequest(Configuration, String, String, String, String, String?, String, String?, Bool?, Bool?)
     case patchPullRequest(Configuration, String, String, String, String, String, Openness, String?, Bool?)
     case listPullRequestsFiles(Configuration, String, String, Int, Int?, Int?)
+    case readPullRequestReviewComments(Configuration, String, String, Int, Int?, Int?)
+    case createPullRequestReviewComment(Configuration, String, String, Int, String, String, Int, String)
+    case readPullRequestRequestedReviewers(Configuration, String, String, Int, Int?, Int?)
 
     var method: HTTPMethod {
         switch self {
-        case .createPullRequest:
+        case .createPullRequest,
+             .createPullRequestReviewComment:
             return .POST
         case .readPullRequest,
              .readPullRequests,
-             .listPullRequestsFiles:
+             .listPullRequestsFiles,
+             .readPullRequestReviewComments,
+             .readPullRequestRequestedReviewers:
             return .GET
         case .patchPullRequest:
             return .PATCH
@@ -474,7 +711,9 @@ enum PullRequestRouter: JSONPostRouter {
 
     var encoding: HTTPEncoding {
         switch self {
-        case .patchPullRequest, .createPullRequest:
+        case .patchPullRequest,
+             .createPullRequest,
+             .createPullRequestReviewComment:
             return .json
         default:
             return .url
@@ -488,6 +727,9 @@ enum PullRequestRouter: JSONPostRouter {
         case let .patchPullRequest(config, _, _, _, _, _, _, _, _): return config
         case let .createPullRequest(config, _, _, _, _, _, _, _, _, _): return config
         case let .listPullRequestsFiles(config, _, _, _, _, _): return config
+        case let .readPullRequestReviewComments(config, _, _, _, _, _): return config
+        case let .createPullRequestReviewComment(config, _, _, _, _, _, _, _): return config
+        case let .readPullRequestRequestedReviewers(config, _, _, _, _, _): return config
         }
     }
 
@@ -552,15 +794,24 @@ enum PullRequestRouter: JSONPostRouter {
                 parameters["draft"] = draft
             }
             return parameters
-        case let .listPullRequestsFiles(_, _, _, _, perPage, page):
+        case let .listPullRequestsFiles(_, _, _, _, perPage, page),
+             let .readPullRequestReviewComments(_, _, _, _, page, perPage),
+             let .readPullRequestRequestedReviewers(_, _, _, _, page, perPage):
             var parameters: [String: Any] = [:]
-            if let perPage = perPage {
+            if let perPage {
                 parameters["per_page"] = perPage
             }
-            if let page = page {
+            if let page {
                 parameters["page"] = page
             }
             return parameters
+        case let .createPullRequestReviewComment(_, _, _, _, commitId, path, line, body):
+            return [
+                "body": body,
+                "commit_id": commitId,
+                "path": path,
+                "line": line
+            ]
         }
     }
 
@@ -575,7 +826,16 @@ enum PullRequestRouter: JSONPostRouter {
         case let .createPullRequest(_, owner, repository, _, _, _, _, _, _, _):
             return "repos/\(owner)/\(repository)/pulls"
         case let .listPullRequestsFiles(_, owner, repository, number, _, _):
-            return "/repos/\(owner)/\(repository)/pulls/\(number)/files"
+            return "repos/\(owner)/\(repository)/pulls/\(number)/files"
+        case let .readPullRequestReviewComments(_, owner, repository, number, _, _):
+            /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#list-review-comments-on-a-pull-request
+            return "repos/\(owner)/\(repository)/pulls/\(number)/comments"
+        case let .createPullRequestReviewComment(_, owner, repository, number, _, _, _, _):
+            /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
+            return "repos/\(owner)/\(repository)/pulls/\(number)/comments"
+        case let .readPullRequestRequestedReviewers(_, owner, repository, number, _, _):
+            /// See: https://docs.github.com/en/rest/pulls/review-requests?apiVersion=2022-11-28#get-all-requested-reviewers-for-a-pull-request
+            return "repos/\(owner)/\(repository)/pulls/\(number)/requested_reviewers"
         }
     }
 }
