@@ -1,7 +1,5 @@
 # Octokit.swift
 
-[![CocoaPods](https://img.shields.io/cocoapods/v/OctoKit.swift.svg)](https://cocoapods.org/pods/OctoKit.swift)
-
 ## Installation
 
 - **Using [Swift Package Manager](https://swift.org/package-manager)**:
