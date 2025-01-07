@@ -799,10 +799,10 @@ enum PullRequestRouter: JSONPostRouter {
              let .readPullRequestRequestedReviewers(_, _, _, _, page, perPage):
             var parameters: [String: Any] = [:]
             if let perPage {
-                parameters["per_page"] = perPage
+                parameters["per_page"] = String(perPage)
             }
             if let page {
-                parameters["page"] = page
+                parameters["page"] = String(page)
             }
             return parameters
         case let .createPullRequestReviewComment(_, _, _, _, commitId, path, line, body):

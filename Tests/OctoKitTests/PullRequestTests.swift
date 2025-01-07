@@ -431,7 +431,7 @@ class PullRequestTests: XCTestCase {
     #endif
 
     func testReadPullRequestReviewComments() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/comments?",
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/comments?page=1&per_page=100",
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "pull_request_comments",
                                             statusCode: 200)
@@ -455,7 +455,7 @@ class PullRequestTests: XCTestCase {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testReadPullRequestReviewCommentsAsync() async throws {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/comments?",
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/comments?page=1&per_page=100",
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "pull_request_comments",
                                             statusCode: 200)
@@ -563,7 +563,7 @@ class PullRequestTests: XCTestCase {
     #endif
 
     func testReadPullRequestRequestedReviewers() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/requested_reviewers?",
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/requested_reviewers?page=1&per_page=100",
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "pull_request_requested_reviewers",
                                             statusCode: 200)
@@ -587,7 +587,7 @@ class PullRequestTests: XCTestCase {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testReadPullRequestRequestedReviewersAsync() async throws {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/requested_reviewers?",
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octokat/Hello-World/pulls/1347/requested_reviewers?page=1&per_page=100",
                                             expectedHTTPMethod: "GET",
                                             jsonFile: "pull_request_requested_reviewers",
                                             statusCode: 200)
