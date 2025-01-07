@@ -171,12 +171,43 @@ open class User: Codable {
 public extension Octokit {
     /**
      Fetches a user or organization
+     - parameter id: The id of the user or organization.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func user(id: Int, completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = UserRouter.readUserById(id, configuration)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self) { user, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                if let user = user {
+                    completion(.success(user))
+                }
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches a user or organization
+     - parameter id: The identifier of the user or organization.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func user(id: Int) async throws -> User {
+        let router = UserRouter.readUserById(id, configuration)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self)
+    }
+    #endif
+
+    /**
+     Fetches a user or organization
      - parameter name: The name of the user or organization.
      - parameter completion: Callback for the outcome of the fetch.
      */
     @discardableResult
     func user(name: String, completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = UserRouter.readUser(name, configuration)
+        let router = UserRouter.readUserByName(name, configuration)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self) { user, error in
             if let error = error {
                 completion(.failure(error))
@@ -195,7 +226,7 @@ public extension Octokit {
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func user(name: String) async throws -> User {
-        let router = UserRouter.readUser(name, configuration)
+        let router = UserRouter.readUserByName(name, configuration)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self)
     }
     #endif
@@ -234,12 +265,14 @@ public extension Octokit {
 
 enum UserRouter: Router {
     case readAuthenticatedUser(Configuration)
-    case readUser(String, Configuration)
+    case readUserById(Int, Configuration)
+    case readUserByName(String, Configuration)
 
     var configuration: Configuration {
         switch self {
         case let .readAuthenticatedUser(config): return config
-        case let .readUser(_, config): return config
+        case let .readUserById(_, config): return config
+        case let .readUserByName(_, config): return config
         }
     }
 
@@ -255,7 +288,9 @@ enum UserRouter: Router {
         switch self {
         case .readAuthenticatedUser:
             return "user"
-        case let .readUser(username, _):
+        case let .readUserById(id, _):
+            return "user/\(id)"
+        case let .readUserByName(username, _):
             return "users/\(username)"
         }
     }

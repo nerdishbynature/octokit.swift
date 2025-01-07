@@ -4,7 +4,7 @@ import XCTest
 class UserTests: XCTestCase {
     // MARK: Actual Request tests
 
-    func testGetUser() {
+    func testGetUserByName() {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/mietzmithut", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
         let username = "mietzmithut"
         let task = Octokit(session: session).user(name: username) { response in
@@ -20,7 +20,7 @@ class UserTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
-    func testFailingToGetUser() {
+    func testFailingToGetUserByName() {
         let username = "notexisting"
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/notexisting", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
         let task = Octokit(session: session).user(name: username) { response in
@@ -38,11 +38,55 @@ class UserTests: XCTestCase {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
-    func testGetUserAsync() async throws {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/mietzmithut", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
-        let username = "mietzmithut"
-        let user = try await Octokit(session: session).user(name: username)
-        XCTAssertEqual(user.login, username)
+    func testGetUserByNameAsync() async throws {
+        let expectedUserId = 4672699
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/\(expectedUserId)", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
+        let user = try await Octokit(session: session).user(id: expectedUserId)
+        XCTAssertEqual(user.id, expectedUserId)
+        XCTAssertNotNil(user.createdAt)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
+    func testGetUserById() {
+        let expectedUserId = 4672699
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/\(expectedUserId)", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
+        let task = Octokit(session: session).user(id: expectedUserId) { response in
+            switch response {
+            case let .success(user):
+                XCTAssertEqual(user.id, expectedUserId)
+                XCTAssertNotNil(user.createdAt)
+            case .failure:
+                XCTFail("should get a user")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testFailingToGetUserById() {
+        let userId = 123456
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/\(userId)", expectedHTTPMethod: "GET", jsonFile: nil, statusCode: 404)
+        let task = Octokit(session: session).user(id: userId) { response in
+            switch response {
+            case .success:
+                XCTAssert(false, "should not retrieve user")
+            case let .failure(error as NSError):
+                XCTAssertEqual(error.code, 404)
+                XCTAssertEqual(error.domain, OctoKitErrorDomain)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetUserByIdAsync() async throws {
+        let expectedUserId = 4672699
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/\(expectedUserId)", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
+        let user = try await Octokit(session: session).user(id: expectedUserId)
+        XCTAssertEqual(user.id, expectedUserId)
         XCTAssertNotNil(user.createdAt)
         XCTAssertTrue(session.wasCalled)
     }
