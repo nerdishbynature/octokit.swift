@@ -44,6 +44,47 @@ class GistTests: XCTestCase {
     }
     #endif
 
+    func testGetMyStarredGists() {
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists/starred?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            jsonFile: "starred_gists",
+                                            statusCode: 200)
+        let task = Octokit(config, session: session).myStarredGists { response in
+            switch response {
+            case let .success(gists):
+                XCTAssertEqual(gists.count, 1)
+                XCTAssertEqual(gists[0].description, "Hello World StarredExamples")
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetMyStarredGistsAsync() async throws {
+        let config = TokenConfiguration("user:12345")
+        let headers = Helper.makeAuthHeader(username: "user", password: "12345")
+
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/gists/starred?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            expectedHTTPHeaders: headers,
+                                            jsonFile: "starred_gists",
+                                            statusCode: 200)
+        let gists = try await Octokit(config, session: session).myStarredGists()
+        XCTAssertEqual(gists.count, 1)
+        XCTAssertEqual(gists[0].description, "Hello World StarredExamples")
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
+
     func testGetGists() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")
@@ -88,6 +129,11 @@ class GistTests: XCTestCase {
             switch response {
             case let .success(gist):
                 XCTAssertEqual(gist.id, "aa5a315d61ae9438b18d")
+                guard let forkID = gist.forkOf?.id else {
+                    XCTFail("Didn't properly decode fork parent gist")
+                    return
+                }
+                XCTAssertEqual(forkID, "f87cbd23c4bc9ad7b04a9f80cf532fc3")
             case .failure:
                 XCTFail("should not get an error")
             }
