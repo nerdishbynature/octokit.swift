@@ -8,7 +8,6 @@ import FoundationNetworking
 
 open class Gist: Codable {
     open private(set) var id: String?
-    open var title: String?
     open var url: URL?
     open var forksURL: URL?
     open var commitsURL: URL?
@@ -27,7 +26,6 @@ open class Gist: Codable {
     open var forkOf: Gist?
 
     public init(id: String? = nil,
-                title: String,
                 url: URL? = nil,
                 forksURL: URL? = nil,
                 commitsURL: URL? = nil,
@@ -45,7 +43,6 @@ open class Gist: Codable {
                 owner: User? = nil,
                 forkOf: Gist? = nil) {
         self.id = id
-        self.title = title
         self.url = url
         self.forksURL = forksURL
         self.commitsURL = commitsURL
@@ -66,7 +63,6 @@ open class Gist: Codable {
 
     enum CodingKeys: String, CodingKey {
         case id
-        case title
         case url
         case forksURL = "forks_url"
         case commitsURL = "commits_url"
