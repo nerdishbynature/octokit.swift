@@ -84,7 +84,6 @@ class GistTests: XCTestCase {
     }
     #endif
 
-
     func testGetGists() {
         let config = TokenConfiguration("user:12345")
         let headers = Helper.makeAuthHeader(username: "user", password: "12345")

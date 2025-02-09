@@ -121,15 +121,15 @@ public extension Octokit {
     #endif
 
     /**
-    Fetches the starred gists of the authenticated user
-    - parameter page: Current page for gist pagination. `1` by default.
-    - parameter perPage: Number of gists per page. `100` by default.
-    - parameter completion: Callback for the outcome of the fetch.
-    */
+     Fetches the starred gists of the authenticated user
+     - parameter page: Current page for gist pagination. `1` by default.
+     - parameter perPage: Number of gists per page. `100` by default.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
     @discardableResult
     func myStarredGists(page: String = "1",
-                      perPage: String = "100",
-                      completion: @escaping (_ response: Result<[Gist], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+                        perPage: String = "100",
+                        completion: @escaping (_ response: Result<[Gist], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = GistRouter.readAuthenticatedStarredGists(configuration, page, perPage)
         return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self) { gists, error in
             if let error = error {
