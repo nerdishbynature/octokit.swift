@@ -57,7 +57,7 @@ class GistTests: XCTestCase {
             switch response {
             case let .success(gists):
                 XCTAssertEqual(gists.count, 1)
-                XCTAssertEqual(gists[0].description, "Hello World StarredExamples")
+                XCTAssertEqual(gists[0].description, "Hello World Starred Examples")
             case let .failure(error):
                 XCTAssertNil(error)
             }
@@ -79,7 +79,7 @@ class GistTests: XCTestCase {
                                             statusCode: 200)
         let gists = try await Octokit(config, session: session).myStarredGists()
         XCTAssertEqual(gists.count, 1)
-        XCTAssertEqual(gists[0].description, "Hello World StarredExamples")
+        XCTAssertEqual(gists[0].description, "Hello World Starred Examples")
         XCTAssertTrue(session.wasCalled)
     }
     #endif
