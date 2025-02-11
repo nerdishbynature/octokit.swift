@@ -23,6 +23,7 @@ open class Gist: Codable {
     open var comments: Int?
     open var user: User?
     open var owner: User?
+    open var forkOf: Gist?
 
     public init(id: String? = nil,
                 url: URL? = nil,
@@ -39,7 +40,8 @@ open class Gist: Codable {
                 description: String? = nil,
                 comments: Int? = nil,
                 user: User? = nil,
-                owner: User? = nil) {
+                owner: User? = nil,
+                forkOf: Gist? = nil) {
         self.id = id
         self.url = url
         self.forksURL = forksURL
@@ -56,6 +58,7 @@ open class Gist: Codable {
         self.comments = comments
         self.user = user
         self.owner = owner
+        self.forkOf = forkOf
     }
 
     enum CodingKeys: String, CodingKey {
@@ -75,6 +78,7 @@ open class Gist: Codable {
         case comments
         case user
         case owner
+        case forkOf = "fork_of"
     }
 }
 
@@ -112,6 +116,41 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myGists(page: String = "1", perPage: String = "100") async throws -> [Gist] {
         let router = GistRouter.readAuthenticatedGists(configuration, page, perPage)
+        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self)
+    }
+    #endif
+
+    /**
+     Fetches the starred gists of the authenticated user
+     - parameter page: Current page for gist pagination. `1` by default.
+     - parameter perPage: Number of gists per page. `100` by default.
+     - parameter completion: Callback for the outcome of the fetch.
+     */
+    @discardableResult
+    func myStarredGists(page: String = "1",
+                        perPage: String = "100",
+                        completion: @escaping (_ response: Result<[Gist], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = GistRouter.readAuthenticatedStarredGists(configuration, page, perPage)
+        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self) { gists, error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                if let gists = gists {
+                    completion(.success(gists))
+                }
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /**
+     Fetches the starred gists of the authenticated user
+     - parameter page: Current page for gist pagination. `1` by default.
+     - parameter perPage: Number of gists per page. `100` by default.
+     */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func myStarredGists(page: String = "1", perPage: String = "100") async throws -> [Gist] {
+        let router = GistRouter.readAuthenticatedStarredGists(configuration, page, perPage)
         return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Gist].self)
     }
     #endif
@@ -155,7 +194,7 @@ public extension Octokit {
     #endif
 
     /**
-     Fetches an gist
+     Fetches a gist
      - parameter id: The id of the gist.
      - parameter completion: Callback for the outcome of the fetch.
      */
@@ -175,7 +214,7 @@ public extension Octokit {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Fetches an gist
+     Fetches a gist
      - parameter id: The id of the gist.
      */
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
@@ -186,7 +225,7 @@ public extension Octokit {
     #endif
 
     /**
-     Creates an gist with a single file.
+     Creates a gist with a single file.
      - parameter description: The description of the gist.
      - parameter filename: The name of the file in the gist.
      - parameter fileContent: The content of the file in the gist.
@@ -215,7 +254,7 @@ public extension Octokit {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Creates an gist with a single file.
+     Creates a gist with a single file.
      - parameter description: The description of the gist.
      - parameter filename: The name of the file in the gist.
      - parameter fileContent: The content of the file in the gist.
@@ -231,7 +270,7 @@ public extension Octokit {
     #endif
 
     /**
-     Edits an gist with a single file.
+     Edits a gist with a single file.
      - parameter id: The of the gist to update.
      - parameter description: The description of the gist.
      - parameter filename: The name of the file in the gist.
@@ -260,7 +299,7 @@ public extension Octokit {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
-     Edits an gist with a single file.
+     Edits a gist with a single file.
      - parameter id: The of the gist to update.
      - parameter description: The description of the gist.
      - parameter filename: The name of the file in the gist.
@@ -280,6 +319,7 @@ public extension Octokit {
 
 enum GistRouter: JSONPostRouter {
     case readAuthenticatedGists(Configuration, String, String)
+    case readAuthenticatedStarredGists(Configuration, String, String)
     case readGists(Configuration, String, String, String)
     case readGist(Configuration, String)
     case postGistFile(Configuration, String, String, String, Bool)
@@ -306,6 +346,7 @@ enum GistRouter: JSONPostRouter {
     var configuration: Configuration {
         switch self {
         case let .readAuthenticatedGists(config, _, _): return config
+        case let .readAuthenticatedStarredGists(config, _, _): return config
         case let .readGists(config, _, _, _): return config
         case let .readGist(config, _): return config
         case let .postGistFile(config, _, _, _, _): return config
@@ -316,6 +357,8 @@ enum GistRouter: JSONPostRouter {
     var params: [String: Any] {
         switch self {
         case let .readAuthenticatedGists(_, page, perPage):
+            return ["per_page": perPage, "page": page]
+        case let .readAuthenticatedStarredGists(_, page, perPage):
             return ["per_page": perPage, "page": page]
         case let .readGists(_, _, page, perPage):
             return ["per_page": perPage, "page": page]
@@ -347,6 +390,8 @@ enum GistRouter: JSONPostRouter {
         switch self {
         case .readAuthenticatedGists:
             return "gists"
+        case .readAuthenticatedStarredGists:
+            return "gists/starred"
         case let .readGists(_, owner, _, _):
             return "users/\(owner)/gists"
         case let .readGist(_, id):

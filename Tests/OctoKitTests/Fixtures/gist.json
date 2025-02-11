@@ -42,6 +42,47 @@
       "type" : "application\/x-ruby"
     }
   },
+  "fork_of": {
+    "url": "https://api.github.com/gists/f87cbd23c4bc9ad7b04a9f80cf532fc3",
+    "forks_url": "https://api.github.com/gists/f87cbd23c4bc9ad7b04a9f80cf532fc3/forks",
+    "commits_url": "https://api.github.com/gists/f87cbd23c4bc9ad7b04a9f80cf532fc3/commits",
+    "id": "f87cbd23c4bc9ad7b04a9f80cf532fc3",
+    "node_id": "G_kwDOADF1_doAIGY4N2NiZDIzYzRiYzlhZDdiMDRhOWY4MGNmNTMyZmMz",
+    "git_pull_url": "https://gist.github.com/f87cbd23c4bc9ad7b04a9f80cf532fc3.git",
+    "git_push_url": "https://gist.github.com/f87cbd23c4bc9ad7b04a9f80cf532fc3.git",
+    "html_url": "https://gist.github.com/armcknight/f87cbd23c4bc9ad7b04a9f80cf532fc3",
+    "files": {
+
+    },
+    "public": true,
+    "created_at": "2023-07-24T19:09:01Z",
+    "updated_at": "2023-07-24T19:09:02Z",
+    "description": "Hello World Examples",
+    "comments": 0,
+    "user": null,
+    "comments_url": "https://api.github.com/gists/f87cbd23c4bc9ad7b04a9f80cf532fc3/comments",
+    "owner": {
+      "login": "armcknight",
+      "id": 3241469,
+      "node_id": "MDQ6VXNlcjMyNDE0Njk=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3241469?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/armcknight",
+      "html_url": "https://github.com/armcknight",
+      "followers_url": "https://api.github.com/users/armcknight/followers",
+      "following_url": "https://api.github.com/users/armcknight/following{/other_user}",
+      "gists_url": "https://api.github.com/users/armcknight/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/armcknight/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/armcknight/subscriptions",
+      "organizations_url": "https://api.github.com/users/armcknight/orgs",
+      "repos_url": "https://api.github.com/users/armcknight/repos",
+      "events_url": "https://api.github.com/users/armcknight/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/armcknight/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    }
+  },
   "forks" : [
     {
       "created_at" : "2011-04-14T16:00:49Z",
