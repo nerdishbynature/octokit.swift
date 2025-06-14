@@ -149,7 +149,7 @@ public extension PullRequest {
         public var blobUrl: String
         public var rawUrl: String
         public var contentsUrl: String
-        public var patch: String
+        public var patch: String?
     }
 }
 
