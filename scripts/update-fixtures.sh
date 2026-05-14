@@ -66,6 +66,15 @@ run_cmd "followers.json"            follower   get-list  nerdishbynature
 # Gist list (octocat has known public gists; nerdishbynature has 0)
 run_cmd "gists.json"                gist       get-list  octocat
 
+# Git
+run_cmd "git_refs.json"             git        get-refs  nerdishbynature   octokit.swift
+# Tree SHA must be resolved at runtime; fetch main branch tree SHA via the refs endpoint
+GIT_TREE_SHA=$(curl -s "https://api.github.com/repos/nerdishbynature/octokit.swift/git/refs/heads/main" \
+    | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['object']['sha'])" \
+    | xargs -I{} curl -s "https://api.github.com/repos/nerdishbynature/octokit.swift/git/commits/{}" \
+    | python3 -c "import sys,json; print(json.load(sys.stdin)['tree']['sha'])")
+run_cmd "git_tree.json"             git        get-tree  nerdishbynature   octokit.swift   "$GIT_TREE_SHA"
+
 echo ""
 echo "Sorting JSON keys..."
 "$CLI" sorted-json-keys "$OUTPUT_DIR"/*.json

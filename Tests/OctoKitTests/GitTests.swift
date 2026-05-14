@@ -11,8 +11,8 @@ class GitTests: XCTestCase {
                                             statusCode: 200)
 
         let task = Octokit(session: session).tree(owner: "nerdishbynature",
-                                                   repository: "octokit.swift",
-                                                   treeSHA: "f6453ef0e01c0dc276b3e76d71685e99ff98d66f") { response in
+                                                  repository: "octokit.swift",
+                                                  treeSHA: "f6453ef0e01c0dc276b3e76d71685e99ff98d66f") { response in
             switch response {
             case let .success(tree):
                 XCTAssertEqual(tree.sha, "f6453ef0e01c0dc276b3e76d71685e99ff98d66f")
@@ -35,9 +35,9 @@ class GitTests: XCTestCase {
                                             statusCode: 200)
 
         let task = Octokit(session: session).tree(owner: "nerdishbynature",
-                                                   repository: "octokit.swift",
-                                                   treeSHA: "f6453ef0e01c0dc276b3e76d71685e99ff98d66f",
-                                                   recursive: true) { response in
+                                                  repository: "octokit.swift",
+                                                  treeSHA: "f6453ef0e01c0dc276b3e76d71685e99ff98d66f",
+                                                  recursive: true) { response in
             switch response {
             case let .success(tree):
                 XCTAssertEqual(tree.sha, "f6453ef0e01c0dc276b3e76d71685e99ff98d66f")
