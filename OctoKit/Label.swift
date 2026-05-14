@@ -100,6 +100,30 @@ public extension Octokit {
     }
     #endif
 
+    @discardableResult
+    func labelsPaginated(owner: String,
+                         repository: String,
+                         page: String = "1",
+                         perPage: String = "100",
+                         completion: @escaping (_ response: Result<PaginatedResponse<[Label]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = LabelRouter.readLabels(configuration, owner, repository, page, perPage)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Label].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func labelsPaginated(owner: String, repository: String, page: String = "1", perPage: String = "100") async throws -> PaginatedResponse<[Label]> {
+        let router = LabelRouter.readLabels(configuration, owner, repository, page, perPage)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Label].self)
+    }
+    #endif
+
     /**
      Create a label in a repository
      - parameter owner: The user or organization that owns the repository.

@@ -19,16 +19,28 @@ class OctoKitURLTestSession: RequestKitURLSession {
     let expectedHTTPHeaders: [String: String]
     let responseString: String?
     let statusCode: Int
+    let responseHeaders: [String: String]
 
-    init(expectedURL: String, expectedHTTPMethod: String, expectedHTTPHeaders: [String: String] = [:], response: String?, statusCode: Int) {
+    init(expectedURL: String,
+         expectedHTTPMethod: String,
+         expectedHTTPHeaders: [String: String] = [:],
+         response: String?,
+         statusCode: Int,
+         responseHeaders: [String: String] = ["Content-Type": "application/json"]) {
         self.expectedURL = expectedURL
         self.expectedHTTPMethod = expectedHTTPMethod
         self.expectedHTTPHeaders = expectedHTTPHeaders
         responseString = response
         self.statusCode = statusCode
+        self.responseHeaders = responseHeaders
     }
 
-    init(expectedURL: String, expectedHTTPMethod: String, expectedHTTPHeaders: [String: String] = [:], jsonFile: String?, statusCode: Int) {
+    init(expectedURL: String,
+         expectedHTTPMethod: String,
+         expectedHTTPHeaders: [String: String] = [:],
+         jsonFile: String?,
+         statusCode: Int,
+         responseHeaders: [String: String] = ["Content-Type": "application/json"]) {
         self.expectedURL = expectedURL
         self.expectedHTTPMethod = expectedHTTPMethod
         self.expectedHTTPHeaders = expectedHTTPHeaders
@@ -38,6 +50,7 @@ class OctoKitURLTestSession: RequestKitURLSession {
             responseString = nil
         }
         self.statusCode = statusCode
+        self.responseHeaders = responseHeaders
     }
 
     func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
@@ -49,7 +62,7 @@ class OctoKitURLTestSession: RequestKitURLSession {
         }
 
         let data = responseString?.data(using: String.Encoding.utf8)
-        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "http/1.1", headerFields: ["Content-Type": "application/json"])
+        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "http/1.1", headerFields: responseHeaders)
         completionHandler(data, response, nil)
         wasCalled = true
         return MockURLSessionDataTask()
@@ -64,7 +77,7 @@ class OctoKitURLTestSession: RequestKitURLSession {
         }
 
         let data = responseString?.data(using: String.Encoding.utf8)
-        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "http/1.1", headerFields: ["Content-Type": "application/json"])
+        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "http/1.1", headerFields: responseHeaders)
         completionHandler(data, response, nil)
         wasCalled = true
         return MockURLSessionDataTask()
@@ -80,7 +93,7 @@ class OctoKitURLTestSession: RequestKitURLSession {
             XCTAssertEqual(request.allHTTPHeaderFields?[key], value)
         }
 
-        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "http/1.1", headerFields: ["Content-Type": "application/json"])
+        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "http/1.1", headerFields: responseHeaders)
         wasCalled = true
         return (responseString?.data(using: String.Encoding.utf8) ?? Data(), response!)
     }
@@ -94,7 +107,7 @@ class OctoKitURLTestSession: RequestKitURLSession {
             XCTAssertEqual(request.allHTTPHeaderFields?[key], value)
         }
 
-        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "http/1.1", headerFields: ["Content-Type": "application/json"])
+        let response = HTTPURLResponse(url: request.url!, statusCode: statusCode, httpVersion: "http/1.1", headerFields: responseHeaders)
         wasCalled = true
         return (responseString?.data(using: String.Encoding.utf8) ?? Data(), response!)
     }

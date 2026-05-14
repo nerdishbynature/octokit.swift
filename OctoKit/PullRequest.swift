@@ -394,6 +394,43 @@ public extension Octokit {
     }
     #endif
 
+    @discardableResult
+    func pullRequestsPaginated(owner: String,
+                               repository: String,
+                               base: String? = nil,
+                               head: String? = nil,
+                               state: Openness = .open,
+                               sort: SortType = .created,
+                               direction: SortDirection = .desc,
+                               page: String? = nil,
+                               perPage: String? = nil,
+                               completion: @escaping (_ response: Result<PaginatedResponse<[PullRequest]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction, page, perPage)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [PullRequest].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func pullRequestsPaginated(owner: String,
+                               repository: String,
+                               base: String? = nil,
+                               head: String? = nil,
+                               state: Openness = .open,
+                               sort: SortType = .created,
+                               direction: SortDirection = .desc,
+                               page: String? = nil,
+                               perPage: String? = nil) async throws -> PaginatedResponse<[PullRequest]> {
+        let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction, page, perPage)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [PullRequest].self)
+    }
+    #endif
+
     /**
      Updates a pull request
      - parameter owner: The user or organization that owns the repositories.

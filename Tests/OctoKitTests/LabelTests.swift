@@ -107,6 +107,42 @@ class LabelTests: XCTestCase {
     }
     #endif
 
+    func testLabelsPaginated() {
+        let linkHeader = "<https://api.github.com/repos/octocat/hello-world/labels?page=2&per_page=100>; rel=\"next\""
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "labels",
+                                            statusCode: 200,
+                                            responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
+        let task = Octokit(session: session).labelsPaginated(owner: "octocat", repository: "hello-world") { response in
+            switch response {
+            case let .success(paginated):
+                XCTAssertFalse(paginated.values.isEmpty)
+                XCTAssertTrue(paginated.pageInfo.hasNextPage)
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testLabelsPaginatedAsync() async throws {
+        let linkHeader = "<https://api.github.com/repos/octocat/hello-world/labels?page=2&per_page=100>; rel=\"next\""
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/hello-world/labels?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "labels",
+                                            statusCode: 200,
+                                            responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
+        let paginated = try await Octokit(session: session).labelsPaginated(owner: "octocat", repository: "hello-world")
+        XCTAssertFalse(paginated.values.isEmpty)
+        XCTAssertTrue(paginated.pageInfo.hasNextPage)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
     // MARK: Parsing Tests
 
     func testParsingLabel() {

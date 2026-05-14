@@ -168,6 +168,31 @@ public extension Octokit {
     }
     #endif
 
+    @discardableResult
+    func myIssuesPaginated(state: Openness = .open,
+                           page: String = "1",
+                           perPage: String = "100",
+                           completion: @escaping (_ response: Result<PaginatedResponse<[Issue]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Issue].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func myIssuesPaginated(state: Openness = .open,
+                           page: String = "1",
+                           perPage: String = "100") async throws -> PaginatedResponse<[Issue]> {
+        let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Issue].self)
+    }
+    #endif
+
     /**
      Fetches an issue in a repository
      - parameter owner: The user or organization that owns the repository.
@@ -253,6 +278,35 @@ public extension Octokit {
                 perPage: String = "100") async throws -> [Issue] {
         let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
         return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Issue].self)
+    }
+    #endif
+
+    @discardableResult
+    func issuesPaginated(owner: String,
+                         repository: String,
+                         state: Openness = .open,
+                         page: String = "1",
+                         perPage: String = "100",
+                         completion: @escaping (_ response: Result<PaginatedResponse<[Issue]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Issue].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func issuesPaginated(owner: String,
+                         repository: String,
+                         state: Openness = .open,
+                         page: String = "1",
+                         perPage: String = "100") async throws -> PaginatedResponse<[Issue]> {
+        let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Issue].self)
     }
     #endif
 

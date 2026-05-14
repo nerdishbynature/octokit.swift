@@ -149,6 +149,40 @@ public extension Octokit {
     }
     #endif
 
+    /// Fetches the list of releases with pagination info.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repositories.
+    ///   - repository: The name of the repository.
+    ///   - perPage: Results per page (max 100). Default: `30`.
+    ///   - completion: Callback for the outcome of the fetch.
+    @discardableResult
+    func listReleasesPaginated(owner: String,
+                               repository: String,
+                               perPage: Int = 30,
+                               completion: @escaping (_ response: Result<PaginatedResponse<[Release]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Release].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    /// Fetches the list of releases with pagination info.
+    /// - Parameters:
+    ///   - owner: The user or organization that owns the repositories.
+    ///   - repository: The name of the repository.
+    ///   - perPage: Results per page (max 100). Default: `30`.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func listReleasesPaginated(owner: String, repository: String, perPage: Int = 30) async throws -> PaginatedResponse<[Release]> {
+        let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Release].self)
+    }
+    #endif
+
     /// Creates a new release.
     /// - Parameters:
     ///   - owner: The user or organization that owns the repositories.
