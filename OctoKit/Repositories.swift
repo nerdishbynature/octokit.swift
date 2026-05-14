@@ -168,6 +168,27 @@ public struct Topics: Codable {
     }
 }
 
+public struct TagCommit: Codable {
+    public let sha: String
+    public let url: String
+}
+
+public struct RepositoryTag: Codable {
+    public let name: String
+    public let commit: TagCommit
+    public let zipballURL: String
+    public let tarballURL: String
+    public let nodeID: String
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case commit
+        case zipballURL = "zipball_url"
+        case tarballURL = "tarball_url"
+        case nodeID = "node_id"
+    }
+}
+
 public struct SubmoduleContent: Codable {
     public let type: String
     public let submoduleGitUrl: String
@@ -389,6 +410,57 @@ public extension Octokit {
         }
     }
 
+    @discardableResult
+    func tags(owner: String,
+              name: String,
+              page: String = "1",
+              perPage: String = "100",
+              completion: @escaping (_ response: Result<[RepositoryTag], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = RepositoryRouter.listTags(configuration, owner, name, page, perPage)
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [RepositoryTag].self) { tags, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let tags = tags {
+                completion(.success(tags))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func tags(owner: String, name: String, page: String = "1", perPage: String = "100") async throws -> [RepositoryTag] {
+        let router = RepositoryRouter.listTags(configuration, owner, name, page, perPage)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [RepositoryTag].self)
+    }
+    #endif
+
+    @discardableResult
+    func tagsPaginated(owner: String,
+                       name: String,
+                       page: String = "1",
+                       perPage: String = "100",
+                       completion: @escaping (_ response: Result<PaginatedResponse<[RepositoryTag]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = RepositoryRouter.listTags(configuration, owner, name, page, perPage)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [RepositoryTag].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func tagsPaginated(owner: String,
+                       name: String,
+                       page: String = "1",
+                       perPage: String = "100") async throws -> PaginatedResponse<[RepositoryTag]> {
+        let router = RepositoryRouter.listTags(configuration, owner, name, page, perPage)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [RepositoryTag].self)
+    }
+    #endif
+
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /**
          Gets the contents of a file or directory in a repository.
@@ -414,6 +486,7 @@ enum RepositoryRouter: Router {
     case readRepository(Configuration, String, String)
     case getRepositoryContent(Configuration, String, String, String?, String?)
     case getRepositoryTopics(Configuration, owner: String, name: String)
+    case listTags(Configuration, String, String, String, String)
 
     var configuration: Configuration {
         switch self {
@@ -422,6 +495,7 @@ enum RepositoryRouter: Router {
         case let .readRepository(config, _, _): return config
         case let .getRepositoryContent(config, _, _, _, _): return config
         case let .getRepositoryTopics(config, _, _): return config
+        case let .listTags(config, _, _, _, _): return config
         }
     }
 
@@ -448,6 +522,8 @@ enum RepositoryRouter: Router {
             return [:]
         case .getRepositoryTopics:
             return [:]
+        case let .listTags(_, _, _, page, perPage):
+            return ["per_page": perPage, "page": page]
         }
     }
 
@@ -465,6 +541,8 @@ enum RepositoryRouter: Router {
             return path
         case let .getRepositoryTopics(_, owner, name):
             return "repos/\(owner)/\(name)/topics"
+        case let .listTags(_, owner, name, _, _):
+            return "repos/\(owner)/\(name)/tags"
         }
     }
 }
