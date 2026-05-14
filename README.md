@@ -391,3 +391,52 @@ Octokit().postRelease(owner: "octocat", repository: "Hello-World", tagName: "v1.
     }
 }
 ```
+
+## Pagination
+
+Several list endpoints have a `*Paginated` variant that returns a `PaginatedResponse<T>` containing both the decoded values and a `PageInfo` parsed from the GitHub `Link` response header.
+
+### Fetch a single page with pagination info
+
+```swift
+let config = TokenConfiguration(bearerToken: "your_token")
+Octokit(config).issuesPaginated(owner: "octocat", repository: "Hello-World") { response in
+    switch response {
+    case .success(let paginated):
+        let issues = paginated.values          // [Issue]
+        let hasMore = paginated.pageInfo.hasNextPage
+        let nextURL = paginated.pageInfo.next  // URL? pointing to the next page
+        // do something with issues
+    case .failure:
+        // handle any errors
+    }
+}
+```
+
+### Fetch all pages (async)
+
+```swift
+func allIssues(owner: String, repo: String) async throws -> [Issue] {
+    let config = TokenConfiguration(bearerToken: "your_token")
+    let octokit = Octokit(config)
+    var all: [Issue] = []
+    var page = "1"
+
+    while true {
+        let paginated = try await octokit.issuesPaginated(owner: owner, repository: repo, page: page)
+        all += paginated.values
+
+        guard paginated.pageInfo.hasNextPage,
+              let nextURL = paginated.pageInfo.next,
+              let components = URLComponents(url: nextURL, resolvingAgainstBaseURL: false),
+              let nextPage = components.queryItems?.first(where: { $0.name == "page" })?.value
+        else { break }
+
+        page = nextPage
+    }
+
+    return all
+}
+```
+
+Paginated variants are available for: `myIssuesPaginated`, `issuesPaginated`, `pullRequestsPaginated`, `repositoriesPaginated`, `myNotificationsPaginated`, `listRepositoryNotificationsPaginated`, `listReleasesPaginated`, `labelsPaginated`.

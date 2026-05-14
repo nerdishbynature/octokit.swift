@@ -151,6 +151,33 @@ public extension Octokit {
     }
     #endif
 
+    @discardableResult
+    func myNotificationsPaginated(all: Bool = false,
+                                  participating: Bool = false,
+                                  page: String = "1",
+                                  perPage: String = "100",
+                                  completion: @escaping (_ response: Result<PaginatedResponse<[NotificationThread]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = NotificationRouter.readNotifications(configuration, all, participating, page, perPage)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func myNotificationsPaginated(all: Bool = false,
+                                  participating: Bool = false,
+                                  page: String = "1",
+                                  perPage: String = "100") async throws -> PaginatedResponse<[NotificationThread]> {
+        let router = NotificationRouter.readNotifications(configuration, all, participating, page, perPage)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self)
+    }
+    #endif
+
     /**
      Marks All Notifications As read
      - parameter lastReadAt: Describes the last point that notifications were checked `last_read_at` by default.
@@ -407,6 +434,41 @@ public extension Octokit {
                                      perPage: String = "100") async throws -> [NotificationThread] {
         let router = NotificationRouter.listRepositoryNotifications(configuration, owner, repository, all, participating, since, before, perPage, page)
         return try await router.load(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self)
+    }
+    #endif
+
+    @discardableResult
+    func listRepositoryNotificationsPaginated(owner: String,
+                                              repository: String,
+                                              all: Bool = false,
+                                              participating: Bool = false,
+                                              since: String? = nil,
+                                              before: String? = nil,
+                                              page: String = "1",
+                                              perPage: String = "100",
+                                              completion: @escaping (_ response: Result<PaginatedResponse<[NotificationThread]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = NotificationRouter.listRepositoryNotifications(configuration, owner, repository, all, participating, since, before, perPage, page)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func listRepositoryNotificationsPaginated(owner: String,
+                                              repository: String,
+                                              all: Bool = false,
+                                              participating: Bool = false,
+                                              since: String? = nil,
+                                              before: String? = nil,
+                                              page: String = "1",
+                                              perPage: String = "100") async throws -> PaginatedResponse<[NotificationThread]> {
+        let router = NotificationRouter.listRepositoryNotifications(configuration, owner, repository, all, participating, since, before, perPage, page)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self)
     }
     #endif
 

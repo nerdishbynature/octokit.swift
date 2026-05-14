@@ -209,4 +209,40 @@ final class ReleasesTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
     #endif
+
+    func testListReleasesPaginated() {
+        let linkHeader = "<https://api.github.com/repos/octocat/Hello-World/releases?page=2&per_page=30>; rel=\"next\""
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=30",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "releases",
+                                            statusCode: 200,
+                                            responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
+        let task = Octokit(session: session).listReleasesPaginated(owner: "octocat", repository: "Hello-World") { response in
+            switch response {
+            case let .success(paginated):
+                XCTAssertFalse(paginated.values.isEmpty)
+                XCTAssertTrue(paginated.pageInfo.hasNextPage)
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testListReleasesPaginatedAsync() async throws {
+        let linkHeader = "<https://api.github.com/repos/octocat/Hello-World/releases?page=2&per_page=30>; rel=\"next\""
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/releases?per_page=30",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "releases",
+                                            statusCode: 200,
+                                            responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
+        let paginated = try await Octokit(session: session).listReleasesPaginated(owner: "octocat", repository: "Hello-World")
+        XCTAssertFalse(paginated.values.isEmpty)
+        XCTAssertTrue(paginated.pageInfo.hasNextPage)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 }

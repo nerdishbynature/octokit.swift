@@ -603,4 +603,40 @@ class PullRequestTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
     #endif
+
+    func testGetPullRequestsPaginated() {
+        let linkHeader = "<https://api.github.com/repos/octocat/Hello-World/pulls?direction=desc&sort=created&state=open&page=2>; rel=\"next\""
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?direction=desc&sort=created&state=open",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_requests",
+                                            statusCode: 200,
+                                            responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
+        let task = Octokit(session: session).pullRequestsPaginated(owner: "octocat", repository: "Hello-World") { response in
+            switch response {
+            case let .success(paginated):
+                XCTAssertFalse(paginated.values.isEmpty)
+                XCTAssertTrue(paginated.pageInfo.hasNextPage)
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetPullRequestsPaginatedAsync() async throws {
+        let linkHeader = "<https://api.github.com/repos/octocat/Hello-World/pulls?direction=desc&sort=created&state=open&page=2>; rel=\"next\""
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/pulls?direction=desc&sort=created&state=open",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "pull_requests",
+                                            statusCode: 200,
+                                            responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
+        let paginated = try await Octokit(session: session).pullRequestsPaginated(owner: "octocat", repository: "Hello-World")
+        XCTAssertFalse(paginated.values.isEmpty)
+        XCTAssertTrue(paginated.pageInfo.hasNextPage)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
 }
