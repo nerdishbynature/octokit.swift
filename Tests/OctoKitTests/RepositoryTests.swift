@@ -463,9 +463,9 @@ class RepositoryTests: XCTestCase {
         let task = Octokit(session: session).tags(owner: "octocat", name: "Hello-World") { response in
             switch response {
             case let .success(tags):
-                XCTAssertEqual(tags.count, 2)
-                XCTAssertEqual(tags[0].name, "v0.1")
-                XCTAssertEqual(tags[0].commit.sha, "c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc")
+                XCTAssertEqual(tags.count, 31)
+                XCTAssertEqual(tags[0].name, "0.14.0")
+                XCTAssertEqual(tags[0].commit.sha, "cd108b387782d8509e64e298cf4800dc47fc40ae")
             case .failure:
                 XCTFail("should not get an error")
             }
@@ -482,8 +482,8 @@ class RepositoryTests: XCTestCase {
                                             jsonFile: "tags",
                                             statusCode: 200)
         let tags = try await Octokit(session: session).tags(owner: "octocat", name: "Hello-World")
-        XCTAssertEqual(tags.count, 2)
-        XCTAssertEqual(tags[0].name, "v0.1")
+        XCTAssertEqual(tags.count, 31)
+        XCTAssertEqual(tags[0].name, "0.14.0")
         XCTAssertTrue(session.wasCalled)
     }
     #endif
@@ -496,7 +496,7 @@ class RepositoryTests: XCTestCase {
         let task = Octokit(session: session).tagsPaginated(owner: "octocat", name: "Hello-World") { response in
             switch response {
             case let .success(paginated):
-                XCTAssertEqual(paginated.values.count, 2)
+                XCTAssertEqual(paginated.values.count, 31)
                 XCTAssertFalse(paginated.pageInfo.hasNextPage)
             case let .failure(error):
                 XCTAssertNil(error)
@@ -508,13 +508,13 @@ class RepositoryTests: XCTestCase {
 
     func testTagsParsing() {
         let tags = Helper.codableFromFile("tags", type: [RepositoryTag].self)
-        XCTAssertEqual(tags.count, 2)
-        XCTAssertEqual(tags[0].name, "v0.1")
-        XCTAssertEqual(tags[0].commit.sha, "c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc")
-        XCTAssertEqual(tags[0].commit.url, "https://api.github.com/repos/octocat/Hello-World/commits/c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc")
-        XCTAssertEqual(tags[0].zipballURL, "https://github.com/octocat/Hello-World/zipball/v0.1")
-        XCTAssertEqual(tags[0].tarballURL, "https://github.com/octocat/Hello-World/tarball/v0.1")
-        XCTAssertEqual(tags[0].nodeID, "MDM6UmVmMTI5NjI3NDpyZWZzL3RhZ3MvdjAuMQ==")
+        XCTAssertEqual(tags.count, 31)
+        XCTAssertEqual(tags[0].name, "0.14.0")
+        XCTAssertEqual(tags[0].commit.sha, "cd108b387782d8509e64e298cf4800dc47fc40ae")
+        XCTAssertEqual(tags[0].commit.url, "https://api.github.com/repos/nerdishbynature/octokit.swift/commits/cd108b387782d8509e64e298cf4800dc47fc40ae")
+        XCTAssertEqual(tags[0].zipballURL, "https://api.github.com/repos/nerdishbynature/octokit.swift/zipball/refs/tags/0.14.0")
+        XCTAssertEqual(tags[0].tarballURL, "https://api.github.com/repos/nerdishbynature/octokit.swift/tarball/refs/tags/0.14.0")
+        XCTAssertEqual(tags[0].nodeID, "MDM6UmVmMjkxNTI4OTI6cmVmcy90YWdzLzAuMTQuMA==")
     }
 
     func testRepositoriesPaginated() {
