@@ -15,7 +15,9 @@ struct Gist: AsyncParsableCommand {
     static let configuration = CommandConfiguration(abstract: "Operate on Gists",
                                                     subcommands: [
                                                         Get.self,
-                                                        GetList.self
+                                                        GetList.self,
+                                                        GetMyList.self,
+                                                        GetMyStarred.self
                                                     ])
 
     init() {}
@@ -37,7 +39,7 @@ extension Gist {
 
         mutating func run() async throws {
             let session = JSONInterceptingURLSession()
-            let octokit = Octokit(session: session)
+            let octokit = makeOctokit(session: session)
             _ = try await octokit.gist(id: id)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
@@ -61,8 +63,47 @@ extension Gist {
 
         mutating func run() async throws {
             let session = JSONInterceptingURLSession()
-            let octokit = Octokit(session: session)
+            let octokit = makeOctokit(session: session)
             _ = try await octokit.gists(owner: owner)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+}
+
+@available(macOS 12.0, *)
+extension Gist {
+    struct GetMyList: AsyncParsableCommand {
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.myGists()
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetMyStarred: AsyncParsableCommand {
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.myStarredGists()
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

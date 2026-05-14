@@ -1,8 +1,5 @@
 //
-//  Star.swift
-//
-//
-//  Created by Piet Brauer-Kallenberg on 11.12.22.
+//  Notification.swift
 //
 
 import ArgumentParser
@@ -11,22 +8,19 @@ import OctoKit
 import Rainbow
 
 @available(macOS 12.0, *)
-struct Star: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(abstract: "Operate on Stars",
+struct Notification: AsyncParsableCommand {
+    static let configuration = CommandConfiguration(abstract: "Operate on Notifications",
                                                     subcommands: [
                                                         GetList.self,
-                                                        GetMyList.self
+                                                        GetThread.self
                                                     ])
 
     init() {}
 }
 
 @available(macOS 12.0, *)
-extension Star {
+extension Notification {
     struct GetList: AsyncParsableCommand {
-        @Argument(help: "The user to fetch stars for")
-        var name: String
-
         @Argument(help: "The path to put the file in")
         var filePath: String?
 
@@ -38,13 +32,16 @@ extension Star {
         mutating func run() async throws {
             let session = JSONInterceptingURLSession()
             let octokit = makeOctokit(session: session)
-            _ = try await octokit.stars(name: name)
+            _ = try await octokit.myNotifications()
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
     }
 
-    struct GetMyList: AsyncParsableCommand {
+    struct GetThread: AsyncParsableCommand {
+        @Argument(help: "The ID of the notification thread")
+        var threadId: String
+
         @Argument(help: "The path to put the file in")
         var filePath: String?
 
@@ -56,7 +53,7 @@ extension Star {
         mutating func run() async throws {
             let session = JSONInterceptingURLSession()
             let octokit = makeOctokit(session: session)
-            _ = try await octokit.myStars()
+            _ = try await octokit.getNotificationThread(threadId: threadId)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

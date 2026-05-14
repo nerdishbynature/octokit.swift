@@ -1,8 +1,5 @@
 //
-//  File 2.swift
-//
-//
-//  Created by Piet Brauer-Kallenberg on 11.12.22.
+//  Search.swift
 //
 
 import ArgumentParser
@@ -11,26 +8,20 @@ import OctoKit
 import Rainbow
 
 @available(macOS 12.0, *)
-struct Status: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(abstract: "Operate on Status",
+struct Search: AsyncParsableCommand {
+    static let configuration = CommandConfiguration(abstract: "Search GitHub",
                                                     subcommands: [
-                                                        GetList.self
+                                                        Code.self
                                                     ])
 
     init() {}
 }
 
 @available(macOS 12.0, *)
-extension Status {
-    struct GetList: AsyncParsableCommand {
-        @Argument(help: "The owner of the repository")
-        var owner: String
-
-        @Argument(help: "The name of the repository")
-        var repository: String
-
-        @Argument(help: "The SHA, branch name or tag name")
-        var reference: String
+extension Search {
+    struct Code: AsyncParsableCommand {
+        @Argument(help: "The search query")
+        var query: String
 
         @Argument(help: "The path to put the file in")
         var filePath: String?
@@ -43,7 +34,7 @@ extension Status {
         mutating func run() async throws {
             let session = JSONInterceptingURLSession()
             let octokit = makeOctokit(session: session)
-            _ = try await octokit.listCommitStatuses(owner: owner, repository: repository, ref: reference)
+            _ = try await octokit.searchCode(query: query)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

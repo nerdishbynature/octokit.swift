@@ -12,9 +12,12 @@ import Rainbow
 
 @available(macOS 12.0, *)
 struct Follower: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(abstract: "Operate on Followes",
+    static let configuration = CommandConfiguration(abstract: "Operate on Followers",
                                                     subcommands: [
-                                                        GetList.self
+                                                        GetList.self,
+                                                        GetMyList.self,
+                                                        GetMyFollowing.self,
+                                                        GetFollowing.self
                                                     ])
 
     init() {}
@@ -36,8 +39,65 @@ extension Follower {
 
         mutating func run() async throws {
             let session = JSONInterceptingURLSession()
-            let octokit = Octokit(session: session)
+            let octokit = makeOctokit(session: session)
             _ = try await octokit.followers(name: name)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetMyList: AsyncParsableCommand {
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.myFollowers()
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetMyFollowing: AsyncParsableCommand {
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.myFollowing()
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetFollowing: AsyncParsableCommand {
+        @Argument(help: "The name of the user")
+        var name: String
+
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.following(name: name)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

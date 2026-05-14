@@ -1,8 +1,5 @@
 //
-//  PullRequest.swift
-//
-//
-//  Created by Piet Brauer-Kallenberg on 11.12.22.
+//  Milestone.swift
 //
 
 import ArgumentParser
@@ -11,8 +8,8 @@ import OctoKit
 import Rainbow
 
 @available(macOS 12.0, *)
-struct PullRequest: AsyncParsableCommand {
-    static let configuration = CommandConfiguration(abstract: "Operate on PullRequest",
+struct Milestone: AsyncParsableCommand {
+    static let configuration = CommandConfiguration(abstract: "Operate on Milestones",
                                                     subcommands: [
                                                         Get.self,
                                                         GetList.self
@@ -22,15 +19,15 @@ struct PullRequest: AsyncParsableCommand {
 }
 
 @available(macOS 12.0, *)
-extension PullRequest {
+extension Milestone {
     struct Get: AsyncParsableCommand {
         @Argument(help: "The owner of the repository")
         var owner: String
 
         @Argument(help: "The name of the repository")
-        var repository: String
+        var repo: String
 
-        @Argument(help: "The number of the pull request")
+        @Argument(help: "The number of the milestone")
         var number: Int
 
         @Argument(help: "The path to put the file in")
@@ -44,7 +41,7 @@ extension PullRequest {
         mutating func run() async throws {
             let session = JSONInterceptingURLSession()
             let octokit = makeOctokit(session: session)
-            _ = try await octokit.pullRequest(owner: owner, repository: repository, number: number)
+            _ = try await octokit.milestone(owner: owner, repo: repo, number: number)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
@@ -55,16 +52,10 @@ extension PullRequest {
         var owner: String
 
         @Argument(help: "The name of the repository")
-        var repository: String
+        var repo: String
 
         @Argument(help: "The path to put the file in")
         var filePath: String?
-
-        @Option(help: "Filter by state: open, closed, all")
-        var state: String = "open"
-
-        @Option(help: "Number of results per page")
-        var perPage: String = "30"
 
         @Flag(help: "Verbose output flag")
         var verbose: Bool = false
@@ -72,10 +63,9 @@ extension PullRequest {
         init() {}
 
         mutating func run() async throws {
-            let openness = Openness(rawValue: state) ?? .open
             let session = JSONInterceptingURLSession()
             let octokit = makeOctokit(session: session)
-            _ = try await octokit.pullRequests(owner: owner, repository: repository, state: openness, perPage: perPage)
+            _ = try await octokit.milestones(owner: owner, repo: repo)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
