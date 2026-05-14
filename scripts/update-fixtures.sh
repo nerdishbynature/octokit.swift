@@ -68,12 +68,7 @@ run_cmd "gists.json"                gist       get-list  octocat
 
 # Git
 run_cmd "git_refs.json"             git        get-refs  nerdishbynature   octokit.swift
-# Tree SHA must be resolved at runtime; fetch main branch tree SHA via the refs endpoint
-GIT_TREE_SHA=$(curl -s "https://api.github.com/repos/nerdishbynature/octokit.swift/git/refs/heads/main" \
-    | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['object']['sha'])" \
-    | xargs -I{} curl -s "https://api.github.com/repos/nerdishbynature/octokit.swift/git/commits/{}" \
-    | python3 -c "import sys,json; print(json.load(sys.stdin)['tree']['sha'])")
-run_cmd "git_tree.json"             git        get-tree  nerdishbynature   octokit.swift   "$GIT_TREE_SHA"
+run_cmd "git_tree.json"             git        get-tree  nerdishbynature   octokit.swift   f6453ef0e01c0dc276b3e76d71685e99ff98d66f
 
 echo ""
 echo "Sorting JSON keys..."
