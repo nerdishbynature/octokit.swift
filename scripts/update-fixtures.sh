@@ -33,6 +33,7 @@ run_cmd "user_mietzmithut.json"     user       get       nerdishbynature
 # Repository
 run_cmd "repo.json"                 repository get       nerdishbynature   octokit.swift
 run_cmd "user_repos.json"           repository get-list  nerdishbynature
+run_cmd "tags.json"                 repository get-tags  nerdishbynature   octokit.swift
 
 # Issue
 run_cmd "issue.json"                issue      get       nerdishbynature   octokit.swift   1

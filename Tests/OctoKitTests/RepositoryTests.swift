@@ -455,6 +455,68 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(submoduleContent.links.selfLink, "https://api.github.com/repos/muter-mutation-testing/muter/contents/homebrew-formulae?ref=master")
     }
 
+    func testListTags() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/tags?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "tags",
+                                            statusCode: 200)
+        let task = Octokit(session: session).tags(owner: "octocat", name: "Hello-World") { response in
+            switch response {
+            case let .success(tags):
+                XCTAssertEqual(tags.count, 2)
+                XCTAssertEqual(tags[0].name, "v0.1")
+                XCTAssertEqual(tags[0].commit.sha, "c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc")
+            case .failure:
+                XCTFail("should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testListTagsAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/tags?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "tags",
+                                            statusCode: 200)
+        let tags = try await Octokit(session: session).tags(owner: "octocat", name: "Hello-World")
+        XCTAssertEqual(tags.count, 2)
+        XCTAssertEqual(tags[0].name, "v0.1")
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
+    func testListTagsPaginated() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/tags?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "tags",
+                                            statusCode: 200)
+        let task = Octokit(session: session).tagsPaginated(owner: "octocat", name: "Hello-World") { response in
+            switch response {
+            case let .success(paginated):
+                XCTAssertEqual(paginated.values.count, 2)
+                XCTAssertFalse(paginated.pageInfo.hasNextPage)
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testTagsParsing() {
+        let tags = Helper.codableFromFile("tags", type: [RepositoryTag].self)
+        XCTAssertEqual(tags.count, 2)
+        XCTAssertEqual(tags[0].name, "v0.1")
+        XCTAssertEqual(tags[0].commit.sha, "c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc")
+        XCTAssertEqual(tags[0].commit.url, "https://api.github.com/repos/octocat/Hello-World/commits/c5b97d5ae6c19d5c5df71a34c7fbeeda2479ccbc")
+        XCTAssertEqual(tags[0].zipballURL, "https://github.com/octocat/Hello-World/zipball/v0.1")
+        XCTAssertEqual(tags[0].tarballURL, "https://github.com/octocat/Hello-World/tarball/v0.1")
+        XCTAssertEqual(tags[0].nodeID, "MDM6UmVmMTI5NjI3NDpyZWZzL3RhZ3MvdjAuMQ==")
+    }
+
     func testRepositoriesPaginated() {
         let linkHeader = "<https://api.github.com/users/octocat/repos?page=2&per_page=100>; rel=\"next\""
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/repos?page=1&per_page=100",
