@@ -10,13 +10,16 @@ public struct OctokitCLI: AsyncParsableCommand {
                                                                Repository.self,
                                                                Follower.self,
                                                                Label.self,
+                                                               Milestone.self,
                                                                PullRequest.self,
                                                                Release.self,
                                                                Review.self,
+                                                               Search.self,
                                                                Star.self,
                                                                Status.self,
                                                                User.self,
                                                                Gist.self,
+                                                               Notification.self,
                                                                SortedJSONKeys.self
                                                            ])
 

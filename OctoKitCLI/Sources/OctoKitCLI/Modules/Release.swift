@@ -14,8 +14,8 @@ import Rainbow
 struct Release: AsyncParsableCommand {
     static let configuration = CommandConfiguration(abstract: "Operate on Releases",
                                                     subcommands: [
-                                                        //            Get.self,
-                                                        GetList.self
+                                                        GetList.self,
+                                                        GetLatest.self
                                                     ])
 
     init() {}
@@ -23,33 +23,6 @@ struct Release: AsyncParsableCommand {
 
 @available(macOS 12.0, *)
 extension Release {
-//    struct Get: AsyncParsableCommand {
-//        @Argument(help: "The owner of the repository")
-//        var owner: String
-//
-//        @Argument(help: "The name of the repository")
-//        var repository: String
-//
-//        @Argument(help: "The tag of the release")
-//        var tag: String
-//
-//        @Argument(help: "The path to put the file in")
-//        var filePath: String?
-//
-//        @Flag(help: "Verbose output flag")
-//        var verbose: Bool = false
-//
-//        init() {}
-//
-//        mutating func run() async throws {
-//            let octokit = Octokit()
-//            let session = FixtureURLSession()
-//            _ = try await octokit.release(session, owner: owner, repository: repository, tag: tag)
-//            session.verbosePrint(verbose: verbose)
-//            try session.printResponseToFileOrConsole(filePath: filePath)
-//        }
-//    }
-
     struct GetList: AsyncParsableCommand {
         @Argument(help: "The owner of the repository")
         var owner: String
@@ -67,8 +40,32 @@ extension Release {
 
         mutating func run() async throws {
             let session = JSONInterceptingURLSession()
-            let octokit = Octokit(session: session)
+            let octokit = makeOctokit(session: session)
             _ = try await octokit.listReleases(owner: owner, repository: repository)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetLatest: AsyncParsableCommand {
+        @Argument(help: "The owner of the repository")
+        var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
+
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.getLatestRelease(owner: owner, repository: repository)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
