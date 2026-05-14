@@ -53,7 +53,7 @@ extension Git {
         @Argument(help: "The name of the repository")
         var repository: String
 
-        @Argument(help: "Optional ref prefix to filter (e.g. heads, tags)")
+        @Option(help: "Optional ref prefix to filter (e.g. heads, tags)")
         var ref: String?
 
         @Argument(help: "The path to put the file in")
