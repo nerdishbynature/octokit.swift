@@ -1,25 +1,24 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "RequestKit",
-        "repositoryURL": "https://github.com/nerdishbynature/RequestKit.git",
-        "state": {
-          "branch": null,
-          "revision": "e4d905fed938807e36d87f28375f88b7c1c26840",
-          "version": "3.3.0"
-        }
-      },
-      {
-        "package": "SwiftFormat",
-        "repositoryURL": "https://github.com/nicklockwood/SwiftFormat",
-        "state": {
-          "branch": null,
-          "revision": "4c8386a35e6a287387da041794b71b85d0858760",
-          "version": "0.52.8"
-        }
+  "originHash" : "103d26dbf9e24efb90aca46eb3c94cf15e5847c3fc220990dd92f095ac2124cb",
+  "pins" : [
+    {
+      "identity" : "requestkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nerdishbynature/RequestKit.git",
+      "state" : {
+        "revision" : "9d45c9aacc1d46c87def44dd120d9c71dab3c788",
+        "version" : "3.4.0"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "swiftformat",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nicklockwood/SwiftFormat",
+      "state" : {
+        "revision" : "4c8386a35e6a287387da041794b71b85d0858760",
+        "version" : "0.52.8"
+      }
+    }
+  ],
+  "version" : 3
 }

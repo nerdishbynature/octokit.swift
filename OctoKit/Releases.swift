@@ -96,7 +96,7 @@ public extension Octokit {
                       perPage: Int = 30,
                       completion: @escaping (_ response: Result<[Release], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self) { releases, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Release].self) { releases, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -117,9 +117,7 @@ public extension Octokit {
                  tag: String,
                  completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.getReleaseByTag(configuration, owner, repository, tag)
-        return router.load(session,
-                           dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter),
-                           expectedResultType: Release.self) { release, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: Release.self) { release, error in
             if let error = error {
                 completion(.failure(error))
             } else if let release = release {
@@ -137,7 +135,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func listReleases(owner: String, repository: String, perPage: Int = 30) async throws -> [Release] {
         let router = ReleaseRouter.listReleases(configuration, owner, repository, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Release].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Release].self)
     }
 
     /// Fetches the latest release.
@@ -147,7 +145,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func getLatestRelease(owner: String, repository: String) async throws -> Release {
         let router = ReleaseRouter.getLatestRelease(configuration, owner, repository)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Release.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: Release.self)
     }
     #endif
 
@@ -175,10 +173,7 @@ public extension Octokit {
                      generateNotes: Bool = false,
                      completion: @escaping (_ response: Result<Release, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft, generateNotes)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-
-        return router.post(session, decoder: decoder, expectedResultType: Release.self) { issue, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Release.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -227,9 +222,7 @@ public extension Octokit {
                      draft: Bool = false,
                      generateNotes: Bool = false) async throws -> Release {
         let router = ReleaseRouter.postRelease(configuration, owner, repository, tagName, targetCommitish, name, body, prerelease, draft, generateNotes)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Release.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Release.self)
     }
     #endif
 }

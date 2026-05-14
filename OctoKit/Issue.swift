@@ -140,7 +140,7 @@ public extension Octokit {
                   perPage: String = "100",
                   completion: @escaping (_ response: Result<[Issue], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self) { issues, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Issue].self) { issues, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -164,7 +164,7 @@ public extension Octokit {
                   page: String = "1",
                   perPage: String = "100") async throws -> [Issue] {
         let router = IssueRouter.readAuthenticatedIssues(configuration, page, perPage, state)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Issue].self)
     }
     #endif
 
@@ -181,7 +181,7 @@ public extension Octokit {
                number: Int,
                completion: @escaping (_ response: Result<Issue, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssue(configuration, owner, repository, number)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Issue.self) { issue, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -203,7 +203,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func issue(owner: String, repository: String, number: Int) async throws -> Issue {
         let router = IssueRouter.readIssue(configuration, owner, repository, number)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Issue.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: Issue.self)
     }
     #endif
 
@@ -224,7 +224,7 @@ public extension Octokit {
                 perPage: String = "100",
                 completion: @escaping (_ response: Result<[Issue], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self) { issues, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Issue].self) { issues, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -252,7 +252,7 @@ public extension Octokit {
                 page: String = "1",
                 perPage: String = "100") async throws -> [Issue] {
         let router = IssueRouter.readIssues(configuration, owner, repository, page, perPage, state)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Issue].self)
     }
     #endif
 
@@ -275,9 +275,7 @@ public extension Octokit {
                    labels: [String] = [],
                    completion: @escaping (_ response: Result<Issue, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee, labels)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Issue.self) { issue, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -306,9 +304,7 @@ public extension Octokit {
                    assignee: String? = nil,
                    labels: [String] = []) async throws -> Issue {
         let router = IssueRouter.postIssue(configuration, owner, repository, title, body, assignee, labels)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Issue.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Issue.self)
     }
     #endif
 
@@ -333,9 +329,7 @@ public extension Octokit {
                     state: Openness? = nil,
                     completion: @escaping (_ response: Result<Issue, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Issue.self) { issue, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Issue.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -366,9 +360,7 @@ public extension Octokit {
                     assignee: String? = nil,
                     state: Openness? = nil) async throws -> Issue {
         let router = IssueRouter.patchIssue(configuration, owner, repository, number, title, body, assignee, state)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Issue.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Issue.self)
     }
     #endif
 
@@ -386,9 +378,7 @@ public extension Octokit {
                       body: String,
                       completion: @escaping (_ response: Result<Issue.Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Issue.Comment.self) { issue, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Issue.Comment.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -410,9 +400,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func commentIssue(owner: String, repository: String, number: Int, body: String) async throws -> Issue.Comment {
         let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Issue.Comment.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Issue.Comment.self)
     }
     #endif
 
@@ -432,7 +420,7 @@ public extension Octokit {
                        perPage: String = "100",
                        completion: @escaping (_ response: Result<[Issue.Comment], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.readIssueComments(configuration, owner, repository, number, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue.Comment].self) { comments, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Issue.Comment].self) { comments, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -459,7 +447,7 @@ public extension Octokit {
                        page: String = "1",
                        perPage: String = "100") async throws -> [Issue.Comment] {
         let router = IssueRouter.readIssueComments(configuration, owner, repository, number, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Issue.Comment].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Issue.Comment].self)
     }
     #endif
 
@@ -477,9 +465,7 @@ public extension Octokit {
                            body: String,
                            completion: @escaping (_ response: Result<Issue.Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Issue.Comment.self) { issue, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Issue.Comment.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -501,9 +487,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func patchIssueComment(owner: String, repository: String, number: Int, body: String) async throws -> Issue.Comment {
         let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Issue.Comment.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Issue.Comment.self)
     }
     #endif
 }

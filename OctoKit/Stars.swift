@@ -13,7 +13,7 @@ public extension Octokit {
     @discardableResult
     func stars(name: String, completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.readStars(name, configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self) { repos, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Repository].self) { repos, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -31,7 +31,7 @@ public extension Octokit {
     @discardableResult
     func myStars(completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = StarsRouter.readAuthenticatedStars(configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self) { repos, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Repository].self) { repos, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -104,7 +104,7 @@ public extension Octokit {
      */
     func stars(name: String) async throws -> [Repository] {
         let router = StarsRouter.readStars(name, configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Repository].self)
     }
 
     /**
@@ -113,7 +113,7 @@ public extension Octokit {
      */
     func myStars() async throws -> [Repository] {
         let router = StarsRouter.readAuthenticatedStars(configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Repository].self)
     }
 
     /**

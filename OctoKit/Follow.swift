@@ -12,7 +12,7 @@ public extension Octokit {
     @discardableResult
     func myFollowers(completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [User].self) { users, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -30,7 +30,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myFollowers() async throws -> [User] {
         let router = FollowRouter.readAuthenticatedFollowers(configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [User].self)
     }
     #endif
 
@@ -42,7 +42,7 @@ public extension Octokit {
     @discardableResult
     func followers(name: String, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowers(name, configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [User].self) { users, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -61,7 +61,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func followers(name: String) async throws -> [User] {
         let router = FollowRouter.readFollowers(name, configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [User].self)
     }
     #endif
 
@@ -72,7 +72,7 @@ public extension Octokit {
     @discardableResult
     func myFollowing(completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [User].self) { users, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -90,7 +90,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func myFollowing() async throws -> [User] {
         let router = FollowRouter.readAuthenticatedFollowing(configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [User].self)
     }
     #endif
 
@@ -102,7 +102,7 @@ public extension Octokit {
     @discardableResult
     func following(name: String, completion: @escaping (_ response: Result<[User], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = FollowRouter.readFollowing(name, configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self) { users, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [User].self) { users, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -121,7 +121,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func following(name: String) async throws -> [User] {
         let router = FollowRouter.readFollowing(name, configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [User].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [User].self)
     }
     #endif
 }

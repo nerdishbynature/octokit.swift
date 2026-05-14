@@ -237,7 +237,7 @@ public extension Octokit {
         let router = (owner != nil)
             ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.readAuthenticatedRepositories(configuration, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self) { repos, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Repository].self) { repos, error in
             if let error = error {
                 completion(.failure(error))
             }
@@ -260,7 +260,7 @@ public extension Octokit {
         let router = (owner != nil)
             ? RepositoryRouter.readRepositories(configuration, owner!, page, perPage)
             : RepositoryRouter.readAuthenticatedRepositories(configuration, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Repository].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Repository].self)
     }
     #endif
 
@@ -275,7 +275,7 @@ public extension Octokit {
                     name: String,
                     completion: @escaping (_ response: Result<Repository, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Repository.self) { repo, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: Repository.self) { repo, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -295,7 +295,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func repository(owner: String, name: String) async throws -> Repository {
         let router = RepositoryRouter.readRepository(configuration, owner, name)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Repository.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: Repository.self)
     }
     #endif
 
@@ -308,7 +308,7 @@ public extension Octokit {
     @discardableResult
     func repositoryTopics(owner: String, name: String, completion: @escaping (_ response: Result<Topics, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.getRepositoryTopics(configuration, owner: owner, name: name)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Topics.self) { contentResponse, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: Topics.self) { contentResponse, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -329,7 +329,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func repositoryTopics(owner: String, name: String) async throws -> Topics {
         let router = RepositoryRouter.getRepositoryTopics(configuration, owner: owner, name: name)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Topics.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: Topics.self)
     }
     #endif
 
@@ -349,7 +349,7 @@ public extension Octokit {
                            ref: String?,
                            completion: @escaping (_ response: Result<ContentResponse, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = RepositoryRouter.getRepositoryContent(configuration, owner, name, path, ref)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ContentResponse.self) { contentResponse, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: ContentResponse.self) { contentResponse, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -372,7 +372,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func repositoryContent(owner: String, name: String, path: String?, ref: String? = nil) async throws -> ContentResponse {
         let router = RepositoryRouter.getRepositoryContent(configuration, owner, name, path, ref)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ContentResponse.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: ContentResponse.self)
     }
     #endif
 }

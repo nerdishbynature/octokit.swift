@@ -122,7 +122,7 @@ public extension Octokit {
                          perPage: String = "100",
                          completion: @escaping (_ response: Result<[NotificationThread], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.readNotifications(configuration, all, participating, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self) { notifications, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self) { notifications, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -147,7 +147,7 @@ public extension Octokit {
                          page: String = "1",
                          perPage: String = "100") async throws -> [NotificationThread] {
         let router = NotificationRouter.readNotifications(configuration, all, participating, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self)
     }
     #endif
 
@@ -236,7 +236,7 @@ public extension Octokit {
     func getNotificationThread(threadId: String,
                                completion: @escaping (_ response: Result<NotificationThread, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.getNotificationThread(configuration, threadId)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: NotificationThread.self) { notification, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: NotificationThread.self) { notification, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -255,7 +255,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func getNotificationThread(threadId: String) async throws -> NotificationThread {
         let router = NotificationRouter.getNotificationThread(configuration, threadId)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: NotificationThread.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: NotificationThread.self)
     }
     #endif
 
@@ -268,7 +268,7 @@ public extension Octokit {
     func getThreadSubscription(threadId: String,
                                completion: @escaping (_ response: Result<ThreadSubscription, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.getThreadSubscription(configuration, threadId)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self) { thread, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: ThreadSubscription.self) { thread, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -287,7 +287,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func getThreadSubscription(threadId: String) async throws -> ThreadSubscription {
         let router = NotificationRouter.getThreadSubscription(configuration, threadId)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: ThreadSubscription.self)
     }
     #endif
 
@@ -302,7 +302,7 @@ public extension Octokit {
                                ignored: Bool = false,
                                completion: @escaping (_ response: Result<ThreadSubscription, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.setThreadSubscription(configuration, threadId, ignored)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self) { thread, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: ThreadSubscription.self) { thread, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -323,7 +323,7 @@ public extension Octokit {
     func setThreadSubscription(threadId: String,
                                ignored: Bool = false) async throws -> ThreadSubscription {
         let router = NotificationRouter.setThreadSubscription(configuration, threadId, ignored)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: ThreadSubscription.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: ThreadSubscription.self)
     }
     #endif
 
@@ -373,7 +373,7 @@ public extension Octokit {
                                      perPage: String = "100",
                                      completion: @escaping (_ response: Result<[NotificationThread], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = NotificationRouter.listRepositoryNotifications(configuration, owner, repository, all, participating, since, before, perPage, page)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self) { notifications, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self) { notifications, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -406,7 +406,7 @@ public extension Octokit {
                                      page: String = "1",
                                      perPage: String = "100") async throws -> [NotificationThread] {
         let router = NotificationRouter.listRepositoryNotifications(configuration, owner, repository, all, participating, since, before, perPage, page)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [NotificationThread].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [NotificationThread].self)
     }
     #endif
 
