@@ -2,57 +2,73 @@
   {
     "color" : "fc2929",
     "default" : true,
-    "id" : 107942188,
+    "description" : null,
+    "id" : 165520776,
     "name" : "bug",
-    "node_id" : "MDU6TGFiZWwxMDc5NDIxODg=",
-    "url" : "https:\/\/api.github.com\/repos\/octocat\/hello-worId\/labels\/bug"
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3NzY=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/bug"
+  },
+  {
+    "color" : "0366d6",
+    "default" : false,
+    "description" : "Pull requests that update a dependency file",
+    "id" : 1722300618,
+    "name" : "dependencies",
+    "node_id" : "MDU6TGFiZWwxNzIyMzAwNjE4",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/dependencies"
   },
   {
     "color" : "cccccc",
     "default" : true,
-    "id" : 107942189,
+    "description" : null,
+    "id" : 165520777,
     "name" : "duplicate",
-    "node_id" : "MDU6TGFiZWwxMDc5NDIxODk=",
-    "url" : "https:\/\/api.github.com\/repos\/octocat\/hello-worId\/labels\/duplicate"
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3Nzc=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/duplicate"
   },
   {
     "color" : "84b6eb",
     "default" : true,
-    "id" : 107942190,
+    "description" : null,
+    "id" : 165520778,
     "name" : "enhancement",
-    "node_id" : "MDU6TGFiZWwxMDc5NDIxOTA=",
-    "url" : "https:\/\/api.github.com\/repos\/octocat\/hello-worId\/labels\/enhancement"
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3Nzg=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/enhancement"
   },
   {
     "color" : "159818",
     "default" : true,
-    "id" : 107942191,
+    "description" : null,
+    "id" : 165520779,
     "name" : "help wanted",
-    "node_id" : "MDU6TGFiZWwxMDc5NDIxOTE=",
-    "url" : "https:\/\/api.github.com\/repos\/octocat\/hello-worId\/labels\/help%20wanted"
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3Nzk=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/help%20wanted"
   },
   {
     "color" : "e6e6e6",
     "default" : true,
-    "id" : 107942192,
+    "description" : null,
+    "id" : 165520780,
     "name" : "invalid",
-    "node_id" : "MDU6TGFiZWwxMDc5NDIxOTI=",
-    "url" : "https:\/\/api.github.com\/repos\/octocat\/hello-worId\/labels\/invalid"
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3ODA=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/invalid"
   },
   {
     "color" : "cc317c",
     "default" : true,
-    "id" : 107942193,
+    "description" : null,
+    "id" : 165520781,
     "name" : "question",
-    "node_id" : "MDU6TGFiZWwxMDc5NDIxOTM=",
-    "url" : "https:\/\/api.github.com\/repos\/octocat\/hello-worId\/labels\/question"
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3ODE=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/question"
   },
   {
     "color" : "ffffff",
     "default" : true,
-    "id" : 107942194,
+    "description" : null,
+    "id" : 165520782,
     "name" : "wontfix",
-    "node_id" : "MDU6TGFiZWwxMDc5NDIxOTQ=",
-    "url" : "https:\/\/api.github.com\/repos\/octocat\/hello-worId\/labels\/wontfix"
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3ODI=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/wontfix"
   }
 ]

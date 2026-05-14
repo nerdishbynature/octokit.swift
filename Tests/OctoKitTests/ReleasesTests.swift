@@ -20,30 +20,30 @@ final class ReleasesTests: XCTestCase {
         let task = Octokit(session: session).listReleases(owner: "octocat", repository: "Hello-World") {
             switch $0 {
             case let .success(releases):
-                XCTAssertEqual(releases.count, 2)
+                XCTAssertEqual(releases.count, 30)
                 if let release = releases.first {
-                    XCTAssertEqual(release.tagName, "v1.0.0")
-                    XCTAssertEqual(release.commitish, "master")
-                    XCTAssertEqual(release.name, "v1.0.0 Release")
-                    XCTAssertEqual(release.body, "The changelog of this release")
+                    XCTAssertEqual(release.tagName, "0.14.0")
+                    XCTAssertEqual(release.commitish, "main")
+                    XCTAssertEqual(release.name, "0.14.0")
+                    XCTAssertNotNil(release.body)
                     XCTAssertFalse(release.prerelease)
-                    XCTAssertTrue(release.draft)
-                    XCTAssertNil(release.tarballURL)
-                    XCTAssertNil(release.zipballURL)
-                    XCTAssertNil(release.publishedAt)
+                    XCTAssertFalse(release.draft)
+                    XCTAssertNotNil(release.tarballURL)
+                    XCTAssertNotNil(release.zipballURL)
+                    XCTAssertNotNil(release.publishedAt)
                 } else {
                     XCTFail("Failed to unwrap `releases.first`")
                 }
                 if let release = releases.last {
-                    XCTAssertEqual(release.tagName, "v1.0.0")
+                    XCTAssertEqual(release.tagName, "0.2.0")
                     XCTAssertEqual(release.commitish, "master")
-                    XCTAssertEqual(release.name, "v1.0.0 Release")
-                    XCTAssertEqual(release.body, "The changelog of this release")
+                    XCTAssertEqual(release.name, "Restart all the things")
+                    XCTAssertNotNil(release.body)
                     XCTAssertFalse(release.prerelease)
                     XCTAssertFalse(release.draft)
-                    XCTAssertEqual(release.tarballURL?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/tarball/v1.0.0")
-                    XCTAssertEqual(release.zipballURL?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/zipball/v1.0.0")
-                    XCTAssertEqual(release.publishedAt, Date(timeIntervalSince1970: 1_361_993_732.0))
+                    XCTAssertEqual(release.tarballURL?.absoluteString, "https://api.github.com/repos/nerdishbynature/octokit.swift/tarball/0.2.0")
+                    XCTAssertEqual(release.zipballURL?.absoluteString, "https://api.github.com/repos/nerdishbynature/octokit.swift/zipball/0.2.0")
+                    XCTAssertEqual(release.publishedAt, Date(timeIntervalSince1970: 1_440_486_064.0))
                 } else {
                     XCTFail("Failed to unwrap `releases.last`")
                 }
@@ -81,30 +81,30 @@ final class ReleasesTests: XCTestCase {
                                             jsonFile: "Fixtures/releases",
                                             statusCode: 200)
         let releases = try await Octokit(session: session).listReleases(owner: "octocat", repository: "Hello-World")
-        XCTAssertEqual(releases.count, 2)
+        XCTAssertEqual(releases.count, 30)
         if let release = releases.first {
-            XCTAssertEqual(release.tagName, "v1.0.0")
-            XCTAssertEqual(release.commitish, "master")
-            XCTAssertEqual(release.name, "v1.0.0 Release")
-            XCTAssertEqual(release.body, "The changelog of this release")
+            XCTAssertEqual(release.tagName, "0.14.0")
+            XCTAssertEqual(release.commitish, "main")
+            XCTAssertEqual(release.name, "0.14.0")
+            XCTAssertNotNil(release.body)
             XCTAssertFalse(release.prerelease)
-            XCTAssertTrue(release.draft)
-            XCTAssertNil(release.tarballURL)
-            XCTAssertNil(release.zipballURL)
-            XCTAssertNil(release.publishedAt)
+            XCTAssertFalse(release.draft)
+            XCTAssertNotNil(release.tarballURL)
+            XCTAssertNotNil(release.zipballURL)
+            XCTAssertNotNil(release.publishedAt)
         } else {
             XCTFail("Failed to unwrap `releases.first`")
         }
         if let release = releases.last {
-            XCTAssertEqual(release.tagName, "v1.0.0")
+            XCTAssertEqual(release.tagName, "0.2.0")
             XCTAssertEqual(release.commitish, "master")
-            XCTAssertEqual(release.name, "v1.0.0 Release")
-            XCTAssertEqual(release.body, "The changelog of this release")
+            XCTAssertEqual(release.name, "Restart all the things")
+            XCTAssertNotNil(release.body)
             XCTAssertFalse(release.prerelease)
             XCTAssertFalse(release.draft)
-            XCTAssertEqual(release.tarballURL?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/tarball/v1.0.0")
-            XCTAssertEqual(release.zipballURL?.absoluteString, "https://api.github.com/repos/octocat/Hello-World/zipball/v1.0.0")
-            XCTAssertEqual(release.publishedAt, Date(timeIntervalSince1970: 1_361_993_732.0))
+            XCTAssertEqual(release.tarballURL?.absoluteString, "https://api.github.com/repos/nerdishbynature/octokit.swift/tarball/0.2.0")
+            XCTAssertEqual(release.zipballURL?.absoluteString, "https://api.github.com/repos/nerdishbynature/octokit.swift/zipball/0.2.0")
+            XCTAssertEqual(release.publishedAt, Date(timeIntervalSince1970: 1_440_486_064.0))
         } else {
             XCTFail("Failed to unwrap `releases.last`")
         }

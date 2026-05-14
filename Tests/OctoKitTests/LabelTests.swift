@@ -47,7 +47,7 @@ class LabelTests: XCTestCase {
         let task = Octokit(session: session).labels(owner: "octocat", repository: "hello-world") { response in
             switch response {
             case let .success(labels):
-                XCTAssertEqual(labels.count, 7)
+                XCTAssertEqual(labels.count, 8)
             case .failure:
                 XCTFail("should not get an error")
             }
@@ -64,7 +64,7 @@ class LabelTests: XCTestCase {
                                             jsonFile: "labels",
                                             statusCode: 200)
         let labels = try await Octokit(session: session).labels(owner: "octocat", repository: "hello-world")
-        XCTAssertEqual(labels.count, 7)
+        XCTAssertEqual(labels.count, 8)
         XCTAssertTrue(session.wasCalled)
     }
     #endif
