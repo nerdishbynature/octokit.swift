@@ -314,6 +314,56 @@ public extension Octokit {
     }
     #endif
 
+    @discardableResult
+    func organizationRepositories(org: String,
+                                  page: String = "1",
+                                  perPage: String = "100",
+                                  completion: @escaping (_ response: Result<[Repository], Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = RepositoryRouter.readOrganizationRepositories(configuration, org, page, perPage)
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Repository].self) { repos, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+
+            if let repos = repos {
+                completion(.success(repos))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func organizationRepositories(org: String, page: String = "1", perPage: String = "100") async throws -> [Repository] {
+        let router = RepositoryRouter.readOrganizationRepositories(configuration, org, page, perPage)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Repository].self)
+    }
+    #endif
+
+    @discardableResult
+    func organizationRepositoriesPaginated(org: String,
+                                           page: String = "1",
+                                           perPage: String = "100",
+                                           completion: @escaping (_ response: Result<PaginatedResponse<[Repository]>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
+        let router = RepositoryRouter.readOrganizationRepositories(configuration, org, page, perPage)
+        return router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Repository].self) { response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let response = response {
+                completion(.success(response))
+            }
+        }
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func organizationRepositoriesPaginated(org: String,
+                                           page: String = "1",
+                                           perPage: String = "100") async throws -> PaginatedResponse<[Repository]> {
+        let router = RepositoryRouter.readOrganizationRepositories(configuration, org, page, perPage)
+        return try await router.loadPaginated(session, decoder: configuration.decoder, expectedResultType: [Repository].self)
+    }
+    #endif
+
     /**
          Fetches a repository for a user or organization
          - parameter owner: The user or organization that owns the repositories.
@@ -482,6 +532,7 @@ public extension Octokit {
 
 enum RepositoryRouter: Router {
     case readRepositories(Configuration, String, String, String)
+    case readOrganizationRepositories(Configuration, String, String, String)
     case readAuthenticatedRepositories(Configuration, String, String)
     case readRepository(Configuration, String, String)
     case getRepositoryContent(Configuration, String, String, String?, String?)
@@ -491,6 +542,7 @@ enum RepositoryRouter: Router {
     var configuration: Configuration {
         switch self {
         case let .readRepositories(config, _, _, _): return config
+        case let .readOrganizationRepositories(config, _, _, _): return config
         case let .readAuthenticatedRepositories(config, _, _): return config
         case let .readRepository(config, _, _): return config
         case let .getRepositoryContent(config, _, _, _, _): return config
@@ -510,6 +562,8 @@ enum RepositoryRouter: Router {
     var params: [String: Any] {
         switch self {
         case let .readRepositories(_, _, page, perPage):
+            return ["per_page": perPage, "page": page]
+        case let .readOrganizationRepositories(_, _, page, perPage):
             return ["per_page": perPage, "page": page]
         case let .readAuthenticatedRepositories(_, page, perPage):
             return ["per_page": perPage, "page": page]
@@ -531,6 +585,8 @@ enum RepositoryRouter: Router {
         switch self {
         case let .readRepositories(_, owner, _, _):
             return "users/\(owner)/repos"
+        case let .readOrganizationRepositories(_, org, _, _):
+            return "orgs/\(org)/repos"
         case .readAuthenticatedRepositories:
             return "user/repos"
         case let .readRepository(_, owner, name):
