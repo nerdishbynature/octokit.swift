@@ -130,7 +130,8 @@ class RepositoryTests: XCTestCase {
     func testGetRepositoryEnterprise() {
         let config = TokenConfiguration(url: "https://enterprise.nerdishbynature.com/api/v3/")
         let (owner, name) = ("nerdishbynature", "octokit.swift")
-        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/repos/nerdishbynature/octokit.swift", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/repos/nerdishbynature/octokit.swift", expectedHTTPMethod: "GET", jsonFile: "repo",
+                                            statusCode: 200)
         let task = Octokit(config, session: session).repository(owner: owner, name: name) { response in
             switch response {
             case let .success(repo):

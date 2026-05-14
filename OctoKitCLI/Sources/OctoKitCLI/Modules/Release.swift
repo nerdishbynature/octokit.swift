@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Release.swift
 //
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
@@ -12,11 +12,11 @@ import Rainbow
 
 @available(macOS 12.0, *)
 struct Release: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Releases",
-                                                           subcommands: [
-                                                               //            Get.self,
-                                                               GetList.self
-                                                           ])
+    static let configuration = CommandConfiguration(abstract: "Operate on Releases",
+                                                    subcommands: [
+                                                        //            Get.self,
+                                                        GetList.self
+                                                    ])
 
     init() {}
 }

@@ -20,13 +20,11 @@ final class JSONInterceptingURLSession: RequestKitURLSession {
         usedHTTPMethod = request.httpMethod
         usedHTTPHeaders = request.allHTTPHeaderFields
 
-        let task = session.dataTask(with: request) { data, _, _ in
+        return session.dataTask(with: request) { data, _, _ in
             if let data = data {
                 self.response = String(data: data, encoding: .utf8)
             }
         }
-
-        return task
     }
 
     func uploadTask(with request: URLRequest, fromData data: Data?, completionHandler _: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTaskProtocol {
@@ -34,13 +32,11 @@ final class JSONInterceptingURLSession: RequestKitURLSession {
         usedHTTPMethod = request.httpMethod
         usedHTTPHeaders = request.allHTTPHeaderFields
 
-        let task = session.uploadTask(with: request, fromData: data) { data, _, _ in
+        return session.uploadTask(with: request, fromData: data) { data, _, _ in
             if let data = data {
                 self.response = String(data: data, encoding: .utf8)
             }
         }
-
-        return task
     }
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)

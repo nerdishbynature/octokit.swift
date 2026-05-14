@@ -146,7 +146,7 @@ class IssueTests: XCTestCase {
         let comments = try await Octokit(session: session).issueComments(owner: "octocat", repository: "Hello-World", number: 1)
         XCTAssertEqual(comments.count, 1)
         XCTAssertEqual(comments[0].body, "Testing fetching comments for an issue")
-        XCTAssertEqual(comments[0].reactions!.totalCount, 5)
+        XCTAssertEqual(comments[0].reactions?.totalCount, 5)
         XCTAssertTrue(session.wasCalled)
     }
     #endif

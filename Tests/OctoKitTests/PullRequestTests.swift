@@ -83,7 +83,8 @@ class PullRequestTests: XCTestCase {
             case let .success(pullRequests):
                 XCTAssertEqual(pullRequests.count, 10)
                 XCTAssertEqual(pullRequests.first?.title, "Add paginated variants for list endpoints using RequestKit 3.4.0 load Paginated")
-                XCTAssertEqual(pullRequests.first?.body, "Adds *Paginated methods (callback + async) for: myIssues, issues, pullRequests, repositories, myNotifications, listRepositoryNotifications, listReleases, labels. Each returns PaginatedResponse<T> with PageInfo parsed from RFC 5988 Link header.\r\n\r\nUpdates OctoKitURLTestSession to accept responseHeaders so tests can inject Link headers and assert pageInfo.hasNextPage. Adds README pagination section with single-page and fetch-all-pages examples.")
+                XCTAssertEqual(pullRequests.first?.body,
+                               "Adds *Paginated methods (callback + async) for: myIssues, issues, pullRequests, repositories, myNotifications, listRepositoryNotifications, listReleases, labels. Each returns PaginatedResponse<T> with PageInfo parsed from RFC 5988 Link header.\r\n\r\nUpdates OctoKitURLTestSession to accept responseHeaders so tests can inject Link headers and assert pageInfo.hasNextPage. Adds README pagination section with single-page and fetch-all-pages examples.")
                 XCTAssertEqual(pullRequests.first?.labels?.count, 0)
                 XCTAssertEqual(pullRequests.first?.user?.login, "pietbrauer")
 
@@ -120,7 +121,8 @@ class PullRequestTests: XCTestCase {
         let pullRequests = try await Octokit(session: session).pullRequests(owner: "octocat", repository: "Hello-World", base: "develop", state: Openness.open)
         XCTAssertEqual(pullRequests.count, 10)
         XCTAssertEqual(pullRequests.first?.title, "Add paginated variants for list endpoints using RequestKit 3.4.0 load Paginated")
-        XCTAssertEqual(pullRequests.first?.body, "Adds *Paginated methods (callback + async) for: myIssues, issues, pullRequests, repositories, myNotifications, listRepositoryNotifications, listReleases, labels. Each returns PaginatedResponse<T> with PageInfo parsed from RFC 5988 Link header.\r\n\r\nUpdates OctoKitURLTestSession to accept responseHeaders so tests can inject Link headers and assert pageInfo.hasNextPage. Adds README pagination section with single-page and fetch-all-pages examples.")
+        XCTAssertEqual(pullRequests.first?.body,
+                       "Adds *Paginated methods (callback + async) for: myIssues, issues, pullRequests, repositories, myNotifications, listRepositoryNotifications, listReleases, labels. Each returns PaginatedResponse<T> with PageInfo parsed from RFC 5988 Link header.\r\n\r\nUpdates OctoKitURLTestSession to accept responseHeaders so tests can inject Link headers and assert pageInfo.hasNextPage. Adds README pagination section with single-page and fetch-all-pages examples.")
         XCTAssertEqual(pullRequests.first?.labels?.count, 0)
         XCTAssertEqual(pullRequests.first?.user?.login, "pietbrauer")
 
@@ -153,7 +155,8 @@ class PullRequestTests: XCTestCase {
             case let .success(pullRequests):
                 XCTAssertEqual(pullRequests.count, 10)
                 XCTAssertEqual(pullRequests.first?.title, "Add paginated variants for list endpoints using RequestKit 3.4.0 load Paginated")
-                XCTAssertEqual(pullRequests.first?.body, "Adds *Paginated methods (callback + async) for: myIssues, issues, pullRequests, repositories, myNotifications, listRepositoryNotifications, listReleases, labels. Each returns PaginatedResponse<T> with PageInfo parsed from RFC 5988 Link header.\r\n\r\nUpdates OctoKitURLTestSession to accept responseHeaders so tests can inject Link headers and assert pageInfo.hasNextPage. Adds README pagination section with single-page and fetch-all-pages examples.")
+                XCTAssertEqual(pullRequests.first?.body,
+                               "Adds *Paginated methods (callback + async) for: myIssues, issues, pullRequests, repositories, myNotifications, listRepositoryNotifications, listReleases, labels. Each returns PaginatedResponse<T> with PageInfo parsed from RFC 5988 Link header.\r\n\r\nUpdates OctoKitURLTestSession to accept responseHeaders so tests can inject Link headers and assert pageInfo.hasNextPage. Adds README pagination section with single-page and fetch-all-pages examples.")
                 XCTAssertEqual(pullRequests.first?.labels?.count, 0)
                 XCTAssertEqual(pullRequests.first?.user?.login, "pietbrauer")
 
@@ -190,7 +193,8 @@ class PullRequestTests: XCTestCase {
         let pullRequests = try await Octokit(session: session).pullRequests(owner: "octocat", repository: "Hello-World", head: "octocat:new-topic", state: Openness.open)
         XCTAssertEqual(pullRequests.count, 10)
         XCTAssertEqual(pullRequests.first?.title, "Add paginated variants for list endpoints using RequestKit 3.4.0 load Paginated")
-        XCTAssertEqual(pullRequests.first?.body, "Adds *Paginated methods (callback + async) for: myIssues, issues, pullRequests, repositories, myNotifications, listRepositoryNotifications, listReleases, labels. Each returns PaginatedResponse<T> with PageInfo parsed from RFC 5988 Link header.\r\n\r\nUpdates OctoKitURLTestSession to accept responseHeaders so tests can inject Link headers and assert pageInfo.hasNextPage. Adds README pagination section with single-page and fetch-all-pages examples.")
+        XCTAssertEqual(pullRequests.first?.body,
+                       "Adds *Paginated methods (callback + async) for: myIssues, issues, pullRequests, repositories, myNotifications, listRepositoryNotifications, listReleases, labels. Each returns PaginatedResponse<T> with PageInfo parsed from RFC 5988 Link header.\r\n\r\nUpdates OctoKitURLTestSession to accept responseHeaders so tests can inject Link headers and assert pageInfo.hasNextPage. Adds README pagination section with single-page and fetch-all-pages examples.")
         XCTAssertEqual(pullRequests.first?.labels?.count, 0)
         XCTAssertEqual(pullRequests.first?.user?.login, "pietbrauer")
 

@@ -149,6 +149,6 @@ class LabelTests: XCTestCase {
         let label = Helper.codableFromFile("label", type: Label.self)
         XCTAssertEqual(label.name, "bug")
         XCTAssertEqual(label.color, "fc2929")
-        XCTAssertEqual(label.url, URL(string: "https://api.github.com/repos/octocat/hello-worId/labels/bug")!)
+        XCTAssertEqual(label.url, URL(string: "https://api.github.com/repos/octocat/hello-worId/labels/bug"))
     }
 }

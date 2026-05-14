@@ -140,7 +140,7 @@ class UserTests: XCTestCase {
 
     // MARK: Model Tests
 
-    func testUserParsingFullUser() {
+    func testUserParsingFullUser() throws {
         let subject = Helper.codableFromFile("user_me", type: User.self)
         XCTAssertEqual(subject.login, "pietbrauer")
         XCTAssertEqual(subject.id, 759_730)
@@ -165,8 +165,8 @@ class UserTests: XCTestCase {
         XCTAssertEqual(subject.reposURL, "https://api.github.com/users/pietbrauer/repos")
         XCTAssertEqual(subject.eventsURL, "https://api.github.com/users/pietbrauer/events{/privacy}")
         XCTAssertEqual(subject.receivedEventsURL, "https://api.github.com/users/pietbrauer/received_events")
-        XCTAssertFalse(subject.siteAdmin!)
-        XCTAssertTrue(subject.hireable!)
+        XCTAssertFalse(try XCTUnwrap(subject.siteAdmin))
+        XCTAssertTrue(try XCTUnwrap(subject.hireable))
         XCTAssertEqual(subject.bio, "Tweeting about iOS and Drumming")
         XCTAssertEqual(subject.twitterUsername, "pietbrauer")
         XCTAssertEqual(subject.numberOfFollowers, 41)

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  User.swift
 //
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
@@ -12,10 +12,10 @@ import Rainbow
 
 @available(macOS 12.0, *)
 struct User: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Users",
-                                                           subcommands: [
-                                                               Get.self
-                                                           ])
+    static let configuration = CommandConfiguration(abstract: "Operate on Users",
+                                                    subcommands: [
+                                                        Get.self
+                                                    ])
 
     init() {}
 }

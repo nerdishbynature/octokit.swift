@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  String+PrettyPrintJSON.swift
 //
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
