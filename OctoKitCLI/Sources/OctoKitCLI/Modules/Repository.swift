@@ -16,6 +16,7 @@ struct Repository: AsyncParsableCommand {
                                                     subcommands: [
                                                         Get.self,
                                                         GetList.self,
+                                                        GetOrgList.self,
                                                         GetTopics.self,
                                                         GetContent.self,
                                                         GetTags.self
@@ -66,6 +67,27 @@ extension Repository {
             let session = JSONInterceptingURLSession()
             let octokit = makeOctokit(session: session)
             _ = try await octokit.repositories(owner: owner)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetOrgList: AsyncParsableCommand {
+        @Argument(help: "The organization name")
+        var org: String
+
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.organizationRepositories(org: org)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

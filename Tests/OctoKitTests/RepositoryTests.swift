@@ -517,6 +517,90 @@ class RepositoryTests: XCTestCase {
         XCTAssertEqual(tags[0].nodeID, "MDM6UmVmMjkxNTI4OTI6cmVmcy90YWdzLzAuMTQuMA==")
     }
 
+    func testGetOrganizationRepositories() {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/orgs/apple/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "org_repos",
+                                            statusCode: 200)
+        let task = Octokit(session: session).organizationRepositories(org: "apple") { response in
+            switch response {
+            case let .success(repositories):
+                XCTAssertEqual(repositories.count, 42)
+            case .failure:
+                XCTFail("should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetOrganizationRepositoriesAsync() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/orgs/apple/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "org_repos",
+                                            statusCode: 200)
+        let repositories = try await Octokit(session: session).organizationRepositories(org: "apple")
+        XCTAssertEqual(repositories.count, 42)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
+    func testGetOrganizationRepositoriesEnterprise() {
+        let config = TokenConfiguration(url: "https://enterprise.nerdishbynature.com/api/v3/")
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/orgs/apple/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "org_repos",
+                                            statusCode: 200)
+        let task = Octokit(config, session: session).organizationRepositories(org: "apple") { response in
+            switch response {
+            case let .success(repositories):
+                XCTAssertEqual(repositories.count, 42)
+            case .failure:
+                XCTFail("should not get an error")
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    func testOrganizationRepositoriesPaginated() {
+        let linkHeader = "<https://api.github.com/orgs/apple/repos?page=2&per_page=100>; rel=\"next\""
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/orgs/apple/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "org_repos",
+                                            statusCode: 200,
+                                            responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
+        let task = Octokit(session: session).organizationRepositoriesPaginated(org: "apple") { response in
+            switch response {
+            case let .success(paginated):
+                XCTAssertFalse(paginated.values.isEmpty)
+                XCTAssertTrue(paginated.pageInfo.hasNextPage)
+            case let .failure(error):
+                XCTAssertNil(error)
+            }
+        }
+        XCTAssertNotNil(task)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    #if compiler(>=5.5.2) && canImport(_Concurrency)
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testOrganizationRepositoriesPaginatedAsync() async throws {
+        let linkHeader = "<https://api.github.com/orgs/apple/repos?page=2&per_page=100>; rel=\"next\""
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/orgs/apple/repos?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "org_repos",
+                                            statusCode: 200,
+                                            responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
+        let paginated = try await Octokit(session: session).organizationRepositoriesPaginated(org: "apple")
+        XCTAssertFalse(paginated.values.isEmpty)
+        XCTAssertTrue(paginated.pageInfo.hasNextPage)
+        XCTAssertTrue(session.wasCalled)
+    }
+    #endif
+
     func testRepositoriesPaginated() {
         let linkHeader = "<https://api.github.com/users/octocat/repos?page=2&per_page=100>; rel=\"next\""
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/repos?page=1&per_page=100",
