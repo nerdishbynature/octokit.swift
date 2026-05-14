@@ -5,8 +5,8 @@ class UserTests: XCTestCase {
     // MARK: Actual Request tests
 
     func testGetUserByName() {
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/mietzmithut", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
-        let username = "mietzmithut"
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/nerdishbynature", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
+        let username = "nerdishbynature"
         let task = Octokit(session: session).user(name: username) { response in
             switch response {
             case let .success(user):
@@ -39,7 +39,7 @@ class UserTests: XCTestCase {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetUserByNameAsync() async throws {
-        let expectedUserId = 4672699
+        let expectedUserId = 6136721
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/\(expectedUserId)", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
         let user = try await Octokit(session: session).user(id: expectedUserId)
         XCTAssertEqual(user.id, expectedUserId)
@@ -49,7 +49,7 @@ class UserTests: XCTestCase {
     #endif
 
     func testGetUserById() {
-        let expectedUserId = 4672699
+        let expectedUserId = 6136721
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/\(expectedUserId)", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
         let task = Octokit(session: session).user(id: expectedUserId) { response in
             switch response {
@@ -83,7 +83,7 @@ class UserTests: XCTestCase {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetUserByIdAsync() async throws {
-        let expectedUserId = 4672699
+        let expectedUserId = 6136721
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/\(expectedUserId)", expectedHTTPMethod: "GET", jsonFile: "user_mietzmithut", statusCode: 200)
         let user = try await Octokit(session: session).user(id: expectedUserId)
         XCTAssertEqual(user.id, expectedUserId)
@@ -140,7 +140,7 @@ class UserTests: XCTestCase {
 
     // MARK: Model Tests
 
-    func testUserParsingFullUser() {
+    func testUserParsingFullUser() throws {
         let subject = Helper.codableFromFile("user_me", type: User.self)
         XCTAssertEqual(subject.login, "pietbrauer")
         XCTAssertEqual(subject.id, 759_730)
@@ -165,8 +165,8 @@ class UserTests: XCTestCase {
         XCTAssertEqual(subject.reposURL, "https://api.github.com/users/pietbrauer/repos")
         XCTAssertEqual(subject.eventsURL, "https://api.github.com/users/pietbrauer/events{/privacy}")
         XCTAssertEqual(subject.receivedEventsURL, "https://api.github.com/users/pietbrauer/received_events")
-        XCTAssertFalse(subject.siteAdmin!)
-        XCTAssertTrue(subject.hireable!)
+        XCTAssertFalse(try XCTUnwrap(subject.siteAdmin))
+        XCTAssertTrue(try XCTUnwrap(subject.hireable))
         XCTAssertEqual(subject.bio, "Tweeting about iOS and Drumming")
         XCTAssertEqual(subject.twitterUsername, "pietbrauer")
         XCTAssertEqual(subject.numberOfFollowers, 41)
@@ -183,17 +183,17 @@ class UserTests: XCTestCase {
 
     func testUserParsingMinimalUser() {
         let subject = Helper.codableFromFile("user_mietzmithut", type: User.self)
-        XCTAssertEqual(subject.login, "mietzmithut")
-        XCTAssertEqual(subject.id, 4_672_699)
-        XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/4672699?v=3")
+        XCTAssertEqual(subject.login, "nerdishbynature")
+        XCTAssertEqual(subject.id, 6_136_721)
+        XCTAssertEqual(subject.avatarURL, "https://avatars.githubusercontent.com/u/6136721?v=4")
         XCTAssertEqual(subject.gravatarID, "")
-        XCTAssertEqual(subject.type, "User")
-        XCTAssertEqual(subject.name, "Julia Kallenberg")
-        XCTAssertEqual(subject.company, "")
-        XCTAssertEqual(subject.blog, "")
-        XCTAssertEqual(subject.location, "Hamburg")
-        XCTAssertEqual(subject.email, "")
-        XCTAssertEqual(subject.numberOfPublicRepos, 7)
+        XCTAssertEqual(subject.type, "Organization")
+        XCTAssertEqual(subject.name, "nerdish by nature")
+        XCTAssertNil(subject.company)
+        XCTAssertEqual(subject.blog, "nerdishbynature.com")
+        XCTAssertNil(subject.location)
+        XCTAssertNil(subject.email)
+        XCTAssertEqual(subject.numberOfPublicRepos, 42)
         XCTAssertEqual(subject.numberOfPublicGists, 0)
         XCTAssertNil(subject.numberOfPrivateRepos)
     }

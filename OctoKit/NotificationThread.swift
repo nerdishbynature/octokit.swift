@@ -566,7 +566,6 @@ enum NotificationRouter: Router {
              let .markNotificationThreadAsRead(_, threadId),
              let .markNotificationThreadAsDone(_, threadId):
             return "notifications/threads/\(threadId)"
-
         case let .getThreadSubscription(_, threadId),
              let .setThreadSubscription(_, threadId, _),
              let .deleteThreadSubscription(_, threadId):

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Follower.swift
 //
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
@@ -12,10 +12,10 @@ import Rainbow
 
 @available(macOS 12.0, *)
 struct Follower: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Followes",
-                                                           subcommands: [
-                                                               GetList.self
-                                                           ])
+    static let configuration = CommandConfiguration(abstract: "Operate on Followes",
+                                                    subcommands: [
+                                                        GetList.self
+                                                    ])
 
     init() {}
 }

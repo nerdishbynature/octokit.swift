@@ -12,10 +12,10 @@ import Rainbow
 
 @available(macOS 12.0, *)
 struct Status: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on Status",
-                                                           subcommands: [
-                                                               GetList.self
-                                                           ])
+    static let configuration = CommandConfiguration(abstract: "Operate on Status",
+                                                    subcommands: [
+                                                        GetList.self
+                                                    ])
 
     init() {}
 }

@@ -16,7 +16,7 @@ class IssueTests: XCTestCase {
         let task = Octokit(config, session: session).myIssues { response in
             switch response {
             case let .success(issues):
-                XCTAssertEqual(issues.count, 1)
+                XCTAssertEqual(issues.count, 6)
             case let .failure(error):
                 XCTAssertNil(error)
             }
@@ -37,7 +37,7 @@ class IssueTests: XCTestCase {
                                             jsonFile: "issues",
                                             statusCode: 200)
         let issues = try await Octokit(config, session: session).myIssues()
-        XCTAssertEqual(issues.count, 1)
+        XCTAssertEqual(issues.count, 6)
         XCTAssertTrue(session.wasCalled)
     }
     #endif
@@ -47,7 +47,7 @@ class IssueTests: XCTestCase {
         let task = Octokit(session: session).issue(owner: "octocat", repository: "Hello-World", number: 1347) { response in
             switch response {
             case let .success(issue):
-                XCTAssertEqual(issue.number, 1347)
+                XCTAssertEqual(issue.number, 1)
             case .failure:
                 XCTFail("should not get an error")
             }
@@ -61,7 +61,7 @@ class IssueTests: XCTestCase {
     func testGetIssueAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/octocat/Hello-World/issues/1347", expectedHTTPMethod: "GET", jsonFile: "issue", statusCode: 200)
         let issue = try await Octokit(session: session).issue(owner: "octocat", repository: "Hello-World", number: 1347)
-        XCTAssertEqual(issue.number, 1347)
+        XCTAssertEqual(issue.number, 1)
         XCTAssertTrue(session.wasCalled)
     }
     #endif
@@ -146,7 +146,7 @@ class IssueTests: XCTestCase {
         let comments = try await Octokit(session: session).issueComments(owner: "octocat", repository: "Hello-World", number: 1)
         XCTAssertEqual(comments.count, 1)
         XCTAssertEqual(comments[0].body, "Testing fetching comments for an issue")
-        XCTAssertEqual(comments[0].reactions!.totalCount, 5)
+        XCTAssertEqual(comments[0].reactions?.totalCount, 5)
         XCTAssertTrue(session.wasCalled)
     }
     #endif
@@ -177,7 +177,7 @@ class IssueTests: XCTestCase {
         let task = Octokit(session: session).myIssuesPaginated { response in
             switch response {
             case let .success(paginated):
-                XCTAssertEqual(paginated.values.count, 1)
+                XCTAssertEqual(paginated.values.count, 6)
                 XCTAssertTrue(paginated.pageInfo.hasNextPage)
             case let .failure(error):
                 XCTAssertNil(error)
@@ -197,7 +197,7 @@ class IssueTests: XCTestCase {
                                             statusCode: 200,
                                             responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
         let paginated = try await Octokit(session: session).myIssuesPaginated()
-        XCTAssertEqual(paginated.values.count, 1)
+        XCTAssertEqual(paginated.values.count, 6)
         XCTAssertTrue(paginated.pageInfo.hasNextPage)
         XCTAssertTrue(session.wasCalled)
     }
@@ -213,7 +213,7 @@ class IssueTests: XCTestCase {
         let task = Octokit(session: session).issuesPaginated(owner: "octocat", repository: "Hello-World") { response in
             switch response {
             case let .success(paginated):
-                XCTAssertEqual(paginated.values.count, 1)
+                XCTAssertEqual(paginated.values.count, 6)
                 XCTAssertTrue(paginated.pageInfo.hasNextPage)
             case let .failure(error):
                 XCTAssertNil(error)
@@ -233,7 +233,7 @@ class IssueTests: XCTestCase {
                                             statusCode: 200,
                                             responseHeaders: ["Content-Type": "application/json", "Link": linkHeader])
         let paginated = try await Octokit(session: session).issuesPaginated(owner: "octocat", repository: "Hello-World")
-        XCTAssertEqual(paginated.values.count, 1)
+        XCTAssertEqual(paginated.values.count, 6)
         XCTAssertTrue(paginated.pageInfo.hasNextPage)
         XCTAssertTrue(session.wasCalled)
     }
@@ -243,14 +243,14 @@ class IssueTests: XCTestCase {
 
     func testParsingIssue() {
         let subject = Helper.codableFromFile("issue", type: Issue.self)
-        XCTAssertEqual(subject.user?.login, "octocat")
-        XCTAssertEqual(subject.user?.id, 1)
+        XCTAssertEqual(subject.user?.login, "pietbrauer")
+        XCTAssertEqual(subject.user?.id, 759730)
 
-        XCTAssertEqual(subject.id, 1)
-        XCTAssertEqual(subject.number, 1347)
-        XCTAssertEqual(subject.title, "Found a bug")
-        XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/octocat/Hello-World/issues/1347"))
-        XCTAssertEqual(subject.state, Openness.open)
+        XCTAssertEqual(subject.id, 54248528)
+        XCTAssertEqual(subject.number, 1)
+        XCTAssertEqual(subject.title, "Authenticatio")
+        XCTAssertEqual(subject.htmlURL, URL(string: "https://github.com/nerdishbynature/octokit.swift/pull/1"))
+        XCTAssertEqual(subject.state, Openness.closed)
         XCTAssertEqual(subject.locked, false)
     }
 

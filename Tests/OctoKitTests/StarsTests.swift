@@ -12,7 +12,7 @@ class StarsTests: XCTestCase {
         let task = Octokit(config, session: session).myStars { response in
             switch response {
             case let .success(repositories):
-                XCTAssertEqual(repositories.count, 1)
+                XCTAssertEqual(repositories.count, 42)
             case .failure:
                 XCTFail("should not get an error")
             }
@@ -44,7 +44,7 @@ class StarsTests: XCTestCase {
         let task = Octokit(session: session).stars(name: "octocat") { response in
             switch response {
             case let .success(repositories):
-                XCTAssertEqual(repositories.count, 1)
+                XCTAssertEqual(repositories.count, 42)
             case .failure:
                 XCTFail("should not get an error")
             }
@@ -124,14 +124,14 @@ extension StarsTests {
 
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/user/starred", expectedHTTPMethod: "GET", expectedHTTPHeaders: headers, jsonFile: "user_repos", statusCode: 200)
         let repositories = try await Octokit(config, session: session).myStars()
-        XCTAssertEqual(repositories.count, 1)
+        XCTAssertEqual(repositories.count, 42)
         XCTAssertTrue(session.wasCalled)
     }
 
     func testGetUsersStarredRepositoriesAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/starred", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
         let repositories = try await Octokit(session: session).stars(name: "octocat")
-        XCTAssertEqual(repositories.count, 1)
+        XCTAssertEqual(repositories.count, 42)
         XCTAssertTrue(session.wasCalled)
     }
 

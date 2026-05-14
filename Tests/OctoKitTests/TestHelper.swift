@@ -15,7 +15,7 @@ class Helper {
         return dict!
     }
 
-    class func codableFromFile<T>(_ name: String, type _: T.Type) -> T where T: Codable {
+    class func codableFromFile<T: Codable>(_ name: String, type _: T.Type) -> T {
         let path = jsonFilePath(for: name)
         let data = try! Data(contentsOf: URL(fileURLWithPath: path))
         let decoder = JSONDecoder()

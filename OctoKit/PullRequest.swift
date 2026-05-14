@@ -628,8 +628,8 @@ public extension Octokit {
                                         number: Int,
                                         body: String,
                                         completion: @escaping (_ response: Result<Issue.Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        /// To add a regular comment to a pull request timeline, the Issue Comment API should be used.
-        /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
+        // To add a regular comment to a pull request timeline, the Issue Comment API should be used.
+        // See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
         commentIssue(owner: owner,
                      repository: repository,
                      number: number, body: body,
@@ -648,8 +648,8 @@ public extension Octokit {
                                         repository: String,
                                         number: Int,
                                         body: String) async throws -> Issue.Comment {
-        /// To add a regular comment to a pull request timeline, the Issue Comment API should be used.
-        /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
+        // To add a regular comment to a pull request timeline, the Issue Comment API should be used.
+        // See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
         try await commentIssue(owner: owner, repository: repository, number: number, body: body)
     }
     #endif
@@ -799,7 +799,6 @@ enum PullRequestRouter: JSONPostRouter {
                 parameters["maintainer_can_modify"] = mantainerCanModify
             }
             return parameters
-
         case let .createPullRequest(_, _, _, title, head, headRepo, base, body, mantainerCanModify, draft):
             var parameters: [String: Any] = [
                 "title": title,
@@ -853,13 +852,13 @@ enum PullRequestRouter: JSONPostRouter {
         case let .listPullRequestsFiles(_, owner, repository, number, _, _):
             return "repos/\(owner)/\(repository)/pulls/\(number)/files"
         case let .readPullRequestReviewComments(_, owner, repository, number, _, _):
-            /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#list-review-comments-on-a-pull-request
+            // See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#list-review-comments-on-a-pull-request
             return "repos/\(owner)/\(repository)/pulls/\(number)/comments"
         case let .createPullRequestReviewComment(_, owner, repository, number, _, _, _, _):
-            /// See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
+            // See: https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28#create-a-review-comment-for-a-pull-request
             return "repos/\(owner)/\(repository)/pulls/\(number)/comments"
         case let .readPullRequestRequestedReviewers(_, owner, repository, number, _, _):
-            /// See: https://docs.github.com/en/rest/pulls/review-requests?apiVersion=2022-11-28#get-all-requested-reviewers-for-a-pull-request
+            // See: https://docs.github.com/en/rest/pulls/review-requests?apiVersion=2022-11-28#get-all-requested-reviewers-for-a-pull-request
             return "repos/\(owner)/\(repository)/pulls/\(number)/requested_reviewers"
         }
     }

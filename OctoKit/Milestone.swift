@@ -103,7 +103,6 @@ public extension Octokit {
     }
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
-    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     /**
      Create a milestone
      - parameter owner: The user or organization that owns the repositories.
@@ -113,6 +112,7 @@ public extension Octokit {
      - parameter description: The description of the new milestone.
      - parameter date: The milestone due date
      */
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     @discardableResult
     func createMilestone(owner: String,
                          repo: String,

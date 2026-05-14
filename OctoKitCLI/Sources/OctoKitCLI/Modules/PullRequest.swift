@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  PullRequest.swift
 //
 //
 //  Created by Piet Brauer-Kallenberg on 11.12.22.
@@ -12,11 +12,11 @@ import Rainbow
 
 @available(macOS 12.0, *)
 struct PullRequest: AsyncParsableCommand {
-    public static let configuration = CommandConfiguration(abstract: "Operate on PullRequest",
-                                                           subcommands: [
-                                                               Get.self,
-                                                               GetList.self
-                                                           ])
+    static let configuration = CommandConfiguration(abstract: "Operate on PullRequest",
+                                                    subcommands: [
+                                                        Get.self,
+                                                        GetList.self
+                                                    ])
 
     init() {}
 }
@@ -60,15 +60,22 @@ extension PullRequest {
         @Argument(help: "The path to put the file in")
         var filePath: String?
 
+        @Option(help: "Filter by state: open, closed, all")
+        var state: String = "open"
+
+        @Option(help: "Number of results per page")
+        var perPage: String = "30"
+
         @Flag(help: "Verbose output flag")
         var verbose: Bool = false
 
         init() {}
 
         mutating func run() async throws {
+            let openness = Openness(rawValue: state) ?? .open
             let session = JSONInterceptingURLSession()
             let octokit = Octokit(session: session)
-            _ = try await octokit.pullRequests(owner: owner, repository: repository)
+            _ = try await octokit.pullRequests(owner: owner, repository: repository, state: openness, perPage: perPage)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

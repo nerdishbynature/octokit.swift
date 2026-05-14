@@ -18,7 +18,7 @@ class GistTests: XCTestCase {
         let task = Octokit(config, session: session).myGists { response in
             switch response {
             case let .success(gists):
-                XCTAssertEqual(gists.count, 1)
+                XCTAssertEqual(gists.count, 8)
             case let .failure(error):
                 XCTAssertNil(error)
             }
@@ -39,7 +39,7 @@ class GistTests: XCTestCase {
                                             jsonFile: "gists",
                                             statusCode: 200)
         let gists = try await Octokit(config, session: session).myGists()
-        XCTAssertEqual(gists.count, 1)
+        XCTAssertEqual(gists.count, 8)
         XCTAssertTrue(session.wasCalled)
     }
     #endif
@@ -96,7 +96,7 @@ class GistTests: XCTestCase {
         let task = Octokit(config, session: session).gists(owner: "vincode-io") { response in
             switch response {
             case let .success(gists):
-                XCTAssertEqual(gists.count, 1)
+                XCTAssertEqual(gists.count, 8)
             case let .failure(error):
                 XCTAssertNil(error)
             }
@@ -117,7 +117,7 @@ class GistTests: XCTestCase {
                                             jsonFile: "gists",
                                             statusCode: 200)
         let gists = try await Octokit(config, session: session).gists(owner: "vincode-io")
-        XCTAssertEqual(gists.count, 1)
+        XCTAssertEqual(gists.count, 8)
         XCTAssertTrue(session.wasCalled)
     }
     #endif

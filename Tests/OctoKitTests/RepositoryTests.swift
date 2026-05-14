@@ -9,7 +9,7 @@ class RepositoryTests: XCTestCase {
         let task = Octokit(session: session).repositories(owner: "octocat") { response in
             switch response {
             case let .success(repositories):
-                XCTAssertEqual(repositories.count, 1)
+                XCTAssertEqual(repositories.count, 42)
             case .failure:
                 XCTAssert(false, "should not get an error")
             }
@@ -27,7 +27,7 @@ class RepositoryTests: XCTestCase {
         let task = Octokit(config, session: session).repositories(owner: "octocat") { response in
             switch response {
             case let .success(repositories):
-                XCTAssertEqual(repositories.count, 1)
+                XCTAssertEqual(repositories.count, 42)
             case .failure:
                 XCTAssert(false, "should not get an error")
             }
@@ -48,7 +48,7 @@ class RepositoryTests: XCTestCase {
         let task = Octokit(config, session: session).repositories { response in
             switch response {
             case let .success(repositories):
-                XCTAssertEqual(repositories.count, 1)
+                XCTAssertEqual(repositories.count, 42)
             case .failure:
                 XCTAssert(false, "should not get an error")
             }
@@ -69,7 +69,7 @@ class RepositoryTests: XCTestCase {
         let task = Octokit(config, session: session).repositories { response in
             switch response {
             case let .success(repositories):
-                XCTAssertEqual(repositories.count, 1)
+                XCTAssertEqual(repositories.count, 42)
             case .failure:
                 XCTFail("should not get an error")
             }
@@ -106,14 +106,14 @@ class RepositoryTests: XCTestCase {
     func testGetRepositoriesAsync() async throws {
         let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/users/octocat/repos?page=1&per_page=100", expectedHTTPMethod: "GET", jsonFile: "user_repos", statusCode: 200)
         let repositories = try await Octokit(session: session).repositories(owner: "octocat")
-        XCTAssertEqual(repositories.count, 1)
+        XCTAssertEqual(repositories.count, 42)
         XCTAssertTrue(session.wasCalled)
     }
     #endif
 
     func testGetRepository() {
-        let (owner, name) = ("mietzmithut", "Test")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
+        let (owner, name) = ("nerdishbynature", "octokit.swift")
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/nerdishbynature/octokit.swift", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
         let task = Octokit(session: session).repository(owner: owner, name: name) { response in
             switch response {
             case let .success(repo):
@@ -129,8 +129,9 @@ class RepositoryTests: XCTestCase {
 
     func testGetRepositoryEnterprise() {
         let config = TokenConfiguration(url: "https://enterprise.nerdishbynature.com/api/v3/")
-        let (owner, name) = ("mietzmithut", "Test")
-        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
+        let (owner, name) = ("nerdishbynature", "octokit.swift")
+        let session = OctoKitURLTestSession(expectedURL: "https://enterprise.nerdishbynature.com/api/v3/repos/nerdishbynature/octokit.swift", expectedHTTPMethod: "GET", jsonFile: "repo",
+                                            statusCode: 200)
         let task = Octokit(config, session: session).repository(owner: owner, name: name) { response in
             switch response {
             case let .success(repo):
@@ -163,8 +164,8 @@ class RepositoryTests: XCTestCase {
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func testGetRepositoryAsync() async throws {
-        let (owner, name) = ("mietzmithut", "Test")
-        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/mietzmithut/Test", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
+        let (owner, name) = ("nerdishbynature", "octokit.swift")
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/nerdishbynature/octokit.swift", expectedHTTPMethod: "GET", jsonFile: "repo", statusCode: 200)
         let repo = try await Octokit(session: session).repository(owner: owner, name: name)
         XCTAssertEqual(repo.name, name)
         XCTAssertEqual(repo.owner.login, owner)
@@ -346,26 +347,26 @@ class RepositoryTests: XCTestCase {
 
     func testUserParsingFullRepository() throws {
         let subject = Helper.codableFromFile("repo", type: Repository.self)
-        XCTAssertEqual(subject.owner.login, "mietzmithut")
-        XCTAssertEqual(subject.owner.id, 4_672_699)
+        XCTAssertEqual(subject.owner.login, "nerdishbynature")
+        XCTAssertEqual(subject.owner.id, 6_136_721)
 
-        XCTAssertEqual(subject.id, 10_824_973)
-        XCTAssertEqual(subject.name, "Test")
-        XCTAssertEqual(subject.fullName, "mietzmithut/Test")
+        XCTAssertEqual(subject.id, 29_152_892)
+        XCTAssertEqual(subject.name, "octokit.swift")
+        XCTAssertEqual(subject.fullName, "nerdishbynature/octokit.swift")
         XCTAssertEqual(subject.isPrivate, false)
-        XCTAssertEqual(subject.repositoryDescription, "")
+        XCTAssertEqual(subject.repositoryDescription, "A Swift API Client for GitHub and GitHub Enterprise")
         XCTAssertFalse(subject.isFork)
-        XCTAssertEqual(subject.gitURL, "git://github.com/mietzmithut/Test.git")
-        XCTAssertEqual(subject.sshURL, "git@github.com:mietzmithut/Test.git")
-        XCTAssertEqual(subject.cloneURL, "https://github.com/mietzmithut/Test.git")
-        XCTAssertEqual(subject.size, 132)
-        XCTAssertTrue(try XCTUnwrap(subject.hasWiki))
-        XCTAssertEqual(subject.language, "Ruby")
+        XCTAssertEqual(subject.gitURL, "git://github.com/nerdishbynature/octokit.swift.git")
+        XCTAssertEqual(subject.sshURL, "git@github.com:nerdishbynature/octokit.swift.git")
+        XCTAssertEqual(subject.cloneURL, "https://github.com/nerdishbynature/octokit.swift.git")
+        XCTAssertEqual(subject.size, 725)
+        XCTAssertFalse(try XCTUnwrap(subject.hasWiki))
+        XCTAssertEqual(subject.language, "Swift")
 
         let org = try XCTUnwrap(subject.organization)
-        XCTAssertEqual(org.login, "github")
-        XCTAssertEqual(org.id, 1)
-        XCTAssertEqual(org.url, "https://api.github.com/orgs/github")
+        XCTAssertEqual(org.login, "nerdishbynature")
+        XCTAssertEqual(org.id, 6_136_721)
+        XCTAssertEqual(org.url, "https://api.github.com/users/nerdishbynature")
         XCTAssertEqual(org.type, "Organization")
     }
 
