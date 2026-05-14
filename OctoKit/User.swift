@@ -177,7 +177,7 @@ public extension Octokit {
     @discardableResult
     func user(id: Int, completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readUserById(id, configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self) { user, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: User.self) { user, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -196,7 +196,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func user(id: Int) async throws -> User {
         let router = UserRouter.readUserById(id, configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: User.self)
     }
     #endif
 
@@ -208,7 +208,7 @@ public extension Octokit {
     @discardableResult
     func user(name: String, completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readUserByName(name, configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self) { user, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: User.self) { user, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -227,7 +227,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func user(name: String) async throws -> User {
         let router = UserRouter.readUserByName(name, configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: User.self)
     }
     #endif
 
@@ -238,7 +238,7 @@ public extension Octokit {
     @discardableResult
     func me(completion: @escaping (_ response: Result<User, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = UserRouter.readAuthenticatedUser(configuration)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self) { user, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: User.self) { user, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -256,7 +256,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func me() async throws -> User {
         let router = UserRouter.readAuthenticatedUser(configuration)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: User.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: User.self)
     }
     #endif
 }

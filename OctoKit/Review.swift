@@ -86,7 +86,7 @@ public extension Octokit {
                      pullRequestNumber: Int,
                      completion: @escaping (_ response: Result<[Review], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self) { pullRequests, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Review].self) { pullRequests, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -107,7 +107,7 @@ public extension Octokit {
                     comments: [Review.Comment] = [],
                     completion: @escaping (_ response: Result<Review, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReviewsRouter.postReview(configuration, owner, repository, pullRequestNumber, commitId, event, body, comments)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self) { pullRequest, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: Review.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
             } else if let pullRequest = pullRequest {
@@ -123,7 +123,7 @@ public extension Octokit {
                              reviewId: Int,
                              completion: @escaping (_ response: Result<Review, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReviewsRouter.deletePendingReview(configuration, owner, repository, pullRequestNumber, reviewId)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self) { pullRequest, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: Review.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
             } else if let pullRequest = pullRequest {
@@ -141,7 +141,7 @@ public extension Octokit {
                       body: String? = nil,
                       completion: @escaping (_ response: Result<Review, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = ReviewsRouter.submitReview(configuration, owner, repository, pullRequestNumber, reviewId, event, body)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self) { pullRequest, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: Review.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
             } else if let pullRequest = pullRequest {
@@ -156,7 +156,7 @@ public extension Octokit {
                  repository: String,
                  pullRequestNumber: Int) async throws -> [Review] {
         let router = ReviewsRouter.listReviews(configuration, owner, repository, pullRequestNumber)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Review].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Review].self)
     }
 
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
@@ -169,7 +169,7 @@ public extension Octokit {
                     body: String? = nil,
                     comments: [Review.Comment] = []) async throws -> Review {
         let router = ReviewsRouter.postReview(configuration, owner, repository, pullRequestNumber, commitId, event, body, comments)
-        return try await router.post(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Review.self)
     }
 
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
@@ -179,7 +179,7 @@ public extension Octokit {
                              pullRequestNumber: Int,
                              reviewId: Int) async throws -> Review {
         let router = ReviewsRouter.deletePendingReview(configuration, owner, repository, pullRequestNumber, reviewId)
-        return try await router.post(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Review.self)
     }
 
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
@@ -191,7 +191,7 @@ public extension Octokit {
                       event: Review.Event,
                       body: String? = nil) async throws -> Review {
         let router = ReviewsRouter.submitReview(configuration, owner, repository, pullRequestNumber, reviewId, event, body)
-        return try await router.post(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Review.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Review.self)
     }
     #endif
 }

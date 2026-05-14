@@ -260,9 +260,7 @@ public extension Octokit {
                            draft: Bool? = nil,
                            completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.createPullRequest(configuration, owner, repo, title, head, headRepo, base, body, maintainerCanModify, draft)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: PullRequest.self) { pullRequest, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
             } else if let pullRequest {
@@ -296,9 +294,7 @@ public extension Octokit {
                            maintainerCanModify: Bool? = nil,
                            draft: Bool? = nil) async throws -> PullRequest {
         let router = PullRequestRouter.createPullRequest(configuration, owner, repo, title, head, headRepo, base, body, maintainerCanModify, draft)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: PullRequest.self)
     }
     #endif
 
@@ -315,7 +311,7 @@ public extension Octokit {
                      number: Int,
                      completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self) { pullRequest, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
             } else if let pullRequest {
@@ -336,7 +332,7 @@ public extension Octokit {
                      repository: String,
                      number: Int) async throws -> PullRequest {
         let router = PullRequestRouter.readPullRequest(configuration, owner, repository, "\(number)")
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: PullRequest.self)
     }
     #endif
 
@@ -364,7 +360,7 @@ public extension Octokit {
                       perPage: String? = nil,
                       completion: @escaping (_ response: Result<[PullRequest], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self) { pullRequests, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [PullRequest].self) { pullRequests, error in
             if let error = error {
                 completion(.failure(error))
             } else if let pullRequests {
@@ -394,7 +390,7 @@ public extension Octokit {
                       perPage: String? = nil,
                       direction: SortDirection = .desc) async throws -> [PullRequest] {
         let router = PullRequestRouter.readPullRequests(configuration, owner, repository, base, head, state, sort, direction, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [PullRequest].self)
     }
     #endif
 
@@ -422,9 +418,7 @@ public extension Octokit {
                           completion: @escaping (_ response: Result<PullRequest, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         guard state != .all else { fatalError("Openess.all is not supported as a setting") }
         let router = PullRequestRouter.patchPullRequest(configuration, owner, repository, "\(number)", title, body, state, base, nil)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: PullRequest.self) { pullRequest, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: PullRequest.self) { pullRequest, error in
             if let error = error {
                 completion(.failure(error))
             } else if let pullRequest {
@@ -456,9 +450,7 @@ public extension Octokit {
                           mantainerCanModify _: Bool?) async throws -> PullRequest {
         guard state != .all else { fatalError("Openess.all is not supported as a setting") }
         let router = PullRequestRouter.patchPullRequest(configuration, owner, repository, "\(number)", title, body, state, base, nil)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: PullRequest.self)
     }
     #endif
 
@@ -469,7 +461,7 @@ public extension Octokit {
                                page: Int? = nil,
                                completion: @escaping (_ response: Result<[PullRequest.File], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.listPullRequestsFiles(configuration, owner, repository, number, perPage, page)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.File].self) { files, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [PullRequest.File].self) { files, error in
             if let error = error {
                 completion(.failure(error))
             } else if let files {
@@ -486,7 +478,7 @@ public extension Octokit {
                                perPage: Int? = nil,
                                page: Int? = nil) async throws -> [PullRequest.File] {
         let router = PullRequestRouter.listPullRequestsFiles(configuration, owner, repository, number, perPage, page)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.File].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [PullRequest.File].self)
     }
     #endif
 
@@ -506,7 +498,7 @@ public extension Octokit {
                                        perPage: Int = 100,
                                        completion: @escaping (_ response: Result<[PullRequest.Comment], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.readPullRequestReviewComments(configuration, owner, repository, number, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.Comment].self) { comments, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [PullRequest.Comment].self) { comments, error in
             if let error = error {
                 completion(.failure(error))
             } else if let comments {
@@ -530,7 +522,7 @@ public extension Octokit {
                                        page: Int = 1,
                                        perPage: Int = 100) async throws -> [PullRequest.Comment] {
         let router = PullRequestRouter.readPullRequestReviewComments(configuration, owner, repository, number, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [PullRequest.Comment].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [PullRequest.Comment].self)
     }
     #endif
 
@@ -554,9 +546,7 @@ public extension Octokit {
                                         body: String,
                                         completion: @escaping (_ response: Result<PullRequest.Comment, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.createPullRequestReviewComment(configuration, owner, repository, number, commitId, path, line, body)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: PullRequest.Comment.self) { issue, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: PullRequest.Comment.self) { issue, error in
             if let error = error {
                 completion(.failure(error))
             } else if let issue {
@@ -584,9 +574,7 @@ public extension Octokit {
                                         line: Int,
                                         body: String) async throws -> PullRequest.Comment {
         let router = PullRequestRouter.createPullRequestReviewComment(configuration, owner, repository, number, commitId, path, line, body)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: PullRequest.Comment.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: PullRequest.Comment.self)
     }
     #endif
 
@@ -645,7 +633,7 @@ public extension Octokit {
                                            perPage: Int = 100,
                                            completion: @escaping (_ response: Result<PullRequest.RequestedReviewers, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = PullRequestRouter.readPullRequestRequestedReviewers(configuration, owner, repository, number, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.RequestedReviewers.self) { requestedReviewers, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: PullRequest.RequestedReviewers.self) { requestedReviewers, error in
             if let error = error {
                 completion(.failure(error))
             } else if let requestedReviewers {
@@ -669,7 +657,7 @@ public extension Octokit {
                                            page: Int = 1,
                                            perPage: Int = 100) async throws -> PullRequest.RequestedReviewers {
         let router = PullRequestRouter.readPullRequestRequestedReviewers(configuration, owner, repository, number, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: PullRequest.RequestedReviewers.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: PullRequest.RequestedReviewers.self)
     }
     #endif
 }

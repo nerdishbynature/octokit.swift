@@ -34,7 +34,7 @@ public extension Octokit {
                name: String,
                completion: @escaping (_ response: Result<Label, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = LabelRouter.readLabel(configuration, owner, repository, name)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Label.self) { label, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: Label.self) { label, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -55,7 +55,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func label(owner: String, repository: String, name: String) async throws -> Label {
         let router = LabelRouter.readLabel(configuration, owner, repository, name)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: Label.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: Label.self)
     }
     #endif
 
@@ -74,7 +74,7 @@ public extension Octokit {
                 perPage: String = "100",
                 completion: @escaping (_ response: Result<[Label], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = LabelRouter.readLabels(configuration, owner, repository, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Label].self) { labels, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Label].self) { labels, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -96,7 +96,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func labels(owner: String, repository: String, page: String = "1", perPage: String = "100") async throws -> [Label] {
         let router = LabelRouter.readLabels(configuration, owner, repository, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: [Label].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Label].self)
     }
     #endif
 
@@ -115,7 +115,7 @@ public extension Octokit {
                    color: String,
                    completion: @escaping (_ response: Result<Label, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = LabelRouter.createLabel(configuration, owner, repository, name, color)
-        return router.post(session, expectedResultType: Label.self) { label, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Label.self) { label, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -137,7 +137,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func postLabel(owner: String, repository: String, name: String, color: String) async throws -> Label {
         let router = LabelRouter.createLabel(configuration, owner, repository, name, color)
-        return try await router.post(session, expectedResultType: Label.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Label.self)
     }
     #endif
 }

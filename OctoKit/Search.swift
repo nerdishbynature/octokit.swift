@@ -97,7 +97,7 @@ public extension Octokit {
                     perPage: String = "100",
                     completion: @escaping (_ response: Result<SearchResponse<CodeSearchResultItem>, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = SearchRouter.searchCode(configuration, query, page, perPage)
-        return router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: SearchResponse<CodeSearchResultItem>.self) { response, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: SearchResponse<CodeSearchResultItem>.self) { response, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -118,7 +118,7 @@ public extension Octokit {
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func searchCode(query: String, page: String = "1", perPage: String = "100") async throws -> SearchResponse<CodeSearchResultItem> {
         let router = SearchRouter.searchCode(configuration, query, page, perPage)
-        return try await router.load(session, dateDecodingStrategy: .formatted(Time.rfc3339DateFormatter), expectedResultType: SearchResponse<CodeSearchResultItem>.self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: SearchResponse<CodeSearchResultItem>.self)
     }
     #endif
 }

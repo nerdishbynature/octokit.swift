@@ -91,9 +91,7 @@ public extension Octokit {
                          dueDate: Date? = nil,
                          completion: @escaping (_ response: Result<Milestone, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = MilestoneRouter.createMilestone(configuration, owner, repo, title, state, description, dueDate)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Milestone.self) { milestone, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Milestone.self) { milestone, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -123,11 +121,7 @@ public extension Octokit {
                          description: String? = nil,
                          dueDate: Date? = nil) async throws -> Milestone {
         let router = MilestoneRouter.createMilestone(configuration, owner, repo, title, state, description, dueDate)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session,
-                                     decoder: decoder,
-                                     expectedResultType: Milestone.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Milestone.self)
     }
     #endif
 
@@ -143,9 +137,7 @@ public extension Octokit {
                    number: Int,
                    completion: @escaping (_ response: Result<Milestone, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = MilestoneRouter.readMilestone(configuration, owner, repo, number)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Milestone.self) { milestone, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Milestone.self) { milestone, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -168,9 +160,7 @@ public extension Octokit {
                    repo: String,
                    number: Int) async throws -> Milestone {
         let router = MilestoneRouter.readMilestone(configuration, owner, repo, number)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Milestone.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Milestone.self)
     }
     #endif
 
@@ -194,9 +184,7 @@ public extension Octokit {
                     perPage: Int? = nil,
                     completion: @escaping (_ response: Result<[Milestone], Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = MilestoneRouter.readMilestones(configuration, owner, repo, state, sort, direction, perPage, page)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.load(session, decoder: decoder, expectedResultType: [Milestone].self) { milestones, error in
+        return router.load(session, decoder: configuration.decoder, expectedResultType: [Milestone].self) { milestones, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -227,9 +215,7 @@ public extension Octokit {
                     page: Int? = nil,
                     perPage: Int? = nil) async throws -> [Milestone] {
         let router = MilestoneRouter.readMilestones(configuration, owner, repo, state, sort, direction, perPage, page)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.load(session, decoder: decoder, expectedResultType: [Milestone].self)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Milestone].self)
     }
     #endif
 
@@ -254,9 +240,7 @@ public extension Octokit {
                          dueDate: Date? = nil,
                          completion: @escaping (_ response: Result<Milestone, Error>) -> Void) -> URLSessionDataTaskProtocol? {
         let router = MilestoneRouter.updateMilestone(configuration, owner, repo, number, title, state, description, dueDate)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return router.post(session, decoder: decoder, expectedResultType: Milestone.self) { milestone, error in
+        return router.post(session, decoder: configuration.decoder, expectedResultType: Milestone.self) { milestone, error in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -287,9 +271,7 @@ public extension Octokit {
                          description: String? = nil,
                          dueDate: Date? = nil) async throws -> Milestone {
         let router = MilestoneRouter.updateMilestone(configuration, owner, repo, number, title, state, description, dueDate)
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(Time.rfc3339DateFormatter)
-        return try await router.post(session, decoder: decoder, expectedResultType: Milestone.self)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Milestone.self)
     }
     #endif
 
