@@ -1,0 +1,105 @@
+{
+  "sha" : "f6453ef0e01c0dc276b3e76d71685e99ff98d66f",
+  "tree" : [
+    {
+      "mode" : "040000",
+      "path" : ".devcontainer",
+      "sha" : "9c11725826bfa2b4c01b85503d20a52396aba11d",
+      "type" : "tree",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/trees\/9c11725826bfa2b4c01b85503d20a52396aba11d"
+    },
+    {
+      "mode" : "040000",
+      "path" : ".github",
+      "sha" : "c016e52c0c5d354f7301b3bae2ecef257f782129",
+      "type" : "tree",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/trees\/c016e52c0c5d354f7301b3bae2ecef257f782129"
+    },
+    {
+      "mode" : "100644",
+      "path" : ".gitignore",
+      "sha" : "6a2c788b6dc7700171ec3be4d77b4d7fb3f8153d",
+      "size" : 340,
+      "type" : "blob",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/blobs\/6a2c788b6dc7700171ec3be4d77b4d7fb3f8153d"
+    },
+    {
+      "mode" : "100644",
+      "path" : ".swift-version",
+      "sha" : "f9ce5a96efa2084f1e5e4e342358198b7159cbec",
+      "size" : 5,
+      "type" : "blob",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/blobs\/f9ce5a96efa2084f1e5e4e342358198b7159cbec"
+    },
+    {
+      "mode" : "100644",
+      "path" : ".swiftformat",
+      "sha" : "da2af0b468fc0f0bd92beeae3dc937d7c764dbfd",
+      "size" : 396,
+      "type" : "blob",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/blobs\/da2af0b468fc0f0bd92beeae3dc937d7c764dbfd"
+    },
+    {
+      "mode" : "100644",
+      "path" : "LICENSE",
+      "sha" : "9f8a7f5991a7aae68197fcbdd566254f348cec0e",
+      "size" : 1066,
+      "type" : "blob",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/blobs\/9f8a7f5991a7aae68197fcbdd566254f348cec0e"
+    },
+    {
+      "mode" : "040000",
+      "path" : "OctoKit",
+      "sha" : "6d69b8cffb44b80619ab1b4c40d1a89bd21d2190",
+      "type" : "tree",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/trees\/6d69b8cffb44b80619ab1b4c40d1a89bd21d2190"
+    },
+    {
+      "mode" : "040000",
+      "path" : "OctoKitCLI",
+      "sha" : "705171f1d0e88d492e86634365079ab94fde9d06",
+      "type" : "tree",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/trees\/705171f1d0e88d492e86634365079ab94fde9d06"
+    },
+    {
+      "mode" : "100644",
+      "path" : "Package.resolved",
+      "sha" : "862525bb2aa494ab402ad7caa0d48ed4dfc5f676",
+      "size" : 668,
+      "type" : "blob",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/blobs\/862525bb2aa494ab402ad7caa0d48ed4dfc5f676"
+    },
+    {
+      "mode" : "100644",
+      "path" : "Package.swift",
+      "sha" : "c7cfdf0869ae5da3000f38fe5cb90e24d64b3ed1",
+      "size" : 769,
+      "type" : "blob",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/blobs\/c7cfdf0869ae5da3000f38fe5cb90e24d64b3ed1"
+    },
+    {
+      "mode" : "100644",
+      "path" : "README.md",
+      "sha" : "78d2107b394a4ed5d2d29222b0d0b1a24608c46a",
+      "size" : 11260,
+      "type" : "blob",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/blobs\/78d2107b394a4ed5d2d29222b0d0b1a24608c46a"
+    },
+    {
+      "mode" : "040000",
+      "path" : "Tests",
+      "sha" : "4c630c5d9a6cdafce3b16e34e1f68eaddd84a572",
+      "type" : "tree",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/trees\/4c630c5d9a6cdafce3b16e34e1f68eaddd84a572"
+    },
+    {
+      "mode" : "040000",
+      "path" : "scripts",
+      "sha" : "2c2d684d9599a0dd46cf659583b00a73ef657894",
+      "type" : "tree",
+      "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/trees\/2c2d684d9599a0dd46cf659583b00a73ef657894"
+    }
+  ],
+  "truncated" : false,
+  "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/git\/trees\/f6453ef0e01c0dc276b3e76d71685e99ff98d66f"
+}

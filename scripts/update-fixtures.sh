@@ -66,6 +66,10 @@ run_cmd "followers.json"            follower   get-list  nerdishbynature
 # Gist list (octocat has known public gists; nerdishbynature has 0)
 run_cmd "gists.json"                gist       get-list  octocat
 
+# Git
+run_cmd "git_refs.json"             git        get-refs  nerdishbynature   octokit.swift
+run_cmd "git_tree.json"             git        get-tree  nerdishbynature   octokit.swift   f6453ef0e01c0dc276b3e76d71685e99ff98d66f
+
 echo ""
 echo "Sorting JSON keys..."
 "$CLI" sorted-json-keys "$OUTPUT_DIR"/*.json
