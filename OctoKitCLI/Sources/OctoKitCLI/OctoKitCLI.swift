@@ -20,6 +20,7 @@ public struct OctokitCLI: AsyncParsableCommand {
                                                                User.self,
                                                                Gist.self,
                                                                Git.self,
+                                                               IssueEvent.self,
                                                                Notification.self,
                                                                SortedJSONKeys.self
                                                            ])
