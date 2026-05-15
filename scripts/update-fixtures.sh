@@ -40,6 +40,10 @@ run_cmd "tags.json"                 repository get-tags  nerdishbynature   octok
 run_cmd "issue.json"                issue      get       nerdishbynature   octokit.swift   1
 run_cmd "issues.json"               issue      get-list  nerdishbynature   octokit.swift
 
+# Issue Event (issue_event.json requires a known event ID — generate issue_events.json first, then pick an ID)
+run_cmd "issue_events.json"         issue-event  get-list       nerdishbynature   octokit.swift   1
+run_cmd "issue_repo_events.json"    issue-event  get-repo-list  nerdishbynature   octokit.swift
+
 # Pull Request
 run_cmd "pull_request.json"         pull-request get     nerdishbynature   octokit.swift   1
 run_cmd "pull_requests.json"        pull-request get-list nerdishbynature   octokit.swift --state closed --per-page 10
