@@ -27,55 +27,6 @@ open class IssueEvent: Codable {
 // MARK: - Requests
 
 public extension Octokit {
-    @discardableResult
-    func issueEvents(owner: String,
-                     repository: String,
-                     issueNumber: Int,
-                     page: String = "1",
-                     perPage: String = "100",
-                     completion: @escaping (_ response: Result<[IssueEvent], Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = IssueEventRouter.readIssueEvents(configuration, owner, repository, issueNumber, page, perPage)
-        return router.load(session, decoder: configuration.decoder, expectedResultType: [IssueEvent].self) { events, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let events = events {
-                completion(.success(events))
-            }
-        }
-    }
-
-    @discardableResult
-    func repositoryIssueEvents(owner: String,
-                               repository: String,
-                               page: String = "1",
-                               perPage: String = "100",
-                               completion: @escaping (_ response: Result<[IssueEvent], Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = IssueEventRouter.readRepositoryIssueEvents(configuration, owner, repository, page, perPage)
-        return router.load(session, decoder: configuration.decoder, expectedResultType: [IssueEvent].self) { events, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let events = events {
-                completion(.success(events))
-            }
-        }
-    }
-
-    @discardableResult
-    func issueEvent(owner: String,
-                    repository: String,
-                    id: Int,
-                    completion: @escaping (_ response: Result<IssueEvent, Error>) -> Void) -> URLSessionDataTaskProtocol? {
-        let router = IssueEventRouter.readIssueEvent(configuration, owner, repository, id)
-        return router.load(session, decoder: configuration.decoder, expectedResultType: IssueEvent.self) { event, error in
-            if let error = error {
-                completion(.failure(error))
-            } else if let event = event {
-                completion(.success(event))
-            }
-        }
-    }
-
-    #if compiler(>=5.5.2) && canImport(_Concurrency)
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func issueEvents(owner: String,
                      repository: String,
@@ -102,7 +53,6 @@ public extension Octokit {
         let router = IssueEventRouter.readIssueEvent(configuration, owner, repository, id)
         return try await router.load(session, decoder: configuration.decoder, expectedResultType: IssueEvent.self)
     }
-    #endif
 }
 
 // MARK: - Router
