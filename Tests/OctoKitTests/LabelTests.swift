@@ -143,6 +143,20 @@ class LabelTests: XCTestCase {
     }
     #endif
 
+    // MARK: New Async-Only Endpoint Tests
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetIssueLabels() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/nerdishbynature/octokit.swift/issues/153/labels",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "issue_labels",
+                                            statusCode: 200)
+        let labels = try await Octokit(session: session).issueLabels(owner: "nerdishbynature", repository: "octokit.swift", number: 153)
+        XCTAssertEqual(labels.count, 2)
+        XCTAssertEqual(labels[0].name, "enhancement")
+        XCTAssertTrue(session.wasCalled)
+    }
+
     // MARK: Parsing Tests
 
     func testParsingLabel() {

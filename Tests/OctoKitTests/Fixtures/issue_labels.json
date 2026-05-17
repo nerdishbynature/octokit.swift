@@ -1,0 +1,20 @@
+[
+  {
+    "color" : "84b6eb",
+    "default" : true,
+    "description" : null,
+    "id" : 165520778,
+    "name" : "enhancement",
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3Nzg=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/enhancement"
+  },
+  {
+    "color" : "159818",
+    "default" : true,
+    "description" : null,
+    "id" : 165520779,
+    "name" : "help wanted",
+    "node_id" : "MDU6TGFiZWwxNjU1MjA3Nzk=",
+    "url" : "https:\/\/api.github.com\/repos\/nerdishbynature\/octokit.swift\/labels\/help%20wanted"
+  }
+]

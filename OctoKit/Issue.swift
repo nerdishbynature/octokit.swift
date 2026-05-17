@@ -419,12 +419,6 @@ public extension Octokit {
     #endif
 
     /// Posts a comment on an issue using the given body.
-    /// - Parameters:
-    ///   - owner: The user or organization that owns the repository.
-    ///   - repository: The name of the repository.
-    ///   - number: The number of the issue.
-    ///   - body: The contents of the comment.
-    ///   - completion: Callback for the comment that is created.
     @discardableResult
     func commentIssue(owner: String,
                       repository: String,
@@ -445,12 +439,6 @@ public extension Octokit {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Posts a comment on an issue using the given body.
-    /// - Parameters:
-    ///   - owner: The user or organization that owns the repository.
-    ///   - repository: The name of the repository.
-    ///   - number: The number of the issue.
-    ///   - body: The contents of the comment.
-    ///   - completion: Callback for the comment that is created.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func commentIssue(owner: String, repository: String, number: Int, body: String) async throws -> Issue.Comment {
         let router = IssueRouter.commentIssue(configuration, owner, repository, number, body)
@@ -458,14 +446,7 @@ public extension Octokit {
     }
     #endif
 
-    /// Fetches all comments for an issue
-    /// - Parameters:
-    ///   - owner: The user or organization that owns the repository.
-    ///   - repository: The name of the repository.
-    ///   - number: The number of the issue.
-    ///   - page: Current page for comments pagination. `1` by default.
-    ///   - perPage: Number of comments per page. `100` by default.
-    ///   - completion: Callback for the outcome of the fetch.
+    /// Fetches all comments for an issue.
     @discardableResult
     func issueComments(owner: String,
                        repository: String,
@@ -486,14 +467,7 @@ public extension Octokit {
     }
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
-    /// Fetches all comments for an issue
-    /// - Parameters:
-    ///   - owner: The user or organization that owns the repository.
-    ///   - repository: The name of the repository.
-    ///   - number: The number of the issue.
-    ///   - page: Current page for comments pagination. `1` by default.
-    ///   - perPage: Number of comments per page. `100` by default.
-    ///   - completion: Callback for the outcome of the fetch.
+    /// Fetches all comments for an issue.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func issueComments(owner: String,
                        repository: String,
@@ -506,12 +480,6 @@ public extension Octokit {
     #endif
 
     /// Edits a comment on an issue using the given body.
-    /// - Parameters:
-    ///   - owner: The user or organization that owns the repository.
-    ///   - repository: The name of the repository.
-    ///   - number: The number of the comment.
-    ///   - body: The contents of the comment.
-    ///   - completion: Callback for the comment that is created.
     @discardableResult
     func patchIssueComment(owner: String,
                            repository: String,
@@ -532,18 +500,78 @@ public extension Octokit {
 
     #if compiler(>=5.5.2) && canImport(_Concurrency)
     /// Edits a comment on an issue using the given body.
-    /// - Parameters:
-    ///   - owner: The user or organization that owns the repository.
-    ///   - repository: The name of the repository.
-    ///   - number: The number of the comment.
-    ///   - body: The contents of the comment.
-    ///   - completion: Callback for the comment that is created.
     @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
     func patchIssueComment(owner: String, repository: String, number: Int, body: String) async throws -> Issue.Comment {
         let router = IssueRouter.patchIssueComment(configuration, owner, repository, number, body)
         return try await router.post(session, decoder: configuration.decoder, expectedResultType: Issue.Comment.self)
     }
     #endif
+
+    // MARK: - New async-only endpoints
+
+    /// Fetches issues for the authenticated user across owned and member repositories.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func userIssues(state: Openness = .open,
+                    page: String = "1",
+                    perPage: String = "100") async throws -> [Issue] {
+        let router = IssueRouter.readUserIssues(configuration, page, perPage, state)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Issue].self)
+    }
+
+    /// Fetches issues for an organization.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func organizationIssues(organization: String,
+                            state: Openness = .open,
+                            page: String = "1",
+                            perPage: String = "100") async throws -> [Issue] {
+        let router = IssueRouter.readOrganizationIssues(configuration, organization, page, perPage, state)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Issue].self)
+    }
+
+    /// Locks an issue.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func lockIssue(owner: String, repository: String, number: Int) async throws {
+        let router = IssueRouter.lockIssue(configuration, owner, repository, number)
+        return try await router.load(session)
+    }
+
+    /// Unlocks an issue.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func unlockIssue(owner: String, repository: String, number: Int) async throws {
+        let router = IssueRouter.unlockIssue(configuration, owner, repository, number)
+        return try await router.delete(session)
+    }
+
+    /// Fetches all potential assignees for a repository.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func assignees(owner: String, repository: String) async throws -> [User] {
+        let router = IssueRouter.readAssignees(configuration, owner, repository)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [User].self)
+    }
+
+    /// Fetches all comments across all issues in a repository.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func issueComments(owner: String,
+                       repository: String,
+                       page: String = "1",
+                       perPage: String = "100") async throws -> [Issue.Comment] {
+        let router = IssueRouter.readAllIssueComments(configuration, owner, repository, page, perPage)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Issue.Comment].self)
+    }
+
+    /// Fetches a single issue comment by ID.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func issueComment(owner: String, repository: String, id: Int) async throws -> Issue.Comment {
+        let router = IssueRouter.readIssueComment(configuration, owner, repository, id)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: Issue.Comment.self)
+    }
+
+    /// Deletes an issue comment.
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func deleteIssueComment(owner: String, repository: String, id: Int) async throws {
+        let router = IssueRouter.deleteIssueComment(configuration, owner, repository, id)
+        return try await router.delete(session)
+    }
 }
 
 // MARK: Router
@@ -557,11 +585,23 @@ enum IssueRouter: JSONPostRouter {
     case commentIssue(Configuration, String, String, Int, String)
     case readIssueComments(Configuration, String, String, Int, String, String)
     case patchIssueComment(Configuration, String, String, Int, String)
+    case readUserIssues(Configuration, String, String, Openness)
+    case readOrganizationIssues(Configuration, String, String, String, Openness)
+    case lockIssue(Configuration, String, String, Int)
+    case unlockIssue(Configuration, String, String, Int)
+    case readAssignees(Configuration, String, String)
+    case readAllIssueComments(Configuration, String, String, String, String)
+    case readIssueComment(Configuration, String, String, Int)
+    case deleteIssueComment(Configuration, String, String, Int)
 
     var method: HTTPMethod {
         switch self {
         case .postIssue, .patchIssue, .commentIssue, .patchIssueComment:
             return .POST
+        case .lockIssue:
+            return .PUT
+        case .unlockIssue, .deleteIssueComment:
+            return .DELETE
         default:
             return .GET
         }
@@ -586,6 +626,14 @@ enum IssueRouter: JSONPostRouter {
         case let .commentIssue(config, _, _, _, _): return config
         case let .readIssueComments(config, _, _, _, _, _): return config
         case let .patchIssueComment(config, _, _, _, _): return config
+        case let .readUserIssues(config, _, _, _): return config
+        case let .readOrganizationIssues(config, _, _, _, _): return config
+        case let .lockIssue(config, _, _, _): return config
+        case let .unlockIssue(config, _, _, _): return config
+        case let .readAssignees(config, _, _): return config
+        case let .readAllIssueComments(config, _, _, _, _): return config
+        case let .readIssueComment(config, _, _, _): return config
+        case let .deleteIssueComment(config, _, _, _): return config
         }
     }
 
@@ -599,30 +647,16 @@ enum IssueRouter: JSONPostRouter {
             return ["per_page": perPage, "page": page, "state": state.rawValue]
         case let .postIssue(_, _, _, title, body, assignee, labels):
             var params: [String: Any] = ["title": title]
-            if let body = body {
-                params["body"] = body
-            }
-            if let assignee = assignee {
-                params["assignee"] = assignee
-            }
-            if !labels.isEmpty {
-                params["labels"] = labels
-            }
+            if let body = body { params["body"] = body }
+            if let assignee = assignee { params["assignee"] = assignee }
+            if !labels.isEmpty { params["labels"] = labels }
             return params
         case let .patchIssue(_, _, _, _, title, body, assignee, state):
             var params: [String: String] = [:]
-            if let title = title {
-                params["title"] = title
-            }
-            if let body = body {
-                params["body"] = body
-            }
-            if let assignee = assignee {
-                params["assignee"] = assignee
-            }
-            if let state = state {
-                params["state"] = state.rawValue
-            }
+            if let title = title { params["title"] = title }
+            if let body = body { params["body"] = body }
+            if let assignee = assignee { params["assignee"] = assignee }
+            if let state = state { params["state"] = state.rawValue }
             return params
         case let .commentIssue(_, _, _, _, body):
             return ["body": body]
@@ -630,6 +664,20 @@ enum IssueRouter: JSONPostRouter {
             return ["per_page": perPage, "page": page]
         case let .patchIssueComment(_, _, _, _, body):
             return ["body": body]
+        case let .readUserIssues(_, page, perPage, state):
+            return ["per_page": perPage, "page": page, "state": state.rawValue]
+        case let .readOrganizationIssues(_, _, page, perPage, state):
+            return ["per_page": perPage, "page": page, "state": state.rawValue]
+        case .lockIssue, .unlockIssue:
+            return [:]
+        case .readAssignees:
+            return [:]
+        case let .readAllIssueComments(_, _, _, page, perPage):
+            return ["per_page": perPage, "page": page]
+        case .readIssueComment:
+            return [:]
+        case .deleteIssueComment:
+            return [:]
         }
     }
 
@@ -651,6 +699,22 @@ enum IssueRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/issues/\(number)/comments"
         case let .patchIssueComment(_, owner, repository, number, _):
             return "repos/\(owner)/\(repository)/issues/comments/\(number)"
+        case .readUserIssues:
+            return "user/issues"
+        case let .readOrganizationIssues(_, org, _, _, _):
+            return "orgs/\(org)/issues"
+        case let .lockIssue(_, owner, repository, number):
+            return "repos/\(owner)/\(repository)/issues/\(number)/lock"
+        case let .unlockIssue(_, owner, repository, number):
+            return "repos/\(owner)/\(repository)/issues/\(number)/lock"
+        case let .readAssignees(_, owner, repository):
+            return "repos/\(owner)/\(repository)/assignees"
+        case let .readAllIssueComments(_, owner, repository, _, _):
+            return "repos/\(owner)/\(repository)/issues/comments"
+        case let .readIssueComment(_, owner, repository, id):
+            return "repos/\(owner)/\(repository)/issues/comments/\(id)"
+        case let .deleteIssueComment(_, owner, repository, id):
+            return "repos/\(owner)/\(repository)/issues/comments/\(id)"
         }
     }
 }

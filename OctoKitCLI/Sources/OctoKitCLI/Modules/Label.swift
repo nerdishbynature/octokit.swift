@@ -15,7 +15,9 @@ struct Label: AsyncParsableCommand {
     static let configuration = CommandConfiguration(abstract: "Operate on Labels",
                                                     subcommands: [
                                                         Get.self,
-                                                        GetList.self
+                                                        GetList.self,
+                                                        GetIssueLabels.self,
+                                                        GetMilestoneLabels.self
                                                     ])
 
     init() {}
@@ -69,6 +71,60 @@ extension Label {
             let session = JSONInterceptingURLSession()
             let octokit = makeOctokit(session: session)
             _ = try await octokit.labels(owner: owner, repository: repository)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetIssueLabels: AsyncParsableCommand {
+        @Argument(help: "The owner of the repository")
+        var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
+
+        @Argument(help: "The number of the issue")
+        var number: Int
+
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.issueLabels(owner: owner, repository: repository, number: number)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetMilestoneLabels: AsyncParsableCommand {
+        @Argument(help: "The owner of the repository")
+        var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
+
+        @Argument(help: "The number of the milestone")
+        var number: Int
+
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.milestoneLabels(owner: owner, repository: repository, number: number)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }

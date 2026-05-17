@@ -17,7 +17,10 @@ struct Issue: AsyncParsableCommand {
                                                         Get.self,
                                                         GetList.self,
                                                         GetMyList.self,
-                                                        GetComments.self
+                                                        GetComments.self,
+                                                        GetAssignees.self,
+                                                        GetAllComments.self,
+                                                        GetComment.self
                                                     ])
 
     init() {}
@@ -116,6 +119,81 @@ extension Issue {
             let session = JSONInterceptingURLSession()
             let octokit = makeOctokit(session: session)
             _ = try await octokit.issueComments(owner: owner, repository: repository, number: number)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetAssignees: AsyncParsableCommand {
+        @Argument(help: "The owner of the repository")
+        var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
+
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.assignees(owner: owner, repository: repository)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetAllComments: AsyncParsableCommand {
+        @Argument(help: "The owner of the repository")
+        var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
+
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.issueComments(owner: owner, repository: repository)
+            session.verbosePrint(verbose: verbose)
+            try session.printResponseToFileOrConsole(filePath: filePath)
+        }
+    }
+
+    struct GetComment: AsyncParsableCommand {
+        @Argument(help: "The owner of the repository")
+        var owner: String
+
+        @Argument(help: "The name of the repository")
+        var repository: String
+
+        @Argument(help: "The ID of the comment")
+        var id: Int
+
+        @Argument(help: "The path to put the file in")
+        var filePath: String?
+
+        @Flag(help: "Verbose output flag")
+        var verbose: Bool = false
+
+        init() {}
+
+        mutating func run() async throws {
+            let session = JSONInterceptingURLSession()
+            let octokit = makeOctokit(session: session)
+            _ = try await octokit.issueComment(owner: owner, repository: repository, id: id)
             session.verbosePrint(verbose: verbose)
             try session.printResponseToFileOrConsole(filePath: filePath)
         }
