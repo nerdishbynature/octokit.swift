@@ -164,17 +164,84 @@ public extension Octokit {
         return try await router.post(session, decoder: configuration.decoder, expectedResultType: Label.self)
     }
     #endif
+
+    // MARK: - New async-only endpoints
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func updateLabel(owner: String,
+                     repository: String,
+                     name: String,
+                     newName: String? = nil,
+                     color: String? = nil,
+                     labelDescription: String? = nil) async throws -> Label {
+        let router = LabelRouter.updateLabel(configuration, owner, repository, name, newName, color, labelDescription)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: Label.self)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func deleteLabel(owner: String, repository: String, name: String) async throws {
+        let router = LabelRouter.deleteLabel(configuration, owner, repository, name)
+        return try await router.delete(session)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func issueLabels(owner: String, repository: String, number: Int) async throws -> [Label] {
+        let router = LabelRouter.readIssueLabels(configuration, owner, repository, number)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Label].self)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func addLabelsToIssue(owner: String, repository: String, number: Int, labels: [String]) async throws -> [Label] {
+        let router = LabelRouter.addLabelsToIssue(configuration, owner, repository, number, labels)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: [Label].self)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func removeLabelFromIssue(owner: String, repository: String, number: Int, name: String) async throws -> [Label] {
+        let router = LabelRouter.removeLabelFromIssue(configuration, owner, repository, number, name)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Label].self)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func replaceIssueLabels(owner: String, repository: String, number: Int, labels: [String]) async throws -> [Label] {
+        let router = LabelRouter.replaceIssueLabels(configuration, owner, repository, number, labels)
+        return try await router.post(session, decoder: configuration.decoder, expectedResultType: [Label].self)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func removeAllIssueLabels(owner: String, repository: String, number: Int) async throws {
+        let router = LabelRouter.removeAllIssueLabels(configuration, owner, repository, number)
+        return try await router.delete(session)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func milestoneLabels(owner: String, repository: String, number: Int) async throws -> [Label] {
+        let router = LabelRouter.readMilestoneLabels(configuration, owner, repository, number)
+        return try await router.load(session, decoder: configuration.decoder, expectedResultType: [Label].self)
+    }
 }
 
 enum LabelRouter: JSONPostRouter {
     case readLabel(Configuration, String, String, String)
     case readLabels(Configuration, String, String, String, String)
     case createLabel(Configuration, String, String, String, String)
+    case updateLabel(Configuration, String, String, String, String?, String?, String?)
+    case deleteLabel(Configuration, String, String, String)
+    case readIssueLabels(Configuration, String, String, Int)
+    case addLabelsToIssue(Configuration, String, String, Int, [String])
+    case removeLabelFromIssue(Configuration, String, String, Int, String)
+    case replaceIssueLabels(Configuration, String, String, Int, [String])
+    case removeAllIssueLabels(Configuration, String, String, Int)
+    case readMilestoneLabels(Configuration, String, String, Int)
 
     var method: HTTPMethod {
         switch self {
-        case .createLabel:
+        case .createLabel, .addLabelsToIssue, .replaceIssueLabels:
             return .POST
+        case .updateLabel:
+            return .PATCH
+        case .deleteLabel, .removeLabelFromIssue, .removeAllIssueLabels:
+            return .DELETE
         default:
             return .GET
         }
@@ -182,7 +249,7 @@ enum LabelRouter: JSONPostRouter {
 
     var encoding: HTTPEncoding {
         switch self {
-        case .createLabel:
+        case .createLabel, .updateLabel, .addLabelsToIssue, .replaceIssueLabels:
             return .json
         default:
             return .url
@@ -194,6 +261,14 @@ enum LabelRouter: JSONPostRouter {
         case let .readLabel(config, _, _, _): return config
         case let .readLabels(config, _, _, _, _): return config
         case let .createLabel(config, _, _, _, _): return config
+        case let .updateLabel(config, _, _, _, _, _, _): return config
+        case let .deleteLabel(config, _, _, _): return config
+        case let .readIssueLabels(config, _, _, _): return config
+        case let .addLabelsToIssue(config, _, _, _, _): return config
+        case let .removeLabelFromIssue(config, _, _, _, _): return config
+        case let .replaceIssueLabels(config, _, _, _, _): return config
+        case let .removeAllIssueLabels(config, _, _, _): return config
+        case let .readMilestoneLabels(config, _, _, _): return config
         }
     }
 
@@ -204,6 +279,21 @@ enum LabelRouter: JSONPostRouter {
             return ["per_page": perPage, "page": page]
         case let .createLabel(_, _, _, name, color):
             return ["name": name, "color": color]
+        case let .updateLabel(_, _, _, _, newName, color, description):
+            var params: [String: String] = [:]
+            if let newName = newName { params["new_name"] = newName }
+            if let color = color { params["color"] = color }
+            if let description = description { params["description"] = description }
+            return params
+        case .deleteLabel: return [:]
+        case .readIssueLabels: return [:]
+        case let .addLabelsToIssue(_, _, _, _, labels):
+            return ["labels": labels]
+        case .removeLabelFromIssue: return [:]
+        case let .replaceIssueLabels(_, _, _, _, labels):
+            return ["labels": labels]
+        case .removeAllIssueLabels: return [:]
+        case .readMilestoneLabels: return [:]
         }
     }
 
@@ -216,6 +306,25 @@ enum LabelRouter: JSONPostRouter {
             return "repos/\(owner)/\(repository)/labels"
         case let .createLabel(_, owner, repository, _, _):
             return "repos/\(owner)/\(repository)/labels"
+        case let .updateLabel(_, owner, repository, name, _, _, _):
+            let name = name.stringByAddingPercentEncodingForRFC3986() ?? name
+            return "repos/\(owner)/\(repository)/labels/\(name)"
+        case let .deleteLabel(_, owner, repository, name):
+            let name = name.stringByAddingPercentEncodingForRFC3986() ?? name
+            return "repos/\(owner)/\(repository)/labels/\(name)"
+        case let .readIssueLabels(_, owner, repository, number):
+            return "repos/\(owner)/\(repository)/issues/\(number)/labels"
+        case let .addLabelsToIssue(_, owner, repository, number, _):
+            return "repos/\(owner)/\(repository)/issues/\(number)/labels"
+        case let .removeLabelFromIssue(_, owner, repository, number, name):
+            let name = name.stringByAddingPercentEncodingForRFC3986() ?? name
+            return "repos/\(owner)/\(repository)/issues/\(number)/labels/\(name)"
+        case let .replaceIssueLabels(_, owner, repository, number, _):
+            return "repos/\(owner)/\(repository)/issues/\(number)/labels"
+        case let .removeAllIssueLabels(_, owner, repository, number):
+            return "repos/\(owner)/\(repository)/issues/\(number)/labels"
+        case let .readMilestoneLabels(_, owner, repository, number):
+            return "repos/\(owner)/\(repository)/milestones/\(number)/labels"
         }
     }
 }

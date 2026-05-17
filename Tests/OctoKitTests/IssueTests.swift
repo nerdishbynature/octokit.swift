@@ -165,6 +165,41 @@ class IssueTests: XCTestCase {
         XCTAssertTrue(session.wasCalled)
     }
 
+    // MARK: New Async-Only Endpoint Tests
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetAssignees() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/nerdishbynature/octokit.swift/assignees",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "assignees",
+                                            statusCode: 200)
+        let users = try await Octokit(session: session).assignees(owner: "nerdishbynature", repository: "octokit.swift")
+        XCTAssertEqual(users.count, 27)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetAllIssueComments() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/nerdishbynature/octokit.swift/issues/comments?page=1&per_page=100",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "issue_repo_comments",
+                                            statusCode: 200)
+        let comments = try await Octokit(session: session).issueComments(owner: "nerdishbynature", repository: "octokit.swift")
+        XCTAssertEqual(comments.count, 100)
+        XCTAssertTrue(session.wasCalled)
+    }
+
+    @available(macOS 12.0, iOS 15.0, tvOS 15.0, watchOS 8.0, *)
+    func testGetIssueComment() async throws {
+        let session = OctoKitURLTestSession(expectedURL: "https://api.github.com/repos/nerdishbynature/octokit.swift/issues/comments/151509149",
+                                            expectedHTTPMethod: "GET",
+                                            jsonFile: "issue_comment_single",
+                                            statusCode: 200)
+        let comment = try await Octokit(session: session).issueComment(owner: "nerdishbynature", repository: "octokit.swift", id: 151509149)
+        XCTAssertEqual(comment.user.login, "pietbrauer")
+        XCTAssertTrue(session.wasCalled)
+    }
+
     // MARK: Pagination Tests
 
     func testGetMyIssuesPaginated() {

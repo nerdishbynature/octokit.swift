@@ -40,9 +40,24 @@ run_cmd "tags.json"                 repository get-tags  nerdishbynature   octok
 run_cmd "issue.json"                issue      get       nerdishbynature   octokit.swift   1
 run_cmd "issues.json"               issue      get-list  nerdishbynature   octokit.swift
 
+# Assignees
+run_cmd "assignees.json"            issue        get-assignees  nerdishbynature   octokit.swift
+
+# Repository-level issue comments (use get-all-comments)
+run_cmd "issue_repo_comments.json"  issue        get-all-comments nerdishbynature octokit.swift
+
+# Single issue comment (comment 151509149 is a known comment in nerdishbynature/octokit.swift)
+run_cmd "issue_comment_single.json" issue        get-comment    nerdishbynature   octokit.swift   151509149
+
+# Issue labels (issue #153 has known labels: enhancement, help wanted)
+run_cmd "issue_labels.json"         label        get-issue-labels nerdishbynature octokit.swift 153
+
 # Issue Event (issue_event.json requires a known event ID — generate issue_events.json first, then pick an ID)
 run_cmd "issue_events.json"         issue-event  get-list       nerdishbynature   octokit.swift   1
 run_cmd "issue_repo_events.json"    issue-event  get-repo-list  nerdishbynature   octokit.swift
+
+# milestone_labels.json: nerdishbynature/octokit.swift has no milestones — skip live generation.
+# milestone_labels fixture is not maintained; milestoneLabels is covered by model parsing test using labels.json.
 
 # Pull Request
 run_cmd "pull_request.json"         pull-request get     nerdishbynature   octokit.swift   1
