@@ -440,3 +440,21 @@ func allIssues(owner: String, repo: String) async throws -> [Issue] {
 ```
 
 Paginated variants are available for: `myIssuesPaginated`, `issuesPaginated`, `pullRequestsPaginated`, `repositoriesPaginated`, `myNotificationsPaginated`, `listRepositoryNotificationsPaginated`, `listReleasesPaginated`, `labelsPaginated`.
+
+## Formatting
+
+OctoKit uses [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) for code style. It is not declared as a Swift Package Manager dependency (to avoid propagating it to consumers), so install it locally before contributing:
+
+```sh
+brew install swiftformat
+# or
+mint install nicklockwood/SwiftFormat
+```
+
+Run the formatter from the repo root:
+
+```sh
+swiftformat .
+```
+
+CI enforces the same rules via `swiftformat --lint .`.
