@@ -20,11 +20,11 @@ jobs:
   swiftformat:
     name: Linting
     runs-on: ubuntu-latest
-    container: swift:5.10-noble
+    container: ghcr.io/nicklockwood/swiftformat:0.52.8
     steps:
       - uses: actions/checkout@v2
       - name: Lint
-        run: swift package plugin --allow-writing-to-package-directory swiftformat --lint
+        run: swiftformat --lint .
   cli_build:
     name: Build CLI
     runs-on: ubuntu-latest
